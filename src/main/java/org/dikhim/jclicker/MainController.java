@@ -297,7 +297,6 @@ public class MainController {
 
 	@FXML
 	void insertKeyCodeWithDelay(ActionEvent event) {
-		OutStream.println("This button doesn't work yet");
 		ToggleButton toggle = (ToggleButton) event.getSource();
 		KeyEventsManager manager = KeyEventsManager.getInstance();
 		if (toggle.isSelected()) {
@@ -339,9 +338,7 @@ public class MainController {
 
 	@FXML
 	void insertMouseCode(ActionEvent event) {
-		OutStream.println("This button doesn't work yet");
 		ToggleButton toggle = (ToggleButton) event.getSource();
-
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted

@@ -10,9 +10,6 @@ import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
-/**
- * Created by dikobraz on 22.03.17.
- */
 public class MouseEventsManager implements NativeMouseInputListener {
     private static MouseEventsManager instance;
     private static int x;
@@ -24,6 +21,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
 			10);
 	private static LimitedSizeQueue<String> releasedButtonsLog = new LimitedSizeQueue<>(
 			10);
+
 	
     private MouseEventsManager() {
     }
@@ -33,8 +31,6 @@ public class MouseEventsManager implements NativeMouseInputListener {
             instance = new MouseEventsManager();
         return instance;
     }
-
-
 
     
     public int getX() {
