@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.MainController">
+   <top>
+      <MenuBar maxHeight="0.0" minHeight="0.0" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" styleClass=".menu" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" styleClass=".gray-element" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" styleClass=".gray-element" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" styleClass=".gray-element" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <FlowPane rowValignment="TOP" style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" vgap="4.0">
+               <children>
+                  <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0" mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0" text="New">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+                  <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false" onAction="#openFile" text="Open">
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+                  <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false" onAction="#saveFile" text="Save">
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+                  <Button id="save-as-script-button" fx:id="btnSaveFileAs" focusTraversable="false" mnemonicParsing="false" onAction="#saveFileAs" text="Save as">
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+                  <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="Run">
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+                  <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="Stop">
+                     <styleClass>
+                        <String fx:value="script-button" />
+                        <String fx:value="gray-element" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </FlowPane>
+            <SplitPane dividerPositions="0.5551378446115288" prefHeight="160.0" prefWidth="200.0" GridPane.rowIndex="1">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TextArea fx:id="codeTextArea" editable="false" maxHeight="1.7976931348623157E308" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font name="FreeMono Bold" size="13.0" />
+                                       </font>
+                                    </TextArea>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                 <children>
+                                    <TextArea fx:id="outTxt" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font name="FreeMono Bold" size="13.0" />
+                                       </font>
+                                    </TextArea>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane maxWidth="230.0" minWidth="250.0">
+                     <children>
+                        <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <panes>
+                            <TitledPane animated="false" text="Paste events code">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyName">
+                                                   <graphic>
+                                                      <BorderPane>
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="BTN1-BTN2-BTN3" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label alignment="CENTER" text="Key name:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCode">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="key.press('BTN1');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Key code:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="system.sleep(100);&#10;key.press('BTN1');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Key code with delay:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseName">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="BTN1-BTN2-BTN3" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Mouse key name:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCode">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Mouse code:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="system.sleep(100);&#10;mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Mouse code with delay:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                            </TitledPane>
+                          </panes>
+                        </Accordion>
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>

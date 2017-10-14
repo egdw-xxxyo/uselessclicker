@@ -1,0 +1,175 @@
+#run-script-button{
+	-fx-background-image: url("images/play.png"); 
+}
+
+#stop-script-button{
+	-fx-background-image: url("images/stop.png"); 
+}
+#new-script-button{
+	-fx-background-image: url("images/document.png"); 
+}
+#open-script-button{
+	-fx-background-image: url("images/folder.png"); 
+}
+#save-script-button{
+	-fx-background-image: url("images/save.png"); 
+}
+#save-as-script-button{
+	-fx-background-image: url("images/saveAs.png"); 
+}
+#paste-keycodes-button{
+	-fx-background-image: url("images/keyboard.png"); 
+}
+#paste-keycodes-button:selected{
+	-fx-background-color: #FFCC5F;
+}
+
+
+#paste-mousecodes-button{
+	-fx-background-image: url("images/mouse.png"); 
+	
+	
+}
+#paste-mousecodes-button:selected{
+	-fx-background-color: #FFCC5F;
+}
+
+/*Menu buttons*/
+#menu-keyboard-button{
+	-fx-background-image: url("images/keyboard.png"); 
+}
+#menu-mouse-button{
+	-fx-background-image: url("images/mouse.png"); 
+}
+.menu-button{
+	-fx-graphic: url("images/mouse.png")
+}
+.menu-button-item > .label{
+	-fx-graphic: url("images/mouse.png")
+}
+
+.script-button{
+	-fx-alignment: bottom_center;
+	-fx-font-size: 10;
+	
+	-fx-background-radius: 0;
+	-fx-background-repeat: no-repeat ;
+	-fx-background-position: center 8px;
+	-fx-background-size: 26px;
+	
+	-fx-min-height: 50;
+	-fx-pref-height: 50;
+	-fx-max-height: 50;
+	-fx-min-width: 55;
+	-fx-pref-width: 55;
+	-fx-max-width: 55;
+	
+	-fx-padding: 0;
+}
+
+
+.gray-element{
+	-fx-background-color: #dddddd;
+}
+.gray-element:hover{
+	-fx-background-color: #cccccc;
+}
+.gray-element:pressed{
+	-fx-background-color: #FFCC5F;
+}
+
+.menu-bar{
+	-fx-background-color: #eaeaea;
+	-fx-border-color: #aaaaaa;
+	-fx-border-width: 0 0 1 0;
+}
+
+.menu-bar .label {
+    -fx-text-fill: #444444;
+}
+.menu-item{
+	-fx-background-color: #dddddd;
+		-fx-min-height: 50;
+	-fx-max-height:50;
+	-fx-min-width: 55;
+	-fx-max-width: 45;
+}
+.menu:hover {
+    -fx-background-color: #cccccc;
+}
+.menu:pressed {
+    -fx-background-color: #FFCC5F;
+}
+
+
+/*text area */
+
+.code-text-area{
+		-fx-text-fill: #666;
+		-fx-font-size: 13px;
+		-fx-font-family: "FreeMono";
+		
+		-fx-highlight-fill: #ffdd7F;
+    -fx-highlight-text-fill: #777;
+    
+    
+}
+.code-text-area:focused{
+		-fx-text-fill: #444;
+		
+		-fx-font-size: 13px;
+		-fx-font-family: "FreeMono Bold";
+    -fx-highlight-fill: #FFCC5F;
+    -fx-highlight-text-fill: #333;
+    
+    
+    -fx-focus-color: #777;
+    
+}
+.code-text-area:disabled{
+		-fx-opacity: 0.9;
+		-fx-text-fill: #444;
+		
+		-fx-font-size: 13px;
+		-fx-font-family: "FreeMono Bold";   
+    
+}
+.code-text-area > .scroll-pane:disabled {
+    -fx-opacity: 1;
+}
+.code-text-area:readonly .content{
+		-fx-background-color: #ddd;
+		-fx-display-caret: true; 
+}
+
+/*Paste code buttons */
+.paste-code-button{
+	
+	-fx-min-height: 70;
+	-fx-max-height: 70;
+	-fx-max-width: 300;
+	
+	-fx-padding: 2 0 0 0;
+	
+	-fx-background-radius: 0;
+	-fx-background-repeat: no-repeat ;
+	-fx-background-position: 3 2;
+	-fx-background-size: 16px;
+	-fx-background-color: #dddddd;
+	
+	-fx-border-width: 0 1 1 1;
+	-fx-border-color: #bbb;
+}
+.paste-code-button-label{
+	-fx-alignment: left ;
+}
+.paste-code-button:selected{
+	-fx-background-color: #FFCC5F;
+	-fx-border-color: #FFCC5F;
+}
+.keyboard-paste-code-button{
+	-fx-background-image: url("images/keyboard.png"); 
+}
+.mouse-paste-code-button{
+	-fx-background-image: url("images/mouse.png"); 
+}
