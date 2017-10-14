@@ -13,17 +13,19 @@ public class LimitedSizeQueue<K> extends ArrayList<K> {
 
     public boolean add(K k){
         boolean r = super.add(k);
+
         if (size() > maxSize){
-            removeRange(0, size() - maxSize - 1);
+        	remove(0);
         }
+
         return r;
     }
 
-    public K getFirst() {
+    public K getLast() {
         return get(size() - 1);
     }
 
-    public K getLast() {
+    public K getFirst() {
         return get(0);
     }
     

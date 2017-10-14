@@ -139,7 +139,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
 	 * @return the name of the last pressed key
 	 */
 	public String getLastPressed() {
-		return pressedButtonsLog.getFirst();
+		return pressedButtonsLog.getLast();
 	}
 	
 	/**
@@ -147,6 +147,6 @@ public class MouseEventsManager implements NativeMouseInputListener {
 	 * @return the name of the last released key
 	 */
 	public String getLastReleased() {
-		return releasedButtonsLog.getFirst();
+		return releasedButtonsLog.getLast();
 	}
 }

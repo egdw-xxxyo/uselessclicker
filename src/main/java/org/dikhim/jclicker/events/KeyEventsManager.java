@@ -113,14 +113,14 @@ public class KeyEventsManager implements NativeKeyListener {
 	 * @return the name of the last pressed key
 	 */
 	public String getLastPressed() {
-		return pressedKeysLog.getFirst();
+		return pressedKeysLog.getLast();
 	}
 	/**
 	 * 
 	 * @return the name of the last released key
 	 */
 	public String getLastReleased() {
-		return releasedKeysLog.getFirst();
+		return releasedKeysLog.getLast();
 	}
 	/**
 	 * Return true if one of the pressed keys is 'key'
@@ -136,7 +136,7 @@ public class KeyEventsManager implements NativeKeyListener {
 	 */
 	public int getLastDelay() {
 		if(timeLog.size()>1) {
-			return (int) (timeLog.getFromEnd(1) - timeLog.getFromEnd(1));
+			return (int) (timeLog.getFromEnd(0) - timeLog.getFromEnd(1));
 		}else {
 			return 0;
 		}

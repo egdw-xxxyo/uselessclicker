@@ -299,12 +299,40 @@ public class MainController {
 	void insertKeyCodeWithDelay(ActionEvent event) {
 		OutStream.println("This button doesn't work yet");
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		KeyEventsManager manager = KeyEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
 			enableCodeType=false;
+			manager.resetTimeLog();
+			manager.addPressListener(new ShortcutIncludesHandler(
+					"insert.keyboard.code.press", "", () -> {
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						int delay = manager.getLastDelay();
+						if(delay != 0) {
+							sb.append("system.sleep(").append(delay).append(");\n");
+						}
+						sb.append("key.press('").append(manager.getLastPressed()).append("');\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+
+					}));
+			manager.addReleaseListener(new ShortcutIncludesHandler(
+					"insert.keyboard.code.release", "", () -> {
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						int delay = manager.getLastDelay();
+						if(delay != 0) {
+							sb.append("system.sleep(").append(delay).append(");\n");
+						}
+						sb.append("key.release('").append(manager.getLastReleased()).append("');\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+
+					}));
 		} else {
 			// if toggle has been deselected
+			manager.removePressListenersByPrefix("insert.keyboard.code");
+			manager.removeReleaseListenersByPrefix("insert.keyboard.code");
 			enableCodeType=true;
 		}
 	}
