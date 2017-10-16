@@ -21,7 +21,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
 			10);
 	private static LimitedSizeQueue<String> releasedButtonsLog = new LimitedSizeQueue<>(
 			10);
-
+	private static LimitedSizeQueue<Long> timeLog = new LimitedSizeQueue<>(2);
 	
     private MouseEventsManager() {
     }
@@ -32,7 +32,6 @@ public class MouseEventsManager implements NativeMouseInputListener {
         return instance;
     }
 
-    
     public int getX() {
     	return x;
     }
@@ -43,6 +42,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
 
     @Override
     public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
+		timeLog.add(System.currentTimeMillis());
         pressedButtons.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         pressedButtonsLog.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         x = nativeMouseEvent.getX();
@@ -53,7 +53,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
 
     @Override
     public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
-
+		timeLog.add(System.currentTimeMillis());
         releasedButtonsLog.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         for (MouseHandler h : releaseHandlers)
 			h.fire(pressedButtons);
@@ -64,12 +64,14 @@ public class MouseEventsManager implements NativeMouseInputListener {
 
     @Override
     public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
+		timeLog.add(System.currentTimeMillis());
         x = nativeMouseEvent.getX();
         y = nativeMouseEvent.getY();
     }
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
+		timeLog.add(System.currentTimeMillis());
         x = nativeMouseEvent.getX();
         y = nativeMouseEvent.getY();
     }
@@ -144,5 +146,22 @@ public class MouseEventsManager implements NativeMouseInputListener {
 	 */
 	public String getLastReleased() {
 		return releasedButtonsLog.getLast();
+	}
+	/**
+	 * Return delay between last two key events
+	 * @return
+	 */
+	public int getLastDelay() {
+		if(timeLog.size()>1) {
+			return (int) (timeLog.getFromEnd(0) - timeLog.getFromEnd(1));
+		}else {
+			return 0;
+		}
+	}
+	/**
+	 * Resets the time log fo input events
+	 */
+	public void resetTimeLog() {
+		timeLog.clear();
 	}
 }

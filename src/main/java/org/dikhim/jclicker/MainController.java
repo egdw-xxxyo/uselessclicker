@@ -43,21 +43,25 @@ public class MainController {
 		listOfToggles.add(btnInsertMouseName);
 		listOfToggles.add(btnInsertMouseCode);
 		listOfToggles.add(btnInsertMouseCodeWithDelay);
-		
-		codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if(!enableCodeType) event.consume();
-			}
-		});
-		codeTextArea.addEventFilter(KeyEvent.KEY_TYPED, new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent event) {
-				if(!enableCodeType) event.consume();
-			}
-		});
+
+		codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
+				new EventHandler<KeyEvent>() {
+					@Override
+					public void handle(KeyEvent event) {
+						if (!enableCodeType)
+							event.consume();
+					}
+				});
+		codeTextArea.addEventFilter(KeyEvent.KEY_TYPED,
+				new EventHandler<KeyEvent>() {
+					@Override
+					public void handle(KeyEvent event) {
+						if (!enableCodeType)
+							event.consume();
+					}
+				});
 	}
-	
+
 	@FXML
 	private Button btnRunScript;
 	@FXML
@@ -68,19 +72,15 @@ public class MainController {
 	private Button btnOpenFile;
 	@FXML
 	private Button btnSaveFile;
-	
-	
-	
+
 	@FXML
 	private TextArea codeTextArea;
 	private StringProperty codeTextProperty = new SimpleStringProperty("");
-	private boolean enableCodeType= true;
+	private boolean enableCodeType = true;
 
 	@FXML
 	private TextArea outTxt;
 	private StringProperty outTextProperty = OutStream.getProperty();
-
-	
 
 	@FXML
 	public void stopScript() {
@@ -208,8 +208,6 @@ public class MainController {
 				script.getScriptFile().getParentFile().getAbsolutePath());
 	}
 
-
-
 	//////
 	@FXML
 	private ToggleButton btnInsertKeyName;
@@ -232,6 +230,7 @@ public class MainController {
 	private List<ToggleButton> listOfToggles = new ArrayList<>();
 	/**
 	 * Deselect all toggle except the parameter
+	 * 
 	 * @param selectedToggle
 	 */
 	private void select(ToggleButton selectedToggle) {
@@ -249,7 +248,7 @@ public class MainController {
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
+			enableCodeType = false;
 			manager.addPressListener(new ShortcutIncludesHandler(
 					"insert.keyboard.name", "", () -> {
 						int caretPosition = codeTextArea.getCaretPosition();
@@ -260,7 +259,7 @@ public class MainController {
 		} else {
 			// if toggle has been deselected
 			manager.removePressListenersByPrefix("insert.keyboard.name");
-			enableCodeType=true;
+			enableCodeType = true;
 		}
 	}
 
@@ -271,7 +270,7 @@ public class MainController {
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
+			enableCodeType = false;
 			manager.addPressListener(new ShortcutIncludesHandler(
 					"insert.keyboard.code.press", "", () -> {
 						int caretPosition = codeTextArea.getCaretPosition();
@@ -291,7 +290,7 @@ public class MainController {
 			// if toggle has been deselected
 			manager.removePressListenersByPrefix("insert.keyboard.code");
 			manager.removeReleaseListenersByPrefix("insert.keyboard.code");
-			enableCodeType=true;
+			enableCodeType = true;
 		}
 	}
 
@@ -302,17 +301,20 @@ public class MainController {
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
+			enableCodeType = false;
 			manager.resetTimeLog();
 			manager.addPressListener(new ShortcutIncludesHandler(
 					"insert.keyboard.code.press", "", () -> {
 						int caretPosition = codeTextArea.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
 						int delay = manager.getLastDelay();
-						if(delay != 0) {
-							sb.append("system.sleep(").append(delay).append(");\n");
+						if (delay != 0) {
+							sb.append("system.sleep(").append(delay)
+									.append(");\n");
 						}
-						sb.append("key.press('").append(manager.getLastPressed()).append("');\n");
+						sb.append("key.press('")
+								.append(manager.getLastPressed())
+								.append("');\n");
 						codeTextArea.insertText(caretPosition, sb.toString());
 
 					}));
@@ -321,10 +323,13 @@ public class MainController {
 						int caretPosition = codeTextArea.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
 						int delay = manager.getLastDelay();
-						if(delay != 0) {
-							sb.append("system.sleep(").append(delay).append(");\n");
+						if (delay != 0) {
+							sb.append("system.sleep(").append(delay)
+									.append(");\n");
 						}
-						sb.append("key.release('").append(manager.getLastReleased()).append("');\n");
+						sb.append("key.release('")
+								.append(manager.getLastReleased())
+								.append("');\n");
 						codeTextArea.insertText(caretPosition, sb.toString());
 
 					}));
@@ -332,7 +337,7 @@ public class MainController {
 			// if toggle has been deselected
 			manager.removePressListenersByPrefix("insert.keyboard.code");
 			manager.removeReleaseListenersByPrefix("insert.keyboard.code");
-			enableCodeType=true;
+			enableCodeType = true;
 		}
 	}
 
@@ -343,63 +348,116 @@ public class MainController {
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
-			manager.addPressListener(new MouseHandler("insert.mouse.press", "", ()-> {
-				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
-					return;
-				int caretPosition = codeTextArea.getCaretPosition();
-				codeTextArea.insertText(caretPosition, 
-						"mouse.pressAt('"+
-						manager.getLastPressed() + "',"+
-						manager.getX() + "," +
-						manager.getY() + ");\n");
+			enableCodeType = false;
+			manager.addPressListener(
+					new MouseHandler("insert.mouse.press", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						codeTextArea.insertText(caretPosition,
+								"mouse.pressAt('" + manager.getLastPressed()
+										+ "'," + manager.getX() + ","
+										+ manager.getY() + ");\n");
 
-			}));
-			manager.addReleaseListener(new MouseHandler("insert.mouse.release", "", ()-> {
-				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
-					return;
-				int caretPosition = codeTextArea.getCaretPosition();
-				codeTextArea.insertText(caretPosition, 
-						"mouse.releaseAt('"+
-						manager.getLastReleased() + "',"+
-						manager.getX() + "," +
-						manager.getY() + ");\n");
+					}));
+			manager.addReleaseListener(
+					new MouseHandler("insert.mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						codeTextArea.insertText(caretPosition,
+								"mouse.releaseAt('" + manager.getLastReleased()
+										+ "'," + manager.getX() + ","
+										+ manager.getY() + ");\n");
 
-			}));
+					}));
 		} else {
 			// if toggle has been deselected
 			manager.removePressListenersByPrefix("insert.mouse");
 			manager.removeReleaseListenersByPrefix("insert.mouse");
-			enableCodeType=true;
+			enableCodeType = true;
 		}
 	}
 
 	@FXML
 	void insertMouseCodeWithDelay(ActionEvent event) {
-		OutStream.println("This button doesn't work yet");
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
+			enableCodeType = false;
+			manager.addPressListener(
+					new MouseHandler("insert.mouse.press", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						int delay = manager.getLastDelay();
+						if (delay != 0) {
+							sb.append("system.sleep(").append(delay)
+									.append(");\n");
+						}
+						sb.append("mouse.pressAt('")
+								.append(manager.getLastPressed()).append("',")
+								.append(manager.getX()).append(",")
+								.append(manager.getY()).append(");\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+
+					}));
+			manager.addReleaseListener(
+					new MouseHandler("insert.mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						int delay = manager.getLastDelay();
+						if (delay != 0) {
+							sb.append("system.sleep(").append(delay)
+									.append(");\n");
+						}
+						sb.append("mouse.releaseAt('")
+								.append(manager.getLastReleased()).append("',")
+								.append(manager.getX()).append(",")
+								.append(manager.getY()).append(");\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+					}));
 		} else {
 			// if toggle has been deselected
-			enableCodeType=true;
+			manager.removePressListenersByPrefix("insert.mouse");
+			manager.removeReleaseListenersByPrefix("insert.mouse");
+			enableCodeType = true;
 		}
 	}
 
 	@FXML
 	void insertMouseName(ActionEvent event) {
-		OutStream.println("This button doesn't work yet");
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
 			select(toggle);
-			enableCodeType=false;
+			enableCodeType = false;
+			manager.addPressListener(
+					new MouseHandler("insert.mouse.press", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						sb.append("").append(manager.getLastPressed())
+								.append(" ");
+						codeTextArea.insertText(caretPosition, sb.toString());
+					}));
 		} else {
 			// if toggle has been deselected
-			enableCodeType=true;
+			manager.removePressListenersByPrefix("insert.mouse");
+			enableCodeType = true;
 		}
 	}
-	
+
 }
