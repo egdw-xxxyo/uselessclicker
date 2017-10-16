@@ -396,7 +396,7 @@ public class MainController {
 							return;
 						int caretPosition = codeTextArea.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
-						int delay = manager.getLastDelay();
+						int delay = manager.getLastKeyDelay();
 						if (delay != 0) {
 							sb.append("system.sleep(").append(delay)
 									.append(");\n");
@@ -415,7 +415,7 @@ public class MainController {
 							return;
 						int caretPosition = codeTextArea.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
-						int delay = manager.getLastDelay();
+						int delay = manager.getLastKeyDelay();
 						if (delay != 0) {
 							sb.append("system.sleep(").append(delay)
 									.append(");\n");
