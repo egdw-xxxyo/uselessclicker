@@ -237,6 +237,82 @@
                                     </ScrollPane>
                                  </content>
                             </TitledPane>
+                              <TitledPane animated="false" text="Mouse movement">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePath">
+                                                   <graphic>
+                                                      <BorderPane>
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAbsolute('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label alignment="CENTER" text="Absolute path" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePath">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveRelative('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Relative Path" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAbsolute_D('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Absolute path with delays" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="keyboard-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePathWithDelays">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveRelative_D('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Relative path with delays" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
                           </panes>
                         </Accordion>
                      </children>

@@ -13,9 +13,13 @@ import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.events.KeyEventsManager;
 import org.dikhim.jclicker.events.MouseEventsManager;
 import org.dikhim.jclicker.events.MouseHandler;
+import org.dikhim.jclicker.events.ShortcutEqualsHandler;
 import org.dikhim.jclicker.events.ShortcutIncludesHandler;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.OutStream;
+
+import com.sun.javafx.scene.KeyboardShortcutsHandler;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -36,13 +40,7 @@ public class MainController {
 
 		codeTextArea.textProperty().bindBidirectional(codeTextProperty);
 		outTxt.textProperty().bindBidirectional(outTextProperty);
-
-		listOfToggles.add(btnInsertKeyName);
-		listOfToggles.add(btnInsertKeyCode);
-		listOfToggles.add(btnInsertKeyCodeWithDelay);
-		listOfToggles.add(btnInsertMouseName);
-		listOfToggles.add(btnInsertMouseCode);
-		listOfToggles.add(btnInsertMouseCodeWithDelay);
+		initToggles();
 
 		codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
 				new EventHandler<KeyEvent>() {
@@ -227,7 +225,35 @@ public class MainController {
 	@FXML
 	private ToggleButton btnInsertMouseCodeWithDelay;
 
+	@FXML
+	private ToggleButton btnInsertAbsolutePath;
+
+	@FXML
+	private ToggleButton btnInsertRelativePath;
+
+	@FXML
+	private ToggleButton btnInsertAbsolutePathWithDelays;
+
+	@FXML
+	private ToggleButton btnInsertRelativePathWithDelays;
+
 	private List<ToggleButton> listOfToggles = new ArrayList<>();
+	/**
+	 * Adds all toggles to listOfToggles
+	 */
+	private void initToggles() {
+		listOfToggles.add(btnInsertKeyName);
+		listOfToggles.add(btnInsertKeyCode);
+		listOfToggles.add(btnInsertKeyCodeWithDelay);
+		listOfToggles.add(btnInsertMouseName);
+		listOfToggles.add(btnInsertMouseCode);
+		listOfToggles.add(btnInsertMouseCodeWithDelay);
+		listOfToggles.add(btnInsertAbsolutePath);
+		listOfToggles.add(btnInsertRelativePath);
+		listOfToggles.add(btnInsertAbsolutePathWithDelays);
+		listOfToggles.add(btnInsertRelativePathWithDelays);
+
+	}
 	/**
 	 * Deselect all toggle except the parameter
 	 * 
@@ -449,13 +475,99 @@ public class MainController {
 							return;
 						int caretPosition = codeTextArea.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
-						sb.append("").append(manager.getLastPressed())
-								.append(" ");
+						sb.append(manager.getLastPressed()).append(" ");
 						codeTextArea.insertText(caretPosition, sb.toString());
 					}));
 		} else {
 			// if toggle has been deselected
 			manager.removePressListenersByPrefix("insert.mouse");
+			enableCodeType = true;
+		}
+	}
+	private MouseMoveUtil movementPath;
+	@FXML
+	void insertAbsolutePath(ActionEvent event) {
+		System.out.println("Does not work yet");
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+			// on press key start record path
+			KeyEventsManager.getInstance().addPressListener(
+					new ShortcutEqualsHandler("mouse.move.key.press", "CONTROL",
+							() -> {
+								movementPath = new MouseMoveUtil();
+							}));
+			// on release key stop record, insert code and clear path;
+			KeyEventsManager.getInstance().addReleaseListener(
+					new ShortcutEqualsHandler("mouse.move.key.release",
+							"CONTROL", () -> {
+								int caretPosition = codeTextArea
+										.getCaretPosition();
+								codeTextArea.insertText(caretPosition,
+										movementPath
+												.getMoveCodeAbsolutePath(120));
+								movementPath = null;
+							}));
+
+			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
+				if(movementPath!=null) {
+					movementPath.add(manager.getX(), manager.getY());
+				}
+			}));
+		} else {
+			// if toggle has been deselected
+			KeyEventsManager.getInstance()
+					.removePressListenersByPrefix("mouse.move");
+			KeyEventsManager.getInstance()
+					.removeReleaseListenersByPrefix("mouse.move");
+			manager.removeMoveListenersByPrefix("mouse.move");
+			enableCodeType = true;
+		}
+	}
+	@FXML
+	void insertRelativePath(ActionEvent event) {
+		System.out.println("Does not work yet");
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
+			enableCodeType = true;
+		}
+	}
+
+	@FXML
+	void insertAbsolutePathWithDelays(ActionEvent event) {
+		System.out.println("Does not work yet");
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
+			enableCodeType = true;
+		}
+	}
+
+	@FXML
+	void insertRelativePathWithDelays(ActionEvent event) {
+		System.out.println("Does not work yet");
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
 			enableCodeType = true;
 		}
 	}

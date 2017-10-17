@@ -57,7 +57,7 @@ public class MouseObject {
 		robot.delay(moveDelay);
 	}
 	// movement by path
-	public void moveByAbsolutePath(String path) {
+	public void moveAbsolute(String path) {
 		MouseMoveUtil mu = new MouseMoveUtil(path);
 		int x;
 		int y;
@@ -69,7 +69,7 @@ public class MouseObject {
 		}
 	}
 
-	public void moveByAbsolutePathWithDelays(String path) {
+	public void moveAbsolute_D(String path) {
 		MouseMoveUtil mu = new MouseMoveUtil(path);
 		int x;
 		int y;
@@ -87,7 +87,7 @@ public class MouseObject {
 		}
 	}
 
-	public void moveByRelativePath(String path) {
+	public void moveRelative(String path) {
 		int oldX = getX();
 		int oldY = getY();
 		MouseMoveUtil mu = new MouseMoveUtil(path);
@@ -103,7 +103,7 @@ public class MouseObject {
 		}
 	}
 
-	public void moveByRelativePathWithDelays(String path) {
+	public void moveRelative_D(String path) {
 		int oldX = getX();
 		int oldY = getY();
 		MouseMoveUtil mu = new MouseMoveUtil(path);

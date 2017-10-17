@@ -38,7 +38,7 @@ public class MouseMoveUtil {
 	}
 	public String getMoveCodeAbsolutePath(int lineSize) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append("mouse.moveAbsolutePath('");
+		sb.append("mouse.moveAbsolute('");
 		appendTextWithLineSize(sb, lineSize);
 		return sb.toString();
 	}
@@ -59,7 +59,7 @@ public class MouseMoveUtil {
 
 	public String getMoveCodeAbsolutePathWithDelays(int lineSize) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append("mouse.moveAbsolutePathWithDelays('");
+		sb.append("mouse.moveAbsolute_D('");
 		appendTextWithLineSize(sb, lineSize);
 		sb.append("');");
 		return sb.toString();
@@ -67,7 +67,7 @@ public class MouseMoveUtil {
 
 	public String getMoveCodeRelativePath(int lineSize) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append("mouse.moveRelativePath('");
+		sb.append("mouse.moveRelative('");
 		appendTextWithLineSize(sb, lineSize);
 		sb.append("');");
 		return sb.toString();
@@ -75,7 +75,7 @@ public class MouseMoveUtil {
 
 	public String getMoveCodeRelativePathWithDelays(int lineSize) {
 		StringBuilder sb = new StringBuilder("");
-		sb.append("mouse.moveRelativePathWithDelays('");
+		sb.append("mouse.moveRelative_D('");
 		appendTextWithLineSize(sb, lineSize);
 		sb.append("');");
 		return sb.toString();
