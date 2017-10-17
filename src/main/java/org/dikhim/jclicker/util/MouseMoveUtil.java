@@ -1,9 +1,16 @@
 package org.dikhim.jclicker.util;
 
 public class MouseMoveUtil {
-	private StringBuilder builder = new StringBuilder("");
+	private StringBuilder builder;
 	private final int SHIFT = 13350;
-	public void load(String path) {
+	public MouseMoveUtil() {
+		this.builder = new StringBuilder();
+	}
+	public MouseMoveUtil(String path) {
+		this.builder = new StringBuilder(path);
+	}
+	
+	public void set(String path) {
 		builder = new StringBuilder(path);
 	}
 	public void add(int x, int y) {
@@ -21,6 +28,10 @@ public class MouseMoveUtil {
 		int out = ((int)c)-SHIFT;
 		builder.delete(0, 1);
 		return out;
+	}
+	
+	public boolean hasNext() {
+		return builder.length()!=0;
 	}
 	public String getString() {
 		return builder.toString();

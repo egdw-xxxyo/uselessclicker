@@ -37,11 +37,19 @@ public class MouseEventsManager implements NativeMouseInputListener {
     }
 
     public int getX() {
-    	return moveLog.getLast().x;
+    	if(!moveLog.isEmpty()) {
+    		return moveLog.getLast().x;
+    	}else {
+    		return 0;
+    	}
     }
     
     public int getY() {
-    	return moveLog.getLast().y;
+    	if(!moveLog.isEmpty()) {
+    		return moveLog.getLast().y;
+    	}else {
+    		return 0;
+    	}
     }
 
     @Override

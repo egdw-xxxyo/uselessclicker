@@ -1,10 +1,11 @@
 package org.dikhim.jclicker.jsengine;
 
 import java.awt.Robot;
-import java.awt.event.InputEvent;
 
 import org.dikhim.jclicker.events.MouseCodes;
 import org.dikhim.jclicker.events.MouseEventsManager;
+import org.dikhim.jclicker.util.MouseMoveUtil;
+import org.dikhim.jclicker.util.OutStream;
 
 /**
  * Created by dikobraz on 30.03.17.
@@ -16,29 +17,18 @@ public class MouseObject {
 	private final int RELEASE_DELAY = 10;
 	private final int CLICK_DELAY = 10;
 	private final int MOVE_DELAY = 10;
-	
+
 	private int pressDelay = PRESS_DELAY;
 	private int releaseDelay = RELEASE_DELAY;
 	private int clickDelay = CLICK_DELAY;
 	private int moveDelay = MOVE_DELAY;
-	
+
 	private Robot robot;
-	private JSEngine engine;
 
-	public MouseObject(JSEngine engine) {
-		this.setEngine(engine);
-		this.robot = engine.getRobot();
+	public MouseObject(Robot robot) {
+		this.robot = robot;
 	}
 
-	public JSEngine getEngine() {
-		return engine;
-	}
-
-	public void setEngine(JSEngine engine) {
-		this.engine = engine;
-	}
-
-	
 	public int getX() {
 		return MouseEventsManager.getInstance().getX();
 	}
@@ -65,6 +55,70 @@ public class MouseObject {
 	public void setY(int y) {
 		robot.mouseMove(getX(), y);
 		robot.delay(moveDelay);
+	}
+	// movement by path
+	public void moveByAbsolutePath(String path) {
+		MouseMoveUtil mu = new MouseMoveUtil(path);
+		int x;
+		int y;
+		while (mu.hasNext()) {
+			x = mu.getNext();
+			y = mu.getNext();
+			robot.mouseMove(x, y);
+			robot.delay(MOVE_DELAY);
+		}
+	}
+
+	public void moveByAbsolutePathWithDelays(String path) {
+		MouseMoveUtil mu = new MouseMoveUtil(path);
+		int x;
+		int y;
+		int delay;
+		while (mu.hasNext()) {
+			x = mu.getNext();
+			y = mu.getNext();
+			delay = mu.getNext();
+			if (x < 0 || y < 0 || delay < 0) {
+				OutStream.print("Incorrect path");
+				return;
+			}
+			robot.mouseMove(x, y);
+			robot.delay(delay);
+		}
+	}
+
+	public void moveByRelativePath(String path) {
+		int oldX = getX();
+		int oldY = getY();
+		MouseMoveUtil mu = new MouseMoveUtil(path);
+		int x;
+		int y;
+		while (mu.hasNext()) {
+			x = mu.getNext();
+			y = mu.getNext();
+			oldX+=x;
+			oldY+=y;
+			robot.mouseMove(oldX, oldY);
+			robot.delay(MOVE_DELAY);
+		}
+	}
+
+	public void moveByRelativePathWithDelays(String path) {
+		int oldX = getX();
+		int oldY = getY();
+		MouseMoveUtil mu = new MouseMoveUtil(path);
+		int x;
+		int y;
+		int delay;
+		while (mu.hasNext()) {
+			x = mu.getNext();
+			y = mu.getNext();
+			delay = mu.getNext();
+			oldX+=x;
+			oldY+=y;
+			robot.mouseMove(oldX, oldY);
+			robot.delay(delay);
+		}
 	}
 	// click
 	public void click(String key) {
@@ -107,7 +161,7 @@ public class MouseObject {
 		robot.mouseRelease(MouseCodes.getEventCodeByName(key));
 		robot.delay(releaseDelay);
 	}
-	//Getters\setters
+	// Getters\setters
 
 	/**
 	 * @return the pressDelay
@@ -117,7 +171,8 @@ public class MouseObject {
 	}
 
 	/**
-	 * @param pressDelay the pressDelay to set
+	 * @param pressDelay
+	 *            the pressDelay to set
 	 */
 	public void setPressDelay(int pressDelay) {
 		this.pressDelay = pressDelay;
@@ -131,7 +186,8 @@ public class MouseObject {
 	}
 
 	/**
-	 * @param releaseDelay the releaseDelay to set
+	 * @param releaseDelay
+	 *            the releaseDelay to set
 	 */
 	public void setReleaseDelay(int releaseDelay) {
 		this.releaseDelay = releaseDelay;
@@ -145,7 +201,8 @@ public class MouseObject {
 	}
 
 	/**
-	 * @param clickDelay the clickDelay to set
+	 * @param clickDelay
+	 *            the clickDelay to set
 	 */
 	public void setClickDelay(int clickDelay) {
 		this.clickDelay = clickDelay;
@@ -159,7 +216,8 @@ public class MouseObject {
 	}
 
 	/**
-	 * @param moveDelay the moveDelay to set
+	 * @param moveDelay
+	 *            the moveDelay to set
 	 */
 	public void setMoveDelay(int moveDelay) {
 		this.moveDelay = moveDelay;
