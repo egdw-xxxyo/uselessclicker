@@ -554,7 +554,6 @@ public class MainController {
 
 			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
 				if(movementPath!=null) {
-					System.out.println("Last:"+manager.getX()+" last-1:"+manager.getXFromEnd(1));
 					movementPath.add(manager.getX()-manager.getXFromEnd(1), manager.getY()-manager.getYFromEnd(1));
 				}
 			}));

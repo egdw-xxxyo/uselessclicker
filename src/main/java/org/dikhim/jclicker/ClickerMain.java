@@ -35,25 +35,7 @@ public class ClickerMain extends Application {
 	public static MainController controller;
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		stage = primaryStage;
-		try {
-			robot = new Robot();
-		} catch (AWTException e1) {
-			e1.printStackTrace();
-			OutStream.print(e1.getMessage());
-		}
-		jse = new JSEngine(robot);
-		actions = new Actions();
-
-		
-		FXMLLoader fxmlLoader = new FXMLLoader();
-		
-		Parent root = fxmlLoader.load(getClass().getResource("../../../MainScene.fxml").openStream());
-		controller = (MainController)fxmlLoader.getController();
-		primaryStage.setTitle("JClicker");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("../../../images/cursor.png")));
-		primaryStage.setScene(new Scene(root, 600, 400));
-		primaryStage.show();
+		System.out.println("Start");
 		Logger logger = Logger
 				.getLogger(GlobalScreen.class.getPackage().getName());
 		logger.setLevel(Level.OFF);
@@ -62,6 +44,32 @@ public class ClickerMain extends Application {
 		} catch (NativeHookException e) {
 			System.exit(-1);
 		}
+		System.out.println("Logger off");
+		stage = primaryStage;
+		try {
+			robot = new Robot();
+		} catch (AWTException e1) {
+			e1.printStackTrace();
+			OutStream.print(e1.getMessage());
+		}
+		System.out.println("Robot created");
+		jse = new JSEngine(robot);
+		System.out.println("JS created");
+		actions = new Actions();
+
+		
+		FXMLLoader fxmlLoader = new FXMLLoader();
+		Parent root = fxmlLoader.load(getClass().getResource("/MainScene.fxml").openStream());
+
+		System.out.println("FXML loded");
+		controller = (MainController)fxmlLoader.getController();
+		System.out.println("Controller get");
+		primaryStage.setTitle("JClicker");
+		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
+		primaryStage.setScene(new Scene(root, 600, 400));
+		primaryStage.show();
+		System.out.println("Show");
+
 		MouseEventsManager mouseListener = MouseEventsManager.getInstance();
 		GlobalScreen.addNativeMouseListener(mouseListener);
 		GlobalScreen.addNativeMouseMotionListener(mouseListener);
