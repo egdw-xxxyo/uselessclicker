@@ -52,7 +52,6 @@ public class MouseHandler {
 		this.handler = handler;
 	}
 	public void fire(Set<String> pressedButtons) {
-		if(buttons.isEmpty())handler.run();
 		if(buttons.equals(pressedButtons))handler.run();
 		
 	}

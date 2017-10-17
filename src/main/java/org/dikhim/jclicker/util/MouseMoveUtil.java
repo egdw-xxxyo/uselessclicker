@@ -61,7 +61,6 @@ public class MouseMoveUtil {
 		StringBuilder sb = new StringBuilder("");
 		sb.append("mouse.moveAbsolute_D('");
 		appendTextWithLineSize(sb, lineSize);
-		sb.append("');");
 		return sb.toString();
 	}
 
@@ -69,7 +68,6 @@ public class MouseMoveUtil {
 		StringBuilder sb = new StringBuilder("");
 		sb.append("mouse.moveRelative('");
 		appendTextWithLineSize(sb, lineSize);
-		sb.append("');");
 		return sb.toString();
 	}
 
@@ -77,7 +75,6 @@ public class MouseMoveUtil {
 		StringBuilder sb = new StringBuilder("");
 		sb.append("mouse.moveRelative_D('");
 		appendTextWithLineSize(sb, lineSize);
-		sb.append("');");
 		return sb.toString();
 	}
 
