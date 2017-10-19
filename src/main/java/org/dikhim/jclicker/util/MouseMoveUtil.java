@@ -46,7 +46,7 @@ public class MouseMoveUtil {
 	private void appendTextWithLineSize(StringBuilder sb, int lineSize) {
 		char[] c = builder.toString().toCharArray();
 		for (char ch : c) {
-			if ((sb.length() + 2) % lineSize != 0) {
+			if ((sb.length() + 3) % lineSize != 0) {
 				sb.append(ch);
 			} else {
 				sb.append("'+\n");
@@ -54,7 +54,7 @@ public class MouseMoveUtil {
 				sb.append(ch);
 			}
 		}
-		sb.append("');");
+		sb.append("');\n");
 	}
 
 	public String getMoveCodeAbsolutePathWithDelays(int lineSize) {

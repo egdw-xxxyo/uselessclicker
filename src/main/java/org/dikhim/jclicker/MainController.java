@@ -631,6 +631,8 @@ public class MainController {
 			// if toggle has been deselected
 			KeyEventsManager.getInstance()
 					.removePressListenersByPrefix("mouse.move");
+			KeyEventsManager.getInstance()
+			.removeReleaseListenersByPrefix("mouse.move");
 			manager.removePressListenersByPrefix("insert.mouse");
 			manager.removeReleaseListenersByPrefix("insert.mouse");
 			enableCodeType = true;
@@ -772,7 +774,7 @@ public class MainController {
 										.getCaretPosition();
 								areaCode.insertText(caretPosition,
 										movementPath
-												.getMoveCodeAbsolutePath(120));
+												.getMoveCodeAbsolutePath(80));
 								movementPath = null;
 							}));
 
@@ -813,7 +815,7 @@ public class MainController {
 										.getCaretPosition();
 								areaCode.insertText(caretPosition,
 										movementPath
-												.getMoveCodeRelativePath(120));
+												.getMoveCodeRelativePath(80));
 								movementPath = null;
 							}));
 
@@ -858,7 +860,7 @@ public class MainController {
 								areaCode.insertText(caretPosition,
 										movementPath
 												.getMoveCodeAbsolutePathWithDelays(
-														120));
+														80));
 								movementPath = null;
 							}));
 
@@ -903,7 +905,7 @@ public class MainController {
 								areaCode.insertText(caretPosition,
 										movementPath
 												.getMoveCodeRelativePathWithDelays(
-														120));
+														80));
 								movementPath = null;
 							}));
 
