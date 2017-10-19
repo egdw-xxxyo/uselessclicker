@@ -105,16 +105,17 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextArea fx:id="codeTextArea" editable="false" maxHeight="1.7976931348623157E308" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TextArea fx:id="areaCode" editable="false" maxHeight="1.7976931348623157E308" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="FreeMono Bold" size="13.0" />
                                        </font>
                                     </TextArea>
+                                    <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextArea fx:id="outTxt" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TextArea fx:id="areaOut" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="FreeMono Bold" size="13.0" />
                                        </font>
@@ -135,7 +136,7 @@
                                        <content>
                                           <VBox>
                                              <children>
-                                                <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyName">
+                                                <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane>
                                                          <center>
@@ -151,7 +152,7 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCode">
+                                                <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -167,7 +168,7 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay">
+                                                <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -189,13 +190,13 @@
                                     </ScrollPane>
                                  </content>
                             </TitledPane>
-                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'press/release'">
+                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse basics">
                                  <content>
                                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                        <content>
                                           <VBox>
                                              <children>
-                                                <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseName">
+                                                <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -211,7 +212,19 @@
                                                       <String fx:value="mouse-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCode">
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'press/release'">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -227,7 +240,7 @@
                                                       <String fx:value="mouse-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay">
+                                                <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -243,7 +256,7 @@
                                                       <String fx:value="mouse-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseRelativeCode">
+                                                <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseRelativeCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -271,7 +284,7 @@
                                        <content>
                                           <VBox>
                                              <children>
-                                                <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeClick">
+                                                <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeClick" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -299,7 +312,7 @@
                                        <content>
                                           <VBox>
                                              <children>
-                                                <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePath">
+                                                <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane>
                                                          <center>
@@ -315,7 +328,7 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePath">
+                                                <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -331,7 +344,7 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays">
+                                                <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
@@ -347,7 +360,7 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePathWithDelays">
+                                                <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
