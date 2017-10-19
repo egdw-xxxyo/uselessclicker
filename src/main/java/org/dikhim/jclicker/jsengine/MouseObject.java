@@ -43,9 +43,7 @@ public class MouseObject {
 	}
 
 	public void move(int x, int y) {
-		int oldX = getX();
-		int oldY = getY();
-		robot.mouseMove(oldX + x, oldY + y);
+		robot.mouseMove(getX() + x, getY() + y);
 		robot.delay(moveDelay);
 	}
 	public void setX(int x) {
@@ -65,7 +63,7 @@ public class MouseObject {
 			x = mu.getNext();
 			y = mu.getNext();
 			robot.mouseMove(x, y);
-			robot.delay(MOVE_DELAY);
+			robot.delay(moveDelay);
 		}
 	}
 
@@ -78,10 +76,6 @@ public class MouseObject {
 			x = mu.getNext();
 			y = mu.getNext();
 			delay = mu.getNext();
-			if (x < 0 || y < 0 || delay < 0) {
-				OutStream.print("Incorrect path");
-				return;
-			}
 			robot.mouseMove(x, y);
 			robot.delay(delay);
 		}
@@ -99,7 +93,7 @@ public class MouseObject {
 			oldX+=x;
 			oldY+=y;
 			robot.mouseMove(oldX, oldY);
-			robot.delay(MOVE_DELAY);
+			robot.delay(moveDelay);
 		}
 	}
 
@@ -138,6 +132,16 @@ public class MouseObject {
 		robot.mouseRelease(code);
 		robot.delay(clickDelay);
 	}
+	
+	public void moveAndClick(String key, int x, int y) {
+		int code = MouseCodes.getEventCodeByName(key);
+		robot.mouseMove(getX()+x, getY()+y);
+		robot.delay(moveDelay);
+		robot.mousePress(code);
+		robot.delay(clickDelay);
+		robot.mouseRelease(code);
+		robot.delay(clickDelay);
+	}
 
 	// press
 	public void press(String key) {
@@ -146,6 +150,13 @@ public class MouseObject {
 	}
 	public void pressAt(String key, int x, int y) {
 		robot.mouseMove(x, y);
+		robot.delay(moveDelay);
+		robot.mousePress(MouseCodes.getEventCodeByName(key));
+		robot.delay(pressDelay);
+	}
+	public void moveAndPress(String key, int x, int y) {
+		robot.mouseMove(getX()+x, getY()+y);
+		robot.delay(moveDelay);
 		robot.mousePress(MouseCodes.getEventCodeByName(key));
 		robot.delay(pressDelay);
 	}
@@ -158,8 +169,15 @@ public class MouseObject {
 
 	public void releaseAt(String key, int x, int y) {
 		robot.mouseMove(x, y);
+		robot.delay(moveDelay);
 		robot.mouseRelease(MouseCodes.getEventCodeByName(key));
 		robot.delay(releaseDelay);
+	}
+	public void moveAndRelease(String key, int x, int y) {
+		robot.mouseMove(getX()+x, getY()+y);
+		robot.delay(moveDelay);
+		robot.mouseRelease(MouseCodes.getEventCodeByName(key));
+		robot.delay(pressDelay);
 	}
 	// Getters\setters
 

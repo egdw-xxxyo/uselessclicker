@@ -23,10 +23,14 @@ public class MouseEventsManager implements NativeMouseInputListener {
 			10);
 	private static LimitedSizeQueue<String> releasedButtonsLog = new LimitedSizeQueue<>(
 			10);
-	private static LimitedSizeQueue<Point> moveLog = new LimitedSizeQueue<>(
+	private static LimitedSizeQueue<Point> movedLog = new LimitedSizeQueue<>(
 			10);
 	private static LimitedSizeQueue<Long> keysTimeLog = new LimitedSizeQueue<>(2);
-	private static LimitedSizeQueue<Long> moveTimeLog = new LimitedSizeQueue<>(2);
+	private static LimitedSizeQueue<Long> movedTimeLog = new LimitedSizeQueue<>(2);
+	
+	//new queues
+	private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(2);
+	private static LimitedSizeQueue<MouseMoveEvent> moveLog = new LimitedSizeQueue<>(2);
     private MouseEventsManager() {
     }
 
@@ -37,30 +41,30 @@ public class MouseEventsManager implements NativeMouseInputListener {
     }
 
     public int getX() {
-    	if(!moveLog.isEmpty()) {
-    		return moveLog.getLast().x;
+    	if(!movedLog.isEmpty()) {
+    		return movedLog.getLast().x;
     	}else {
     		return 0;
     	}
     }
     public int getXFromEnd(int index) {
-    	if(!moveLog.isEmpty()) {
-    		return moveLog.getFromEnd(index).x;
+    	if(!movedLog.isEmpty()) {
+    		return movedLog.getFromEnd(index).x;
     	}else {
     		return 0;
     	}
     }
     
     public int getY() {
-    	if(!moveLog.isEmpty()) {
-    		return moveLog.getLast().y;
+    	if(!movedLog.isEmpty()) {
+    		return movedLog.getLast().y;
     	}else {
     		return 0;
     	}
     }
     public int getYFromEnd(int index) {
-    	if(!moveLog.isEmpty()) {
-    		return moveLog.getFromEnd(index).y;
+    	if(!movedLog.isEmpty()) {
+    		return movedLog.getFromEnd(index).y;
     	}else {
     		return 0;
     	}
@@ -68,15 +72,29 @@ public class MouseEventsManager implements NativeMouseInputListener {
 
     @Override
     public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
+    	String button = MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton());
+    	int x = nativeMouseEvent.getX();
+    	int y = nativeMouseEvent.getY();
+    	long time = System.currentTimeMillis();
+        buttonLog.add(new MouseButtonEvent(button,"PRESS", x, y, time));
+    	
 		keysTimeLog.add(System.currentTimeMillis());
         pressedButtons.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         pressedButtonsLog.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         for (MouseHandler h : pressHandlers)
 			h.fire(pressedButtons);
+        
+        
     }
 
     @Override
     public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
+    	String button = MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton());
+    	int x = nativeMouseEvent.getX();
+    	int y = nativeMouseEvent.getY();
+    	long time = System.currentTimeMillis();
+        buttonLog.add(new MouseButtonEvent(button,"RELEASE", x, y, time));
+    	
 		keysTimeLog.add(System.currentTimeMillis());
         releasedButtonsLog.add(MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
         for (MouseHandler h : releaseHandlers)
@@ -86,16 +104,26 @@ public class MouseEventsManager implements NativeMouseInputListener {
 
     @Override
     public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
-		moveTimeLog.add(System.currentTimeMillis());
-		moveLog.add(new Point(nativeMouseEvent.getX(),nativeMouseEvent.getY()));
+    	int x = nativeMouseEvent.getX();
+    	int y = nativeMouseEvent.getY();
+    	long time = System.currentTimeMillis();
+    	moveLog.add(new MouseMoveEvent(x, y, time));
+    	
+		movedTimeLog.add(System.currentTimeMillis());
+		movedLog.add(new Point(nativeMouseEvent.getX(),nativeMouseEvent.getY()));
         for (MouseHandler h : moveHandlers)
 			h.fire(pressedButtons);
     }
 
     @Override
     public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
-		moveTimeLog.add(System.currentTimeMillis());
-		moveLog.add(new Point(nativeMouseEvent.getX(),nativeMouseEvent.getY()));
+    	int x = nativeMouseEvent.getX();
+    	int y = nativeMouseEvent.getY();
+    	long time = System.currentTimeMillis();
+    	moveLog.add(new MouseMoveEvent(x, y, time));
+    	
+		movedTimeLog.add(System.currentTimeMillis());
+		movedLog.add(new Point(nativeMouseEvent.getX(),nativeMouseEvent.getY()));
         for (MouseHandler h : moveHandlers)
 			h.fire(pressedButtons);
     }
@@ -212,8 +240,8 @@ public class MouseEventsManager implements NativeMouseInputListener {
 	 * @return
 	 */
 	public int getLastMoveDelay() {
-		if(moveTimeLog.size()>1) {
-			return (int) (moveTimeLog.getFromEnd(0) - moveTimeLog.getFromEnd(1));
+		if(movedTimeLog.size()>1) {
+			return (int) (movedTimeLog.getFromEnd(0) - movedTimeLog.getFromEnd(1));
 		}else {
 			return 0;
 		}
@@ -230,6 +258,36 @@ public class MouseEventsManager implements NativeMouseInputListener {
 	 */
 	public void resetMoveTimeLog() {
 		keysTimeLog.clear();
+	}
+	
+	/////////////////////
+	public MouseButtonEvent getLastButtonEvent() {
+		if(buttonLog.size()>0) {
+			return buttonLog.getFromEnd(0);
+		}else return null;
+	}
+	
+	public MouseButtonEvent getPreLastButtonEvent() {
+		if(buttonLog.size()>1) {
+			return buttonLog.getFromEnd(1);
+		}else return null;
+	}
+	
+	
+	public MouseMoveEvent getLastMoveEvent() {
+		if(moveLog.size()>0) {
+			return moveLog.getFromEnd(0);
+		}else return null;
+	}
+	
+	public MouseMoveEvent getPreLastMoveEvent() {
+		if(moveLog.size()>1) {
+			return moveLog.getFromEnd(1);
+		}else return null;
+	}
+	
+	public void clearButtonEventLog() {
+		buttonLog.clear();
 	}
 	
 }

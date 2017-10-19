@@ -129,7 +129,7 @@
                      <children>
                         <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <panes>
-                            <TitledPane animated="false" text="Paste events code">
+                            <TitledPane animated="false" text="Keyboard">
                                  <content>
                                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                        <content>
@@ -183,6 +183,18 @@
                                                       <String fx:value="keyboard-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                            </TitledPane>
+                              <TitledPane prefHeight="200.0" prefWidth="200.0" text="Mouse buttons">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
                                                 <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseName">
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
@@ -231,12 +243,28 @@
                                                       <String fx:value="mouse-paste-code-button" />
                                                    </styleClass>
                                                 </ToggleButton>
+                                                <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseRelativeCode">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="Mouse relative code:" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
                                              </children>
                                           </VBox>
                                        </content>
                                     </ScrollPane>
                                  </content>
-                            </TitledPane>
+                              </TitledPane>
                               <TitledPane animated="false" text="Mouse movement">
                                  <content>
                                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">

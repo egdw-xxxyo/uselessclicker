@@ -4,6 +4,7 @@ import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.security.KeyManagementException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -11,8 +12,10 @@ import java.util.prefs.Preferences;
 
 import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.events.KeyEventsManager;
+import org.dikhim.jclicker.events.MouseButtonEvent;
 import org.dikhim.jclicker.events.MouseEventsManager;
 import org.dikhim.jclicker.events.MouseHandler;
+import org.dikhim.jclicker.events.MouseMoveEvent;
 import org.dikhim.jclicker.events.ShortcutEqualsHandler;
 import org.dikhim.jclicker.events.ShortcutIncludesHandler;
 import org.dikhim.jclicker.model.Script;
@@ -196,7 +199,6 @@ public class MainController {
 				FileUtils.writeStringToFile(script.getScriptFile(),
 						script.getScript().get(), Charset.defaultCharset());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -207,6 +209,7 @@ public class MainController {
 	}
 
 	//////
+	// Keyboard
 	@FXML
 	private ToggleButton btnInsertKeyName;
 
@@ -216,6 +219,7 @@ public class MainController {
 	@FXML
 	private ToggleButton btnInsertKeyCodeWithDelay;
 
+	// Mouse buttons
 	@FXML
 	private ToggleButton btnInsertMouseName;
 
@@ -225,6 +229,10 @@ public class MainController {
 	@FXML
 	private ToggleButton btnInsertMouseCodeWithDelay;
 
+	@FXML
+	private ToggleButton btnInsertMouseRelativeCode;
+
+	// Movement
 	@FXML
 	private ToggleButton btnInsertAbsolutePath;
 
@@ -242,12 +250,17 @@ public class MainController {
 	 * Adds all toggles to listOfToggles
 	 */
 	private void initToggles() {
+		// Keyboard
 		listOfToggles.add(btnInsertKeyName);
 		listOfToggles.add(btnInsertKeyCode);
 		listOfToggles.add(btnInsertKeyCodeWithDelay);
+
+		// mouse
 		listOfToggles.add(btnInsertMouseName);
 		listOfToggles.add(btnInsertMouseCode);
 		listOfToggles.add(btnInsertMouseCodeWithDelay);
+		listOfToggles.add(btnInsertMouseRelativeCode);
+		// Movement
 		listOfToggles.add(btnInsertAbsolutePath);
 		listOfToggles.add(btnInsertRelativePath);
 		listOfToggles.add(btnInsertAbsolutePathWithDelays);
@@ -267,6 +280,7 @@ public class MainController {
 			}
 		}
 	}
+	// Keyboard
 	@FXML
 	void insertKeyName(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
@@ -367,6 +381,7 @@ public class MainController {
 		}
 	}
 
+	// Mouse buttons
 	@FXML
 	void insertMouseCode(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
@@ -484,6 +499,80 @@ public class MainController {
 			enableCodeType = true;
 		}
 	}
+
+	// TODO
+	MouseMoveEvent lastMoveEvent;
+	@FXML
+	void insertMouseRelativeCode(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+			KeyEventsManager.getInstance().addPressListener(
+					new ShortcutEqualsHandler("mouse.move.key.press", "CONTROL",
+							() -> {
+								lastMoveEvent = manager.getLastMoveEvent();
+							}));
+
+			manager.addPressListener(
+					new MouseHandler("insert.mouse.press", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+
+						MouseButtonEvent lastButtonEvent = manager
+								.getLastButtonEvent();
+						if (lastButtonEvent == null)
+							return;
+						int dx = (int) (lastButtonEvent.getX()
+								- lastMoveEvent.getX());
+						int dy = (int) (lastButtonEvent.getY()
+								- lastMoveEvent.getY());
+						lastMoveEvent = manager.getLastMoveEvent();
+						sb.append("mouse.moveAndPress('")
+								.append(lastButtonEvent.getButton())
+								.append("',").append(dx).append(",").append(dy)
+								.append(");\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+
+					}));
+			manager.addReleaseListener(
+					new MouseHandler("insert.mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = codeTextArea.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						MouseButtonEvent lastButtonEvent = manager
+								.getLastButtonEvent();
+						if (lastButtonEvent == null)
+							return;
+						int dx = (int) (lastButtonEvent.getX()
+								- lastMoveEvent.getX());
+						int dy = (int) (lastButtonEvent.getY()
+								- lastMoveEvent.getY());
+						lastMoveEvent = manager.getLastMoveEvent();
+						sb.append("mouse.moveAndRelease('")
+								.append(lastButtonEvent.getButton())
+								.append("',").append(dx).append(",").append(dy)
+								.append(");\n");
+						codeTextArea.insertText(caretPosition, sb.toString());
+
+					}));
+		} else {
+			// if toggle has been deselected
+			KeyEventsManager.getInstance().removePressListenersByPrefix("mouse.move");
+			manager.removePressListenersByPrefix("insert.mouse");
+			manager.removeReleaseListenersByPrefix("insert.mouse");
+			enableCodeType = true;
+		}
+	}
+
+	// Movement
 	private MouseMoveUtil movementPath;
 	@FXML
 	void insertAbsolutePath(ActionEvent event) {
@@ -512,7 +601,7 @@ public class MainController {
 							}));
 
 			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
-				if(movementPath!=null) {
+				if (movementPath != null) {
 					movementPath.add(manager.getX(), manager.getY());
 				}
 			}));
@@ -553,8 +642,9 @@ public class MainController {
 							}));
 
 			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
-				if(movementPath!=null) {
-					movementPath.add(manager.getX()-manager.getXFromEnd(1), manager.getY()-manager.getYFromEnd(1));
+				if (movementPath != null) {
+					movementPath.add(manager.getX() - manager.getXFromEnd(1),
+							manager.getY() - manager.getYFromEnd(1));
 				}
 			}));
 		} else {
@@ -591,13 +681,15 @@ public class MainController {
 										.getCaretPosition();
 								codeTextArea.insertText(caretPosition,
 										movementPath
-												.getMoveCodeAbsolutePathWithDelays(120));
+												.getMoveCodeAbsolutePathWithDelays(
+														120));
 								movementPath = null;
 							}));
 
 			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
-				if(movementPath!=null) {
-					movementPath.add(manager.getX(), manager.getY(),manager.getLastMoveDelay());
+				if (movementPath != null) {
+					movementPath.add(manager.getX(), manager.getY(),
+							manager.getLastMoveDelay());
 				}
 			}));
 		} else {
@@ -634,13 +726,16 @@ public class MainController {
 										.getCaretPosition();
 								codeTextArea.insertText(caretPosition,
 										movementPath
-												.getMoveCodeRelativePathWithDelays(120));
+												.getMoveCodeRelativePathWithDelays(
+														120));
 								movementPath = null;
 							}));
 
 			manager.addMoveListener(new MouseHandler("mouse.move", "", () -> {
-				if(movementPath!=null) {
-					movementPath.add(manager.getX()-manager.getXFromEnd(1), manager.getY()-manager.getYFromEnd(1),manager.getLastMoveDelay());
+				if (movementPath != null) {
+					movementPath.add(manager.getX() - manager.getXFromEnd(1),
+							manager.getY() - manager.getYFromEnd(1),
+							manager.getLastMoveDelay());
 				}
 			}));
 		} else {
