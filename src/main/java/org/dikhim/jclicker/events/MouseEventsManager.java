@@ -131,7 +131,7 @@ public class MouseEventsManager implements NativeMouseInputListener {
     @Override
     public void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
     }
-    //
+  
     public void addPressListener(MouseHandler handler) {
     	MouseHandler existingHandler = null;
 		for (MouseHandler h : pressHandlers) {

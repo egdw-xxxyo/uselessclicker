@@ -125,7 +125,7 @@
                         </SplitPane>
                      </children>
                   </AnchorPane>
-                <AnchorPane maxWidth="230.0" minWidth="250.0">
+                <AnchorPane maxWidth="300.0" minWidth="300.0">
                      <children>
                         <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <panes>
@@ -189,7 +189,7 @@
                                     </ScrollPane>
                                  </content>
                             </TitledPane>
-                              <TitledPane prefHeight="200.0" prefWidth="200.0" text="Mouse buttons">
+                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'press/release'">
                                  <content>
                                     <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                        <content>
@@ -218,7 +218,7 @@
                                                             <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
                                                          </center>
                                                          <top>
-                                                            <Label text="Mouse code:" BorderPane.alignment="CENTER" />
+                                                            <Label text="pressAt/releaseAt" BorderPane.alignment="CENTER" />
                                                          </top>
                                                       </BorderPane>
                                                    </graphic>
@@ -234,7 +234,7 @@
                                                             <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="system.sleep(100);&#10;mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
                                                          </center>
                                                          <top>
-                                                            <Label text="Mouse code with delay:" BorderPane.alignment="CENTER" />
+                                                            <Label text="sleep+pressAt/releaseAt" BorderPane.alignment="CENTER" />
                                                          </top>
                                                       </BorderPane>
                                                    </graphic>
@@ -247,10 +247,38 @@
                                                    <graphic>
                                                       <BorderPane prefHeight="200.0" prefWidth="200.0">
                                                          <center>
+                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAndPress('BTN1',x,y);" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <top>
+                                                            <Label text="moveAndPress/Release" BorderPane.alignment="CENTER" />
+                                                         </top>
+                                                      </BorderPane>
+                                                   </graphic>
+                                                   <styleClass>
+                                                      <String fx:value="paste-code-button" />
+                                                      <String fx:value="mouse-paste-code-button" />
+                                                   </styleClass>
+                                                </ToggleButton>
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'click'">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeClick">
+                                                   <graphic>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
                                                             <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
                                                          </center>
                                                          <top>
-                                                            <Label text="Mouse relative code:" BorderPane.alignment="CENTER" />
+                                                            <Label text="pressAt/releaseAt + clickAt" BorderPane.alignment="CENTER" />
                                                          </top>
                                                       </BorderPane>
                                                    </graphic>

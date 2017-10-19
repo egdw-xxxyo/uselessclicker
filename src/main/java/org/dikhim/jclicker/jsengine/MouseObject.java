@@ -118,9 +118,9 @@ public class MouseObject {
 	public void click(String key) {
 		int code = MouseCodes.getEventCodeByName(key);
 		robot.mousePress(code);
-		robot.delay(clickDelay);
+		robot.delay(pressDelay);
 		robot.mouseRelease(code);
-		robot.delay(clickDelay);
+		robot.delay(releaseDelay);
 	}
 
 	public void clickAt(String key, int x, int y) {
@@ -128,9 +128,9 @@ public class MouseObject {
 		robot.mouseMove(x, y);
 		robot.delay(moveDelay);
 		robot.mousePress(code);
-		robot.delay(clickDelay);
+		robot.delay(pressDelay);
 		robot.mouseRelease(code);
-		robot.delay(clickDelay);
+		robot.delay(releaseDelay);
 	}
 	
 	public void moveAndClick(String key, int x, int y) {
@@ -138,9 +138,9 @@ public class MouseObject {
 		robot.mouseMove(getX()+x, getY()+y);
 		robot.delay(moveDelay);
 		robot.mousePress(code);
-		robot.delay(clickDelay);
+		robot.delay(pressDelay);
 		robot.mouseRelease(code);
-		robot.delay(clickDelay);
+		robot.delay(releaseDelay);
 	}
 
 	// press
