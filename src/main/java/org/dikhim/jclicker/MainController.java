@@ -968,21 +968,23 @@ public class MainController {
 	public void hideCodeSample(MouseEvent event) {
 		areaCodeSample.setVisible(false);
 	}
-	//
-	//
-	//
+    
+    
 	//// templates
+    
     @FXML
 	public void insertTemplate(ActionEvent event) {
 		Button b = (Button) event.getSource();
 		System.out.println(b.getText());
 	}
+    
     @FXML
 	public void showCodeTemplate(MouseEvent event) {
 		Button btn = (Button) event.getSource();
 		areaCodeSample.setText((String) btn.getUserData());
 		areaCodeSample.setVisible(true);
 	}
+    
     @FXML
 	public void hideCodeTemplate(MouseEvent event) {
 		areaCodeSample.setVisible(false);
