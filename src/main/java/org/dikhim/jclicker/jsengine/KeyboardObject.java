@@ -1,8 +1,15 @@
 package org.dikhim.jclicker.jsengine;
 
 import java.awt.Robot;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.dikhim.jclicker.events.KeyCodes;
+import org.dikhim.jclicker.events.KeyEventsManager;
+import org.dikhim.jclicker.events.MouseCodes;
+import org.dikhim.jclicker.util.OutStream;
 
 /**
  * Created by dikobraz on 31.03.17.
@@ -20,14 +27,38 @@ public class KeyboardObject {
 	public KeyboardObject(JSEngine engine) {
 		this.robot = engine.getRobot();
 	}
-
-	public void press(String keyName) {
-		robot.keyPress(KeyCodes.getEventCodeByName(keyName));
-		robot.delay(pressDelay);
+/*
+ * System.out.println(keys);
+		Set<String> keySet = new HashSet<String>(Arrays.asList(keys.split(" ")));
+		for(String key:keySet) {
+			System.out.println(key);
+			robot.mousePress(MouseCodes.getEventCodeByName(key));
+			robot.delay(pressDelay);
+		}
+ */
+	public void press(String keys) {		
+		Set<String> keySet = new LinkedHashSet<String>(Arrays.asList(keys.split(" ")));
+		for(String key:keySet) {
+			int keyCode = KeyCodes.getEventCodeByName(key);
+			if(keyCode !=-1){
+				robot.keyPress(keyCode);
+				robot.delay(pressDelay);
+			}else {
+				OutStream.println("Method call failed: key.press('"+keys+"')");
+			}
+		}
 	}
-	public void release(String keyName) {
-		robot.keyRelease(KeyCodes.getEventCodeByName(keyName));
-		robot.delay(releaseDelay);
+	public void release(String keys) {		
+		Set<String> keySet = new LinkedHashSet<String>(Arrays.asList(keys.split(" ")));
+		for(String key:keySet) {
+			int keyCode = KeyCodes.getEventCodeByName(key);
+			if(keyCode !=-1){
+				robot.keyRelease(keyCode);
+				robot.delay(releaseDelay);
+			}else {
+				OutStream.println("Method call failed: key.release('"+keys+"')");
+			}
+		}
 	}
 	public void type(String key) {
 		int code = KeyCodes.getEventCodeByName(key);
@@ -51,6 +82,11 @@ public class KeyboardObject {
 
 	public void setReleaseDelay(int releaseDelay) {
 		this.releaseDelay = releaseDelay;
+	}
+	
+	public boolean isPressed(String keys) {
+		Set<String> keySet = new HashSet<String>(Arrays.asList(keys.split(" ")));
+		return KeyEventsManager.getInstance().isPressed(keySet);
 	}
 
 }

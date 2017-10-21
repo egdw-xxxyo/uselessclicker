@@ -163,22 +163,34 @@ public class KeyCodes {
     }
 
     public static String getNameByNativeCode(int code){
-        return getByNativeCode(code).name;
+    	KeyCode k = getByNativeCode(code);
+    	if(k==null)return "";
+    	return k.name;
     }
     public static String getNameByEventCode(int code){
-        return getByEventCode(code).name;
+        KeyCode k = getByEventCode(code);
+        if(k==null)return "";
+    	return k.name;
     }
     public static int getNativeCodeByName(String name){
-        return getByName(name).nativeCode;
+        KeyCode k = getByName(name);
+        if(k==null)return -1;
+        return k.nativeCode;
     }
     public static int getNativeCodeByEventCode(int code){
-        return getByEventCode(code).nativeCode;
+        KeyCode k = getByEventCode(code);
+        if(k==null)return -1;
+        return k.nativeCode;
     }
     public static int getEventCodeByNativeCode(int code){
-        return getByNativeCode(code).eventCode;
+        KeyCode k = getByNativeCode(code);
+        if(k==null)return -1;
+        return k.eventCode;
     }
     public static int getEventCodeByName(String name){
-        return getByName(name).eventCode;
+        KeyCode k = getByName(name);
+        if(k==null)return -1;
+        return k.eventCode;
     }
 
     public static String[] getKeyNames(String shortcutString){

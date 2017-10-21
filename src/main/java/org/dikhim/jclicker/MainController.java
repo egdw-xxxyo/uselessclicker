@@ -430,6 +430,7 @@ public class MainController {
 		}
 	}
 
+   
 	// Mouse buttons
 	@FXML
 	void insertMouseCode(ActionEvent event) {
@@ -925,10 +926,7 @@ public class MainController {
 	}
 	
 	//TODO
-    @FXML
-    void insertKeyType(ActionEvent event) {
 
-    }
 
     //mouse basics
     @FXML

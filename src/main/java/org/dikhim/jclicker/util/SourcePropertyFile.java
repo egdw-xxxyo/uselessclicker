@@ -39,9 +39,6 @@ public class SourcePropertyFile {
 				properties.put(m.group(1), m.group(2));
 			}
 		}
-		for(Map.Entry<String, String> entry:properties.entrySet()) {
-			System.out.println(entry.getKey()+" : "+entry.getValue());
-		}
 	}
 	public String get(String propertyName) {
 		String out = properties.get(propertyName);

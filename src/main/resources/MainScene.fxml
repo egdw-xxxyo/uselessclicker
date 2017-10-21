@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -122,7 +123,10 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
-                        <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" styleClass="example-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" styleClass="example-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                           <effect>
+                              <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
+                           </effect></TextArea>
                      </children>
                   </AnchorPane>
                 <AnchorPane id="insertCodePane">
@@ -142,7 +146,6 @@
                                                             <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="key name" />
                                                             <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press/release" />
                                                             <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press/release + sleep" />
-                                                            <ToggleButton fx:id="btnInsertKeyType" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyType" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="type" />
                                                          </children>
                                                       </VBox>
                                                    </content>

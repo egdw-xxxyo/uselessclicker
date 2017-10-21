@@ -130,6 +130,10 @@ public class KeyEventsManager implements NativeKeyListener {
 	public boolean isPressed(String key) {
 		return pressedKeys.contains(key);
 	}
+	
+	public boolean isPressed(Set<String> keys) {
+		return pressedKeys.containsAll(keys);
+	}
 	/**
 	 * Return delay between last two key events
 	 * @return
