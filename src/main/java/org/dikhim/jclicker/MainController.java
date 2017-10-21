@@ -45,12 +45,10 @@ import javafx.stage.FileChooser;
 public class MainController {
 	@FXML
 	private void initialize() {
-		//init textareas
+		// init textareas
 		areaCode.textProperty().bindBidirectional(codeTextProperty);
 		areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 		areaOut.textProperty().bindBidirectional(outTextProperty);
-		
-		
 
 		areaCode.addEventFilter(KeyEvent.KEY_PRESSED,
 				new EventHandler<KeyEvent>() {
@@ -68,31 +66,39 @@ public class MainController {
 							event.consume();
 					}
 				});
-		//init toggles
+		// init toggles
 		initToggles();
-		SourcePropertyFile pf = new SourcePropertyFile(new File(getClass().getResource("/strings/codesamples.js").getFile()));
+		SourcePropertyFile pf = new SourcePropertyFile(new File(
+				getClass().getResource("/strings/codesamples.js").getFile()));
 		setCodeSamples(pf);
 	}
 	/**
 	 * Sets code samples as user data to each element
-	 * @param prop source property file
+	 * 
+	 * @param prop
+	 *            source property file
 	 */
 	public void setCodeSamples(SourcePropertyFile prop) {
 		btnInsertKeyName.setUserData(prop.get("insertKeyName"));
 		btnInsertKeyCode.setUserData(prop.get("insertKeyCode"));
-		btnInsertKeyCodeWithDelay.setUserData(prop.get("insertKeyCodeWithDelay"));
-		
+		btnInsertKeyCodeWithDelay
+				.setUserData(prop.get("insertKeyCodeWithDelay"));
+
 		btnInsertMouseName.setUserData(prop.get("insertMouseName"));
 		btnInsertMouseCode.setUserData(prop.get("insertMouseCode"));
-		btnInsertMouseCodeWithDelay.setUserData(prop.get("insertMouseCodeWithDelay"));
-		btnInsertMouseRelativeCode.setUserData(prop.get("insertMouseRelativeCode"));
-		
+		btnInsertMouseCodeWithDelay
+				.setUserData(prop.get("insertMouseCodeWithDelay"));
+		btnInsertMouseRelativeCode
+				.setUserData(prop.get("insertMouseRelativeCode"));
+
 		btnInsertMouseCodeClick.setUserData(prop.get("insertMouseCodeClick"));
-		
+
 		btnInsertAbsolutePath.setUserData(prop.get("insertAbsolutePath"));
 		btnInsertRelativePath.setUserData(prop.get("insertRelativePath"));
-		btnInsertAbsolutePathWithDelays.setUserData(prop.get("insertAbsolutePathWithDelays"));
-		btnInsertRelativePathWithDelays.setUserData(prop.get("insertRelativePathWithDelays"));
+		btnInsertAbsolutePathWithDelays
+				.setUserData(prop.get("insertAbsolutePathWithDelays"));
+		btnInsertRelativePathWithDelays
+				.setUserData(prop.get("insertRelativePathWithDelays"));
 	}
 
 	@FXML
@@ -121,11 +127,13 @@ public class MainController {
 
 	@FXML
 	public void stopScript() {
-		
+		ClickerMain.stopScript();
 	}
 	@FXML
 	public void runScript() {
-		ClickerMain.runCode(areaCode.getText());
+		OutStream.clear();
+		select(null);
+		ClickerMain.runScript();
 	}
 	@FXML
 	public void newFile() {
@@ -610,8 +618,7 @@ public class MainController {
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("mouse.move.key.press", "CONTROL",
 							() -> {
-								int caretPosition = areaCode
-										.getCaretPosition();
+								int caretPosition = areaCode.getCaretPosition();
 								StringBuilder sb = new StringBuilder();
 								MouseMoveEvent moveEvent = manager
 										.getLastMoveEvent();
@@ -632,7 +639,7 @@ public class MainController {
 			KeyEventsManager.getInstance()
 					.removePressListenersByPrefix("mouse.move");
 			KeyEventsManager.getInstance()
-			.removeReleaseListenersByPrefix("mouse.move");
+					.removeReleaseListenersByPrefix("mouse.move");
 			manager.removePressListenersByPrefix("insert.mouse");
 			manager.removeReleaseListenersByPrefix("insert.mouse");
 			enableCodeType = true;
@@ -770,11 +777,9 @@ public class MainController {
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("mouse.move.key.release",
 							"CONTROL", () -> {
-								int caretPosition = areaCode
-										.getCaretPosition();
-								areaCode.insertText(caretPosition,
-										movementPath
-												.getMoveCodeAbsolutePath(80));
+								int caretPosition = areaCode.getCaretPosition();
+								areaCode.insertText(caretPosition, movementPath
+										.getMoveCodeAbsolutePath(80));
 								movementPath = null;
 							}));
 
@@ -811,11 +816,9 @@ public class MainController {
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("mouse.move.key.release",
 							"CONTROL", () -> {
-								int caretPosition = areaCode
-										.getCaretPosition();
-								areaCode.insertText(caretPosition,
-										movementPath
-												.getMoveCodeRelativePath(80));
+								int caretPosition = areaCode.getCaretPosition();
+								areaCode.insertText(caretPosition, movementPath
+										.getMoveCodeRelativePath(80));
 								movementPath = null;
 							}));
 
@@ -855,12 +858,9 @@ public class MainController {
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("mouse.move.key.release",
 							"CONTROL", () -> {
-								int caretPosition = areaCode
-										.getCaretPosition();
-								areaCode.insertText(caretPosition,
-										movementPath
-												.getMoveCodeAbsolutePathWithDelays(
-														80));
+								int caretPosition = areaCode.getCaretPosition();
+								areaCode.insertText(caretPosition, movementPath
+										.getMoveCodeAbsolutePathWithDelays(80));
 								movementPath = null;
 							}));
 
@@ -900,12 +900,9 @@ public class MainController {
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("mouse.move.key.release",
 							"CONTROL", () -> {
-								int caretPosition = areaCode
-										.getCaretPosition();
-								areaCode.insertText(caretPosition,
-										movementPath
-												.getMoveCodeRelativePathWithDelays(
-														80));
+								int caretPosition = areaCode.getCaretPosition();
+								areaCode.insertText(caretPosition, movementPath
+										.getMoveCodeRelativePathWithDelays(80));
 								movementPath = null;
 							}));
 
@@ -926,14 +923,69 @@ public class MainController {
 			enableCodeType = true;
 		}
 	}
+	
+	//TODO
+    @FXML
+    void insertKeyType(ActionEvent event) {
 
+    }
+
+    //mouse basics
+    @FXML
+    void insertMousePress(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void insertMouseRelease(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void insertMouseClickAt(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void insertMouseMoveAt(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void insertMouseMove(ActionEvent event) {
+
+    }
+    
+    
+    // Show code samples
+    @FXML
 	public void showCodeSample(MouseEvent event) {
-		ToggleButton btn = (ToggleButton)event.getSource();
-		areaCodeSample.setText((String)btn.getUserData());
+		ToggleButton btn = (ToggleButton) event.getSource();
+		areaCodeSample.setText((String) btn.getUserData());
 		areaCodeSample.setVisible(true);
 	}
-
+    @FXML
 	public void hideCodeSample(MouseEvent event) {
 		areaCodeSample.setVisible(false);
 	}
+	//
+	//
+	//
+	//// templates
+    @FXML
+	public void insertTemplate(ActionEvent event) {
+		Button b = (Button) event.getSource();
+		System.out.println(b.getText());
+	}
+    @FXML
+	public void showCodeTemplate(MouseEvent event) {
+		Button btn = (Button) event.getSource();
+		areaCodeSample.setText((String) btn.getUserData());
+		areaCodeSample.setVisible(true);
+	}
+    @FXML
+	public void hideCodeTemplate(MouseEvent event) {
+		areaCodeSample.setVisible(false);
+	}
+
 }

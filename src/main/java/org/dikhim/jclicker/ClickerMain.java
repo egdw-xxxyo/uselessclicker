@@ -85,26 +85,18 @@ public class ClickerMain extends Application {
 	}
 
 	
-	
-	
-	public static void runCode() {
+	public static void runScript() {
+		if(script==null)return;
+		jse.putCode(script.getScript().get());
 		try {
 			jse.start();
 		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			OutStream.print(e.getMessage());
 		}
 	}
-	public static void runCode(String code) {
-		jse.putCode(code);
-		try {
-			jse.start();
-		} catch (ScriptException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			OutStream.print(e.getMessage());
-		}
+	public static void stopScript() {
+		jse.stop();
 	}
 	@Override
 	public void stop() throws Exception {
@@ -121,7 +113,6 @@ public class ClickerMain extends Application {
 	public static void setScript(Script script) {
 		ClickerMain.script= script;
 		ClickerMain.updateTitle();
-		
 	}
 	
 	public static Script getScript() {

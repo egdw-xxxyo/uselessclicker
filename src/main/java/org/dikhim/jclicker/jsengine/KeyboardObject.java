@@ -12,16 +12,12 @@ public class KeyboardObject {
 	// Constants
 	private final int PRESS_DELAY = 10;
 	private final int RELEASE_DELAY = 10;
-	private final int TYPE_DELAY = 10;
 
 	private int pressDelay = PRESS_DELAY;
 	private int releaseDelay = RELEASE_DELAY;
-	private int typeDelay = TYPE_DELAY;
 
 	private Robot robot;
-	private JSEngine engine;
 	public KeyboardObject(JSEngine engine) {
-		this.setEngine(engine);
 		this.robot = engine.getRobot();
 	}
 
@@ -36,14 +32,25 @@ public class KeyboardObject {
 	public void type(String key) {
 		int code = KeyCodes.getEventCodeByName(key);
 		robot.keyPress(code);
-		robot.delay(typeDelay);
+		robot.delay(pressDelay);
 		robot.keyRelease(code);
-		robot.delay(typeDelay);
+		robot.delay(releaseDelay);
 	}
-	public JSEngine getEngine() {
-		return engine;
+
+	public int getPressDelay() {
+		return pressDelay;
 	}
-	public void setEngine(JSEngine engine) {
-		this.engine = engine;
+
+	public void setPressDelay(int pressDelay) {
+		this.pressDelay = pressDelay;
 	}
+
+	public int getReleaseDelay() {
+		return releaseDelay;
+	}
+
+	public void setReleaseDelay(int releaseDelay) {
+		this.releaseDelay = releaseDelay;
+	}
+
 }

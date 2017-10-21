@@ -29,4 +29,7 @@ public class OutStream {
 	public static StringProperty getProperty() {
 		return property;
 	}
+	public static void clear() {
+		property.set("");
+	}
 }

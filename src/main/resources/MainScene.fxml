@@ -3,7 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -21,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.MainController">
+<BorderPane prefHeight="800.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.MainController">
    <top>
       <MenuBar maxHeight="0.0" minHeight="0.0" BorderPane.alignment="CENTER">
          <menus>
@@ -97,7 +96,7 @@
                   </Button>
                </children>
             </FlowPane>
-            <SplitPane dividerPositions="0.5551378446115288" prefHeight="160.0" prefWidth="200.0" GridPane.rowIndex="1">
+            <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
@@ -110,7 +109,6 @@
                                           <Font name="FreeMono Bold" size="13.0" />
                                        </font>
                                     </TextArea>
-                                    <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
@@ -124,264 +122,179 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
+                        <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" styleClass="example-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                <AnchorPane maxWidth="300.0" minWidth="300.0">
+                <AnchorPane id="insertCodePane">
                      <children>
-                        <Accordion AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Accordion focusTraversable="false" styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <panes>
-                            <TitledPane animated="false" text="Keyboard">
+                            <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Record events">
                                  <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane>
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="BTN1-BTN2-BTN3" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label alignment="CENTER" text="Key name:" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="key.press('BTN1');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Key code:" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="system.sleep(100);&#10;key.press('BTN1');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Key code with delay:" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                            </TitledPane>
-                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse basics">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="BTN1-BTN2-BTN3" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Mouse key name:" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
+                                    <Accordion focusTraversable="false" styleClass="childAccordion">
+                                      <panes>
+                                        <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Keyboard">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="key name" />
+                                                            <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press/release" />
+                                                            <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press/release + sleep" />
+                                                            <ToggleButton fx:id="btnInsertKeyType" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyType" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="type" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                        </TitledPane>
+                                          <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" styleClass="isert-code-titled-pane" text="Mouse basics">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseName" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="button name" />
+                                                            <ToggleButton fx:id="btnInsertMousePress" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePress" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press" />
+                                                            <ToggleButton fx:id="btnInsertMouseRelease" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelease" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="release" />
+                                                            <ToggleButton fx:id="btnInsertMouseClickAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClickAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="click at" />
+                                                            <ToggleButton fx:id="btnInsertMouseMoveAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMoveAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="move at" />
+                                                            <ToggleButton fx:id="btnInsertMouseMove" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMove" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="move" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" styleClass="isert-code-titled-pane" text="Mouse 'press/release'">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="pressAt/releaseAt" />
+                                                            <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="pressAt/releaseAt + sleep" />
+                                                            <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelativeCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="moveAndPress/moveAndRelease" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" styleClass="isert-code-titled-pane" text="Mouse 'click'">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeClick" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="pressAt/releaseAt + clickAt" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                          </TitledPane>
+                                          <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Mouse movement">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAbsolutePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Absolute path" />
+                                                            <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Relative path" />
+                                                            <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Absolute path with delays" />
+                                                            <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Relative path with delays" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                          </TitledPane>
+                                      </panes>
+                                    </Accordion>
                                  </content>
                               </TitledPane>
-                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'press/release'">
+                            <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Templates">
                                  <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="pressAt/releaseAt" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="system.sleep(100);&#10;mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="sleep+pressAt/releaseAt" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseRelativeCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAndPress('BTN1',x,y);" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="moveAndPress/Release" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" prefHeight="200.0" prefWidth="200.0" text="Mouse 'click'">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" mnemonicParsing="false" onAction="#insertMouseCodeClick" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.pressAt('BTN1',x,y);" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="pressAt/releaseAt + clickAt" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" text="Mouse movement">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane>
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAbsolute('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label alignment="CENTER" text="Absolute path" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveRelative('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Relative Path" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveAbsolute_D('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Absolute path with delays" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="keyboard-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                                <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" mnemonicParsing="false" onAction="#insertRelativePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample">
-                                                   <graphic>
-                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
-                                                         <center>
-                                                            <TextArea disable="true" editable="false" prefHeight="200.0" prefWidth="200.0" styleClass="code-text-area" text="mouse.moveRelative_D('ABCD'+&#10;'EFGHJIKLMNOPQRSTUVWXYZ');" BorderPane.alignment="CENTER" />
-                                                         </center>
-                                                         <top>
-                                                            <Label text="Relative path with delays" BorderPane.alignment="CENTER" />
-                                                         </top>
-                                                      </BorderPane>
-                                                   </graphic>
-                                                   <styleClass>
-                                                      <String fx:value="paste-code-button" />
-                                                      <String fx:value="mouse-paste-code-button" />
-                                                   </styleClass>
-                                                </ToggleButton>
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
+                                    <Accordion styleClass="childAccordion">
+                                      <panes>
+                                        <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Mouse">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="click" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="clickAt" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getMoveDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getPressDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getReleaseDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getX" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getY" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="move" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveAbsolute" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveAbsolute_D" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveAndClick" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveAndPress" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveAndRelease" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveRelative" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveRelative_D" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="moveTo" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="press" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="pressAt" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="release" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="releaseAt" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setMoveDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setPressDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setReleaseDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setX" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setY" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" styleClass="isert-code-titled-pane" text="Keyboard">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getPressDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getReleaseDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="press" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="release" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="type" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setPressDelay" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setReleaseDelay" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" styleClass="isert-code-titled-pane" text="System">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="sleep" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="press" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="print" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="println" />
+                                                            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="registerShortcut" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                        </TitledPane>
+                                      </panes>
+                                    </Accordion>
+                                 </content></TitledPane>
                           </panes>
                         </Accordion>
                      </children>

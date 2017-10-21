@@ -15,12 +15,10 @@ public class MouseObject {
 	// Constants
 	private final int PRESS_DELAY = 10;
 	private final int RELEASE_DELAY = 10;
-	private final int CLICK_DELAY = 10;
 	private final int MOVE_DELAY = 10;
 
 	private int pressDelay = PRESS_DELAY;
 	private int releaseDelay = RELEASE_DELAY;
-	private int clickDelay = CLICK_DELAY;
 	private int moveDelay = MOVE_DELAY;
 
 	private Robot robot;
@@ -211,20 +209,6 @@ public class MouseObject {
 		this.releaseDelay = releaseDelay;
 	}
 
-	/**
-	 * @return the clickDelay
-	 */
-	public int getClickDelay() {
-		return clickDelay;
-	}
-
-	/**
-	 * @param clickDelay
-	 *            the clickDelay to set
-	 */
-	public void setClickDelay(int clickDelay) {
-		this.clickDelay = clickDelay;
-	}
 
 	/**
 	 * @return the moveDelay

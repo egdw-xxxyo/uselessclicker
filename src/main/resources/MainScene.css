@@ -1,3 +1,13 @@
+* {
+	-fx-bg: #fff;
+	-fx-bg-selected:#A6ECFF;
+	
+	-fx-bg-pressed:#56DBFF;
+	-fx-bg-hover:#DEF8FF;
+	
+	-fx-b-color:#bbb;
+}
+
 #run-script-button{
 	-fx-background-image: url("images/play.png"); 
 }
@@ -172,4 +182,58 @@
 }
 .mouse-paste-code-button{
 	-fx-background-image: url("images/mouse.png"); 
+}
+/*right pane*/
+#insertCodePane{
+	-fx-max-width: 250;
+}
+.rootAccordion{
+	-fx-background-color: -fx-bg;
+}
+.rootAccordion > .titled-pane > .title {
+	-fx-border-width: 0 0 1 0;
+-fx-border-color: -fx-b-color;
+}
+
+.childAccordion{
+	-fx-background-color: -fx-bg;
+	-fx-border-width: 0;
+}
+
+.childAccordion > .titled-pane > .title  {
+-fx-padding: 5 10 5 20; /* 0 3 0 0 */
+-fx-border-width: 0 0 1 0;
+-fx-border-color: -fx-b-color;
+}
+.isert-code-titled-pane  
+{
+	-fx-border-width: 0;
+}
+.isert-code-titled-pane  > *.content
+{
+	-fx-border-width: 0;
+}
+.isert-code-titled-pane > .title 
+{
+-fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
+-fx-background-insets: 0;
+-fx-background-radius: 0;
+-fx-padding: 5 10 5 10; /* 2 10 3 10 */
+
+}
+
+.templateButton{
+	-fx-alignment: center-left ;
+	-fx-background-radius: 0;
+	-fx-background-color: -fx-bg;
+	-fx-min-height: 24;
+}
+.templateButton:hover{
+	-fx-background-color: -fx-bg-hover;
+}
+.templateButton:pressed{
+	-fx-background-color: -fx-bg-pressed;
+}
+.templateButton:selected{
+	-fx-background-color: -fx-bg-pressed;
 }
