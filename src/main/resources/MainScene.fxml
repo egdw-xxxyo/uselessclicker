@@ -123,7 +123,7 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
-                        <TextArea fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" styleClass="example-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <effect>
                               <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
                            </effect></TextArea>

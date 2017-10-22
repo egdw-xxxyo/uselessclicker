@@ -1210,19 +1210,26 @@ public class MainController {
 		}
 	}
 
-	// Show code samples
+	/**
+	 * Shows hint area with tex from userData in button
+	 * @param event
+	 */
 	@FXML
 	public void showCodeSample(MouseEvent event) {
 		ToggleButton btn = (ToggleButton) event.getSource();
 		areaCodeSample.setText((String) btn.getUserData());
 		areaCodeSample.setVisible(true);
 	}
+	/**
+	 * Hides hint area
+	 * @param event
+	 */
 	@FXML
 	public void hideCodeSample(MouseEvent event) {
 		areaCodeSample.setVisible(false);
 	}
 
-	//// templates
+	//// template buttons
 
 	@FXML
 	private Button btnTemplateMouseClick;
@@ -1299,7 +1306,7 @@ public class MainController {
 	@FXML
 	private Button btnTemplateMouseSetY;
 
-	//////////////KEYBOARD
+	////////////// KEYBOARD
 	@FXML
 	private Button btnTemplateKeyGetPressDelay;
 
@@ -1323,7 +1330,7 @@ public class MainController {
 
 	@FXML
 	private Button btnTemplateKeySetReleaseDelay;
-	//System
+	// System
 	@FXML
 	private Button btnTemplateSystemSleep;
 
@@ -1335,7 +1342,11 @@ public class MainController {
 
 	@FXML
 	private Button btnTemplateSystemRegisterShortcut;
-
+	/**
+	 * Initizlizes template buttons
+	 * 
+	 * @param prop
+	 */
 	private void initTemplateButtons(SourcePropertyFile prop) {
 		Button b;
 		b = btnTemplateMouseClick;
@@ -1353,7 +1364,7 @@ public class MainController {
 		b = btnTemplateMouseGetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
-		
+
 		b = btnTemplateMouseGetX;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
@@ -1420,7 +1431,7 @@ public class MainController {
 		b = btnTemplateMouseGetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
-		//Keyboard
+		// Keyboard
 		b = btnTemplateKeyGetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
@@ -1445,7 +1456,7 @@ public class MainController {
 		b = btnTemplateKeySetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
-		//System
+		// System
 		b = btnTemplateSystemSleep;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
@@ -1458,9 +1469,13 @@ public class MainController {
 		b = btnTemplateSystemRegisterShortcut;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
-		
-	}
 
+	}
+	/**
+	 * inserts template from userData in button
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void insertTemplate(ActionEvent event) {
 		Button btn = (Button) event.getSource();
@@ -1471,7 +1486,11 @@ public class MainController {
 		areaCode.insertText(caretPosition, data[1]);
 
 	}
-
+	/**
+	 * Shows area with hints and sample code from userData in button
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void showCodeTemplate(MouseEvent event) {
 		Button btn = (Button) event.getSource();
@@ -1481,7 +1500,11 @@ public class MainController {
 		areaCodeSample.setText(data[0]);
 		areaCodeSample.setVisible(true);
 	}
-
+	/**
+	 * Hides hint area
+	 * 
+	 * @param event
+	 */
 	@FXML
 	public void hideCodeTemplate(MouseEvent event) {
 		areaCodeSample.setVisible(false);

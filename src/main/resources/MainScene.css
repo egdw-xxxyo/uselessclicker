@@ -113,7 +113,11 @@
 
 
 /*text area */
-
+#hint-text-area{
+		-fx-text-fill: #444;
+		-fx-font-size: 13px;
+		-fx-font-family: "FreeMono Bold";
+}
 .code-text-area{
 		-fx-text-fill: #666;
 		-fx-font-size: 13px;

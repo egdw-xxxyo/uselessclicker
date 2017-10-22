@@ -4,8 +4,9 @@
 //parameter body
 //
 //$nextParameter...
-//At the end of a parameter must be empty line
-////////THIS IS MAX SIZE FOR EACH LINE////////
+//At the end of a parameter must be 
+//empty line
+///THIS IS MAX SIZE FOR EACH LINE////
 $insertKeyName:
 CONTROL ALT DELETE
 
@@ -62,28 +63,28 @@ mouse.releaseAt('LEFT',300,300);
 mouse.clickAt('RIGHT',300,300);
 
 $insertAbsolutePath:
-mouse.moveAbsolute('0101001001001001010100'+
-'1101000101011101010010110101111010010010010'+
+mouse.moveAbsolute('010100100100100'+
+'1101000101011101010010110101111010'+
 '000111100011010101');
 
 $insertRelativePath:
-mouse.moveRelative('0101001001001001010100'+
-'1101000101011101010010110101111010010010010'+
+mouse.moveRelative('010100100100100'+
+'1101000101011101010010110101110010'+
 '000111100011010101');
 
 $insertAbsolutePathWithDelays:
-mouse.moveAbsolute_D('0101001001001001010100'+
-'1101000101011101010010110101111010010010010'+
+mouse.moveAbsolute_D('0101001010100'+
+'1101000101011101010010110101110010'+
 '000111100011010101');
 
 $insertRelativePathWithDelays:
-mouse.moveRelative_D('0101001001001001010100'+
-'1101000101011101010010110101111010010010010'+
+mouse.moveRelative_D('0101001010100'+
+'1101000101011101010010110010010010'+
 '000111100011010101');
 
-////////THIS IS MAX SIZE FOR EACH LINE////////
-/////////////////TEMPLATES////////////////////
-//////////////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+////////////TEMPLATES////////////////
+/////////////////////////////////////
 //MOUSE
 $btnTemplateMouseClick:
 //This button will past this code 
@@ -237,7 +238,7 @@ mouse.SetY();
 $btnTemplateMouseSetYCode:
 mouse.SetY();
 
-////////THIS IS MAX SIZE FOR EACH LINE////////
+///THIS IS MAX SIZE FOR EACH LINE////
 //KEYBOARD
 $btnTemplateKeyGetPressDelay:
 key.getPressDelay();
@@ -287,7 +288,7 @@ key.setReleaseDelay();
 $btnTemplateKeySetReleaseDelayCode:
 key.setReleaseDelay();
 
-////////THIS IS MAX SIZE FOR EACH LINE////////
+///THIS IS MAX SIZE FOR EACH LINE////
 //SYSTEM
 $btnTemplateSystemSleep:
 system.sleep();
