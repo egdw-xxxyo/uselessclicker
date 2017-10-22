@@ -52,12 +52,19 @@ public class KeyboardObject {
 			}
 		}
 	}
-	public void type(String key) {
-		int code = KeyCodes.getEventCodeByName(key);
-		robot.keyPress(code);
-		robot.delay(pressDelay);
-		robot.keyRelease(code);
-		robot.delay(releaseDelay);
+	public void type(String keys) {
+		Set<String> keySet = new LinkedHashSet<String>(Arrays.asList(keys.split(" ")));
+		for(String key:keySet) {
+			int keyCode = KeyCodes.getEventCodeByName(key);
+			if(keyCode !=-1){
+				robot.keyPress(keyCode);
+				robot.delay(pressDelay);
+				robot.keyRelease(keyCode);
+				robot.delay(releaseDelay);
+			}else {
+				OutStream.println("Method call failed: key.type('"+keys+"')");
+			}
+		}
 	}
 
 	public int getPressDelay() {

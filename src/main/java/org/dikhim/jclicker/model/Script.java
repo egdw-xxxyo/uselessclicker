@@ -42,7 +42,7 @@ public class Script {
 	/**
 	 * @return the script
 	 */
-	public StringProperty getScript() {
+	public StringProperty getStringProperty() {
 		return script;
 	}
 	/**

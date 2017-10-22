@@ -81,13 +81,14 @@ public class ClickerMain extends Application {
 				new ShortcutEqualsHandler("stopScript", "CONTROL ALT S", () -> {
 					jse.stop();
 				}));
+		newScript();
 
 	}
 
 	
 	public static void runScript() {
 		if(script==null)return;
-		jse.putCode(script.getScript().get());
+		jse.putCode(script.getStringProperty().get());
 		try {
 			jse.start();
 		} catch (ScriptException e) {
@@ -117,6 +118,10 @@ public class ClickerMain extends Application {
 	
 	public static Script getScript() {
 		return script;
+	}
+	public static void newScript() {
+		script = new Script();
+		ClickerMain.updateTitle();
 	}
 	
 	public static void updateTitle() {

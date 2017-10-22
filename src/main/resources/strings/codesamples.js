@@ -233,10 +233,10 @@ $btnTemplateMouseSetXCode:
 mouse.setX();
 
 $btnTemplateMouseSetY:
-mouse.SetY();
+mouse.setY();
 
 $btnTemplateMouseSetYCode:
-mouse.SetY();
+mouse.setY();
 
 ///THIS IS MAX SIZE FOR EACH LINE////
 //KEYBOARD

@@ -30,6 +30,8 @@ import com.sun.javafx.scene.KeyboardShortcutsHandler;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
@@ -69,6 +71,7 @@ public class MainController {
 							event.consume();
 					}
 				});
+		
 		// init toggles
 		initToggles();
 		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
@@ -145,11 +148,10 @@ public class MainController {
 	@FXML
 	public void newFile() {
 		stopScript();
+		ClickerMain.newScript();
+		Script script = ClickerMain.getScript();
 		codeTextProperty.set("");
-		Script script = new Script();
-		ClickerMain.setScript(script);
 		script.setScript(codeTextProperty);
-		areaCode.setEditable(true);
 	}
 
 	@FXML
@@ -172,8 +174,7 @@ public class MainController {
 			prefs.put("last-opened-folder",
 					file.getParentFile().getAbsolutePath());
 
-			areaCode.textProperty().bindBidirectional(script.getScript());
-			areaCode.setEditable(true);
+			areaCode.textProperty().bindBidirectional(script.getStringProperty());
 		}
 
 	}
@@ -199,7 +200,7 @@ public class MainController {
 
 			if (file != null) {
 				try {
-					FileUtils.writeStringToFile(file, script.getScript().get(),
+					FileUtils.writeStringToFile(file, script.getStringProperty().get(),
 							Charset.defaultCharset());
 					script.setScriptFile(file);
 					prefs.put("last-saved-folder", script.getScriptFile()
@@ -214,7 +215,7 @@ public class MainController {
 		} else {
 			try {
 				FileUtils.writeStringToFile(script.getScriptFile(),
-						script.getScript().get(), Charset.defaultCharset());
+						script.getStringProperty().get(), Charset.defaultCharset());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -248,7 +249,7 @@ public class MainController {
 			script.setScriptFile(file);
 			try {
 				FileUtils.writeStringToFile(script.getScriptFile(),
-						script.getScript().get(), Charset.defaultCharset());
+						script.getStringProperty().get(), Charset.defaultCharset());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -1191,6 +1192,7 @@ public class MainController {
 					}));
 			KeyEventsManager.getInstance().addReleaseListener(
 					new ShortcutEqualsHandler("key.release", "CONTROL", () -> {
+						int caretPosition = areaCode.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
 						int dx = manager.getLastMoveEvent().getX()
 								- lastMoveEvent.getX();
@@ -1198,6 +1200,7 @@ public class MainController {
 								- lastMoveEvent.getY();
 						sb.append("mouse.move(").append(dx).append(",")
 								.append(dy).append(");\n");
+						areaCode.insertText(caretPosition, sb.toString());
 					}));
 
 		} else {
