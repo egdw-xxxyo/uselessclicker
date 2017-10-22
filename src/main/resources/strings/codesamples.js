@@ -1,3 +1,11 @@
+//PARAMETER TEMPLATE
+//$parameterName:
+//parameter body
+//parameter body
+//
+//$nextParameter...
+//At the end of a parameter must be empty line
+////////THIS IS MAX SIZE FOR EACH LINE////////
 $insertKeyName:
 CONTROL ALT DELETE
 
@@ -54,137 +62,253 @@ mouse.releaseAt('LEFT',300,300);
 mouse.clickAt('RIGHT',300,300);
 
 $insertAbsolutePath:
-mouse.moveAbsolute('㚐㙰㚎㙰㚉㙰㚇㙱㚅㙲㚁㙴㙾㙶㙽㙸㙺㙼㙹㙾㙶㚄㙵㚇㙳㚋㙲㚒㙱㚖㙱㚙㙱㚠㙱㚤㙲㚧㙴㚭㙷㚳㙹㚵㙼㚷㚁㚹㚄㚺㚇'+
-'㚺㚚㚸㚞㚶㚧㚱㚰㚫㚷㚦㛂㚜㛈㚘㛍㚓㛑㚎㛒㚋㛒㚈㛒㚆㛑㚅㛏㚃㛍㚃㛈㚂㛇㚂㛄㚂㛄㚃㛂㚅㛀㚋㚿㚐㚾㚕㚽㚠㚺㚬㚹㚳㚷㚿㚵㛇㚴㛎㚲㛕㚱㛙㚫㛢㚪㛣㚫㛣㚬'+
-'㛥㚡㛥㚞㛤㚙㛢㚕㛟㚑㛛㚉㛒㚁㛊㙻㛃㙵㚺㙱㚴㙰㚮㙰㚬㙱㚫㙴㚪㙶㚩㙼㚩㚀㚩㚅㚪㚎㚬㚗㚰㚨㚸㚱㚼㚺㚽㛍㛀㛘㛀㛠㛂㛰㛂㛴㛀㛿㚾㜄㚺㜇㚶㜋㚰㜍㚪㜎㚦㜏'+
-'㚄㜉㙿㜉㙸㜉㙵㜇㙲㜆㙱㜄㙰㜂㙰㜀㙰㛿㙰㛽㙴㛼㙸㛺㚄㛷㚈㛳㚔㛯㚛㛫㚢㛤㚴㛜㚽㛏㛌㛇㛒㛂㛖㚺㛙㚴㛛㚯㛜㚪㛞㚤㛞㚡㛟㚠㛟㚜㛝㚙㛜㚔㛘㚒㛖㚌㛑㚇㛌㚅'+
-'㛉㚂㛇㚁㛂㚁㛁㚂㚿㚅㚾㚆㚽㚇㚽㚉㚼㚍㚻㚏㚻㚒㚻㚕㚻㚖㚻㚙㚻㚚㚻㚛㚻');
+mouse.moveAbsolute('0101001001001001010100'+
+'1101000101011101010010110101111010010010010'+
+'000111100011010101');
 
 $insertRelativePath:
-mouse.moveRelative('㚐㙰㚎㙰㚉㙰㚇㙱㚅㙲㚁㙴㙾㙶㙽㙸㙺㙼㙹㙾㙶㚄㙵㚇㙳㚋㙲㚒㙱㚖㙱㚙㙱㚠㙱㚤㙲㚧㙴㚭㙷㚳㙹㚵㙼㚷㚁㚹㚄㚺㚇'+
-'㚺㚚㚸㚞㚶㚧㚱㚰㚫㚷㚦㛂㚜㛈㚘㛍㚓㛑㚎㛒㚋㛒㚈㛒㚆㛑㚅㛏㚃㛍㚃㛈㚂㛇㚂㛄㚂㛄㚃㛂㚅㛀㚋㚿㚐㚾㚕㚽㚠㚺㚬㚹㚳㚷㚿㚵㛇㚴㛎㚲㛕㚱㛙㚫㛢㚪㛣㚫㛣㚬'+
-'㛣㚪㛥㚞㛤㚙㛢㚕㛟㚑㛛㚉㛒㚁㛊㙻㛃㙵㚺㙱㚴㙰㚮㙰㚬㙱㚫㙴㚪㙶㚩㙼㚩㚀㚩㚅㚪㚎㚬㚗㚰㚨㚸㚱㚼㚺㚽㛍㛀㛘㛀㛠㛂㛰㛂㛴㛀㛿㚾㜄㚺㜇㚶㜋㚰㜍㚪㜎㚦㜏'+
-'㚜㜏㙿㜉㙸㜉㙵㜇㙲㜆㙱㜄㙰㜂㙰㜀㙰㛿㙰㛽㙴㛼㙸㛺㚄㛷㚈㛳㚔㛯㚛㛫㚢㛤㚴㛜㚽㛏㛌㛇㛒㛂㛖㚺㛙㚴㛛㚯㛜㚪㛞㚤㛞㚡㛟㚠㛟㚜㛝㚙㛜㚔㛘㚒㛖㚌㛑㚇㛌㚅'+
-'㛉㚂㛇㚁㛂㚁㛁㚂㚿㚅㚾㚆㚽㚇㚽㚉㚼㚍㚻㚏㚻㚒㚻㚕㚻㚖㚻㚙㚻㚚㚻㚛㚻');
+mouse.moveRelative('0101001001001001010100'+
+'1101000101011101010010110101111010010010010'+
+'000111100011010101');
 
 $insertAbsolutePathWithDelays:
-mouse.moveAbsolute_D('㚛㙰㚎㙰㚉㙰㚇㙱㚅㙲㚁㙴㙾㙶㙽㙸㙺㙼㙹㙾㙶㚄㙵㚇㙳㚋㙲㚒㙱㚖㙱㚙㙱㚠㙱㚤㙲㚧㙴㚭㙷㚳㙹㚵㙼㚷㚁㚹㚄'+
-'㚻㚍㚼㚐㚼㚗㚺㚚㚸㚞㚶㚧㚱㚰㚫㛍㚓㛑㚎㛒㚋㛒㚈㛒㚆㛑㚅㛏㚃㛍㚃㛈㚂㛇㚂㛄㚂㛄㚃㛂㚅㛀㚋㚿㚐㚾㚕㚽㚠㚺㚬㚹㚳㚷㚿㚵㛇㚴㛎㚲㛕㚱㛙㚫㛢㚪㛣㚫㛣㚬'+
-'㛣㚪㛤㚨㛥㚦㛥㚡㛥㚞㛤㚙㛢㚕㛊㙻㛃㙵㚺㙱㚴㙰㚮㙰㚬㙱㚫㙴㚪㙶㚩㙼㚩㚀㚩㚅㚪㚎㚬㚗㚰㚨㚸㚱㚼㚺㚽㛍㛀㛘㛀㛠㛂㛰㛂㛴㛀㛿㚾㜄㚺㜇㚶㜋㚰㜍㚪㜎㚦㜏'+
-'㚜㜏㚖㜎㚌㜋㚄㜉㙿㜉㙸㜉㙵㜂㙰㜀㙰㛿㙰㛽㙴㛼㙸㛺㚄㛷㚈㛳㚔㛯㚛㛫㚢㛤㚴㛜㚽㛏㛌㛇㛒㛂㛖㚺㛙㚴㛛㚯㛜㚪㛞㚤㛞㚡㛟㚠㛟㚜㛝㚙㛜㚔㛘㚒㛖㚌㛑㚇㛌㚅'+
-'㛉㚂㛇㚁㛂㚁㛁㚂㚿㚅㚾㚆㚽㚇㚽㚉㚼㚍㚻㚏㚻㚒㚻㚕㚻㚖㚻㚙㚻㚚㚻㚛㚻');
+mouse.moveAbsolute_D('0101001001001001010100'+
+'1101000101011101010010110101111010010010010'+
+'000111100011010101');
 
 $insertRelativePathWithDelays:
-mouse.moveRelative_D('㚛㙰㚎㙰㚉㙰㚇㙱㚅㙲㚁㙴㙾㙶㙽㙸㙺㙼㙹㙾㙶㚄㙵㚇㙳㚋㙲㚒㙱㚖㙱㚙㙱㚠㙱㚤㙲㚧㙴㚭㙷㚳㙹㚵㙼㚷㚁㚹㚄'+
-'㚻㚍㚼㚐㚼㚗㚺㚚㚸㚞㚶㚧㚱㚰㚘㛍㚓㛑㚎㛒㚋㛒㚈㛒㚆㛑㚅㛏㚃㛍㚃㛈㚂㛇㚂㛄㚂㛄㚃㛂㚅㛀㚋㚿㚐㚾㚕㚽㚠㚺㚬㚹㚳㚷㚿㚵㛇㚴㛎㚲㛕㚱㛙㚫㛢㚪㛣㚫㛣㚬'+
-'㛣㚪㛤㚨㛥㚦㛥㚡㛥㚞㛤㚙㛢㚕㛊㙻㛃㙵㚺㙱㚴㙰㚮㙰㚬㙱㚫㙴㚪㙶㚩㙼㚩㚀㚩㚅㚪㚎㚬㚗㚰㚨㚸㚱㚼㚺㚽㛍㛀㛘㛀㛠㛂㛰㛂㛴㛀㛿㚾㜄㚺㜇㚶㜋㚰㜍㚪㜎㚦㜏'+
-'㚜㜏㚖㜎㚌㜋㚄㜉㙿㜉㙸㜉㙵㜂㙰㜀㙰㛿㙰㛽㙴㛼㙸㛺㚄㛷㚈㛳㚔㛯㚛㛫㚢㛤㚴㛜㚽㛏㛌㛇㛒㛂㛖㚺㛙㚴㛛㚯㛜㚪㛞㚤㛞㚡㛟㚠㛟㚜㛝㚙㛜㚔㛘㚒㛖㚌㛑㚇㛌㚅'+
-'㛉㚂㛇㚁㛂㚁㛁㚂㚿㚅㚾㚆㚽㚇㚽㚉㚼㚍㚻㚏㚻㚒㚻㚕㚻㚖㚻㚙㚻㚚㚻㚛㚻');
+mouse.moveRelative_D('0101001001001001010100'+
+'1101000101011101010010110101111010010010010'+
+'000111100011010101');
 
-$templateMouseClick:
+////////THIS IS MAX SIZE FOR EACH LINE////////
+/////////////////TEMPLATES////////////////////
+//////////////////////////////////////////////
+//MOUSE
+$btnTemplateMouseClick:
+//This button will past this code 
+//  to carret position:
 mouse.click('',,);
 
-$templateMouseClickAt:
+$btnTemplateMouseClickCode:
+mouse.click('',,);
+
+$btnTemplateMouseClickAt:
 mouse.clickAt('',,);
-	
-$templateMouseGetMoveDelay:
+
+$btnTemplateMouseClickAtCode:
+mouse.clickAt('',,);
+
+$btnTemplateMouseGetMoveDelay:
 mouse.getMoveDelay();
-	
-$templateMouseGetPressDelay:
+
+$btnTemplateMouseGetMoveDelayCode:
+mouse.getMoveDelay();
+
+$btnTemplateMouseGetPressDelay:
 mouse.getPressDelay();
 
-$templateMouseGetReleaseDelay:
+$btnTemplateMouseGetPressDelayCode:
+mouse.getPressDelay();
+
+$btnTemplateMouseGetReleaseDelay:
 mouse.getReleaseDelay();
 
-$templateMouseGetX:
+$btnTemplateMouseGetReleaseDelayCode:
+mouse.getReleaseDelay();
+
+$btnTemplateMouseGetX:
 mouse.getX();
 
-$templateMouseGetY:
+$btnTemplateMouseGetXCode:
+mouse.getX();
+
+$btnTemplateMouseGetY:
 mouse.getY();
 
-$templateMouseMove:
+$btnTemplateMouseGetYCode:
+mouse.getY();
+
+$btnTemplateMouseMove:
 mouse.move(,);
 
-$templateMouseMoveAbsolute:
+$btnTemplateMouseMoveCode:
+mouse.move(,);
+
+$btnTemplateMouseMoveAbsolute:
 mouse.moveAbsolute('');
 
-$templateMouseMoveAbsolute_D:
+$btnTemplateMouseMoveAbsoluteCode:
+mouse.moveAbsolute('');
+
+$btnTemplateMouseMoveAbsolute_D:
 mouse.moveAbsolute_D('');
 
-$templateMouseMoveAndClick:
+$btnTemplateMouseMoveAbsolute_DCode:
+mouse.moveAbsolute_D('');
+
+$btnTemplateMouseMoveAndClick:
 mouse.moveAndClick('',,);
 
-$templateMouseMoveAndPress:
+$btnTemplateMouseMoveAndClickCode:
+mouse.moveAndClick('',,);
+
+$btnTemplateMouseMoveAndPress:
 mouse.moveAndPress('',,);
 
-$templateMouseMoveAndRelease:
+$btnTemplateMouseMoveAndPressCode:
+mouse.moveAndPress('',,);
+
+$btnTemplateMouseMoveAndRelease:
 mouse.moveAndRelease('',,);
 
-$templateMouseMoveRelative:
+$btnTemplateMouseMoveAndReleaseCode:
+mouse.moveAndRelease('',,);
+
+$btnTemplateMouseMoveRelative:
 mouse.moveRelative('');
 
-$templateMouseMoveRelative_D:
+$btnTemplateMouseMoveRelativeCode:
+mouse.moveRelative('');
+
+$btnTemplateMouseMoveRelative_D:
 mouse.moveRelative_D('');
 
-$templateMouseMoveTo:
+$btnTemplateMouseMoveRelative_DCode:
+mouse.moveRelative_D('');
+
+$btnTemplateMouseMoveTo:
 mouse.moveTo(,);
 
-$templateMousePress:
+$btnTemplateMouseMoveToCode:
+mouse.moveTo(,);
+
+$btnTemplateMousePress:
 mouse.press('');
 
-$templateMousePressAt:
+$btnTemplateMousePressCode:
+mouse.press('');
+
+$btnTemplateMousePressAt:
 mouse.pressAt('',,);
 
-$templateMouseRelease:
+$btnTemplateMousePressAtCode:
+mouse.pressAt('',,);
+
+$btnTemplateMouseRelease:
 mouse.release('');
 
-$templateMouseReleaseAt:
+$btnTemplateMouseReleaseCode:
+mouse.release('');
+
+$btnTemplateMouseReleaseAt:
 mouse.releaseAt('',,);
 
-$templateMouseSetMoveDelay:
+$btnTemplateMouseReleaseAtCode:
+mouse.releaseAt('',,);
+
+$btnTemplateMouseSetMoveDelay:
 mouse.setMoveDelay();
 
-$templateMouseSetPressDelay:
+$btnTemplateMouseSetMoveDelayCode:
+mouse.setMoveDelay();
+
+$btnTemplateMouseSetPressDelay:
 mouse.setPressDelay();
 
-$templateMouseSetReleaseDelay:
+$btnTemplateMouseSetPressDelayCode:
+mouse.setPressDelay();
+
+$btnTemplateMouseSetReleaseDelay:
 mouse.setReleaseDelay();
 
-$templateMouseSetX:
+$btnTemplateMouseSetReleaseDelayCode:
+mouse.setReleaseDelay();
+
+$btnTemplateMouseSetX:
 mouse.setX();
 
-$templateMouseSetY:
+$btnTemplateMouseSetXCode:
+mouse.setX();
+
+$btnTemplateMouseSetY:
 mouse.SetY();
 
-$templateKeyboardGetPressDelay:
+$btnTemplateMouseSetYCode:
+mouse.SetY();
+
+////////THIS IS MAX SIZE FOR EACH LINE////////
+//KEYBOARD
+$btnTemplateKeyGetPressDelay:
 key.getPressDelay();
 
-$templateKeyboardGetReleaseDelay:
+$btnTemplateKeyGetPressDelayCode:
+key.getPressDelay();
+
+$btnTemplateKeyGetReleaseDelay:
 key.getReleaseDelay();
 
-$templateKeyboardPress:
+$btnTemplateKeyGetReleaseDelayCode:
+key.getReleaseDelay();
+
+$btnTemplateKeyIsPressed:
+key.isPressed('');
+
+$btnTemplateKeyIsPressedCode:
+key.isPressed('');
+
+$btnTemplateKeyPress:
 key.press('');
 
-$templateKeyboardRelease:
+$btnTemplateKeyPressCode:
+key.press('');
+
+$btnTemplateKeyRelease:
 key.release('');
 
-$templateKeyboardType:
+$btnTemplateKeyReleaseCode:
+key.release('');
+
+$btnTemplateKeyType:
 key.type('');
 
-$templateKeyboardSetPressDelay:
+$btnTemplateKeyTypeCode:
+key.type('');
+
+$btnTemplateKeySetPressDelay:
 key.setPressDelay();
 
-$templateKeyboardSetReleaseDelay:
+$btnTemplateKeySetPressDelayCode:
+key.setPressDelay();
+
+$btnTemplateKeySetReleaseDelay:
 key.setReleaseDelay();
 
-$templateSystemSleep:
+$btnTemplateKeySetReleaseDelayCode:
+key.setReleaseDelay();
+
+////////THIS IS MAX SIZE FOR EACH LINE////////
+//SYSTEM
+$btnTemplateSystemSleep:
 system.sleep();
 
-$templateSystemPrint:
+$btnTemplateSystemSleepCode:
+system.sleep();
+
+$btnTemplateSystemPrint:
 system.print('');
 
-$templateSystemPrintln:
+$btnTemplateSystemPrintCode:
+system.print('');
+
+$btnTemplateSystemPrintln:
 system.println('');
 
-$templateSystemRegisterShortcut:
+$btnTemplateSystemPrintlnCode:
+system.println('');
+
+$btnTemplateSystemRegisterShortcut:
+system.registerShortcut('','');
+
+$btnTemplateSystemRegisterShortcutCode:
 system.registerShortcut('','');

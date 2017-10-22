@@ -43,6 +43,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 public class MainController {
+	private MouseMoveUtil movementPath;
+	private MouseMoveEvent lastMoveEvent;
+
 	@FXML
 	private void initialize() {
 		// init textareas
@@ -68,9 +71,10 @@ public class MainController {
 				});
 		// init toggles
 		initToggles();
-		SourcePropertyFile pf = new SourcePropertyFile(new File(
+		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
 				getClass().getResource("/strings/codesamples.js").getFile()));
-		setCodeSamples(pf);
+		setCodeSamples(propertyFile);
+		initTemplateButtons(propertyFile);
 	}
 	/**
 	 * Sets code samples as user data to each element
@@ -94,7 +98,7 @@ public class MainController {
 				.setUserData(prop.get("insertMouseRelativeCode"));
 
 		btnInsertMouseCodeClick.setUserData(prop.get("insertMouseCodeClick"));
-		
+
 		// mouse movement
 		btnInsertAbsolutePath.setUserData(prop.get("insertAbsolutePath"));
 		btnInsertRelativePath.setUserData(prop.get("insertRelativePath"));
@@ -587,7 +591,6 @@ public class MainController {
 		}
 	}
 
-	MouseMoveEvent lastMoveEvent;
 	@FXML
 	void insertMouseRelativeCode(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
@@ -796,7 +799,7 @@ public class MainController {
 	}
 
 	// Movement
-	private MouseMoveUtil movementPath;
+
 	@FXML
 	void insertAbsolutePath(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
@@ -962,8 +965,6 @@ public class MainController {
 		}
 	}
 
-	// TODO
-
 	// mouse basics
 	@FXML
 	void insertMousePress(ActionEvent event) {
@@ -1074,7 +1075,7 @@ public class MainController {
 			enableCodeType = true;
 		}
 	}
-	// TODO
+
 	@FXML
 	void insertMouseClick(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
@@ -1083,22 +1084,9 @@ public class MainController {
 			// if toggle has been seleted
 			select(toggle);
 			enableCodeType = false;
-		} else {
-			// if toggle has been deselected
-			enableCodeType = true;
-		}
-	}
-	@FXML
-	void insertMouseClickAt(ActionEvent event) {
-		ToggleButton toggle = (ToggleButton) event.getSource();
-		MouseEventsManager manager = MouseEventsManager.getInstance();
-		if (toggle.isSelected()) {
-			// if toggle has been seleted
-			select(toggle);
-			enableCodeType = false;
 
 			manager.addReleaseListener(
-					new MouseHandler("mouse.release", "", () -> {
+					new MouseHandler("mouse.click", "", () -> {
 						if (!KeyEventsManager.getInstance()
 								.isPressed("CONTROL"))
 							return;
@@ -1115,14 +1103,50 @@ public class MainController {
 						int caretPosition = areaCode.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
 						sb.append("mouse.click('").append(lastEvent.getButton())
-								.append("',").append(lastEvent.getX())
-								.append(",").append(lastEvent.getY())
-								.append(");\n");
+								.append("');\n");
 						areaCode.insertText(caretPosition, sb.toString());
 					}));
 		} else {
 			// if toggle has been deselected
-			manager.removeReleaseListenersByPrefix("mouse.release");
+			manager.removeReleaseListenersByPrefix("mouse.click");
+			enableCodeType = true;
+		}
+	}
+	@FXML
+	void insertMouseClickAt(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+
+			manager.addReleaseListener(
+					new MouseHandler("mouse.click", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						MouseButtonEvent lastEvent = manager
+								.getLastButtonEvent();
+						MouseButtonEvent preLastEvent = manager
+								.getPreLastButtonEvent();
+						if (preLastEvent == null)
+							return;
+						if ((lastEvent.getX() != preLastEvent.getX())
+								|| (lastEvent.getY() != preLastEvent.getY())) {
+							return;
+						}
+						int caretPosition = areaCode.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						sb.append("mouse.clickAt('")
+								.append(lastEvent.getButton()).append("',")
+								.append(lastEvent.getX()).append(",")
+								.append(lastEvent.getY()).append(");\n");
+						areaCode.insertText(caretPosition, sb.toString());
+					}));
+		} else {
+			// if toggle has been deselected
+			manager.removeReleaseListenersByPrefix("mouse.click");
 			enableCodeType = true;
 		}
 	}
@@ -1135,8 +1159,20 @@ public class MainController {
 			// if toggle has been seleted
 			select(toggle);
 			enableCodeType = false;
+			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
+				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
+					return;
+				int caretPosition = areaCode.getCaretPosition();
+				MouseButtonEvent e = manager.getLastButtonEvent();
+				StringBuilder sb = new StringBuilder();
+				sb.append("mouse.moveAt(").append(e.getX()).append(",")
+						.append(e.getY()).append(");\n");
+				areaCode.insertText(caretPosition, sb.toString());
+			}));
+
 		} else {
 			// if toggle has been deselected
+			manager.removePressListenersByPrefix("mouse.press");
 			enableCodeType = true;
 		}
 	}
@@ -1149,8 +1185,27 @@ public class MainController {
 			// if toggle has been seleted
 			select(toggle);
 			enableCodeType = false;
+			KeyEventsManager.getInstance().addPressListener(
+					new ShortcutEqualsHandler("key.press", "CONTROL", () -> {
+						lastMoveEvent = manager.getLastMoveEvent();
+					}));
+			KeyEventsManager.getInstance().addReleaseListener(
+					new ShortcutEqualsHandler("key.release", "CONTROL", () -> {
+						StringBuilder sb = new StringBuilder();
+						int dx = manager.getLastMoveEvent().getX()
+								- lastMoveEvent.getX();
+						int dy = manager.getLastMoveEvent().getY()
+								- lastMoveEvent.getY();
+						sb.append("mouse.move(").append(dx).append(",")
+								.append(dy).append(");\n");
+					}));
+
 		} else {
 			// if toggle has been deselected
+			KeyEventsManager.getInstance()
+					.removePressListenersByPrefix("key.press");
+			KeyEventsManager.getInstance()
+					.removeReleaseListenersByPrefix("key.release");
 			enableCodeType = true;
 		}
 	}
@@ -1170,15 +1225,260 @@ public class MainController {
 	//// templates
 
 	@FXML
+	private Button btnTemplateMouseClick;
+
+	@FXML
+	private Button btnTemplateMouseClickAt;
+
+	@FXML
+	private Button btnTemplateMouseGetMoveDelay;
+
+	@FXML
+	private Button btnTemplateMouseGetPressDelay;
+
+	@FXML
+	private Button btnTemplateMouseGetReleaseDelay;
+
+	@FXML
+	private Button btnTemplateMouseGetX;
+
+	@FXML
+	private Button btnTemplateMouseGetY;
+
+	@FXML
+	private Button btnTemplateMouseMove;
+
+	@FXML
+	private Button btnTemplateMouseMoveAbsolute;
+
+	@FXML
+	private Button btnTemplateMouseMoveAbsolute_D;
+
+	@FXML
+	private Button btnTemplateMouseMoveAndClick;
+
+	@FXML
+	private Button btnTemplateMouseMoveAndPress;
+
+	@FXML
+	private Button btnTemplateMouseMoveAndRelease;
+
+	@FXML
+	private Button btnTemplateMouseMoveRelative;
+
+	@FXML
+	private Button btnTemplateMouseMoveRelative_D;
+
+	@FXML
+	private Button btnTemplateMouseMoveTo;
+
+	@FXML
+	private Button btnTemplateMousePress;
+
+	@FXML
+	private Button btnTemplateMousePressAt;
+
+	@FXML
+	private Button btnTemplateMouseRelease;
+
+	@FXML
+	private Button btnTemplateMouseReleaseAt;
+
+	@FXML
+	private Button btnTemplateMouseSetMoveDelay;
+
+	@FXML
+	private Button btnTemplateMouseSetPressDelay;
+
+	@FXML
+	private Button btnTemplateMouseSetReleaseDelay;
+
+	@FXML
+	private Button btnTemplateMouseSetX;
+
+	@FXML
+	private Button btnTemplateMouseSetY;
+
+	//////////////KEYBOARD
+	@FXML
+	private Button btnTemplateKeyGetPressDelay;
+
+	@FXML
+	private Button btnTemplateKeyGetReleaseDelay;
+
+	@FXML
+	private Button btnTemplateKeyIsPressed;
+
+	@FXML
+	private Button btnTemplateKeyPress;
+
+	@FXML
+	private Button btnTemplateKeyRelease;
+
+	@FXML
+	private Button btnTemplateKeyType;
+
+	@FXML
+	private Button btnTemplateKeySetPressDelay;
+
+	@FXML
+	private Button btnTemplateKeySetReleaseDelay;
+	//System
+	@FXML
+	private Button btnTemplateSystemSleep;
+
+	@FXML
+	private Button btnTemplateSystemPrint;
+
+	@FXML
+	private Button btnTemplateSystemPrintln;
+
+	@FXML
+	private Button btnTemplateSystemRegisterShortcut;
+
+	private void initTemplateButtons(SourcePropertyFile prop) {
+		Button b;
+		b = btnTemplateMouseClick;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseClickAt;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetMoveDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetPressDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetReleaseDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		
+		b = btnTemplateMouseGetX;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetY;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMove;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveAbsolute;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveAbsolute_D;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveAndClick;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveAndPress;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveAndRelease;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveRelative;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveRelative_D;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseMoveTo;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMousePress;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMousePressAt;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseRelease;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseReleaseAt;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseSetMoveDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseSetPressDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseSetReleaseDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseSetX;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseSetY;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetPressDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateMouseGetReleaseDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		//Keyboard
+		b = btnTemplateKeyGetPressDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeyGetReleaseDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeyIsPressed;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeyPress;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeyRelease;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeyType;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeySetPressDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateKeySetReleaseDelay;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		//System
+		b = btnTemplateSystemSleep;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateSystemPrint;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateSystemPrintln;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		b = btnTemplateSystemRegisterShortcut;
+		b.setUserData(new String[]{prop.get(b.getId()),
+				prop.get(b.getId() + "Code")});
+		
+	}
+
+	@FXML
 	public void insertTemplate(ActionEvent event) {
-		Button b = (Button) event.getSource();
-		System.out.println(b.getText());
+		Button btn = (Button) event.getSource();
+		String[] data = (String[]) btn.getUserData();
+		if (data == null)
+			return;
+		int caretPosition = areaCode.getCaretPosition();
+		areaCode.insertText(caretPosition, data[1]);
+
 	}
 
 	@FXML
 	public void showCodeTemplate(MouseEvent event) {
 		Button btn = (Button) event.getSource();
-		areaCodeSample.setText((String) btn.getUserData());
+		String[] data = (String[]) btn.getUserData();
+		if (data == null)
+			return;
+		areaCodeSample.setText(data[0]);
 		areaCodeSample.setVisible(true);
 	}
 
