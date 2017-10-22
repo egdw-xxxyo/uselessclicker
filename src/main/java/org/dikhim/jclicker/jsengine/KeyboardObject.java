@@ -27,15 +27,7 @@ public class KeyboardObject {
 	public KeyboardObject(JSEngine engine) {
 		this.robot = engine.getRobot();
 	}
-/*
- * System.out.println(keys);
-		Set<String> keySet = new HashSet<String>(Arrays.asList(keys.split(" ")));
-		for(String key:keySet) {
-			System.out.println(key);
-			robot.mousePress(MouseCodes.getEventCodeByName(key));
-			robot.delay(pressDelay);
-		}
- */
+
 	public void press(String keys) {		
 		Set<String> keySet = new LinkedHashSet<String>(Arrays.asList(keys.split(" ")));
 		for(String key:keySet) {

@@ -83,8 +83,10 @@ public class MainController {
 		btnInsertKeyCode.setUserData(prop.get("insertKeyCode"));
 		btnInsertKeyCodeWithDelay
 				.setUserData(prop.get("insertKeyCodeWithDelay"));
-
+		// mouse basics
 		btnInsertMouseName.setUserData(prop.get("insertMouseName"));
+
+		// mouse code
 		btnInsertMouseCode.setUserData(prop.get("insertMouseCode"));
 		btnInsertMouseCodeWithDelay
 				.setUserData(prop.get("insertMouseCodeWithDelay"));
@@ -92,7 +94,8 @@ public class MainController {
 				.setUserData(prop.get("insertMouseRelativeCode"));
 
 		btnInsertMouseCodeClick.setUserData(prop.get("insertMouseCodeClick"));
-
+		
+		// mouse movement
 		btnInsertAbsolutePath.setUserData(prop.get("insertAbsolutePath"));
 		btnInsertRelativePath.setUserData(prop.get("insertRelativePath"));
 		btnInsertAbsolutePathWithDelays
@@ -263,10 +266,35 @@ public class MainController {
 	@FXML
 	private ToggleButton btnInsertKeyCodeWithDelay;
 
-	// Mouse buttons
+	// Mouse basics
 	@FXML
 	private ToggleButton btnInsertMouseName;
 
+	@FXML
+	private ToggleButton btnInsertMouseClick;
+
+	@FXML
+	private ToggleButton btnInsertMouseClickAt;
+
+	@FXML
+	private ToggleButton btnInsertMousePress;
+
+	@FXML
+	private ToggleButton btnInsertMousePressAt;
+
+	@FXML
+	private ToggleButton btnInsertMouseRelease;
+
+	@FXML
+	private ToggleButton btnInsertMouseReleaseAt;
+
+	@FXML
+	private ToggleButton btnInsertMouseMove;
+
+	@FXML
+	private ToggleButton btnInsertMouseMoveAt;
+
+	// mouse code
 	@FXML
 	private ToggleButton btnInsertMouseCode;
 
@@ -302,12 +330,22 @@ public class MainController {
 		listOfToggles.add(btnInsertKeyCode);
 		listOfToggles.add(btnInsertKeyCodeWithDelay);
 
-		// mouse
+		// mouse basics
 		listOfToggles.add(btnInsertMouseName);
+		listOfToggles.add(btnInsertMousePress);
+		listOfToggles.add(btnInsertMousePressAt);
+		listOfToggles.add(btnInsertMouseRelease);
+		listOfToggles.add(btnInsertMouseReleaseAt);
+		listOfToggles.add(btnInsertMouseClick);
+		listOfToggles.add(btnInsertMouseClickAt);
+		listOfToggles.add(btnInsertMouseMove);
+		listOfToggles.add(btnInsertMouseMoveAt);
+
+		// mouse press/release
 		listOfToggles.add(btnInsertMouseCode);
 		listOfToggles.add(btnInsertMouseCodeWithDelay);
 		listOfToggles.add(btnInsertMouseRelativeCode);
-		// click
+		// mouse click
 		listOfToggles.add(btnInsertMouseCodeClick);
 		// Movement
 		listOfToggles.add(btnInsertAbsolutePath);
@@ -430,7 +468,6 @@ public class MainController {
 		}
 	}
 
-   
 	// Mouse buttons
 	@FXML
 	void insertMouseCode(ActionEvent event) {
@@ -924,66 +961,228 @@ public class MainController {
 			enableCodeType = true;
 		}
 	}
-	
-	//TODO
 
+	// TODO
 
-    //mouse basics
-    @FXML
-    void insertMousePress(ActionEvent event) {
+	// mouse basics
+	@FXML
+	void insertMousePress(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
 
-    }
-    
-    @FXML
-    void insertMouseRelease(ActionEvent event) {
+			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
+				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
+					return;
+				int caretPosition = areaCode.getCaretPosition();
+				StringBuilder sb = new StringBuilder();
+				sb.append("mouse.press('")
+						.append(manager.getLastButtonEvent().getButton())
+						.append("');\n");
+				areaCode.insertText(caretPosition, sb.toString());
+			}));
+		} else {
+			// if toggle has been deselected
+			manager.removePressListenersByPrefix("mouse.press");
+			enableCodeType = true;
+		}
+	}
 
-    }
-    
-    @FXML
-    void insertMouseClickAt(ActionEvent event) {
+	@FXML
+	void insertMousePressAt(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
 
-    }
-    
-    @FXML
-    void insertMouseMoveAt(ActionEvent event) {
+			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
+				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
+					return;
+				int caretPosition = areaCode.getCaretPosition();
+				MouseButtonEvent e = manager.getLastButtonEvent();
+				StringBuilder sb = new StringBuilder();
+				sb.append("mouse.pressAt('").append(e.getButton()).append("',")
+						.append(e.getX()).append(",").append(e.getY())
+						.append(");\n");
+				areaCode.insertText(caretPosition, sb.toString());
+			}));
+		} else {
+			// if toggle has been deselected
+			manager.removePressListenersByPrefix("mouse.press");
+			enableCodeType = true;
+		}
+	}
 
-    }
-    
-    @FXML
-    void insertMouseMove(ActionEvent event) {
+	@FXML
+	void insertMouseRelease(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
 
-    }
-    
-    
-    // Show code samples
-    @FXML
+			manager.addReleaseListener(
+					new MouseHandler("mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = areaCode.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						sb.append("mouse.release('").append(
+								manager.getLastButtonEvent().getButton())
+								.append("');\n");
+						areaCode.insertText(caretPosition, sb.toString());
+					}));
+		} else {
+			// if toggle has been deselected
+			manager.removeReleaseListenersByPrefix("mouse.release");
+			enableCodeType = true;
+		}
+	}
+
+	@FXML
+	void insertMouseReleaseAt(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+
+			manager.addReleaseListener(
+					new MouseHandler("mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						int caretPosition = areaCode.getCaretPosition();
+						MouseButtonEvent e = manager.getLastButtonEvent();
+						StringBuilder sb = new StringBuilder();
+						sb.append("mouse.releaseAt('").append(e.getButton())
+								.append("',").append(e.getX()).append(",")
+								.append(e.getY()).append(");\n");
+						areaCode.insertText(caretPosition, sb.toString());
+					}));
+		} else {
+			// if toggle has been deselected
+			manager.removeReleaseListenersByPrefix("mouse.release");
+			enableCodeType = true;
+		}
+	}
+	// TODO
+	@FXML
+	void insertMouseClick(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
+			enableCodeType = true;
+		}
+	}
+	@FXML
+	void insertMouseClickAt(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+
+			manager.addReleaseListener(
+					new MouseHandler("mouse.release", "", () -> {
+						if (!KeyEventsManager.getInstance()
+								.isPressed("CONTROL"))
+							return;
+						MouseButtonEvent lastEvent = manager
+								.getLastButtonEvent();
+						MouseButtonEvent preLastEvent = manager
+								.getPreLastButtonEvent();
+						if (preLastEvent == null)
+							return;
+						if ((lastEvent.getX() != preLastEvent.getX())
+								|| (lastEvent.getY() != preLastEvent.getY())) {
+							return;
+						}
+						int caretPosition = areaCode.getCaretPosition();
+						StringBuilder sb = new StringBuilder();
+						sb.append("mouse.click('").append(lastEvent.getButton())
+								.append("',").append(lastEvent.getX())
+								.append(",").append(lastEvent.getY())
+								.append(");\n");
+						areaCode.insertText(caretPosition, sb.toString());
+					}));
+		} else {
+			// if toggle has been deselected
+			manager.removeReleaseListenersByPrefix("mouse.release");
+			enableCodeType = true;
+		}
+	}
+
+	@FXML
+	void insertMouseMoveAt(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
+			enableCodeType = true;
+		}
+	}
+
+	@FXML
+	void insertMouseMove(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		MouseEventsManager manager = MouseEventsManager.getInstance();
+		if (toggle.isSelected()) {
+			// if toggle has been seleted
+			select(toggle);
+			enableCodeType = false;
+		} else {
+			// if toggle has been deselected
+			enableCodeType = true;
+		}
+	}
+
+	// Show code samples
+	@FXML
 	public void showCodeSample(MouseEvent event) {
 		ToggleButton btn = (ToggleButton) event.getSource();
 		areaCodeSample.setText((String) btn.getUserData());
 		areaCodeSample.setVisible(true);
 	}
-    @FXML
+	@FXML
 	public void hideCodeSample(MouseEvent event) {
 		areaCodeSample.setVisible(false);
 	}
-    
-    
+
 	//// templates
-    
-    @FXML
+
+	@FXML
 	public void insertTemplate(ActionEvent event) {
 		Button b = (Button) event.getSource();
 		System.out.println(b.getText());
 	}
-    
-    @FXML
+
+	@FXML
 	public void showCodeTemplate(MouseEvent event) {
 		Button btn = (Button) event.getSource();
 		areaCodeSample.setText((String) btn.getUserData());
 		areaCodeSample.setVisible(true);
 	}
-    
-    @FXML
+
+	@FXML
 	public void hideCodeTemplate(MouseEvent event) {
 		areaCodeSample.setVisible(false);
 	}
