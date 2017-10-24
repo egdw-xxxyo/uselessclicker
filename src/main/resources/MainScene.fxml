@@ -78,12 +78,12 @@
                   </FlowPane>
                   <HBox>
                      <children>
-                        <ToggleButton fx:id="btnScriptStatus" maxWidth="180.0" minWidth="180.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="180.0" styleClass="templateButton" text="Script: running">
+                        <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton" text="Running:   newFile.js">
                            <font>
                               <Font name="FreeMono Bold" size="13.0" />
                            </font>
                         </ToggleButton>
-                        <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnStatusToggles" styleClass="templateButton" text="Record Events&gt;Mouse 'press/release'&gt;moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
+                        <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnStatusToggles" styleClass="templateButton" text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
                            <font>
                               <Font name="FreeMono Bold" size="13.0" />
                            </font>
@@ -118,7 +118,7 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
-                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="300.0" minWidth="300.0" mouseTransparent="true" prefHeight="200.0" prefWidth="300.0" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="310.0" minWidth="310.0" mouseTransparent="true" prefHeight="200.0" prefWidth="310.0" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <effect>
                               <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
                            </effect></TextArea>

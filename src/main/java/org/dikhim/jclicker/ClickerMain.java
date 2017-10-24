@@ -72,7 +72,7 @@ public class ClickerMain extends Application {
 		System.out.println("Controller loaded");
 		primaryStage.getIcons().add(new Image(
 				getClass().getResourceAsStream("/images/cursor.png")));
-		primaryStage.setScene(new Scene(root, 600, 400));
+		primaryStage.setScene(new Scene(root, 800, 600));
 		primaryStage.show();
 		System.out.println("Show");
 
@@ -117,6 +117,7 @@ public class ClickerMain extends Application {
 
 	public static void setScript(Script script) {
 		StringProperty prop =  ClickerMain.script.getStringProperty();
+		prop.set(script.getStringProperty().get());
 		script.setScriptProperty(prop);
 		ClickerMain.script = script;
 		ClickerMain.updateTitle();
@@ -129,6 +130,7 @@ public class ClickerMain extends Application {
 		StringProperty prop;
 		if(script!=null) {
 			prop =  script.getStringProperty();
+			prop.set("");
 			script = new Script();
 			script.setScriptProperty(prop);
 		}else {
