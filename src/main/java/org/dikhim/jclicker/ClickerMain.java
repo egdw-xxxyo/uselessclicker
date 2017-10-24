@@ -20,9 +20,12 @@ import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
 import javafx.application.Application;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -30,11 +33,11 @@ public class ClickerMain extends Application {
 	public static Script script;
 	public static Stage stage;
 	public static Robot robot;
-	public static Actions actions;
 	public static JSEngine jse;
 	public static MainController controller;
 	@Override
-	public void start(Stage primaryStage) throws IOException {
+	public void start(Stage primaryStage) throws Exception {
+		stage = primaryStage;
 		System.out.println("Start");
 		Logger logger = Logger
 				.getLogger(GlobalScreen.class.getPackage().getName());
@@ -44,28 +47,31 @@ public class ClickerMain extends Application {
 		} catch (NativeHookException e) {
 			System.exit(-1);
 		}
-		System.out.println("Logger off");
-		stage = primaryStage;
+		
 		try {
 			robot = new Robot();
 		} catch (AWTException e1) {
 			e1.printStackTrace();
-			OutStream.print(e1.getMessage());
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Program start failure");
+			alert.setHeaderText("Can not create 'Robot' object ");
+			alert.setContentText(
+					"It can occurs if you have no permission for it\n" + "message:\n"+e1.getMessage());
+			alert.showAndWait();
+			stop();
 		}
-		System.out.println("Robot created");
 		jse = new JSEngine(robot);
-		System.out.println("JS created");
-		actions = new Actions();
-
+		newScript();
 		
 		FXMLLoader fxmlLoader = new FXMLLoader();
-		Parent root = fxmlLoader.load(getClass().getResource("/MainScene.fxml").openStream());
+		Parent root = fxmlLoader
+				.load(getClass().getResource("/MainScene.fxml").openStream());
 
 		System.out.println("FXML loded");
-		controller = (MainController)fxmlLoader.getController();
-		System.out.println("Controller get");
-		primaryStage.setTitle("JClicker");
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
+		controller = (MainController) fxmlLoader.getController();
+		System.out.println("Controller loaded");
+		primaryStage.getIcons().add(new Image(
+				getClass().getResourceAsStream("/images/cursor.png")));
 		primaryStage.setScene(new Scene(root, 600, 400));
 		primaryStage.show();
 		System.out.println("Show");
@@ -81,13 +87,12 @@ public class ClickerMain extends Application {
 				new ShortcutEqualsHandler("stopScript", "CONTROL ALT S", () -> {
 					jse.stop();
 				}));
-		newScript();
 
 	}
 
-	
 	public static void runScript() {
-		if(script==null)return;
+		if (script == null)
+			return;
 		jse.putCode(script.getStringProperty().get());
 		try {
 			jse.start();
@@ -106,36 +111,39 @@ public class ClickerMain extends Application {
 			jse.stop();
 		} catch (NativeHookException e) {
 			e.printStackTrace();
-			OutStream.print(e.getMessage());
 		}
 		super.stop();
 	}
-	
+
 	public static void setScript(Script script) {
-		ClickerMain.script= script;
+		StringProperty prop =  ClickerMain.script.getStringProperty();
+		script.setScriptProperty(prop);
+		ClickerMain.script = script;
 		ClickerMain.updateTitle();
 	}
-	
+
 	public static Script getScript() {
 		return script;
 	}
 	public static void newScript() {
-		script = new Script();
+		StringProperty prop;
+		if(script!=null) {
+			prop =  script.getStringProperty();
+			script = new Script();
+			script.setScriptProperty(prop);
+		}else {
+			script = new Script();
+			
+		}
 		ClickerMain.updateTitle();
 	}
-	
+
 	public static void updateTitle() {
-		File file = script.getScriptFile();
-		if(file!=null) {
-			
-			stage.setTitle(script.getScriptFile().getName());
-		}else {
-			stage.setTitle("newFile.js");
-		}
+		stage.setTitle(script.getName());
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 }

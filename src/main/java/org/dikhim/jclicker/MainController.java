@@ -36,12 +36,18 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 public class MainController {
@@ -71,13 +77,20 @@ public class MainController {
 							event.consume();
 					}
 				});
-		
+
 		// init toggles
 		initToggles();
 		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
 				getClass().getResource("/strings/codesamples.js").getFile()));
 		setCodeSamples(propertyFile);
 		initTemplateButtons(propertyFile);
+
+		Script script = ClickerMain.getScript();
+		codeTextProperty.set("");
+		script.setScriptProperty(codeTextProperty);
+
+		setScriptStatus(Status.SUSPENDED);
+		setToggleStatus(null);
 	}
 	/**
 	 * Sets code samples as user data to each element
@@ -138,22 +151,21 @@ public class MainController {
 	@FXML
 	public void stopScript() {
 		ClickerMain.stopScript();
+		setScriptStatus(Status.SUSPENDED);
 	}
 	@FXML
 	public void runScript() {
 		OutStream.clear();
 		select(null);
+		setScriptStatus(Status.RUNNING);
 		ClickerMain.runScript();
 	}
 	@FXML
 	public void newFile() {
 		stopScript();
 		ClickerMain.newScript();
-		Script script = ClickerMain.getScript();
-		codeTextProperty.set("");
-		script.setScript(codeTextProperty);
+		updateScriptStatus();
 	}
-
 	@FXML
 	public void openFile() {
 		FileChooser fileChooser = new FileChooser();
@@ -174,9 +186,10 @@ public class MainController {
 			prefs.put("last-opened-folder",
 					file.getParentFile().getAbsolutePath());
 
-			areaCode.textProperty().bindBidirectional(script.getStringProperty());
+			areaCode.textProperty()
+					.bindBidirectional(script.getStringProperty());
 		}
-
+		updateScriptStatus();
 	}
 
 	@FXML
@@ -200,7 +213,8 @@ public class MainController {
 
 			if (file != null) {
 				try {
-					FileUtils.writeStringToFile(file, script.getStringProperty().get(),
+					FileUtils.writeStringToFile(file,
+							script.getStringProperty().get(),
 							Charset.defaultCharset());
 					script.setScriptFile(file);
 					prefs.put("last-saved-folder", script.getScriptFile()
@@ -215,14 +229,15 @@ public class MainController {
 		} else {
 			try {
 				FileUtils.writeStringToFile(script.getScriptFile(),
-						script.getStringProperty().get(), Charset.defaultCharset());
+						script.getStringProperty().get(),
+						Charset.defaultCharset());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		ClickerMain.updateTitle();
-
+		updateScriptStatus();
 	}
 	/**
 	 * Save script in new file
@@ -249,7 +264,8 @@ public class MainController {
 			script.setScriptFile(file);
 			try {
 				FileUtils.writeStringToFile(script.getScriptFile(),
-						script.getStringProperty().get(), Charset.defaultCharset());
+						script.getStringProperty().get(),
+						Charset.defaultCharset());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -371,15 +387,16 @@ public class MainController {
 					t.fire();
 			}
 		}
+		setToggleStatus(selectedToggle);
 	}
 	// Keyboard
 	@FXML
 	void insertKeyName(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		KeyEventsManager manager = KeyEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(new ShortcutIncludesHandler(
 					"insert.keyboard.name", "", () -> {
@@ -398,10 +415,10 @@ public class MainController {
 	@FXML
 	void insertKeyCode(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		KeyEventsManager manager = KeyEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(new ShortcutIncludesHandler(
 					"insert.keyboard.code.press", "", () -> {
@@ -429,10 +446,10 @@ public class MainController {
 	@FXML
 	void insertKeyCodeWithDelay(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		KeyEventsManager manager = KeyEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.resetTimeLog();
 			manager.addPressListener(new ShortcutIncludesHandler(
@@ -477,10 +494,10 @@ public class MainController {
 	@FXML
 	void insertMouseCode(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(
 					new MouseHandler("insert.mouse.press", "", () -> {
@@ -517,10 +534,10 @@ public class MainController {
 	@FXML
 	void insertMouseCodeWithDelay(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(
 					new MouseHandler("insert.mouse.press", "", () -> {
@@ -570,10 +587,10 @@ public class MainController {
 	@FXML
 	void insertMouseName(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(
 					new MouseHandler("insert.mouse.press", "", () -> {
@@ -595,10 +612,10 @@ public class MainController {
 	@FXML
 	void insertMouseRelativeCode(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			// Start record by set the first movement point
 			KeyEventsManager.getInstance().addPressListener(
@@ -691,10 +708,10 @@ public class MainController {
 	@FXML
 	void insertMouseCodeClick(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			// insert code on press button
@@ -804,10 +821,10 @@ public class MainController {
 	@FXML
 	void insertAbsolutePath(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			// on press key start record path
 			KeyEventsManager.getInstance().addPressListener(
@@ -843,10 +860,10 @@ public class MainController {
 	@FXML
 	void insertRelativePath(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			// on press key start record path
 			KeyEventsManager.getInstance().addPressListener(
@@ -884,10 +901,10 @@ public class MainController {
 	@FXML
 	void insertAbsolutePathWithDelays(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			// on press key start record path
 			KeyEventsManager.getInstance().addPressListener(
@@ -926,10 +943,10 @@ public class MainController {
 	@FXML
 	void insertRelativePathWithDelays(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			// on press key start record path
 			KeyEventsManager.getInstance().addPressListener(
@@ -970,10 +987,10 @@ public class MainController {
 	@FXML
 	void insertMousePress(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
@@ -996,10 +1013,10 @@ public class MainController {
 	@FXML
 	void insertMousePressAt(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
@@ -1023,10 +1040,10 @@ public class MainController {
 	@FXML
 	void insertMouseRelease(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addReleaseListener(
@@ -1051,10 +1068,10 @@ public class MainController {
 	@FXML
 	void insertMouseReleaseAt(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addReleaseListener(
@@ -1080,10 +1097,10 @@ public class MainController {
 	@FXML
 	void insertMouseClick(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addReleaseListener(
@@ -1116,10 +1133,10 @@ public class MainController {
 	@FXML
 	void insertMouseClickAt(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 
 			manager.addReleaseListener(
@@ -1155,10 +1172,10 @@ public class MainController {
 	@FXML
 	void insertMouseMoveAt(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			manager.addPressListener(new MouseHandler("mouse.press", "", () -> {
 				if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
@@ -1181,10 +1198,10 @@ public class MainController {
 	@FXML
 	void insertMouseMove(ActionEvent event) {
 		ToggleButton toggle = (ToggleButton) event.getSource();
+		select(toggle);
 		MouseEventsManager manager = MouseEventsManager.getInstance();
 		if (toggle.isSelected()) {
 			// if toggle has been seleted
-			select(toggle);
 			enableCodeType = false;
 			KeyEventsManager.getInstance().addPressListener(
 					new ShortcutEqualsHandler("key.press", "CONTROL", () -> {
@@ -1215,6 +1232,7 @@ public class MainController {
 
 	/**
 	 * Shows hint area with tex from userData in button
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -1225,6 +1243,7 @@ public class MainController {
 	}
 	/**
 	 * Hides hint area
+	 * 
 	 * @param event
 	 */
 	@FXML
@@ -1511,6 +1530,96 @@ public class MainController {
 	@FXML
 	public void hideCodeTemplate(MouseEvent event) {
 		areaCodeSample.setVisible(false);
+	}
+
+	// Status control
+
+	private enum Status {
+		RUNNING, SUSPENDED
+	}
+	@FXML
+	private ToggleButton btnScriptStatus;
+
+	@FXML
+	private ToggleButton btnTogglesStatus;
+
+	private void setScriptStatus(Status status) {
+		btnScriptStatus.setUserData(status);
+		if (status == Status.RUNNING) {
+			btnScriptStatus.setSelected(true);
+			btnScriptStatus
+					.setText("Running:   " + ClickerMain.getScript().getName());
+		} else if (status == Status.SUSPENDED) {
+			btnScriptStatus.setSelected(false);
+			btnScriptStatus
+					.setText("Suspended: " + ClickerMain.getScript().getName());
+		}
+	}
+
+	private void updateScriptStatus() {
+		if (btnScriptStatus.isSelected()) {
+			btnScriptStatus
+					.setText("Running:   " + ClickerMain.getScript().getName());
+		} else {
+			btnScriptStatus
+					.setText("Suspended: " + ClickerMain.getScript().getName());
+		}
+	}
+	private void setToggleStatus(ToggleButton toggle) {
+		if (toggle == null) {
+			btnTogglesStatus.setText("Never used");
+			btnTogglesStatus.setUserData(null);
+			return;
+		}
+		btnTogglesStatus.setSelected(toggle.isSelected());
+		String title = "";
+		if (toggle.isSelected()) {
+			title += "Active:    ";
+		} else {
+			title += "Last used: ";
+		}
+		title += getTemplateButtonPath(toggle);
+		btnTogglesStatus.setText(title);
+		btnTogglesStatus.setUserData(toggle);
+	}
+
+	private String getTemplateButtonPath(Object button) {
+		String out = "";
+		Node n = (Node) button;
+		if (button instanceof Button) {
+			out = ((Button) button).getText();
+
+		} else if (button instanceof ToggleButton) {
+			out = ((ToggleButton) button).getText();
+		}
+
+		do {
+			if (n instanceof TitledPane) {
+				out = ((TitledPane) n).getText() + "> " + out;
+			}
+			n = n.getParent();
+		} while ((!(n instanceof AnchorPane)) && (n != null));
+		return out;
+	}
+	@FXML
+	private void onBtnStatusScript(ActionEvent event) {
+		ToggleButton button = (ToggleButton) event.getSource();
+		if (button.isSelected()) {
+			runScript();
+		} else {
+			stopScript();
+		}
+	}
+	@FXML
+	private void onBtnStatusToggles(ActionEvent event) {
+		ToggleButton toggle = (ToggleButton) event.getSource();
+		if (toggle.getUserData() == null) {
+			toggle.setSelected(false);
+			return;
+		}
+		if (toggle.getUserData() instanceof ToggleButton) {
+			((ToggleButton) toggle.getUserData()).fire();
+		}
 	}
 
 }

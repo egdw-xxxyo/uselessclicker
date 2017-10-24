@@ -12,13 +12,15 @@ import javafx.beans.property.StringProperty;
 public class Script {
 	private File scriptFile;
 	private StringProperty script;
+	private String name;
 	public Script() {
 		script = new SimpleStringProperty();
-
+		name = "newFile.js";
 	}
 	public Script(File file) {
 		script = new SimpleStringProperty();
 		this.scriptFile = file;
+		name = file.getName();
 		try {
 			this.script.set(FileUtils.readFileToString(file, Charset.defaultCharset()));
 		} catch (IOException e) {
@@ -38,6 +40,7 @@ public class Script {
 	 */
 	public void setScriptFile(File scriptFile) {
 		this.scriptFile = scriptFile;
+		name = scriptFile.getName();
 	}
 	/**
 	 * @return the script
@@ -49,8 +52,12 @@ public class Script {
 	 * @param script
 	 *            the script to set
 	 */
-	public void setScript(StringProperty script) {
+	public void setScriptProperty(StringProperty script) {
 		this.script = script;
+	}
+	
+	public String getName() {
+		return name;
 	}
 
 }
