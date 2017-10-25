@@ -11,57 +11,132 @@
 //Toggles
 //Keyboard
 $btnInsertKeyName:
+//Вставляет имена нажатых клавишь
+//
+//Пример:
 CONTROL ALT DELETE
+//будет вставлено при нажатии
+//соответствующих клавишь
 
 $btnInsertKeyCode:
+//Вставляет код для событий
+//нажатия и отпускания клавишь
+//
+//Пример:
 key.press('CONTROL');
+key.press('С');
+key.release('С');
 key.release('CONTROL');
-key.press('ALT');
-key.release('ALT');
+//будет вставлено при нажатии и
+//отпускании двух клавишь
+//"CONTROL C"
 
 $btnInsertKeyCodeWithDelay:
-system.sleep(6088);
+//Вставляет код для событий нажатия и
+//отпускания клавишь с задержками
+//между событиями
+//
+//Пример:
+system.sleep(200);
 key.press('CONTROL');
-system.sleep(768);
-key.press('C');
-system.sleep(80);
-key.release('C');
-system.sleep(40);
+system.sleep(100);
+key.press('С');
+system.sleep(100);
+key.release('С');
+system.sleep(200);
 key.release('CONTROL');
+//будет вставлено при нажатии и
+//отпускании двух клавишь 
+//"CONTROL C"
 
 //Mouse basics
 $btnInsertMouseName:
-LEFT MIDDLE RIGHT 
+//Вставляет имена нажатых клавишь
+//мыши
+//
+//Пример:
+LEFT MIDDLE RIGHT
+//будет вставлено при нажатии
+//соответсвующих клавишь
 
 $btnInsertMouseClick:
+//Вставляет код для клика
+//соответсвующией клавиши мыши
+//
+//Пример:
 mouse.click('LEFT');
 mouse.click('RIGHT');
+//будет вставлено при клике левой и
+//правой клавишей миши
 
 $btnInsertMouseClickAt:
-mouse.clickAt('LEFT',428,354);
-mouse.clickAt('RIGHT',443,369);
+//Вставляет код для клика
+//соответсвующей клавиши мыши в
+//определенной точке
+//
+//Пример:
+mouse.clickAt('LEFT',500,500);
+mouse.clickAt('RIGHT',600,600);
+//будет вставлено при клике левой и
+//правой клавишей миши
 
 $btnInsertMouseMove:
-mouse.move(191,23);
+//Вставляет код для относительного
+//движения курсора
+//
+//Пример:
+mouse.move(100,-50);
+//будет вставлено при перемещении
+//курсора
 
 $btnInsertMouseMoveAt:
-mouse.moveAt(191,23);
-
-//Click to paste
-mouse.moveAt(570,359);
-mouse.moveAt(533,497);
+//Вставляет код для перемещения
+//курсора в указанную точку
+//
+//Пример:
+mouse.moveAt(200,200);
+//будет вставлено при клике в
+//указанной точке
 
 $btnInsertMousePress:
+//Вставляет код для нажатия
+//соответствующей клавиши мыши
+//
+//Пример:
 mouse.press('LEFT');
+mouse.press('RIGHT');
+//будет вставлено при нажатии левой
+//и правой клавиши миши
 
 $btnInsertMousePressAt:
-mouse.pressAt('LEFT',437,523);
+//Вставляет код для нажатия
+//соответствующей клавиши мыши в
+//указанной точке
+//
+//Пример:
+mouse.pressAt('LEFT',400,400);
+//будет всталено при нажатии левой
+//клавиши мыши в указанной точке
 
 $btnInsertMouseRelease:
+//Вставляет код для отпускания
+//соответствующей клавиши мыши
+//
+//Пример:
 mouse.release('LEFT');
+mouse.release('RIGHT');
+//будет вставлено при отпускании
+//лувой и правой клавиши мыши
 
 $btnInsertMouseReleaseAt:
-mouse.releaseAt('LEFT',539,479);
+//Вставляет код для отпускания
+//соответствующей клавиши мыши в
+//указанной точке
+//
+//Пример:
+mouse.releaseAt('LEFT',400,400);
+//будет всталено при отпускании левой
+//клавиши мыши в указанной точке
 
 //Mouse code
 $btnInsertMouseCode:

@@ -45,8 +45,6 @@ $btnInsertMouseMove:
 mouse.move(191,23);
 
 $btnInsertMouseMoveAt:
-mouse.moveAt(191,23);
-
 //Click to paste
 mouse.moveAt(570,359);
 mouse.moveAt(533,497);

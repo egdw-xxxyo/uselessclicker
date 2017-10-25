@@ -61,6 +61,7 @@ public class MainController {
 		areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 		areaOut.textProperty().bindBidirectional(outTextProperty);
 
+		// consume keyboard events for textArea while variable not true
 		areaCode.addEventFilter(KeyEvent.KEY_PRESSED,
 				new EventHandler<KeyEvent>() {
 					@Override
@@ -78,52 +79,21 @@ public class MainController {
 					}
 				});
 
-		// init toggles
-		initToggles();
+		// init toggles and template buttons
 		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
 				getClass().getResource("/strings/codesamples.js").getFile()));
-		setCodeSamples(propertyFile);
+		initToggles(propertyFile);
 		initTemplateButtons(propertyFile);
 
+		// Init script
 		Script script = ClickerMain.getScript();
 		codeTextProperty.set("");
 		script.setScriptProperty(codeTextProperty);
 
+		// Set satus suspended and reset toggles status
 		setScriptStatus(Status.SUSPENDED);
 		setToggleStatus(null);
 	}
-	/**
-	 * Sets code samples as user data to each element
-	 * 
-	 * @param prop
-	 *            source property file
-	 */
-	public void setCodeSamples(SourcePropertyFile prop) {
-		btnInsertKeyName.setUserData(prop.get("insertKeyName"));
-		btnInsertKeyCode.setUserData(prop.get("insertKeyCode"));
-		btnInsertKeyCodeWithDelay
-				.setUserData(prop.get("insertKeyCodeWithDelay"));
-		// mouse basics
-		btnInsertMouseName.setUserData(prop.get("insertMouseName"));
-
-		// mouse code
-		btnInsertMouseCode.setUserData(prop.get("insertMouseCode"));
-		btnInsertMouseCodeWithDelay
-				.setUserData(prop.get("insertMouseCodeWithDelay"));
-		btnInsertMouseRelativeCode
-				.setUserData(prop.get("insertMouseRelativeCode"));
-
-		btnInsertMouseCodeClick.setUserData(prop.get("insertMouseCodeClick"));
-
-		// mouse movement
-		btnInsertAbsolutePath.setUserData(prop.get("insertAbsolutePath"));
-		btnInsertRelativePath.setUserData(prop.get("insertRelativePath"));
-		btnInsertAbsolutePathWithDelays
-				.setUserData(prop.get("insertAbsolutePathWithDelays"));
-		btnInsertRelativePathWithDelays
-				.setUserData(prop.get("insertRelativePathWithDelays"));
-	}
-
 	@FXML
 	private Button btnRunScript;
 	@FXML
@@ -276,7 +246,7 @@ public class MainController {
 				script.getScriptFile().getParentFile().getAbsolutePath());
 	}
 
-	//////
+	////// Toggles
 	// Keyboard
 	@FXML
 	private ToggleButton btnInsertKeyName;
@@ -345,36 +315,92 @@ public class MainController {
 	/**
 	 * Adds all toggles to listOfToggles
 	 */
-	private void initToggles() {
+	private void initToggles(SourcePropertyFile properties) {
 		// Keyboard
-		listOfToggles.add(btnInsertKeyName);
-		listOfToggles.add(btnInsertKeyCode);
-		listOfToggles.add(btnInsertKeyCodeWithDelay);
+		ToggleButton b = btnInsertKeyName;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
 
+		b = btnInsertKeyCode;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertKeyCodeWithDelay;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
 		// mouse basics
-		listOfToggles.add(btnInsertMouseName);
-		listOfToggles.add(btnInsertMousePress);
-		listOfToggles.add(btnInsertMousePressAt);
-		listOfToggles.add(btnInsertMouseRelease);
-		listOfToggles.add(btnInsertMouseReleaseAt);
-		listOfToggles.add(btnInsertMouseClick);
-		listOfToggles.add(btnInsertMouseClickAt);
-		listOfToggles.add(btnInsertMouseMove);
-		listOfToggles.add(btnInsertMouseMoveAt);
+		b = btnInsertMouseName;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMousePress;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMousePressAt;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseRelease;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseReleaseAt;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseClick;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseClickAt;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseMove;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseMoveAt;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
 
 		// mouse press/release
-		listOfToggles.add(btnInsertMouseCode);
-		listOfToggles.add(btnInsertMouseCodeWithDelay);
-		listOfToggles.add(btnInsertMouseRelativeCode);
-		// mouse click
-		listOfToggles.add(btnInsertMouseCodeClick);
-		// Movement
-		listOfToggles.add(btnInsertAbsolutePath);
-		listOfToggles.add(btnInsertRelativePath);
-		listOfToggles.add(btnInsertAbsolutePathWithDelays);
-		listOfToggles.add(btnInsertRelativePathWithDelays);
+		b = btnInsertMouseCode;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
 
+		b = btnInsertMouseCodeWithDelay;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertMouseRelativeCode;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		// mouse click
+		b = btnInsertMouseCodeClick;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		// Movement
+		b = btnInsertAbsolutePath;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertAbsolutePathWithDelays;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertRelativePath;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
+
+		b = btnInsertRelativePathWithDelays;
+		listOfToggles.add(b);
+		b.setUserData(properties.get(b.getId()));
 	}
+
 	/**
 	 * Deselect all toggle except the parameter
 	 * 
@@ -1252,7 +1278,6 @@ public class MainController {
 	}
 
 	//// template buttons
-
 	@FXML
 	private Button btnTemplateMouseClick;
 
@@ -1370,19 +1395,24 @@ public class MainController {
 	 * @param prop
 	 */
 	private void initTemplateButtons(SourcePropertyFile prop) {
+		// Mouse
 		Button b;
 		b = btnTemplateMouseClick;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseClickAt;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetMoveDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
@@ -1390,104 +1420,137 @@ public class MainController {
 		b = btnTemplateMouseGetX;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetY;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMove;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveAbsolute;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
 		b = btnTemplateMouseMoveAbsolute_D;
+
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveAndClick;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveAndPress;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveAndRelease;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveRelative;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveRelative_D;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseMoveTo;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMousePress;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMousePressAt;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseRelease;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseReleaseAt;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseSetMoveDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseSetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseSetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseSetX;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseSetY;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateMouseGetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		// Keyboard
 		b = btnTemplateKeyGetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeyGetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeyIsPressed;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeyPress;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeyRelease;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeyType;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeySetPressDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateKeySetReleaseDelay;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		// System
 		b = btnTemplateSystemSleep;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateSystemPrint;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateSystemPrintln;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
+
 		b = btnTemplateSystemRegisterShortcut;
 		b.setUserData(new String[]{prop.get(b.getId()),
 				prop.get(b.getId() + "Code")});
@@ -1567,8 +1630,11 @@ public class MainController {
 	}
 	private void setToggleStatus(ToggleButton toggle) {
 		if (toggle == null) {
-			btnTogglesStatus.setText("Never used");
-			btnTogglesStatus.setUserData(null);
+			if(btnTogglesStatus.getUserData() == null) {
+				btnTogglesStatus.setText("Never used");
+				btnTogglesStatus.setUserData(null);
+				return;
+			}
 			return;
 		}
 		btnTogglesStatus.setSelected(toggle.isSelected());
