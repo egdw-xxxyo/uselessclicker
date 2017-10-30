@@ -138,53 +138,95 @@ mouse.releaseAt('LEFT',400,400);
 //будет всталено при отпускании левой
 //клавиши мыши в указанной точке
 
+/////////////////////////////////////
 //Mouse code
 $btnInsertMouseCode:
+//Вставляет код для нажатия и
+//отпускания клавишь мыши
+//
+//Пример:
 mouse.pressAt('LEFT',100,0);
 mouse.releaseAt('LEFT',200,0);
-mouse.pressAt('RIGHT',300,200);
-mouse.releaseAt('RIGHT',300,200);
+//будет всталено при нажатии левой
+//клавиши мыши перемещении курсора
+//и отпускании клавиши
 
 $btnInsertMouseCodeWithDelay:
+//Вставляет код для нажатия и
+//отпускания клавишь мыши с
+//задержками между событиями
+//
+//Пример:
+system.sleep(200);
 mouse.pressAt('LEFT',100,0);
 system.sleep(200);
 mouse.releaseAt('LEFT',200,0);
 system.sleep(500);
-mouse.pressAt('RIGHT',300,200);
-system.sleep(50);
-mouse.releaseAt('RIGHT',300,200);
+//будет всталено при нажатии левой
+//клавиши мыши перемещении курсора
+//и отпускании клавиши
 
 $btnInsertMouseRelativeCode:
+//Вставляет код для нажатия и
+//отпускания клавишь мыши
+//относительно прошлого события
+//
+//Пример:
 mouse.moveAndPress('LEFT',50,0);
-mouse.moveAndRelease('LEFT',0,50);
-mouse.moveAndPress('RIGHT',-100,0);
-mouse.moveAndRelease('RIGHT',0,-50);
-mouse.move(50,0);
+mouse.moveAndRelease('LEFT',0,0);
+//будет вставлено при перемещении
+//курсора вправо на 50 пикселей,
+//нажатия и отпускания левой
+//клавиши мыши в той же точке
 
+/////////////////////////////////////
 //click
 $btnInsertMouseCodeClick:
+//Вставляет код для нажатия и
+//отпускания клавишь мыши с
+//распознаванием кликов
+//
+//Пример:
 mouse.clickAt('LEFT',200,200);
-mouse.pressAt('LEFT',200,200);
-mouse.releaseAt('LEFT',300,300);
-mouse.clickAt('RIGHT',300,300);
+//будет вставлено при клике левой
+//клавишей мыши
 
+/////////////////////////////////////
 //Movement
 $btnInsertAbsolutePath:
+//Вставляет код для движения курсора
+//по абсолютным координатам
+//
+//Пример:
 mouse.moveAbsolute('010100100100100'+
 '1101000101011101010010110101111010'+
 '000111100011010101');
 
 $btnInsertRelativePath:
+//Вставляет код для движения курсора
+//по относительным координатам
+//
+//Пример:
 mouse.moveRelative('010100100100100'+
 '1101000101011101010010110101110010'+
 '000111100011010101');
 
 $btnInsertAbsolutePathWithDelays:
+//Вставляет код для движения курсора
+//по абсолютным координатам с
+//задержками между событиями
+//
+//Пример:
 mouse.moveAbsolute_D('0101001010100'+
 '1101000101011101010010110101110010'+
 '000111100011010101');
 
 $btnInsertRelativePathWithDelays:
+//Вставляет код для движения курсора
+//по относительным координатам с
+//задержками между событиями
+//
+//Пример:
 mouse.moveRelative_D('0101001010100'+
 '1101000101011101010010110010010010'+
 '000111100011010101');
@@ -194,51 +236,111 @@ mouse.moveRelative_D('0101001010100'+
 /////////////////////////////////////
 //MOUSE
 $btnTemplateMouseClick:
-//This button will past this code 
-//  to carret position:
-mouse.click('',,);
+mouse.click('');
+//Клик клавишей мыши
+//
+//mouse.click('BTN');
+//   BTN - имя клавиши
+//
+//Метод состоит из двух вызовов
+//нажатия и отпускания клавиши мыши:
+//  press('BTN');
+//    sleep(pressDelay);
+//  release('BTN');
+//    sleep(releaseDelay);
 
 $btnTemplateMouseClickCode:
-mouse.click('',,);
+mouse.click('');
 
 $btnTemplateMouseClickAt:
 mouse.clickAt('',,);
+//Клик клавишей мыши в укзанной точке
+//
+//mouse.clickAt('BTN',x,y);
+//  BTN - имя клавиши
+//  x,y - координаты
+//
+//Метод состоит из двух вызовов
+//нажатия и отпускания клавиши мыши:
+//  pressAt('BTN',x,y);
+//    sleep(pressDelay);
+//  releaseAt('BTN',x,y);
+//    sleep(releaseDelay);
 
 $btnTemplateMouseClickAtCode:
 mouse.clickAt('',,);
 
 $btnTemplateMouseGetMoveDelay:
 mouse.getMoveDelay();
+//Получить задержку передвижения
+//курсора мыши в мс. (moveDelay)
+//
+//mouse.getMoveDelay():int
 
 $btnTemplateMouseGetMoveDelayCode:
 mouse.getMoveDelay();
 
 $btnTemplateMouseGetPressDelay:
 mouse.getPressDelay();
+//Получить задержку нажатия клавиши
+//мыши в мс. (pressDelay)
+//
+//mouse.getPressDelay():int
+//
 
 $btnTemplateMouseGetPressDelayCode:
 mouse.getPressDelay();
 
 $btnTemplateMouseGetReleaseDelay:
 mouse.getReleaseDelay();
+//Получить задержку отпускания
+//клавиши мыши в мс. (releaseDelay)
+//
+//mouse.getReleaseDelay():int
+//
 
 $btnTemplateMouseGetReleaseDelayCode:
 mouse.getReleaseDelay();
 
 $btnTemplateMouseGetX:
 mouse.getX();
+//Получить координату 'x' последнего
+//события мыши.
+//
+//mouse.getX():int
+//
+//Если после запуска программы курсор
+//не перемещался и клавиши не
+//нажимались возвращает: 0
 
 $btnTemplateMouseGetXCode:
 mouse.getX();
 
 $btnTemplateMouseGetY:
 mouse.getY();
+//Получить координату 'y' последнего
+//события мыши
+//
+//mouse.getY():int
+//
+//Если после запуска программы курсор
+//не перемещался и клавиши не
+//нажимались возвращает: 0
 
 $btnTemplateMouseGetYCode:
 mouse.getY();
 
 $btnTemplateMouseMove:
 mouse.move(,);
+//Передвинуть курсор относительно
+//координат последнего события
+//
+//mouse.move(dx,dy);
+//  dx, dy - смещения
+//
+//Метод состоит из:
+//  move(dx,dy);
+//    sleep(moveDelay);
 
 $btnTemplateMouseMoveCode:
 mouse.move(,);
@@ -257,18 +359,60 @@ mouse.moveAbsolute_D('');
 
 $btnTemplateMouseMoveAndClick:
 mouse.moveAndClick('',,);
+//Передвинуть курсор относительно
+//координат последнего события
+//и кликнуть
+//
+//mouse.moveAndClick('BTN',dx,dy);
+//  BTN - имя клавиши
+//  dx, dy - смещения
+//
+//Метод состоит из:
+//  move(dx,dy);
+//    sleep(moveDelay);
+//  press('BTN');
+//    sleep(pressDelay);
+//  release('BTN');
+//    sleep(releaseDelay);
+
 
 $btnTemplateMouseMoveAndClickCode:
 mouse.moveAndClick('',,);
 
 $btnTemplateMouseMoveAndPress:
 mouse.moveAndPress('',,);
+//Передвинуть курсор относительно
+//координат последнего события
+//и нажать клавишу мыши
+//
+//mouse.moveAndPress('BTN',dx,dy);
+//  BTN - имя клавиши
+//  dx, dy - смещения
+//
+//Метод состоит из:
+//  move(dx,dy);
+//    sleep(moveDelay);
+//  press('BTN');
+//    sleep(pressDelay);
 
 $btnTemplateMouseMoveAndPressCode:
 mouse.moveAndPress('',,);
 
 $btnTemplateMouseMoveAndRelease:
 mouse.moveAndRelease('',,);
+//Передвинуть курсор относительно
+//координат последнего события
+//и отпустить клавишу мыши
+//
+//mouse.moveAndPress('BTN',dx,dy);
+//  BTN - имя клавиши
+//  dx, dy - смещения
+//
+//Метод состоит из:
+//  move(dx,dy);
+//    sleep(moveDelay);
+//  release('BTN');
+//    sleep(releaseDelay);
 
 $btnTemplateMouseMoveAndReleaseCode:
 mouse.moveAndRelease('',,);
@@ -287,136 +431,293 @@ mouse.moveRelative_D('');
 
 $btnTemplateMouseMoveTo:
 mouse.moveTo(,);
+//Передвинуть курсор в указанную
+//точку
+//
+//mouse.moveTo(x,y);
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
 
 $btnTemplateMouseMoveToCode:
 mouse.moveTo(,);
 
 $btnTemplateMousePress:
 mouse.press('');
+//Нажать клавишу мыши
+//
+//mouse.press('BTN');
+//  BTN - имя клавиши
+//
+//Метод состоит из:
+//  press('BTN');
+//    sleep(pressDelay);
 
 $btnTemplateMousePressCode:
 mouse.press('');
 
 $btnTemplateMousePressAt:
 mouse.pressAt('',,);
+//Передвинуть курсор в указанную
+//точку и нажать клавишу мыши
+//
+//mouse.pressAt('BTN',x,y);
+//  BTN - имя клавиши
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
+//  press('BTN');
+//    sleep(pressDelay);
 
 $btnTemplateMousePressAtCode:
 mouse.pressAt('',,);
 
 $btnTemplateMouseRelease:
 mouse.release('');
+//Отпустить клавишу мыши
+//
+//mouse.release('BTN');
+//  BTN - имя клавиши
+//
+//Метод состоит из:
+//  press('BTN');
+//    sleep(pressDelay);
 
 $btnTemplateMouseReleaseCode:
 mouse.release('');
 
 $btnTemplateMouseReleaseAt:
 mouse.releaseAt('',,);
+//Передвинуть курсор в указанную
+//точку и отпустить клавишу мыши
+//
+//mouse.releaseAt('BTN',x,y);
+//  BTN - имя клавиши
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
+//  release('BTN');
+//    sleep(releaseDelay);
 
 $btnTemplateMouseReleaseAtCode:
 mouse.releaseAt('',,);
 
 $btnTemplateMouseSetMoveDelay:
 mouse.setMoveDelay();
+//Установить задержку передвижения
+//курсора мыши в мс.
+//
+//mouse.setMoveDelay(moveDelay)
+//  moveDelay - задержка
 
 $btnTemplateMouseSetMoveDelayCode:
 mouse.setMoveDelay();
 
 $btnTemplateMouseSetPressDelay:
 mouse.setPressDelay();
+//Установить задержку нажатия
+//клавиши мыши в мс.
+//
+//mouse.setPressDelay(pressDelay)
+//  pressDelay - задержка
 
 $btnTemplateMouseSetPressDelayCode:
 mouse.setPressDelay();
 
 $btnTemplateMouseSetReleaseDelay:
 mouse.setReleaseDelay();
+//Установить задержку отпускания
+//клавиши мыши в мс.
+//
+//mouse.setReleaseDelay(releaseDelay)
+//  releaseDelay - задержка
 
 $btnTemplateMouseSetReleaseDelayCode:
 mouse.setReleaseDelay();
 
 $btnTemplateMouseSetX:
 mouse.setX();
+//Передвинуть курсор мыши по оси 'x'
+//в указанную координату
+//
+//mouse.setX(x);
+//  x - координата
+//
+//Метод состоит из:
+//  moveTo(x,getY());
+//    sleep(moveDelay);
 
 $btnTemplateMouseSetXCode:
 mouse.setX();
 
 $btnTemplateMouseSetY:
 mouse.setY();
+//Передвинуть курсор мыши по оси 'y'
+//в указанную координату
+//
+//mouse.setY(y);
+//  y - координата
+//
+//Метод состоит из:
+//  moveTo(x,getY());
+//    sleep(moveDelay);
 
 $btnTemplateMouseSetYCode:
 mouse.setY();
 
+/////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 //KEYBOARD
 $btnTemplateKeyGetPressDelay:
 key.getPressDelay();
+//Получить задержку нажатия клавиши
+//клавиатуры в мс. (pressDelay)
+//
+//key.getPressDelay():int
 
 $btnTemplateKeyGetPressDelayCode:
 key.getPressDelay();
 
 $btnTemplateKeyGetReleaseDelay:
 key.getReleaseDelay();
+//Получить задержку отпускания
+//клавиши клавиатуры в мс.
+//(releaseDelay)
+//
+//key.getReleaseDelay():int
 
 $btnTemplateKeyGetReleaseDelayCode:
 key.getReleaseDelay();
 
 $btnTemplateKeyIsPressed:
 key.isPressed('');
+//Узнать зажаты ли указанные клавиши
+//клавиатуры
+//
+//key.isPressed('KEY1 KEY2'):boolean
+//  KEY1, KEY2 - имена клавишь через
+//    пробел
 
 $btnTemplateKeyIsPressedCode:
 key.isPressed('');
 
 $btnTemplateKeyPress:
 key.press('');
+//Нажать клавишу клавиатуры
+//
+//key.press('KEY');
+//  KEY - имя клавиши
+//
+//Метод состоит из:
+//  press('KEY');
+//    sleep(pressDelay);
 
 $btnTemplateKeyPressCode:
 key.press('');
 
 $btnTemplateKeyRelease:
 key.release('');
+//Отпустить клавишу клавиатуры
+//
+//key.release('KEY');
+//  KEY - имя клавиши
+//
+//Метод состоит из:
+//  release('KEY');
+//    sleep(releaseDelay);
 
 $btnTemplateKeyReleaseCode:
 key.release('');
 
 $btnTemplateKeyType:
 key.type('');
+//Последовательно нажать и отпустить
+//каждую укзанную клавишу
+//
+//key.release('KEY1 KEY2');
+//  KEY1, KEY2 - имена клавишь через
+//    пробел
+//
+//Метод выполняет для каждой клавиши:
+//  press('KEY');
+//    sleep(pressDelay);
+//  release('KEY');
+//    sleep(releaseDelay);
 
 $btnTemplateKeyTypeCode:
 key.type('');
 
 $btnTemplateKeySetPressDelay:
 key.setPressDelay();
+//Установить задержку нажатия
+//клавиши клавиатуры в мс.
+//
+//key.setPressDelay(pressDelay)
+//  pressDelay - задержка
 
 $btnTemplateKeySetPressDelayCode:
 key.setPressDelay();
 
 $btnTemplateKeySetReleaseDelay:
 key.setReleaseDelay();
+//Установить задержку отпускания
+//клавиши клавиатуры в мс.
+//
+//key.setReleaseDelay(releaseDelay)
+//  releaseDelay - задержка
 
 $btnTemplateKeySetReleaseDelayCode:
 key.setReleaseDelay();
 
+/////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 //SYSTEM
 $btnTemplateSystemSleep:
 system.sleep();
+//Приостановить скрипт на заданное
+//время в мс.
+//
+//system.sleep(ms);
+//  ms - время в мс.
 
 $btnTemplateSystemSleepCode:
 system.sleep();
 
 $btnTemplateSystemPrint:
 system.print('');
+//Вывести сообщение в поле вывода
+//
+//system.print('TEXT');
 
 $btnTemplateSystemPrintCode:
 system.print('');
 
 $btnTemplateSystemPrintln:
 system.println('');
+//Вывести сообщение в поле вывода
+//и перейти на новую строку
+//
+//system.println('TEXT');
 
 $btnTemplateSystemPrintlnCode:
 system.println('');
 
 $btnTemplateSystemRegisterShortcut:
 system.registerShortcut('','');
+//Зарегистрировать сочетание клавишь
+//для вызова процедуры
+//
+//system.registerShortcut
+//    ('BTN2 BTN2','FUNCT');
+//  BTN1, BTN2 - имена клавишь через
+//    пробел
+//  FUNCT - имя вызываемого метода
 
 $btnTemplateSystemRegisterShortcutCode:
 system.registerShortcut('','');

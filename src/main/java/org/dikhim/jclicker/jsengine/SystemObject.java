@@ -16,7 +16,7 @@ public class SystemObject {
 	 * @param shortcut string
 	 */
 	
-	public void registerShortcut(String function, String shortcut) {
+	public void registerShortcut( String shortcut, String function) {
 		ShortcutEqualsHandler handler = new ShortcutEqualsHandler("script." + function,
 				shortcut, () -> {
 					engine.addTask(() -> {

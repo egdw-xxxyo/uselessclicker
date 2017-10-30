@@ -79,7 +79,7 @@ public class ClickerMain extends Application {
 		MouseEventsManager mouseListener = MouseEventsManager.getInstance();
 		GlobalScreen.addNativeMouseListener(mouseListener);
 		GlobalScreen.addNativeMouseMotionListener(mouseListener);
-
+		GlobalScreen.addNativeMouseWheelListener(mouseListener);
 		KeyEventsManager keyListener = KeyEventsManager.getInstance();
 		GlobalScreen.addNativeKeyListener(keyListener);
 

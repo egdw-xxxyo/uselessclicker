@@ -81,7 +81,7 @@ public class MainController {
 
 		// init toggles and template buttons
 		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
-				getClass().getResource("/strings/codesamples.js").getFile()));
+				getClass().getResource("/strings/codesamples_ru.js").getFile()));
 		initToggles(propertyFile);
 		initTemplateButtons(propertyFile);
 
