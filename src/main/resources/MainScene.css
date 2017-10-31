@@ -113,11 +113,6 @@
 
 
 /*text area */
-#hint-text-area{
-		-fx-text-fill: #444;
-		-fx-font-size: 13px;
-		-fx-font-family: "FreeMono Bold";
-}
 .code-text-area{
 		-fx-text-fill: #666;
 		-fx-font-size: 13px;
@@ -141,8 +136,8 @@
     
 }
 .code-text-area:disabled{
-		-fx-opacity: 0.9;
-		-fx-text-fill: #444;
+		-fx-opacity: 1;
+		-fx-text-fill: #111;
 		
 		-fx-font-size: 13px;
 		-fx-font-family: "FreeMono Bold";   
@@ -152,7 +147,7 @@
     -fx-opacity: 1;
 }
 .code-text-area:readonly .content{
-		-fx-background-color: #ddd;
+		-fx-background-color: #eee;
 		-fx-display-caret: true; 
 }
 

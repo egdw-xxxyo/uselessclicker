@@ -118,10 +118,13 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
-                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="310.0" minWidth="310.0" mouseTransparent="true" prefHeight="200.0" prefWidth="310.0" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="310.0" minWidth="310.0" mouseTransparent="true" prefHeight="200.0" prefWidth="310.0" styleClass="code-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <effect>
                               <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
-                           </effect></TextArea>
+                           </effect>
+                           <font>
+                              <Font name="FreeMono Bold" size="13.0" />
+                           </font></TextArea>
                      </children>
                   </AnchorPane>
                 <AnchorPane id="insertCodePane" fx:id="templatePane">

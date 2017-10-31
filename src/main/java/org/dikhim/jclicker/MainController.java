@@ -80,8 +80,9 @@ public class MainController {
 				});
 
 		// init toggles and template buttons
-		SourcePropertyFile propertyFile = new SourcePropertyFile(new File(
-				getClass().getResource("/strings/codesamples_ru.js").getFile()));
+		SourcePropertyFile propertyFile = new SourcePropertyFile(
+				new File(getClass().getResource("/strings/codesamples_ru.js")
+						.getFile()));
 		initToggles(propertyFile);
 		initTemplateButtons(propertyFile);
 
@@ -531,11 +532,12 @@ public class MainController {
 								.isPressed("CONTROL"))
 							return;
 						int caretPosition = areaCode.getCaretPosition();
+						MouseButtonEvent last = manager
+								.getLastButtonEvent();
 						areaCode.insertText(caretPosition,
-								"mouse.pressAt('" + manager.getLastPressed()
-										+ "'," + manager.getX() + ","
-										+ manager.getY() + ");\n");
-
+								"mouse.pressAt('" + last.getButton()
+										+ "'," + last.getX() + ","
+										+ last.getY() + ");\n");
 					}));
 			manager.addReleaseListener(
 					new MouseHandler("insert.mouse.release", "", () -> {
@@ -543,11 +545,12 @@ public class MainController {
 								.isPressed("CONTROL"))
 							return;
 						int caretPosition = areaCode.getCaretPosition();
+						MouseButtonEvent last = manager
+								.getLastButtonEvent();
 						areaCode.insertText(caretPosition,
-								"mouse.releaseAt('" + manager.getLastReleased()
-										+ "'," + manager.getX() + ","
-										+ manager.getY() + ");\n");
-
+								"mouse.releaseAt('" + last.getButton()
+										+ "'," + last.getX() + ","
+										+ last.getY() + ");\n");
 					}));
 		} else {
 			// if toggle has been deselected
@@ -572,16 +575,20 @@ public class MainController {
 							return;
 						int caretPosition = areaCode.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
-						int delay = manager.getLastKeyDelay();
+						MouseButtonEvent last = manager.getLastButtonEvent();
+						MouseButtonEvent preLast = manager
+								.getPreLastButtonEvent();
+						int delay = (int) (last.getTime() - preLast.getTime());
 						if (delay != 0) {
 							sb.append("system.sleep(").append(delay)
 									.append(");\n");
 						}
 						sb.append("mouse.pressAt('")
-								.append(manager.getLastPressed()).append("',")
-								.append(manager.getX()).append(",")
-								.append(manager.getY()).append(");\n");
+								.append(last.getButton()).append("',")
+								.append(last.getX()).append(",")
+								.append(last.getY()).append(");\n");
 						areaCode.insertText(caretPosition, sb.toString());
+
 
 					}));
 			manager.addReleaseListener(
@@ -591,15 +598,18 @@ public class MainController {
 							return;
 						int caretPosition = areaCode.getCaretPosition();
 						StringBuilder sb = new StringBuilder();
-						int delay = manager.getLastKeyDelay();
+						MouseButtonEvent last = manager.getLastButtonEvent();
+						MouseButtonEvent preLast = manager
+								.getPreLastButtonEvent();
+						int delay = (int) (last.getTime() - preLast.getTime());
 						if (delay != 0) {
 							sb.append("system.sleep(").append(delay)
 									.append(");\n");
 						}
 						sb.append("mouse.releaseAt('")
-								.append(manager.getLastReleased()).append("',")
-								.append(manager.getX()).append(",")
-								.append(manager.getY()).append(");\n");
+								.append(last.getButton()).append("',")
+								.append(last.getX()).append(",")
+								.append(last.getY()).append(");\n");
 						areaCode.insertText(caretPosition, sb.toString());
 					}));
 		} else {
@@ -1630,7 +1640,7 @@ public class MainController {
 	}
 	private void setToggleStatus(ToggleButton toggle) {
 		if (toggle == null) {
-			if(btnTogglesStatus.getUserData() == null) {
+			if (btnTogglesStatus.getUserData() == null) {
 				btnTogglesStatus.setText("Never used");
 				btnTogglesStatus.setUserData(null);
 				return;

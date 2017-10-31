@@ -38,6 +38,8 @@ public class MouseEventsManager
 	// new queues
 	private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(
 			2);
+	private static LimitedSizeQueue<MouseWheelEvent> wheelLog = new LimitedSizeQueue<>(
+			2);
 	private static LimitedSizeQueue<MouseMoveEvent> moveLog = new LimitedSizeQueue<>(
 			2);
 	private MouseEventsManager() {
@@ -147,8 +149,18 @@ public class MouseEventsManager
 	}
 
 	@Override
-	public void nativeMouseWheelMoved(NativeMouseWheelEvent e) {
-		System.out.println(e.getWheelRotation()+ " : " + e.getScrollAmount()+" : "+e.getScrollType());
+	public void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
+		int x = nativeMouseEvent.getX();
+		int y = nativeMouseEvent.getY();
+		int amount = nativeMouseEvent.getScrollAmount();
+		long time = nativeMouseEvent.getWhen();
+		String direction;
+		if(nativeMouseEvent.getWheelRotation()<0) {
+			direction = "UP";
+		}else {
+			direction = "DOWN";
+		}
+		wheelLog.add(new MouseWheelEvent(direction, amount, time,x,y));
 	}
 
 	@Override
