@@ -1,335 +1,308 @@
 package org.dikhim.jclicker.events;
 
-import java.awt.Point;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 import org.jnativehook.mouse.NativeMouseWheelListener;
 
+import java.util.*;
+
 public class MouseEventsManager
-		implements
-			NativeMouseInputListener,
-			NativeMouseWheelListener {
-	private static MouseEventsManager instance;
-	private static int x;
-	private static int y;
-	private Set<String> pressedButtons = new HashSet<>();
-	static List<MouseHandler> pressHandlers = new ArrayList<>();
-	static List<MouseHandler> releaseHandlers = new ArrayList<>();
-	static List<MouseHandler> moveHandlers = new ArrayList<>();
-	private static LimitedSizeQueue<String> pressedButtonsLog = new LimitedSizeQueue<>(
-			10);
-	private static LimitedSizeQueue<String> releasedButtonsLog = new LimitedSizeQueue<>(
-			10);
-	private static LimitedSizeQueue<Point> movedLog = new LimitedSizeQueue<>(
-			10);
-	private static LimitedSizeQueue<Long> keysTimeLog = new LimitedSizeQueue<>(
-			2);
-	private static LimitedSizeQueue<Long> movedTimeLog = new LimitedSizeQueue<>(
-			2);
+        implements
+        NativeMouseInputListener,
+        NativeMouseWheelListener {
+    private static MouseEventsManager instance;
 
-	// new queues
-	private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(
-			2);
-	private static LimitedSizeQueue<MouseWheelEvent> wheelLog = new LimitedSizeQueue<>(
-			2);
-	private static LimitedSizeQueue<MouseMoveEvent> moveLog = new LimitedSizeQueue<>(
-			2);
-	private MouseEventsManager() {
-	}
+    // pressed buttons
+    private Set<String> pressedButtons = new HashSet<>();
 
-	public static MouseEventsManager getInstance() {
-		if (instance == null)
-			instance = new MouseEventsManager();
-		return instance;
-	}
+    // handlers
+    static List<MouseButtonHandler> buttonHandlers = new ArrayList<>();
+    static List<MouseWheelHandler> wheelHandlers = new ArrayList<>();
+    static List<MouseMoveHandler> moveHandlers = new ArrayList<>();
 
-	public int getX() {
-		if (!movedLog.isEmpty()) {
-			return movedLog.getLast().x;
-		} else {
-			return 0;
-		}
-	}
-	public int getXFromEnd(int index) {
-		if (!movedLog.isEmpty()) {
-			return movedLog.getFromEnd(index).x;
-		} else {
-			return 0;
-		}
-	}
+    // logs
+    private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(
+            2);
+    private static LimitedSizeQueue<MouseWheelEvent> wheelLog = new LimitedSizeQueue<>(
+            2);
+    private static LimitedSizeQueue<MouseMoveEvent> moveLog = new LimitedSizeQueue<>(
+            2);
 
-	public int getY() {
-		if (!movedLog.isEmpty()) {
-			return movedLog.getLast().y;
-		} else {
-			return 0;
-		}
-	}
-	public int getYFromEnd(int index) {
-		if (!movedLog.isEmpty()) {
-			return movedLog.getFromEnd(index).y;
-		} else {
-			return 0;
-		}
-	}
+    private MouseEventsManager() {
+    }
 
-	@Override
-	public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
-		String button = MouseCodes
-				.getNameByNativeCode(nativeMouseEvent.getButton());
-		if(button == null)return;
-		int x = nativeMouseEvent.getX();
-		int y = nativeMouseEvent.getY();
-		long time = System.currentTimeMillis();
-		buttonLog.add(new MouseButtonEvent(button, "PRESS", x, y, time));
+    public static MouseEventsManager getInstance() {
+        if (instance == null)
+            instance = new MouseEventsManager();
+        return instance;
+    }
 
-		keysTimeLog.add(System.currentTimeMillis());
-		pressedButtons.add(
-				MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
-		pressedButtonsLog.add(
-				MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
-		for (MouseHandler h : pressHandlers)
-			h.fire(pressedButtons);
+    public int getX() {
+        if (!moveLog.isEmpty()) {
+            return moveLog.getLast().getX();
+        } else {
+            return 0;
+        }
+    }
 
-	}
 
-	@Override
-	public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
-		String button = MouseCodes
-				.getNameByNativeCode(nativeMouseEvent.getButton());
-		if(button == null)return;
-		int x = nativeMouseEvent.getX();
-		int y = nativeMouseEvent.getY();
-		long time = System.currentTimeMillis();
-		buttonLog.add(new MouseButtonEvent(button, "RELEASE", x, y, time));
+    public int getY() {
+        if (!moveLog.isEmpty()) {
+            return moveLog.getLast().getY();
+        } else {
+            return 0;
+        }
+    }
 
-		keysTimeLog.add(System.currentTimeMillis());
-		releasedButtonsLog.add(
-				MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
-		for (MouseHandler h : releaseHandlers)
-			h.fire(pressedButtons);
-		pressedButtons.remove(
-				MouseCodes.getNameByNativeCode(nativeMouseEvent.getButton()));
-	}
 
-	@Override
-	public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
-		int x = nativeMouseEvent.getX();
-		int y = nativeMouseEvent.getY();
-		long time = System.currentTimeMillis();
-		moveLog.add(new MouseMoveEvent(x, y, time));
+    @Override
+    public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
+        // build new button event
+        String button = MouseCodes
+                .getNameByNativeCode(nativeMouseEvent.getButton());
+        if (button == null) return;// return if button is unknown
+        // add to pressed buttons
+        pressedButtons.add(button);
 
-		movedTimeLog.add(System.currentTimeMillis());
-		movedLog.add(
-				new Point(nativeMouseEvent.getX(), nativeMouseEvent.getY()));
-		for (MouseHandler h : moveHandlers)
-			h.fire(pressedButtons);
-	}
+        int x = nativeMouseEvent.getX();
+        int y = nativeMouseEvent.getY();
+        long time = nativeMouseEvent.getWhen();
+        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "PRESS", x, y, time);
 
-	@Override
-	public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
-		int x = nativeMouseEvent.getX();
-		int y = nativeMouseEvent.getY();
-		long time = System.currentTimeMillis();
-		moveLog.add(new MouseMoveEvent(x, y, time));
+        // add to log
+        buttonLog.add(buttonEvent);
 
-		movedTimeLog.add(System.currentTimeMillis());
-		movedLog.add(
-				new Point(nativeMouseEvent.getX(), nativeMouseEvent.getY()));
-		for (MouseHandler h : moveHandlers)
-			h.fire(pressedButtons);
-	}
+        // fire
+        for (MouseButtonHandler h : buttonHandlers) {
+            h.fire(buttonEvent);
+        }
 
-	@Override
-	public void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
-		int x = nativeMouseEvent.getX();
-		int y = nativeMouseEvent.getY();
-		int amount = nativeMouseEvent.getScrollAmount();
-		long time = nativeMouseEvent.getWhen();
-		String direction;
-		if(nativeMouseEvent.getWheelRotation()<0) {
-			direction = "UP";
-		}else {
-			direction = "DOWN";
-		}
-		wheelLog.add(new MouseWheelEvent(direction, amount, time,x,y));
-	}
+    }
 
-	@Override
-	public void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
-	}
+    @Override
+    public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
+        // build new button event
+        String button = MouseCodes
+                .getNameByNativeCode(nativeMouseEvent.getButton());
+        if (button == null) return;//return if button is unknown
+        // remove from pressed buttons
+        pressedButtons.remove(button);
 
-	public void addPressListener(MouseHandler handler) {
-		MouseHandler existingHandler = null;
-		for (MouseHandler h : pressHandlers) {
-			if (h.getName().equals(handler.getName()))
-				existingHandler = h;
-		}
-		if (existingHandler != null) {
-			existingHandler.setButtons(handler.getButtons());
-			existingHandler.setHandler(handler.getHandler());
-		} else {
-			pressHandlers.add(handler);
-		}
-	}
+        int x = nativeMouseEvent.getX();
+        int y = nativeMouseEvent.getY();
+        long time = nativeMouseEvent.getWhen();
+        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "RELEASE", x, y, time);
 
-	public void addReleaseListener(MouseHandler handler) {
-		MouseHandler existingHandler = null;
-		for (MouseHandler h : releaseHandlers) {
-			if (h.getName().equals(handler.getName()))
-				existingHandler = h;
-		}
-		if (existingHandler != null) {
-			existingHandler.setButtons(handler.getButtons());
-			existingHandler.setHandler(handler.getHandler());
-		} else {
-			releaseHandlers.add(handler);
-		}
-	}
+        // add to log
+        buttonLog.add(buttonEvent);
 
-	public void addMoveListener(MouseHandler handler) {
-		MouseHandler existingHandler = null;
-		for (MouseHandler h : moveHandlers) {
-			if (h.getName().equals(handler.getName()))
-				existingHandler = h;
-		}
-		if (existingHandler != null) {
-			existingHandler.setButtons(handler.getButtons());
-			existingHandler.setHandler(handler.getHandler());
-		} else {
-			moveHandlers.add(handler);
-		}
-	}
-	/**
-	 * Remove all listeners with same prefix
-	 * 
-	 * @param prefix
-	 */
-	public void removePressListenersByPrefix(String prefix) {
-		Iterator<MouseHandler> it = pressHandlers.iterator();
-		while (it.hasNext()) {
-			if (it.next().getName().startsWith(prefix))
-				it.remove();
-		}
-	}
-	/**
-	 * Remove all listeners with same prefix
-	 * 
-	 * @param prefix
-	 */
-	public void removeReleaseListenersByPrefix(String prefix) {
-		Iterator<MouseHandler> it = releaseHandlers.iterator();
-		while (it.hasNext()) {
-			if (it.next().getName().startsWith(prefix))
-				it.remove();
-		}
-	}
-	/**
-	 * Remove all listeners with same prefix
-	 * 
-	 * @param prefix
-	 */
-	public void removeMoveListenersByPrefix(String prefix) {
-		Iterator<MouseHandler> it = moveHandlers.iterator();
-		while (it.hasNext()) {
-			if (it.next().getName().startsWith(prefix))
-				it.remove();
-		}
-	}
-	/**
-	 * 
-	 * @return the name of the last pressed key
-	 */
-	public String getLastPressed() {
-		return pressedButtonsLog.getLast();
-	}
+        // fire
+        for (MouseButtonHandler h : buttonHandlers)
+            h.fire(buttonEvent);
+    }
 
-	/**
-	 * 
-	 * @return the name of the last released key
-	 */
-	public String getLastReleased() {
-		return releasedButtonsLog.getLast();
-	}
-	/**
-	 * Return delay between last two key events
-	 * 
-	 * @return
-	 */
-	public int getLastKeyDelay() {
-		if (keysTimeLog.size() > 1) {
-			return (int) (keysTimeLog.getFromEnd(0)
-					- keysTimeLog.getFromEnd(1));
-		} else {
-			return 0;
-		}
-	}
-	/**
-	 * Return delay between last two movement delays
-	 * 
-	 * @return
-	 */
-	public int getLastMoveDelay() {
-		if (movedTimeLog.size() > 1) {
-			return (int) (movedTimeLog.getFromEnd(0)
-					- movedTimeLog.getFromEnd(1));
-		} else {
-			return 0;
-		}
-	}
-	/**
-	 * Resets the time log for keys events
-	 */
-	public void resetKeyTimeLog() {
-		keysTimeLog.clear();
-	}
+    @Override
+    public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
+        // build new move event
+        int x = nativeMouseEvent.getX();
+        int y = nativeMouseEvent.getY();
+        long time = nativeMouseEvent.getWhen();
+        MouseMoveEvent moveEvent = new MouseMoveEvent(x, y, time);
 
-	/**
-	 * Resets the time log for movement events
-	 */
-	public void resetMoveTimeLog() {
-		keysTimeLog.clear();
-	}
+        // add to log
+        moveLog.add(moveEvent);
 
-	/////////////////////
-	public MouseButtonEvent getLastButtonEvent() {
-		if (buttonLog.size() > 0) {
-			return buttonLog.getFromEnd(0);
-		} else
-			return null;
-	}
+        // fire
+        for (MouseMoveHandler h : moveHandlers)
+            h.fire(moveEvent);
+    }
 
-	public MouseButtonEvent getPreLastButtonEvent() {
-		if (buttonLog.size() > 1) {
-			return buttonLog.getFromEnd(1);
-		} else
-			return null;
-	}
+    @Override
+    public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
+        nativeMouseMoved(nativeMouseEvent);
+    }
 
-	public MouseMoveEvent getLastMoveEvent() {
-		if (moveLog.size() > 0) {
-			return moveLog.getFromEnd(0);
-		} else
-			return null;
-	}
+    @Override
+    public void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
+        // build new wheel event
+        int x = nativeMouseEvent.getX();
+        int y = nativeMouseEvent.getY();
+        int amount = nativeMouseEvent.getScrollAmount();
+        long time = nativeMouseEvent.getWhen();
+        String direction;
+        if (nativeMouseEvent.getWheelRotation() < 0) {
+            direction = "UP";
+        } else {
+            direction = "DOWN";
+        }
+        MouseWheelEvent wheelEvent = new MouseWheelEvent(direction, amount, time, x, y);
 
-	public MouseMoveEvent getPreLastMoveEvent() {
-		if (moveLog.size() > 1) {
-			return moveLog.getFromEnd(1);
-		} else
-			return null;
-	}
+        //add to log
+        wheelLog.add(wheelEvent);
 
-	public void clearButtonEventLog() {
-		buttonLog.clear();
-	}
+        //fire
+        for (MouseWheelHandler h : wheelHandlers)
+            h.fire(wheelEvent);
+    }
+
+    @Override
+    public void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
+    }
+
+    /////////////////
+
+    /**
+     * Adds mouse buttons listener
+     *
+     * @param handler
+     */
+    public void addButtonListener(MouseButtonHandler handler) {
+        MouseButtonHandler existingHandler = null;
+        for (MouseButtonHandler h : buttonHandlers) {
+            if (h.getName().equals(handler.getName()))
+                existingHandler = h;
+        }
+        if (existingHandler != null) {
+            existingHandler.setButtons(handler.getButtons());
+            existingHandler.setHandler(handler.getHandler());
+        } else {
+            buttonHandlers.add(handler);
+        }
+    }
+
+    /**
+     * Adds mouse move listener
+     *
+     * @param handler
+     */
+    public void addMoveListener(MouseMoveHandler handler) {
+        MouseMoveHandler existingHandler = null;
+        for (MouseMoveHandler h : moveHandlers) {
+            if (h.getName().equals(handler.getName()))
+                existingHandler = h;
+        }
+        if (existingHandler != null) {
+            existingHandler.setHandler(handler.getHandler());
+        } else {
+            moveHandlers.add(handler);
+        }
+    }
+
+    /**
+     * Adds mouse wheel listener
+     *
+     * @param handler mouse wheel listener
+     */
+    public void addWheelListener(MouseWheelHandler handler) {
+        MouseWheelHandler existingHandler = null;
+        for (MouseWheelHandler h : wheelHandlers) {
+            if (h.getName().equals(handler.getName()))
+                existingHandler = h;
+        }
+        if (existingHandler != null) {
+            existingHandler.setDirection(handler.getDirection());
+            existingHandler.setHandler(handler.getHandler());
+        } else {
+            wheelHandlers.add(handler);
+        }
+    }
+
+    /**
+     * Remove all button listeners with same prefix
+     *
+     * @param prefix
+     */
+
+    public void removeButtonListenersByPrefix(String prefix) {
+        Iterator<MouseButtonHandler> it = buttonHandlers.iterator();
+        while (it.hasNext()) {
+            if (it.next().getName().startsWith(prefix))
+                it.remove();
+        }
+    }
+
+    /**
+     * Remove all wheel listeners with same prefix
+     *
+     * @param prefix
+     */
+    public void removeWheelListenersByPrefix(String prefix) {
+        Iterator<MouseWheelHandler> it = wheelHandlers.iterator();
+        while (it.hasNext()) {
+            if (it.next().getName().startsWith(prefix))
+                it.remove();
+        }
+    }
+
+    /**
+     * Remove all move listeners with same prefix
+     *
+     * @param prefix
+     */
+    public void removeMoveListenersByPrefix(String prefix) {
+        Iterator<MouseMoveHandler> it = moveHandlers.iterator();
+        while (it.hasNext()) {
+            if (it.next().getName().startsWith(prefix))
+                it.remove();
+        }
+    }
+
+
+    /////////////////////
+    public MouseButtonEvent getLastButtonEvent() {
+        if (buttonLog.size() > 0) {
+            return buttonLog.getFromEnd(0);
+        } else
+            return null;
+    }
+
+    public MouseButtonEvent getPreLastButtonEvent() {
+        if (buttonLog.size() > 1) {
+            return buttonLog.getFromEnd(1);
+        } else
+            return null;
+    }
+
+    public MouseWheelEvent getLastWheelEvent() {
+        if (wheelLog.size() > 0) {
+            return wheelLog.getFromEnd(0);
+        } else
+            return null;
+    }
+
+    public MouseWheelEvent getPreLastWheelEvent() {
+        if (wheelLog.size() > 1) {
+            return wheelLog.getFromEnd(1);
+        } else
+            return null;
+    }
+
+    public MouseMoveEvent getLastMoveEvent() {
+        if (moveLog.size() > 0) {
+            return moveLog.getFromEnd(0);
+        } else
+            return null;
+    }
+
+    public MouseMoveEvent getPreLastMoveEvent() {
+        if (moveLog.size() > 1) {
+            return moveLog.getFromEnd(1);
+        } else
+            return null;
+    }
+
+    public void clearButtonEventLog() {
+        buttonLog.clear();
+    }
+
+    public void clearMoveEventLog() {
+        moveLog.clear();
+    }
+
+    public void clearWheelEventLog() {
+        wheelLog.clear();
+    }
 
 }
