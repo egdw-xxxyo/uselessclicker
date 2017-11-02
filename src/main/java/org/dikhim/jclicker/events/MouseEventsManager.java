@@ -18,9 +18,9 @@ public class MouseEventsManager
     private Set<String> pressedButtons = new HashSet<>();
 
     // handlers
-    private static List<MouseButtonHandler> buttonHandlers = new ArrayList<>();
-    private static List<MouseWheelHandler> wheelHandlers = new ArrayList<>();
-    private static List<MouseMoveHandler> moveHandlers = new ArrayList<>();
+    private static List<MouseButtonHandler> buttonHandlers = Collections.synchronizedList(new ArrayList<>());
+    private static List<MouseWheelHandler> wheelHandlers = Collections.synchronizedList(new ArrayList<>());
+    private static List<MouseMoveHandler> moveHandlers = Collections.synchronizedList(new ArrayList<>());
 
     // logs
     private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(
