@@ -18,9 +18,9 @@ public class MouseEventsManager
     private Set<String> pressedButtons = new HashSet<>();
 
     // handlers
-    static List<MouseButtonHandler> buttonHandlers = new ArrayList<>();
-    static List<MouseWheelHandler> wheelHandlers = new ArrayList<>();
-    static List<MouseMoveHandler> moveHandlers = new ArrayList<>();
+    private static List<MouseButtonHandler> buttonHandlers = new ArrayList<>();
+    private static List<MouseWheelHandler> wheelHandlers = new ArrayList<>();
+    private static List<MouseMoveHandler> moveHandlers = new ArrayList<>();
 
     // logs
     private static LimitedSizeQueue<MouseButtonEvent> buttonLog = new LimitedSizeQueue<>(
@@ -62,7 +62,7 @@ public class MouseEventsManager
         // build new button event
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
-        if (button == null) return;// return if button is unknown
+        if (button.isEmpty()) return;// return if button is unknown
         // add to pressed buttons
         pressedButtons.add(button);
 
@@ -86,7 +86,7 @@ public class MouseEventsManager
         // build new button event
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
-        if (button == null) return;//return if button is unknown
+        if (button.isEmpty()) return;// return if button is unknown
         // remove from pressed buttons
         pressedButtons.remove(button);
 
@@ -175,7 +175,7 @@ public class MouseEventsManager
     /**
      * Adds mouse move listener
      *
-     * @param handler
+     * @param handler mouse move handler
      */
     public void addMoveListener(MouseMoveHandler handler) {
         MouseMoveHandler existingHandler = null;

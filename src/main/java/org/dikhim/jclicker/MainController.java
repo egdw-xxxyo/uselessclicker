@@ -957,7 +957,6 @@ public class MainController {
             manager.addMoveListener(new MouseMoveHandler("mouse.move", e -> {
                 if (movementPath != null) {
                     int delay = (int)(e.getTime()-lastMoveEvent.getTime());
-                    System.out.println(" "+delay);
                     movementPath.add(delay);
                     int x = e.getX();
                     int y = e.getY();
@@ -996,7 +995,6 @@ public class MainController {
                                 movementPath = new MouseMoveUtil();
                                 //add first point
                                 movementPath.add(0, 0);
-                                System.out.print(0+" "+0);
                             }));
             // on release key stop record, insert code and clear path;
             KeyEventsManager.getInstance().addReleaseListener(
@@ -1014,10 +1012,8 @@ public class MainController {
                 if (movementPath != null) {
                     int delay = (int)(e.getTime()-lastMoveEvent.getTime());
                     movementPath.add(delay);
-                    System.out.println(" "+ delay);
                     int dx = e.getX()-lastMoveEvent.getX();
                     int dy = e.getY()-lastMoveEvent.getY();
-                    System.out.print(dx+ " "+dy);
                     movementPath.add(dx,dy);
                     lastMoveEvent =e;
                 }
