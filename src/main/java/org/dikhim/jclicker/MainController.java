@@ -1369,7 +1369,8 @@ public class MainController {
     private Button btnTemplateSystemRegisterShortcut;
 
     /**
-     * Initizlizes template buttons
+     * Initializes template buttons
+     * set hints and pasted code to user data from property file
      *
      * @param prop
      */
