@@ -8,7 +8,7 @@ import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.OutStream;
 
 /**
- * Created by dikobraz on 30.03.17.
+ *
  */
 public class MouseObject {
 
@@ -74,6 +74,7 @@ public class MouseObject {
 			x = mu.getNext();
 			y = mu.getNext();
 			delay = mu.getNext();
+			System.out.println(x+" "+ y+" "+delay);
 			robot.mouseMove(x, y);
 			robot.delay(delay);
 		}

@@ -68,7 +68,7 @@ public class MouseEventsManager
 
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
-        long time = nativeMouseEvent.getWhen();
+        long time = System.currentTimeMillis();
         MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "PRESS", x, y, time);
 
         // add to log
@@ -92,7 +92,7 @@ public class MouseEventsManager
 
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
-        long time = nativeMouseEvent.getWhen();
+        long time = System.currentTimeMillis();
         MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "RELEASE", x, y, time);
 
         // add to log
@@ -108,7 +108,7 @@ public class MouseEventsManager
         // build new move event
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
-        long time = nativeMouseEvent.getWhen();
+        long time = System.currentTimeMillis();
         MouseMoveEvent moveEvent = new MouseMoveEvent(x, y, time);
 
         // add to log
@@ -130,7 +130,7 @@ public class MouseEventsManager
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
         int amount = nativeMouseEvent.getScrollAmount();
-        long time = nativeMouseEvent.getWhen();
+        long time = System.currentTimeMillis();
         String direction;
         if (nativeMouseEvent.getWheelRotation() < 0) {
             direction = "UP";

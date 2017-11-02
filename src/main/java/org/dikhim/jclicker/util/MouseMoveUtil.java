@@ -13,14 +13,34 @@ public class MouseMoveUtil {
 	public void set(String path) {
 		builder = new StringBuilder(path);
 	}
+
+	/**
+	 * Adds one param. Use it wisely to manual build path
+	 * @param param
+	 */
+	public void add(int param){
+		builder.append((char) (param + SHIFT));
+	}
+	/**
+	 * Adds to int params to path. Use it for add point
+	 * @param x
+	 * @param y
+	 */
 	public void add(int x, int y) {
 		builder.append((char) (x + SHIFT));
 		builder.append((char) (y + SHIFT));
 	}
-	public void add(int delay, int x, int y) {
-		builder.append((char) (delay + SHIFT));
+
+	/**
+	 * Adds 3 params to path. Use it to add delay and point
+	 * @param x
+	 * @param y
+	 * @param delay
+	 */
+	public void add(int x, int y, int delay) {
 		builder.append((char) (x + SHIFT));
 		builder.append((char) (y + SHIFT));
+		builder.append((char) (delay + SHIFT));
 	}
 
 	public int getNext() {
@@ -78,5 +98,12 @@ public class MouseMoveUtil {
 		return sb.toString();
 	}
 
+	public boolean isEmpty(){
+		return builder.length()==0;
+	}
+
+	public void clear(){
+		builder = new StringBuilder("");
+	}
 	
 }
