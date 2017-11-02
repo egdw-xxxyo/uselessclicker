@@ -421,9 +421,9 @@ public class MainController {
     @FXML
     void insertKeyName(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         KeyEventsManager manager = KeyEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.addPressListener(new ShortcutIncludesHandler(
@@ -438,14 +438,16 @@ public class MainController {
             manager.removePressListenersByPrefix("insert.keyboard.name");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
+
     }
 
     @FXML
     void insertKeyCode(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         KeyEventsManager manager = KeyEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.addPressListener(new ShortcutIncludesHandler(
@@ -469,14 +471,15 @@ public class MainController {
             manager.removeReleaseListenersByPrefix("insert.keyboard.code");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         KeyEventsManager manager = KeyEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.resetTimeLog();
@@ -516,15 +519,16 @@ public class MainController {
             manager.removeReleaseListenersByPrefix("insert.keyboard.code");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     // Mouse buttons
     @FXML
     void insertMouseCode(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.addButtonListener(
@@ -556,15 +560,16 @@ public class MainController {
             manager.removeButtonListenersByPrefix("insert.mouse");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
-            // if toggle has been seleted
+            select(toggle);
+            // if toggle has been selected
             enableCodeType = false;
             manager.addButtonListener(
                     new MouseButtonHandler("insert.mouse.press", "PRESS", "", e -> {
@@ -615,14 +620,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("insert.mouse");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseName(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.addButtonListener(
@@ -640,14 +646,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("insert.mouse");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // Start record by set the first movement point
@@ -729,15 +736,16 @@ public class MainController {
 
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     // Clicks
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -836,6 +844,7 @@ public class MainController {
             manager.removeButtonListenersByPrefix("insert.mouse");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     // Movement
@@ -843,9 +852,9 @@ public class MainController {
     @FXML
     void insertAbsolutePath(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // on press key start record path
@@ -878,14 +887,15 @@ public class MainController {
             manager.removeMoveListenersByPrefix("mouse.move");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertRelativePath(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // on press key start record path
@@ -920,14 +930,15 @@ public class MainController {
             manager.removeMoveListenersByPrefix("mouse.move");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // on press key start record path
@@ -974,14 +985,15 @@ public class MainController {
             manager.removeMoveListenersByPrefix("mouse.move");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertRelativePathWithDelays(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // on press key start record path
@@ -1027,15 +1039,16 @@ public class MainController {
             manager.removeMoveListenersByPrefix("mouse.move");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     // mouse basics
     @FXML
     void insertMousePress(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1054,14 +1067,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.press");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMousePressAt(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1080,14 +1094,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.press");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseRelease(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1108,14 +1123,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.release");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseReleaseAt(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1136,14 +1152,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.release");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseClick(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1172,14 +1189,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.click");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseClickAt(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
 
@@ -1209,14 +1227,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.click");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseMoveAt(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
@@ -1234,14 +1253,15 @@ public class MainController {
             manager.removeButtonListenersByPrefix("mouse.press");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     @FXML
     void insertMouseMove(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
-        select(toggle);
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
+            select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             KeyEventsManager.getInstance().addPressListener(
@@ -1269,6 +1289,7 @@ public class MainController {
                     .removeReleaseListenersByPrefix("key.release");
             enableCodeType = true;
         }
+        setToggleStatus(toggle);
     }
 
     /**
