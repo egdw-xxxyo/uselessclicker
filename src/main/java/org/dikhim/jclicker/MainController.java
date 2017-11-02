@@ -1,16 +1,10 @@
 package org.dikhim.jclicker;
 
-import java.awt.event.InputEvent;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.security.KeyManagementException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.util.function.Function;
 import java.util.prefs.Preferences;
 
 import org.apache.commons.io.FileUtils;
@@ -20,28 +14,19 @@ import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.OutStream;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
-import com.sun.javafx.scene.KeyboardShortcutsHandler;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
 public class MainController {
@@ -314,92 +299,43 @@ public class MainController {
     private List<ToggleButton> listOfToggles = new ArrayList<>();
 
     /**
-     * Adds all toggles to listOfToggles
+     * Adds all toggles to listOfToggles and sets hints to user data from property file
      */
     private void initToggles(SourcePropertyFile properties) {
-        // Keyboard
-        ToggleButton b = btnInsertKeyName;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        // keyboard
+        listOfToggles.add(btnInsertKeyName);
+        listOfToggles.add(btnInsertKeyCode);
+        listOfToggles.add(btnInsertKeyCodeWithDelay);
 
-        b = btnInsertKeyCode;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertKeyCodeWithDelay;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
         // mouse basics
-        b = btnInsertMouseName;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMousePress;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMousePressAt;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseRelease;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseReleaseAt;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseClick;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseClickAt;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseMove;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertMouseMoveAt;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        listOfToggles.add(btnInsertMouseClick);
+        listOfToggles.add(btnInsertMouseClickAt);
+        listOfToggles.add(btnInsertMouseName);
+        listOfToggles.add(btnInsertMouseMove);
+        listOfToggles.add(btnInsertMouseMoveAt);
+        listOfToggles.add(btnInsertMousePress);
+        listOfToggles.add(btnInsertMousePressAt);
+        listOfToggles.add(btnInsertMouseRelease);
+        listOfToggles.add(btnInsertMouseReleaseAt);
 
         // mouse press/release
-        b = btnInsertMouseCode;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        listOfToggles.add(btnInsertMouseCode);
+        listOfToggles.add(btnInsertMouseCodeWithDelay);
+        listOfToggles.add(btnInsertMouseRelativeCode);
 
-        b = btnInsertMouseCodeWithDelay;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        //mouse click
+        listOfToggles.add(btnInsertMouseCodeClick);
 
-        b = btnInsertMouseRelativeCode;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        // movement
+        listOfToggles.add(btnInsertAbsolutePath);
+        listOfToggles.add(btnInsertAbsolutePathWithDelays);
+        listOfToggles.add(btnInsertRelativePath);
+        listOfToggles.add(btnInsertRelativePathWithDelays);
 
-        // mouse click
-        b = btnInsertMouseCodeClick;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        // Movement
-        b = btnInsertAbsolutePath;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertAbsolutePathWithDelays;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertRelativePath;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
-
-        b = btnInsertRelativePathWithDelays;
-        listOfToggles.add(b);
-        b.setUserData(properties.get(b.getId()));
+        // set user data 'String' hint
+        for (ToggleButton b : listOfToggles) {
+            b.setUserData(properties.get(b.getId()));
+        }
     }
 
     /**
@@ -959,19 +895,19 @@ public class MainController {
                     new ShortcutEqualsHandler("mouse.move.key.release",
                             "CONTROL", () -> {
                         int caretPosition = areaCode.getCaretPosition();
-                        movementPath.add((int)(System.currentTimeMillis()-lastMoveEvent.getTime()));
-                         areaCode.insertText(caretPosition, movementPath
+                        movementPath.add((int) (System.currentTimeMillis() - lastMoveEvent.getTime()));
+                        areaCode.insertText(caretPosition, movementPath
                                 .getMoveCodeAbsolutePathWithDelays(80));
                         movementPath = null;
                     }));
 
             manager.addMoveListener(new MouseMoveHandler("mouse.move", e -> {
                 if (movementPath != null) {
-                    int delay = (int)(e.getTime()-lastMoveEvent.getTime());
+                    int delay = (int) (e.getTime() - lastMoveEvent.getTime());
                     movementPath.add(delay);
                     int x = e.getX();
                     int y = e.getY();
-                    movementPath.add(x,y);
+                    movementPath.add(x, y);
                     lastMoveEvent = e;
 
                 }
@@ -1013,7 +949,7 @@ public class MainController {
                     new ShortcutEqualsHandler("mouse.move.key.release",
                             "CONTROL", () -> {
                         int caretPosition = areaCode.getCaretPosition();
-                        movementPath.add((int)(System.currentTimeMillis()-lastMoveEvent.getTime()));
+                        movementPath.add((int) (System.currentTimeMillis() - lastMoveEvent.getTime()));
 
                         areaCode.insertText(caretPosition, movementPath
                                 .getMoveCodeRelativePathWithDelays(80));
@@ -1022,12 +958,12 @@ public class MainController {
 
             manager.addMoveListener(new MouseMoveHandler("mouse.move", e -> {
                 if (movementPath != null) {
-                    int delay = (int)(e.getTime()-lastMoveEvent.getTime());
+                    int delay = (int) (e.getTime() - lastMoveEvent.getTime());
                     movementPath.add(delay);
-                    int dx = e.getX()-lastMoveEvent.getX();
-                    int dy = e.getY()-lastMoveEvent.getY();
-                    movementPath.add(dx,dy);
-                    lastMoveEvent =e;
+                    int dx = e.getX() - lastMoveEvent.getX();
+                    int dy = e.getY() - lastMoveEvent.getY();
+                    movementPath.add(dx, dy);
+                    lastMoveEvent = e;
                 }
             }));
         } else {
@@ -1315,6 +1251,8 @@ public class MainController {
     }
 
     //// template buttons
+    private List<Button> templateButtons = new ArrayList<>();
+
     @FXML
     private Button btnTemplateMouseClick;
 
@@ -1436,171 +1374,57 @@ public class MainController {
      * @param prop
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
-        // Mouse
-        Button b;
-        b = btnTemplateMouseClick;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
+        // mouse
+        templateButtons.add(btnTemplateMouseClick);
+        templateButtons.add(btnTemplateMouseClickAt);
+        templateButtons.add(btnTemplateMouseGetMoveDelay);
+        templateButtons.add(btnTemplateMouseGetPressDelay);
+        templateButtons.add(btnTemplateMouseGetReleaseDelay);
+        templateButtons.add(btnTemplateMouseGetX);
+        templateButtons.add(btnTemplateMouseGetY);
+        templateButtons.add(btnTemplateMouseMove);
+        templateButtons.add(btnTemplateMouseMoveAbsolute);
+        templateButtons.add(btnTemplateMouseMoveAbsolute_D);
+        templateButtons.add(btnTemplateMouseMoveAndClick);
+        templateButtons.add(btnTemplateMouseMoveAndPress);
+        templateButtons.add(btnTemplateMouseMoveAndRelease);
+        templateButtons.add(btnTemplateMouseMoveRelative);
+        templateButtons.add(btnTemplateMouseMoveRelative_D);
+        templateButtons.add(btnTemplateMouseMoveTo);
+        templateButtons.add(btnTemplateMousePress);
+        templateButtons.add(btnTemplateMousePressAt);
+        templateButtons.add(btnTemplateMouseRelease);
+        templateButtons.add(btnTemplateMouseReleaseAt);
+        templateButtons.add(btnTemplateMouseSetMoveDelay);
+        templateButtons.add(btnTemplateMouseSetPressDelay);
+        templateButtons.add(btnTemplateMouseSetReleaseDelay);
+        templateButtons.add(btnTemplateMouseSetX);
+        templateButtons.add(btnTemplateMouseSetY);
+        templateButtons.add(btnTemplateMouseWheel);
 
-        b = btnTemplateMouseClickAt;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetMoveDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetPressDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetReleaseDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetX;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetY;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMove;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveAbsolute;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-        b = btnTemplateMouseMoveAbsolute_D;
-
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveAndClick;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveAndPress;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveAndRelease;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveRelative;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveRelative_D;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseMoveTo;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMousePress;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMousePressAt;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseRelease;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseReleaseAt;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseSetMoveDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseSetPressDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseSetReleaseDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseSetX;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseSetY;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseWheel;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-
-        b = btnTemplateMouseGetPressDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateMouseGetReleaseDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        // Keyboard
-        b = btnTemplateKeyGetPressDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeyGetReleaseDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeyIsPressed;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeyPress;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeyRelease;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeyType;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeySetPressDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateKeySetReleaseDelay;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
+        // keyboard
+        templateButtons.add(btnTemplateKeyGetPressDelay);
+        templateButtons.add(btnTemplateKeyGetReleaseDelay);
+        templateButtons.add(btnTemplateKeyIsPressed);
+        templateButtons.add(btnTemplateKeyPress);
+        templateButtons.add(btnTemplateKeyRelease);
+        templateButtons.add(btnTemplateKeyType);
+        templateButtons.add(btnTemplateKeySetPressDelay);
+        templateButtons.add(btnTemplateKeySetReleaseDelay);
 
         // System
-        b = btnTemplateSystemSleep;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
+        templateButtons.add(btnTemplateSystemSleep);
+        templateButtons.add(btnTemplateSystemPrint);
+        templateButtons.add(btnTemplateSystemPrintln);
+        templateButtons.add(btnTemplateSystemRegisterShortcut);
 
-        b = btnTemplateSystemPrint;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateSystemPrintln;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
-        b = btnTemplateSystemRegisterShortcut;
-        b.setUserData(new String[]{prop.get(b.getId()),
-                prop.get(b.getId() + "Code")});
-
+        // Set user data 'String[]' to buttons
+        // [0] - hint text
+        // [1] - code
+        for (Button b : templateButtons) {
+            b.setUserData(new String[]{prop.get(b.getId()),
+                    prop.get(b.getId() + "Code")});
+        }
     }
 
     /**
