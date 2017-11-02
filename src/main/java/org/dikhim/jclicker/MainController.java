@@ -270,6 +270,9 @@ public class MainController {
     @FXML
     private ToggleButton btnInsertMouseMoveAt;
 
+    @FXML
+    private ToggleButton btnInsertMouseWheel;
+
     // mouse code
     @FXML
     private ToggleButton btnInsertMouseCode;
@@ -317,6 +320,7 @@ public class MainController {
         listOfToggles.add(btnInsertMousePressAt);
         listOfToggles.add(btnInsertMouseRelease);
         listOfToggles.add(btnInsertMouseReleaseAt);
+        listOfToggles.add(btnInsertMouseWheel);
 
         // mouse press/release
         listOfToggles.add(btnInsertMouseCode);
@@ -1091,6 +1095,33 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+
+    @FXML
+    void insertMouseWheel(ActionEvent event) {
+        ToggleButton toggle = (ToggleButton) event.getSource();
+        MouseEventsManager manager = MouseEventsManager.getInstance();
+        if (toggle.isSelected()) {
+            select(toggle);
+            // if toggle has been selected
+            enableCodeType = false;
+            manager.addWheelListener(new MouseWheelHandler("mouse.wheel", "", e -> {
+                if (!KeyEventsManager.getInstance()
+                        .isPressed("CONTROL"))
+                    return;
+                int caretPosition = areaCode.getCaretPosition();
+                StringBuilder sb = new StringBuilder();
+                sb.append("mouse.wheel('").append(e.getDirection()).append("',").append(e.getAmount()).append(");\n");
+                areaCode.insertText(caretPosition, sb.toString());
+            }));
+
+        } else {
+            // if toggle has been deselected
+            manager.removeWheelListenersByPrefix("mouse.wheel");
+            enableCodeType = true;
+        }
+        setToggleStatus(toggle);
+    }
+
     @FXML
     void insertMouseClick(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
@@ -1269,6 +1300,9 @@ public class MainController {
     private Button btnTemplateMouseGetReleaseDelay;
 
     @FXML
+    private Button btnTemplateMouseGetWheelDelay;
+
+    @FXML
     private Button btnTemplateMouseGetX;
 
     @FXML
@@ -1321,6 +1355,9 @@ public class MainController {
 
     @FXML
     private Button btnTemplateMouseSetReleaseDelay;
+
+    @FXML
+    private Button btnTemplateMouseSetWheelDelay;
 
     @FXML
     private Button btnTemplateMouseSetX;
@@ -1381,6 +1418,7 @@ public class MainController {
         templateButtons.add(btnTemplateMouseGetMoveDelay);
         templateButtons.add(btnTemplateMouseGetPressDelay);
         templateButtons.add(btnTemplateMouseGetReleaseDelay);
+        templateButtons.add(btnTemplateMouseGetWheelDelay);
         templateButtons.add(btnTemplateMouseGetX);
         templateButtons.add(btnTemplateMouseGetY);
         templateButtons.add(btnTemplateMouseMove);
@@ -1399,6 +1437,7 @@ public class MainController {
         templateButtons.add(btnTemplateMouseSetMoveDelay);
         templateButtons.add(btnTemplateMouseSetPressDelay);
         templateButtons.add(btnTemplateMouseSetReleaseDelay);
+        templateButtons.add(btnTemplateMouseSetWheelDelay);
         templateButtons.add(btnTemplateMouseSetX);
         templateButtons.add(btnTemplateMouseSetY);
         templateButtons.add(btnTemplateMouseWheel);

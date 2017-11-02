@@ -14,7 +14,7 @@ $btnInsertKeyName:
 //Вставляет имена нажатых клавишь
 //
 //Пример:
-CONTROL ALT DELETE
+  CONTROL ALT DELETE
 //будет вставлено при нажатии
 //соответствующих клавишь
 
@@ -23,10 +23,10 @@ $btnInsertKeyCode:
 //нажатия и отпускания клавишь
 //
 //Пример:
-key.press('CONTROL');
-key.press('С');
-key.release('С');
-key.release('CONTROL');
+  key.press('CONTROL');
+  key.press('С');
+  key.release('С');
+  key.release('CONTROL');
 //будет вставлено при нажатии и
 //отпускании двух клавишь
 //"CONTROL C"
@@ -37,14 +37,14 @@ $btnInsertKeyCodeWithDelay:
 //между событиями
 //
 //Пример:
-system.sleep(200);
-key.press('CONTROL');
-system.sleep(100);
-key.press('С');
-system.sleep(100);
-key.release('С');
-system.sleep(200);
-key.release('CONTROL');
+  system.sleep(200);
+  key.press('CONTROL');
+  system.sleep(100);
+  key.press('С');
+  system.sleep(100);
+  key.release('С');
+  system.sleep(200);
+  key.release('CONTROL');
 //будет вставлено при нажатии и
 //отпускании двух клавишь 
 //"CONTROL C"
@@ -55,7 +55,7 @@ $btnInsertMouseName:
 //мыши
 //
 //Пример:
-LEFT MIDDLE RIGHT
+  LEFT MIDDLE RIGHT
 //будет вставлено при нажатии
 //соответсвующих клавишь
 
@@ -64,8 +64,8 @@ $btnInsertMouseClick:
 //соответсвующией клавиши мыши
 //
 //Пример:
-mouse.click('LEFT');
-mouse.click('RIGHT');
+  mouse.click('LEFT');
+  mouse.click('RIGHT');
 //будет вставлено при клике левой и
 //правой клавишей миши
 
@@ -75,8 +75,8 @@ $btnInsertMouseClickAt:
 //определенной точке
 //
 //Пример:
-mouse.clickAt('LEFT',500,500);
-mouse.clickAt('RIGHT',600,600);
+  mouse.clickAt('LEFT',500,500);
+  mouse.clickAt('RIGHT',600,600);
 //будет вставлено при клике левой и
 //правой клавишей миши
 
@@ -85,7 +85,7 @@ $btnInsertMouseMove:
 //движения курсора
 //
 //Пример:
-mouse.move(100,-50);
+  mouse.move(100,-50);
 //будет вставлено при перемещении
 //курсора
 
@@ -94,7 +94,7 @@ $btnInsertMouseMoveAt:
 //курсора в указанную точку
 //
 //Пример:
-mouse.moveAt(200,200);
+  mouse.moveAt(200,200);
 //будет вставлено при клике в
 //указанной точке
 
@@ -103,8 +103,8 @@ $btnInsertMousePress:
 //соответствующей клавиши мыши
 //
 //Пример:
-mouse.press('LEFT');
-mouse.press('RIGHT');
+  mouse.press('LEFT');
+  mouse.press('RIGHT');
 //будет вставлено при нажатии левой
 //и правой клавиши миши
 
@@ -114,7 +114,7 @@ $btnInsertMousePressAt:
 //указанной точке
 //
 //Пример:
-mouse.pressAt('LEFT',400,400);
+  mouse.pressAt('LEFT',400,400);
 //будет всталено при нажатии левой
 //клавиши мыши в указанной точке
 
@@ -123,8 +123,8 @@ $btnInsertMouseRelease:
 //соответствующей клавиши мыши
 //
 //Пример:
-mouse.release('LEFT');
-mouse.release('RIGHT');
+  mouse.release('LEFT');
+  mouse.release('RIGHT');
 //будет вставлено при отпускании
 //лувой и правой клавиши мыши
 
@@ -134,7 +134,7 @@ $btnInsertMouseReleaseAt:
 //указанной точке
 //
 //Пример:
-mouse.releaseAt('LEFT',400,400);
+  mouse.releaseAt('LEFT',400,400);
 //будет всталено при отпускании левой
 //клавиши мыши в указанной точке
 
@@ -145,8 +145,8 @@ $btnInsertMouseCode:
 //отпускания клавишь мыши
 //
 //Пример:
-mouse.pressAt('LEFT',100,0);
-mouse.releaseAt('LEFT',200,0);
+  mouse.pressAt('LEFT',100,0);
+  mouse.releaseAt('LEFT',200,0);
 //будет всталено при нажатии левой
 //клавиши мыши перемещении курсора
 //и отпускании клавиши
@@ -157,11 +157,11 @@ $btnInsertMouseCodeWithDelay:
 //задержками между событиями
 //
 //Пример:
-system.sleep(200);
-mouse.pressAt('LEFT',100,0);
-system.sleep(200);
-mouse.releaseAt('LEFT',200,0);
-system.sleep(500);
+  system.sleep(200);
+  mouse.pressAt('LEFT',100,0);
+  system.sleep(200);
+  mouse.releaseAt('LEFT',200,0);
+  system.sleep(500);
 //будет всталено при нажатии левой
 //клавиши мыши перемещении курсора
 //и отпускании клавиши
@@ -172,12 +172,21 @@ $btnInsertMouseRelativeCode:
 //относительно прошлого события
 //
 //Пример:
-mouse.moveAndPress('LEFT',50,0);
-mouse.moveAndRelease('LEFT',0,0);
+  mouse.moveAndPress('LEFT',50,0);
+  mouse.moveAndRelease('LEFT',0,0);
 //будет вставлено при перемещении
 //курсора вправо на 50 пикселей,
 //нажатия и отпускания левой
 //клавиши мыши в той же точке
+
+$btnInsertMouseWheel:
+//Вставляет код для поворота колесика
+//мыши
+//
+//Пример:
+  mouse.wheel('UP',3);
+//будет вставлено при повороте
+//колесика вверх
 
 /////////////////////////////////////
 //click
@@ -187,7 +196,7 @@ $btnInsertMouseCodeClick:
 //распознаванием кликов
 //
 //Пример:
-mouse.clickAt('LEFT',200,200);
+  mouse.clickAt('LEFT',200,200);
 //будет вставлено при клике левой
 //клавишей мыши
 
@@ -198,18 +207,18 @@ $btnInsertAbsolutePath:
 //по абсолютным координатам
 //
 //Пример:
-mouse.moveAbsolute('010100100100100'+
-'1101000101011101010010110101111010'+
-'000111100011010101');
+  mouse.moveAbsolute('010100100100100'+
+  '1101000101011101010010110101111010'+
+  '000111100011010101');
 
 $btnInsertRelativePath:
 //Вставляет код для движения курсора
 //по относительным координатам
 //
 //Пример:
-mouse.moveRelative('010100100100100'+
-'1101000101011101010010110101110010'+
-'000111100011010101');
+  mouse.moveRelative('010100100100100'+
+  '1101000101011101010010110101110010'+
+  '000111100011010101');
 
 $btnInsertAbsolutePathWithDelays:
 //Вставляет код для движения курсора
@@ -217,9 +226,9 @@ $btnInsertAbsolutePathWithDelays:
 //задержками между событиями
 //
 //Пример:
-mouse.moveAbsolute_D('0101001010100'+
-'1101000101011101010010110101110010'+
-'000111100011010101');
+  mouse.moveAbsolute_D('0101001010100'+
+  '1101000101011101010010110101110010'+
+  '000111100011010101');
 
 $btnInsertRelativePathWithDelays:
 //Вставляет код для движения курсора
@@ -227,9 +236,9 @@ $btnInsertRelativePathWithDelays:
 //задержками между событиями
 //
 //Пример:
-mouse.moveRelative_D('0101001010100'+
-'1101000101011101010010110010010010'+
-'000111100011010101');
+  mouse.moveRelative_D('0101001010100'+
+  '1101000101011101010010110010010010'+
+  '000111100011010101');
 
 ///THIS IS MAX SIZE FOR EACH LINE////
 ////////////TEMPLATES////////////////
@@ -301,6 +310,17 @@ mouse.getReleaseDelay();
 
 $btnTemplateMouseGetReleaseDelayCode:
 mouse.getReleaseDelay();
+
+$btnTemplateMouseGetWheelDelay:
+mouse.getWheelDelay();
+//Получить задержку колеса мыши
+//в мс. (wheelDelay)
+//
+//mouse.getWheelDelay():int
+//
+
+$btnTemplateMouseGetWheelDelayCode:
+mouse.getWheelDelay();
 
 $btnTemplateMouseGetX:
 mouse.getX();
@@ -541,6 +561,17 @@ mouse.setReleaseDelay();
 $btnTemplateMouseSetReleaseDelayCode:
 mouse.setReleaseDelay();
 
+$btnTemplateMouseSetWheelDelay:
+mouse.setWheelDelay();
+//Установить задержку колеса мыши
+//в мс.
+//
+//mouse.setWheelDelay(wheelDelay)
+//  wheelDelay - задержка
+
+$btnTemplateMouseSetWheelDelayCode:
+mouse.setWheelDelay();
+
 $btnTemplateMouseSetX:
 mouse.setX();
 //Передвинуть курсор мыши по оси 'x'
@@ -727,7 +758,7 @@ system.println('');
 $btnTemplateSystemRegisterShortcut:
 system.registerShortcut('','');
 //Зарегистрировать сочетание клавишь
-//для вызова процедуры
+//для вызова метода
 //
 //system.registerShortcut
 //    ('BTN2 BTN2','FUNCT');
