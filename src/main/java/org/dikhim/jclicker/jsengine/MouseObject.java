@@ -16,10 +16,12 @@ public class MouseObject {
     private final int PRESS_DELAY = 10;
     private final int RELEASE_DELAY = 10;
     private final int MOVE_DELAY = 10;
+    private final int WHEEL_DELAY =10;
 
     private int pressDelay = PRESS_DELAY;
     private int releaseDelay = RELEASE_DELAY;
     private int moveDelay = MOVE_DELAY;
+    private int wheelDelay = WHEEL_DELAY;
 
     private Robot robot;
 
@@ -185,6 +187,21 @@ public class MouseObject {
         robot.mouseRelease(MouseCodes.getEventCodeByName(key));
         robot.delay(pressDelay);
     }
+
+    public void wheel(String direction,int amount){
+        if(amount<0){
+            OutStream.println("MouseWheelAmount can't be less then 0  :'"+amount+"'");
+            return;
+        }
+
+        if(direction.equals("UP")){
+            robot.mouseWheel(amount);
+        }else if(direction.equals("DOWN")){
+            robot.mouseWheel(amount*-1);
+        }else{
+            OutStream.println("Wrong wheel direction  :'"+direction+"'");
+        }
+    }
     // Getters\setters
 
     /**
@@ -230,4 +247,11 @@ public class MouseObject {
         this.moveDelay = moveDelay;
     }
 
+    public int getWheelDelay() {
+        return wheelDelay;
+    }
+
+    public void setWheelDelay(int wheelDelay) {
+        this.wheelDelay = wheelDelay;
+    }
 }

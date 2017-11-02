@@ -571,6 +571,22 @@ mouse.setY();
 $btnTemplateMouseSetYCode:
 mouse.setY();
 
+$btnTemplateMouseWheel:
+mouse.wheel('',);
+//Прокрутить колесо мыши на указанное
+//количество строк
+//
+//mouse.wheel("DIRECTION", amount);
+//  DIRECTION - направление UP/DOWN
+//  amount - количество строк
+//
+//Метод состоит из:
+//  wheel(amount);
+//    sleep(wheelDelay);
+
+$btnTemplateMouseWheelCode:
+mouse.wheel('',);
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 //KEYBOARD

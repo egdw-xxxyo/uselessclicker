@@ -254,6 +254,7 @@
                                                             <Button fx:id="btnTemplateMouseSetReleaseDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setReleaseDelay" />
                                                             <Button fx:id="btnTemplateMouseSetX" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setX" />
                                                             <Button fx:id="btnTemplateMouseSetY" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="setY" />
+                                                            <Button fx:id="btnTemplateMouseWheel" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="wheel" />
                                                          </children>
                                                       </VBox>
                                                    </content>

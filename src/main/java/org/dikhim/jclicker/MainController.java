@@ -1390,6 +1390,9 @@ public class MainController {
     @FXML
     private Button btnTemplateMouseSetY;
 
+    @FXML
+    private Button btnTemplateMouseWheel;
+
     ////////////// KEYBOARD
     @FXML
     private Button btnTemplateKeyGetPressDelay;
@@ -1534,6 +1537,11 @@ public class MainController {
         b = btnTemplateMouseSetY;
         b.setUserData(new String[]{prop.get(b.getId()),
                 prop.get(b.getId() + "Code")});
+
+        b = btnTemplateMouseWheel;
+        b.setUserData(new String[]{prop.get(b.getId()),
+                prop.get(b.getId() + "Code")});
+
 
         b = btnTemplateMouseGetPressDelay;
         b.setUserData(new String[]{prop.get(b.getId()),
