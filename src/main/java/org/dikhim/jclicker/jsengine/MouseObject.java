@@ -5,7 +5,7 @@ import java.awt.Robot;
 import org.dikhim.jclicker.events.MouseCodes;
 import org.dikhim.jclicker.events.MouseEventsManager;
 import org.dikhim.jclicker.util.MouseMoveUtil;
-import org.dikhim.jclicker.util.OutStream;
+import org.dikhim.jclicker.util.output.Out;
 
 /**
  *
@@ -190,7 +190,7 @@ public class MouseObject {
 
     public void wheel(String direction,int amount){
         if(amount<0){
-            OutStream.println("MouseWheelAmount can't be less then 0  :'"+amount+"'");
+            Out.println("MouseWheelAmount can't be less then 0  :'"+amount+"'");
             return;
         }
 
@@ -199,7 +199,7 @@ public class MouseObject {
         }else if(direction.equals("DOWN")){
             robot.mouseWheel(amount*-1);
         }else{
-            OutStream.println("Wrong wheel direction  :'"+direction+"'");
+            Out.println("Wrong wheel direction  :'"+direction+"'");
         }
     }
     // Getters\setters

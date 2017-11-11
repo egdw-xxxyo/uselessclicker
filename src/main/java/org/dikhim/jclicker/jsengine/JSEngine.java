@@ -14,7 +14,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.dikhim.jclicker.events.KeyEventsManager;
-import org.dikhim.jclicker.util.OutStream;
+import org.dikhim.jclicker.util.output.Out;
 
 /**
  * Created by dikobraz on 26.03.17.
@@ -52,8 +52,7 @@ public class JSEngine {
             try {
                 engine.eval(code);
             } catch (ScriptException e) {
-                System.out.println(e.getMessage());
-                OutStream.println(e.getMessage());
+                Out.println(e.getMessage());
             }
         });
 
@@ -121,12 +120,8 @@ public class JSEngine {
     public void invokeFunction(String name, Object... args) {
         try {
             ((Invocable) engine).invokeFunction(name, args);
-        } catch (ScriptException e) {
-            System.out.println("invoking function went wrong: " + e.getMessage());
-            OutStream.print(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            System.out.println("invoking function went wrong: " + e.getMessage());
-            OutStream.print(e.getMessage());
+        } catch (ScriptException|NoSuchMethodException e) {
+            Out.println(e.getMessage());
         }
     }
 

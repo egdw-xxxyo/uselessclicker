@@ -2,7 +2,7 @@ package org.dikhim.jclicker.jsengine;
 
 import org.dikhim.jclicker.events.KeyEventsManager;
 import org.dikhim.jclicker.events.ShortcutEqualsHandler;
-import org.dikhim.jclicker.util.OutStream;
+import org.dikhim.jclicker.util.output.Out;
 
 public class SystemObject {
 	private JSEngine engine;
@@ -30,16 +30,14 @@ public class SystemObject {
 		try {
 			Thread.sleep(ms);
 		} catch (InterruptedException e) {
-			System.out.println(e.getMessage());
-			OutStream.println(e.getMessage());
 		}
 	}
 	
 	public void print(String s) {
-		OutStream.print(s);
+		Out.print(s);
 	}
 	public void println(String s) {
-		OutStream.println(s);
+		Out.println(s);
 	}
 	
 }

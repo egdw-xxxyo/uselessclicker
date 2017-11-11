@@ -8,8 +8,7 @@ import java.util.Set;
 
 import org.dikhim.jclicker.events.KeyCodes;
 import org.dikhim.jclicker.events.KeyEventsManager;
-import org.dikhim.jclicker.events.MouseCodes;
-import org.dikhim.jclicker.util.OutStream;
+import org.dikhim.jclicker.util.output.Out;
 
 /**
  * Created by dikobraz on 31.03.17.
@@ -36,7 +35,7 @@ public class KeyboardObject {
 				robot.keyPress(keyCode);
 				robot.delay(pressDelay);
 			}else {
-				OutStream.println("Method call failed: key.press('"+keys+"')");
+				Out.println("Method call failed: key.press('"+keys+"')");
 			}
 		}
 	}
@@ -48,7 +47,7 @@ public class KeyboardObject {
 				robot.keyRelease(keyCode);
 				robot.delay(releaseDelay);
 			}else {
-				OutStream.println("Method call failed: key.release('"+keys+"')");
+				Out.println("Method call failed: key.release('"+keys+"')");
 			}
 		}
 	}
@@ -62,7 +61,7 @@ public class KeyboardObject {
 				robot.keyRelease(keyCode);
 				robot.delay(releaseDelay);
 			}else {
-				OutStream.println("Method call failed: key.type('"+keys+"')");
+				Out.println("Method call failed: key.type('"+keys+"')");
 			}
 		}
 	}

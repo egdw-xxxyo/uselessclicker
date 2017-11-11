@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
+import javafx.application.Application;
 import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.events.*;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.MouseMoveUtil;
-import org.dikhim.jclicker.util.OutStream;
+import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -32,9 +34,11 @@ import javafx.stage.FileChooser;
 public class MainController {
     private MouseMoveUtil movementPath;
     private MouseMoveEvent lastMoveEvent;
+    private ClickerMain application;
 
     @FXML
     private void initialize() {
+        application = ClickerMain.getApplication();
         // init textareas
         areaCode.textProperty().bindBidirectional(codeTextProperty);
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
@@ -60,15 +64,12 @@ public class MainController {
 
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile(
-                new File(getClass().getResource("/strings/codesamples_ru.js")
+                new File(getClass().getResource("/strings/codesamples_ru.txt")
                         .getFile()));
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
         // Init script
-        Script script = ClickerMain.getScript();
-        codeTextProperty.set("");
-        script.setScriptProperty(codeTextProperty);
 
         // Set satus suspended and reset toggles status
         setScriptStatus(Status.SUSPENDED);
@@ -97,26 +98,33 @@ public class MainController {
 
     @FXML
     private TextArea areaOut;
-    private StringProperty outTextProperty = OutStream.getProperty();
+    private StringProperty outTextProperty = Out.getProperty();
 
+    public void bindOutputProperty(StringProperty property){
+        outTextProperty.bindBidirectional(property);
+    }
+
+    public void bindScriptProperty(StringProperty property){
+        codeTextProperty.bindBidirectional(property);
+    }
     @FXML
     public void stopScript() {
-        ClickerMain.stopScript();
+        application.stopScript();
         setScriptStatus(Status.SUSPENDED);
     }
 
     @FXML
     public void runScript() {
-        OutStream.clear();
+        Out.clear();
         select(null);
         setScriptStatus(Status.RUNNING);
-        ClickerMain.runScript();
+        application.runScript();
     }
 
     @FXML
     public void newFile() {
         stopScript();
-        ClickerMain.newScript();
+        application.newScript();
         updateScriptStatus();
     }
 
@@ -133,10 +141,10 @@ public class MainController {
         if (pathFolder != null)
             fileChooser.setInitialDirectory(new File(pathFolder));
 
-        File file = fileChooser.showOpenDialog(ClickerMain.stage);
+        File file = fileChooser.showOpenDialog(application.getPrimaryStage());
         if (file != null) {
             Script script = new Script(file);
-            ClickerMain.setScript(script);
+            application.setScript(script);
             prefs.put("last-opened-folder",
                     file.getParentFile().getAbsolutePath());
 
@@ -150,11 +158,11 @@ public class MainController {
     public void saveFile() {
         Preferences prefs = Preferences.userNodeForPackage(ClickerMain.class);
 
-        Script script = ClickerMain.getScript();
+        Script script = application.getScript();
         if (script == null)
             return;
 
-        if (script.getScriptFile() == null) {
+        if (script.getFile() == null) {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save file");
             fileChooser.setInitialFileName("newFile.js");
@@ -163,15 +171,15 @@ public class MainController {
             if (pathFolder != null)
                 fileChooser.setInitialDirectory(new File(pathFolder));
 
-            File file = fileChooser.showSaveDialog(ClickerMain.stage);
+            File file = fileChooser.showSaveDialog(application.getPrimaryStage());
 
             if (file != null) {
                 try {
                     FileUtils.writeStringToFile(file,
                             script.getStringProperty().get(),
                             Charset.defaultCharset());
-                    script.setScriptFile(file);
-                    prefs.put("last-saved-folder", script.getScriptFile()
+                    script.setFile(file);
+                    prefs.put("last-saved-folder", script.getFile()
                             .getParentFile().getAbsolutePath());
 
                 } catch (IOException e) {
@@ -182,7 +190,7 @@ public class MainController {
             }
         } else {
             try {
-                FileUtils.writeStringToFile(script.getScriptFile(),
+                FileUtils.writeStringToFile(script.getFile(),
                         script.getStringProperty().get(),
                         Charset.defaultCharset());
             } catch (IOException e) {
@@ -190,7 +198,7 @@ public class MainController {
                 e.printStackTrace();
             }
         }
-        ClickerMain.updateTitle();
+        application.updateTitle();
         updateScriptStatus();
     }
 
@@ -202,7 +210,7 @@ public class MainController {
         System.out.println("Save as");
         Preferences prefs = Preferences.userNodeForPackage(ClickerMain.class);
 
-        Script script = ClickerMain.getScript();
+        Script script = application.getScript();
         if (script == null)
             return;
         FileChooser fileChooser = new FileChooser();
@@ -213,12 +221,12 @@ public class MainController {
         if (pathFolder != null)
             fileChooser.setInitialDirectory(new File(pathFolder));
 
-        File file = fileChooser.showSaveDialog(ClickerMain.stage);
+        File file = fileChooser.showSaveDialog(application.getPrimaryStage());
 
         if (file != null) {
-            script.setScriptFile(file);
+            script.setFile(file);
             try {
-                FileUtils.writeStringToFile(script.getScriptFile(),
+                FileUtils.writeStringToFile(script.getFile(),
                         script.getStringProperty().get(),
                         Charset.defaultCharset());
             } catch (IOException e) {
@@ -226,9 +234,9 @@ public class MainController {
             }
 
         }
-        ClickerMain.updateTitle();
+        application.updateTitle();
         prefs.put("last-saved-folder",
-                script.getScriptFile().getParentFile().getAbsolutePath());
+                script.getFile().getParentFile().getAbsolutePath());
     }
 
     ////// Toggles
@@ -1525,21 +1533,21 @@ public class MainController {
         if (status == Status.RUNNING) {
             btnScriptStatus.setSelected(true);
             btnScriptStatus
-                    .setText("Running:   " + ClickerMain.getScript().getName());
+                    .setText("Running:   " + application.getScript().getName());
         } else if (status == Status.SUSPENDED) {
             btnScriptStatus.setSelected(false);
             btnScriptStatus
-                    .setText("Suspended: " + ClickerMain.getScript().getName());
+                    .setText("Suspended: " + application.getScript().getName());
         }
     }
 
     private void updateScriptStatus() {
         if (btnScriptStatus.isSelected()) {
             btnScriptStatus
-                    .setText("Running:   " + ClickerMain.getScript().getName());
+                    .setText("Running:   " + application.getScript().getName());
         } else {
             btnScriptStatus
-                    .setText("Suspended: " + ClickerMain.getScript().getName());
+                    .setText("Suspended: " + application.getScript().getName());
         }
     }
 
