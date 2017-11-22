@@ -1,7 +1,9 @@
 package org.dikhim.jclicker;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +11,7 @@ import java.util.prefs.Preferences;
 
 import javafx.application.Application;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.events.*;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.Cli;
@@ -63,9 +66,17 @@ public class MainController {
                 });
 
         // init toggles and template buttons
-        SourcePropertyFile propertyFile = new SourcePropertyFile(
+        /*SourcePropertyFile propertyFile = new SourcePropertyFile(
                 new File(getClass().getResource("/strings/codesamples_ru.txt")
-                        .getFile()));
+                        .getFile()));*/
+        SourcePropertyFile propertyFile = new SourcePropertyFile();
+
+        BufferedReader txtReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/strings/codesamples_ru.txt")));
+        try {
+            propertyFile.setSource(IOUtils.toString(txtReader));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 

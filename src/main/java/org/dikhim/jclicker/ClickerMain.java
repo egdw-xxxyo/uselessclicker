@@ -51,18 +51,17 @@ public class ClickerMain extends Application {
     public void start(Stage primaryStage) throws Exception {
         application = this;
         String filePath =  getParameters().getNamed().get("filePath");
-        String type = getParameters().getNamed().get("typeApp");
-
+        String type = getParameters().getNamed().get("type");
         this.primaryStage = primaryStage;
-
+        System.out.println(getParameters().getNamed().entrySet());
+        System.out.println(getParameters().getUnnamed().toString());
         jNativeHookStart();
         createRobot();
         createJSEngine();
         createScript();
-
-        loadScript(filePath);
+        if(!filePath.equals(""))
+            loadScript(filePath);
         if(type.equals("GUI")){
-
             startGuiApplication();
         }else if(type.equals("CLI")){
             startCliApplication();
@@ -228,9 +227,9 @@ public class ClickerMain extends Application {
         String[] params = new String[2];
         params[0] = "--filePath=" + cli.getFilePath();
         if(cli.isConsole()){
-            params[1]="--typeApp=CLI";
+            params[1]="--type=CLI";
         }else{
-            params[1]+= "--typeApp=GUI";
+            params[1]= "--type=GUI";
         }
         launch(params);
     }

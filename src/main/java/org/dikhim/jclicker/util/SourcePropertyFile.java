@@ -12,6 +12,9 @@ import org.apache.commons.io.FileUtils;
 public class SourcePropertyFile {
 	private Map<String, String> properties = new HashMap<>();
  	private String source;
+ 	public SourcePropertyFile(){
+
+	}
 	public SourcePropertyFile(File file) {
 		try {
 			this.source = FileUtils.readFileToString(file, "UTF-8");
@@ -44,6 +47,10 @@ public class SourcePropertyFile {
 		String out = properties.get(propertyName);
 		if(out==null)return "";
 		return out;
+	}
+	public void setSource(String source){
+		this.source=source;
+		parse();
 	}
 
 }
