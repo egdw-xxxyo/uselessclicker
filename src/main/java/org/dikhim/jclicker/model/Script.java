@@ -92,7 +92,7 @@ public class Script {
 		try {
 			file = new File(path);
 			name = file.getName();
-			stringProperty.set(FileUtils.readFileToString(file, Charset.defaultCharset()));
+			stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
 		} catch (NullPointerException|IOException e) {
 			Out.println(e.getMessage());
 			file = oldFile;

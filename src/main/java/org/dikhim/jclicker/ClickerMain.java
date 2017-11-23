@@ -14,6 +14,7 @@ import javax.script.ScriptException;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.text.Font;
 import org.dikhim.jclicker.events.KeyEventsManager;
 import org.dikhim.jclicker.events.MouseEventsManager;
 import org.dikhim.jclicker.events.ShortcutEqualsHandler;
@@ -53,8 +54,6 @@ public class ClickerMain extends Application {
         String filePath =  getParameters().getNamed().get("filePath");
         String type = getParameters().getNamed().get("type");
         this.primaryStage = primaryStage;
-        System.out.println(getParameters().getNamed().entrySet());
-        System.out.println(getParameters().getUnnamed().toString());
         jNativeHookStart();
         createRobot();
         createJSEngine();

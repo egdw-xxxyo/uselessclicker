@@ -1,34 +1,38 @@
+@font-face {
+	src: url("fonts/FreeMonoBold.ttf");
+}
+
 * {
 	-fx-bg: #fff;
 	-fx-bg-selected:#A6ECFF;
-	
+
 	-fx-bg-pressed:#56DBFF;
 	-fx-bg-hover:#DEF8FF;
-	
+
 	-fx-b-color:#bbb;
 }
 
 #run-script-button{
-	-fx-background-image: url("images/play.png"); 
+	-fx-background-image: url("images/play.png");
 }
 
 #stop-script-button{
-	-fx-background-image: url("images/stop.png"); 
+	-fx-background-image: url("images/stop.png");
 }
 #new-script-button{
-	-fx-background-image: url("images/document.png"); 
+	-fx-background-image: url("images/document.png");
 }
 #open-script-button{
-	-fx-background-image: url("images/folder.png"); 
+	-fx-background-image: url("images/folder.png");
 }
 #save-script-button{
-	-fx-background-image: url("images/save.png"); 
+	-fx-background-image: url("images/save.png");
 }
 #save-as-script-button{
-	-fx-background-image: url("images/saveAs.png"); 
+	-fx-background-image: url("images/saveAs.png");
 }
 #paste-keycodes-button{
-	-fx-background-image: url("images/keyboard.png"); 
+	-fx-background-image: url("images/keyboard.png");
 }
 #paste-keycodes-button:selected{
 	-fx-background-color: #FFCC5F;
@@ -36,9 +40,9 @@
 
 
 #paste-mousecodes-button{
-	-fx-background-image: url("images/mouse.png"); 
-	
-	
+	-fx-background-image: url("images/mouse.png");
+
+
 }
 #paste-mousecodes-button:selected{
 	-fx-background-color: #FFCC5F;
@@ -46,10 +50,10 @@
 
 /*Menu buttons*/
 #menu-keyboard-button{
-	-fx-background-image: url("images/keyboard.png"); 
+	-fx-background-image: url("images/keyboard.png");
 }
 #menu-mouse-button{
-	-fx-background-image: url("images/mouse.png"); 
+	-fx-background-image: url("images/mouse.png");
 }
 .menu-button{
 	-fx-graphic: url("images/mouse.png")
@@ -61,19 +65,19 @@
 .script-button{
 	-fx-alignment: bottom_center;
 	-fx-font-size: 10;
-	
+
 	-fx-background-radius: 0;
 	-fx-background-repeat: no-repeat ;
 	-fx-background-position: center 8px;
 	-fx-background-size: 26px;
-	
+
 	-fx-min-height: 50;
 	-fx-pref-height: 50;
 	-fx-max-height: 50;
 	-fx-min-width: 55;
 	-fx-pref-width: 55;
 	-fx-max-width: 55;
-	
+
 	-fx-padding: 0;
 }
 
@@ -115,57 +119,57 @@
 /*text area */
 .code-text-area{
 		-fx-text-fill: #666;
-		-fx-font-size: 13px;
+		-fx-font-size: 10pt;
 		-fx-font-family: "FreeMono";
-		
+
 		-fx-highlight-fill: #ffdd7F;
     -fx-highlight-text-fill: #777;
-    
-    
+
+
 }
 .code-text-area:focused{
 		-fx-text-fill: #444;
-		
-		-fx-font-size: 13px;
-		-fx-font-family: "FreeMono Bold";
+
+		-fx-font-size: 10pt;
+		-fx-font-family: "FreeMono";
     -fx-highlight-fill: #FFCC5F;
     -fx-highlight-text-fill: #333;
-    
-    
+
+
     -fx-focus-color: #777;
-    
+
 }
 .code-text-area:disabled{
 		-fx-opacity: 1;
 		-fx-text-fill: #111;
-		
-		-fx-font-size: 13px;
-		-fx-font-family: "FreeMono Bold";   
-    
+
+		-fx-font-size: 10pt;
+		-fx-font-family: "FreeMono";
+
 }
 .code-text-area > .scroll-pane:disabled {
     -fx-opacity: 1;
 }
 .code-text-area:readonly .content{
 		-fx-background-color: #eee;
-		-fx-display-caret: true; 
+		-fx-display-caret: true;
 }
 
 /*Paste code buttons */
 .paste-code-button{
-	
+
 	-fx-min-height: 70;
 	-fx-max-height: 70;
 	-fx-max-width: 300;
-	
+
 	-fx-padding: 2 0 0 0;
-	
+
 	-fx-background-radius: 0;
 	-fx-background-repeat: no-repeat ;
 	-fx-background-position: 3 2;
 	-fx-background-size: 16px;
 	-fx-background-color: #dddddd;
-	
+
 	-fx-border-width: 0 1 1 1;
 	-fx-border-color: #bbb;
 }
@@ -177,10 +181,10 @@
 	-fx-border-color: #FFCC5F;
 }
 .keyboard-paste-code-button{
-	-fx-background-image: url("images/keyboard.png"); 
+	-fx-background-image: url("images/keyboard.png");
 }
 .mouse-paste-code-button{
-	-fx-background-image: url("images/mouse.png"); 
+	-fx-background-image: url("images/mouse.png");
 }
 /*right pane*/
 #insertCodePane{
@@ -204,7 +208,7 @@
 -fx-border-width: 0 0 1 0;
 -fx-border-color: -fx-b-color;
 }
-.isert-code-titled-pane  
+.isert-code-titled-pane
 {
 	-fx-border-width: 0;
 }
@@ -212,7 +216,7 @@
 {
 	-fx-border-width: 0;
 }
-.isert-code-titled-pane > .title 
+.isert-code-titled-pane > .title
 {
 -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
 -fx-background-insets: 0;

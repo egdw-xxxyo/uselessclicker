@@ -1,15 +1,13 @@
 package org.dikhim.jclicker;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
 import javafx.application.Application;
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.events.*;
@@ -71,9 +69,9 @@ public class MainController {
                         .getFile()));*/
         SourcePropertyFile propertyFile = new SourcePropertyFile();
 
-        BufferedReader txtReader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/strings/codesamples_ru.txt")));
+        InputStream txtReader =  getClass().getResourceAsStream("/strings/codesamples_ru.txt");
         try {
-            propertyFile.setSource(IOUtils.toString(txtReader));
+            propertyFile.setSource(IOUtils.toString(txtReader,"UTF-8"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,7 +186,7 @@ public class MainController {
                 try {
                     FileUtils.writeStringToFile(file,
                             script.getStringProperty().get(),
-                            Charset.defaultCharset());
+                            "UTF-8");
                     script.setFile(file);
                     prefs.put("last-saved-folder", script.getFile()
                             .getParentFile().getAbsolutePath());
@@ -203,7 +201,7 @@ public class MainController {
             try {
                 FileUtils.writeStringToFile(script.getFile(),
                         script.getStringProperty().get(),
-                        Charset.defaultCharset());
+                        "UTF-8");
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -239,7 +237,7 @@ public class MainController {
             try {
                 FileUtils.writeStringToFile(script.getFile(),
                         script.getStringProperty().get(),
-                        Charset.defaultCharset());
+                        "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
             }

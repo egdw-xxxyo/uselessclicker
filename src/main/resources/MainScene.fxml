@@ -100,25 +100,25 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextArea fx:id="areaCode" maxHeight="1.7976931348623157E308" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TextArea fx:id="areaCode" maxHeight="1.7976931348623157E308" styleClass="code-text-area" text="....&#10;wwww&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
-                                          <Font name="FreeMono Bold" size="13.0" />
+                                          <Font name="Monospaced Bold" size="13.0" />
                                        </font>
                                     </TextArea>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0">
                                  <children>
-                                    <TextArea fx:id="areaOut" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TextArea fx:id="areaOut" styleClass="code-text-area" text="....&#10;wwww&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
-                                          <Font name="FreeMono Bold" size="13.0" />
+                                          <Font name="Monospaced Bold" size="13.0" />
                                        </font>
                                     </TextArea>
                                  </children>
                               </AnchorPane>
                           </items>
                         </SplitPane>
-                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="310.0" minWidth="310.0" mouseTransparent="true" prefHeight="200.0" prefWidth="310.0" styleClass="code-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                        <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                            <effect>
                               <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
                            </effect>
