@@ -4,10 +4,17 @@ import org.dikhim.jclicker.events.KeyEventsManager;
 import org.dikhim.jclicker.events.ShortcutEqualsHandler;
 import org.dikhim.jclicker.util.output.Out;
 
+import java.awt.*;
+
 public class SystemObject {
 	private JSEngine engine;
+	private Robot robot;
 	public SystemObject(JSEngine engine) {
 		this.engine = engine;
+		this.robot = engine.getRobot();
+	}
+	public SystemObject(Robot robot) {
+		this.robot = robot;
 	}
 	/**
 	 * Register shortcut for call function

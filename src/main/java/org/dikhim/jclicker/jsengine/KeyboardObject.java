@@ -26,6 +26,9 @@ public class KeyboardObject {
 	public KeyboardObject(JSEngine engine) {
 		this.robot = engine.getRobot();
 	}
+	public KeyboardObject(Robot robot) {
+		this.robot = robot;
+	}
 
 	public void press(String keys) {		
 		Set<String> keySet = new LinkedHashSet<String>(Arrays.asList(keys.split(" ")));

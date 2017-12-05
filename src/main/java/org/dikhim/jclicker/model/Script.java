@@ -27,7 +27,7 @@ public class Script {
 			file = new File(filePath);
 			name = file.getName();
 			try {
-				this.stringProperty.set(FileUtils.readFileToString(file, Charset.defaultCharset()));
+				this.stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
 			} catch (IOException e) {
 				Out.println(e.getMessage());
 			}
@@ -38,7 +38,7 @@ public class Script {
 		this.file = file;
 		name = file.getName();
 		try {
-			this.stringProperty.set(FileUtils.readFileToString(file, Charset.defaultCharset()));
+			this.stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
 		} catch (IOException e) {
 			Out.println(e.getMessage());
 		}

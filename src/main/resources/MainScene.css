@@ -34,6 +34,10 @@
 #paste-keycodes-button{
 	-fx-background-image: url("images/keyboard.png");
 }
+
+#server-button{
+	-fx-background-image: url("images/http.png");
+}
 #paste-keycodes-button:selected{
 	-fx-background-color: #FFCC5F;
 }

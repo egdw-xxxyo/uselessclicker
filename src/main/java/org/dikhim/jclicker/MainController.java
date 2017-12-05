@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -95,6 +99,8 @@ public class MainController {
     private Button btnOpenFile;
     @FXML
     private Button btnSaveFile;
+    @FXML
+    private Button btnShowSeverWindow;
 
     @FXML
     private TextArea areaCode;
@@ -248,6 +254,24 @@ public class MainController {
                 script.getFile().getParentFile().getAbsolutePath());
     }
 
+    @FXML
+    public void showServerWindow(){
+        System.out.println("Show server");
+        Parent root;
+        try {
+            FXMLLoader loader= new FXMLLoader();
+
+            root = loader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml").openStream());
+            Stage stage = new Stage();
+            stage.setTitle("Http server");
+            stage.setScene(new Scene(root, 600, 150));
+            stage.show();
+        }
+        catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
     ////// Toggles
     // Keyboard
     @FXML
