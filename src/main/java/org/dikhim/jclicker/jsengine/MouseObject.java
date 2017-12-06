@@ -194,9 +194,9 @@ public class MouseObject {
             return;
         }
 
-        if(direction.equals("UP")){
+        if(direction.equals("DOWN")){
             robot.mouseWheel(amount);
-        }else if(direction.equals("DOWN")){
+        }else if(direction.equals("UP")){
             robot.mouseWheel(amount*-1);
         }else{
             Out.println("Wrong wheel direction  :'"+direction+"'");

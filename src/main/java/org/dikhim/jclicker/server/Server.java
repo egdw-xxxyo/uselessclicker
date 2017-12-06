@@ -61,8 +61,10 @@ public class Server {
     }
 
     public void stop() {
-        httpServer.stop(0);
-        httpServer = null;
+        if(httpServer!=null){
+            httpServer.stop(0);
+            httpServer = null;
+        }
     }
 
     public int getPort() {
@@ -135,6 +137,9 @@ public class Server {
         if (listOfContexts.isEmpty()) {
             listOfContexts.add(new HttpContext("/help", new HelpHandler()));
             listOfContexts.add(new HttpContext("/mouse/move", new MouseMoveHandler()));
+            listOfContexts.add(new HttpContext("/mouse/press",new MousePress()));
+            listOfContexts.add(new HttpContext("/mouse/release",new MouseRelease()));
+            listOfContexts.add(new HttpContext("/mouse/wheel",new MouseWheel()));
         }
 
         for(HttpContext context:listOfContexts){
@@ -144,6 +149,7 @@ public class Server {
 
     // /help
     static class HelpHandler implements HttpHandler {
+
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
             StringBuilder sb = new StringBuilder("");
@@ -151,6 +157,10 @@ public class Server {
             sb.append("Available methods:\n");
             sb.append("/help\n");
             sb.append("/mouse/move  params: dx, dy\n");
+
+            sb.append("/mouse/press  params: button\n");
+            sb.append("/mouse/release  params: button\n");
+            sb.append("/mouse/wheel  params: direction, amount\n");
 
             String response = sb.toString();
             httpExchange.sendResponseHeaders(200, response.length());
@@ -162,16 +172,76 @@ public class Server {
 
     // /mouse/move
     static class MouseMoveHandler implements HttpHandler {
+
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
-            String response = "Okay";
             String query = httpExchange.getRequestURI().getQuery();
             if (query == null) return;
-            Map<String, String> params = queryToMap(query);
+            Map<String, String> params = queryToMap(httpExchange.getRequestURI().getQuery());
             int dx = Integer.parseInt(params.get("dx"));
             int dy = Integer.parseInt(params.get("dy"));
             server.mouse.move(dx, dy);
 
+            String response = "Moved dx="+dx+" dy="+dy;
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+
+    // /mouse/press
+    static class MousePress implements HttpHandler{
+
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            String query = httpExchange.getRequestURI().getQuery();
+            if (query == null) return;
+            Map<String, String> params = queryToMap(httpExchange.getRequestURI().getQuery());
+            String button = params.get("button");
+            server.mouse.press(button);
+
+            String response = "Pressed button="+button;
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+
+    // /mouse/release
+    static class MouseRelease implements HttpHandler{
+
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            String query = httpExchange.getRequestURI().getQuery();
+            if (query == null) return;
+            Map<String, String> params = queryToMap(httpExchange.getRequestURI().getQuery());
+            String button = params.get("button");
+            server.mouse.release(button);
+
+            String response = "Released button="+button;
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+
+    }
+
+    // /mouse/wheel
+    static class MouseWheel implements HttpHandler{
+
+        @Override
+        public void handle(HttpExchange httpExchange) throws IOException {
+            String query = httpExchange.getRequestURI().getQuery();
+            if (query == null) return;
+            Map<String, String> params = queryToMap(httpExchange.getRequestURI().getQuery());
+            String direction =  params.get("direction");
+            int amount = Integer.parseInt(params.get("amount"));
+            server.mouse.wheel(direction,amount);
+
+            String response = "Wheeled direction="+direction+" amount="+amount;
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
