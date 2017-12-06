@@ -254,4 +254,11 @@ public class MouseObject {
     public void setWheelDelay(int wheelDelay) {
         this.wheelDelay = wheelDelay;
     }
+
+    public void setAllDelays(int delay){
+        this.moveDelay=delay;
+        this.pressDelay=delay;
+        this.releaseDelay=delay;
+        this.wheelDelay=delay;
+    }
 }

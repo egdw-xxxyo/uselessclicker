@@ -11,18 +11,16 @@ import org.dikhim.jclicker.jsengine.SystemObject;
 import java.awt.*;
 import java.io.*;
 import java.net.*;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 public class Server {
     private MouseObject mouse;
     private KeyboardObject keyboard;
     private SystemObject system;
     private HttpServer httpServer;
-
     private int port = 5000;
+    private List<HttpContext> listOfContexts = new ArrayList<>();
 
     private static Server server;
 
@@ -34,9 +32,13 @@ public class Server {
             keyboard = new KeyboardObject(robot);
             system = new SystemObject(robot);
 
+
         } catch (AWTException e) {
             e.printStackTrace();
         }
+
+        mouse.setAllDelays(0);
+        keyboard.setAllDelays(0);
     }
 
     public static Server getInstance() {
@@ -108,8 +110,8 @@ public class Server {
         }
     }
 
-    public boolean isAvailable(){
-        return httpServer!=null;
+    public boolean isAvailable() {
+        return httpServer != null;
     }
 
     ////static
@@ -128,12 +130,20 @@ public class Server {
     }
 
 
-    private void createContext(){
-        httpServer.createContext("/help",new HelpHandler());
-        httpServer.createContext("/mouse/move", new MouseMoveHandler());
+    // Contexts
+    private void createContext() {
+        if (listOfContexts.isEmpty()) {
+            listOfContexts.add(new HttpContext("/help", new HelpHandler()));
+            listOfContexts.add(new HttpContext("/mouse/move", new MouseMoveHandler()));
+        }
 
+        for(HttpContext context:listOfContexts){
+            httpServer.createContext(context.getPath(),context.getHandler());
+        }
     }
-    static class HelpHandler implements HttpHandler{
+
+    // /help
+    static class HelpHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
             StringBuilder sb = new StringBuilder("");
@@ -149,6 +159,8 @@ public class Server {
             os.close();
         }
     }
+
+    // /mouse/move
     static class MouseMoveHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange httpExchange) throws IOException {
@@ -158,12 +170,12 @@ public class Server {
             Map<String, String> params = queryToMap(query);
             int dx = Integer.parseInt(params.get("dx"));
             int dy = Integer.parseInt(params.get("dy"));
+            server.mouse.move(dx, dy);
 
             httpExchange.sendResponseHeaders(200, response.length());
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
-            server.mouse.move(dx, dy);
         }
     }
 }

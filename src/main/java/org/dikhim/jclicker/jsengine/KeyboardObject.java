@@ -84,10 +84,16 @@ public class KeyboardObject {
 	public void setReleaseDelay(int releaseDelay) {
 		this.releaseDelay = releaseDelay;
 	}
-	
+
+	public void setAllDelays(int delay){
+		this.pressDelay=delay;
+		this.releaseDelay=delay;
+	}
+
 	public boolean isPressed(String keys) {
 		Set<String> keySet = new HashSet<String>(Arrays.asList(keys.split(" ")));
 		return KeyEventsManager.getInstance().isPressed(keySet);
 	}
+
 
 }
