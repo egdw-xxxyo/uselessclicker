@@ -11,7 +11,10 @@
 
 	-fx-b-color:#bbb;
 }
-
+.root{
+	-fx-font-family: "FreeMono";
+	-fx-font-size: 14px;
+}
 #run-script-button{
 	-fx-background-image: url("images/play.png");
 }
@@ -68,7 +71,7 @@
 
 .script-button{
 	-fx-alignment: bottom_center;
-	-fx-font-size: 10;
+	-fx-font-size: 12px;
 
 	-fx-background-radius: 0;
 	-fx-background-repeat: no-repeat ;
@@ -123,7 +126,7 @@
 /*text area */
 .code-text-area{
 		-fx-text-fill: #666;
-		-fx-font-size: 10pt;
+		-fx-font-size: 14px;
 		-fx-font-family: "FreeMono";
 
 		-fx-highlight-fill: #ffdd7F;
@@ -134,8 +137,6 @@
 .code-text-area:focused{
 		-fx-text-fill: #444;
 
-		-fx-font-size: 10pt;
-		-fx-font-family: "FreeMono";
     -fx-highlight-fill: #FFCC5F;
     -fx-highlight-text-fill: #333;
 
@@ -147,8 +148,6 @@
 		-fx-opacity: 1;
 		-fx-text-fill: #111;
 
-		-fx-font-size: 10pt;
-		-fx-font-family: "FreeMono";
 
 }
 .code-text-area > .scroll-pane:disabled {
@@ -212,15 +211,17 @@
 -fx-border-width: 0 0 1 0;
 -fx-border-color: -fx-b-color;
 }
-.isert-code-titled-pane
+.insert-code-titled-pane
 {
 	-fx-border-width: 0;
+	-fx-border-insets: 0;
 }
-.isert-code-titled-pane  > *.content
+.insert-code-titled-pane  > *.content
 {
 	-fx-border-width: 0;
+	-fx-border-insets: 0;
 }
-.isert-code-titled-pane > .title
+.insert-code-titled-pane > .title
 {
 -fx-background-color: -fx-box-border, -fx-inner-border, -fx-body-color;
 -fx-background-insets: 0;
@@ -233,7 +234,9 @@
 	-fx-alignment: center-left ;
 	-fx-background-radius: 0;
 	-fx-background-color: -fx-bg;
-	-fx-min-height: 24;
+	-fx-max-height: 28;
+	-fx-min-height: 28;
+	-fx-max-width: infinity;
 }
 .templateButton:hover{
 	-fx-background-color: -fx-bg-hover;

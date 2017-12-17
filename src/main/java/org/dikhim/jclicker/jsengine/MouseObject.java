@@ -149,8 +149,10 @@ public class MouseObject {
     }
 
     // press
-    public void press(String key) {
-        robot.mousePress(MouseCodes.getEventCodeByName(key));
+    public void press(String button) {
+        int buttonEventCode = MouseCodes.getEventCodeByName(button);
+        if(buttonEventCode==-1) throw new IllegalArgumentException("undefined mouse button");
+        robot.mousePress(buttonEventCode);
         robot.delay(pressDelay);
     }
 
@@ -169,8 +171,10 @@ public class MouseObject {
     }
 
     // release
-    public void release(String key) {
-        robot.mouseRelease(MouseCodes.getEventCodeByName(key));
+    public void release(String button) {
+        int buttonEventCode = MouseCodes.getEventCodeByName(button);
+        if(buttonEventCode==-1) throw new IllegalArgumentException("undefined mouse button \""+button+"\"");
+        robot.mouseRelease(buttonEventCode);
         robot.delay(releaseDelay);
     }
 

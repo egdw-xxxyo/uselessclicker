@@ -21,6 +21,7 @@ import org.dikhim.jclicker.events.ShortcutEqualsHandler;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.server.Server;
+import org.dikhim.jclicker.server.sockets.SocketServer;
 import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.output.SystemAndStringOutput;
@@ -74,7 +75,7 @@ public class ClickerMain extends Application {
     public void stop() throws Exception {
         jse.stop();
         jNativeHookStop();
-        Server.getInstance().stop();
+        SocketServer.getInstance().stop();
         super.stop();
     }
 

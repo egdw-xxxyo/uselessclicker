@@ -6,7 +6,9 @@ import org.jnativehook.mouse.NativeMouseInputListener;
 import org.jnativehook.mouse.NativeMouseWheelEvent;
 import org.jnativehook.mouse.NativeMouseWheelListener;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class MouseEventsManager
         implements
@@ -40,20 +42,12 @@ public class MouseEventsManager
     }
 
     public int getX() {
-        if (!moveLog.isEmpty()) {
-            return moveLog.getLast().getX();
-        } else {
-            return 0;
-        }
+        return MouseInfo.getPointerInfo().getLocation().x;
     }
 
 
     public int getY() {
-        if (!moveLog.isEmpty()) {
-            return moveLog.getLast().getY();
-        } else {
-            return 0;
-        }
+        return MouseInfo.getPointerInfo().getLocation().y;
     }
 
 
