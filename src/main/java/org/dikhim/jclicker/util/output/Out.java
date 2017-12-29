@@ -9,8 +9,6 @@ public class Out {
 		output = new SystemOutput();
 	}
 
-	private static StringProperty property = new SimpleStringProperty("");
-
 	public static void print(String text) {
 		output.print(text);
 	}
@@ -19,13 +17,13 @@ public class Out {
 	}
 	
 	public static String getString() {
-		return property.get();
+		return output.getStringProperty().toString();
 	}
-	public static StringProperty getProperty() {
-		return property;
+	public static StringProperty getStringProperty() {
+		return output.getStringProperty();
 	}
 	public static void clear() {
-		property.set("");
+		output.clear();
 	}
 	public static void setOutput(CustomOutput output){
 		Out.output = output;

@@ -21,6 +21,10 @@ public class LimitedSizeQueue<K> extends ArrayList<K> {
         return r;
     }
 
+    /**
+     * returns last element
+     * @return
+     */
     public K getLast() {
         return get(size() - 1);
     }
@@ -28,7 +32,7 @@ public class LimitedSizeQueue<K> extends ArrayList<K> {
     public K getFirst() {
         return get(0);
     }
-    
+
     public K getFromBegin(int index) {
     	return get(index);
     }

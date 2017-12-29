@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.jsengine;
 
 import org.dikhim.jclicker.events.KeyEventsManager;
-import org.dikhim.jclicker.events.ShortcutEqualsHandler;
+import org.dikhim.jclicker.events.ShortcutEqualsListener;
 import org.dikhim.jclicker.util.output.Out;
 
 import java.awt.*;
@@ -24,13 +24,13 @@ public class SystemObject {
 	 */
 	
 	public void registerShortcut( String shortcut, String function) {
-		ShortcutEqualsHandler handler = new ShortcutEqualsHandler("script." + function,
-				shortcut, () -> {
+		ShortcutEqualsListener handler = new ShortcutEqualsListener("script." + function,
+				shortcut,"PRESS", (e) -> {
 					engine.addTask(() -> {
 						engine.invokeFunction(function);
 					});
 				});
-		KeyEventsManager.getInstance().addPressListener(handler);
+		KeyEventsManager.getInstance().addKeyboardListener(handler);
 	}
 	
 	public void sleep(int ms) {

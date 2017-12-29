@@ -1,11 +1,7 @@
 package org.dikhim.jclicker.events;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -13,142 +9,123 @@ import org.jnativehook.keyboard.NativeKeyListener;
 
 public class KeyEventsManager implements NativeKeyListener {
 
-	private static KeyEventsManager instance;
-	static Set<String> pressedKeys = new HashSet<>();
-	static List<ShortcutHandler> pressHandlers = new ArrayList<>();
-	static List<ShortcutHandler> releaseHandlers = new ArrayList<>();
-	private static LimitedSizeQueue<String> pressedKeysLog = new LimitedSizeQueue<>(
-			2);
-	private static LimitedSizeQueue<String> releasedKeysLog = new LimitedSizeQueue<>(
-			2);
-	private static LimitedSizeQueue<Long> timeLog = new LimitedSizeQueue<>(2);
-	private KeyEventsManager() {
-	}
-	public static KeyEventsManager getInstance() {
-		if (instance == null)
-			instance = new KeyEventsManager();
-		return instance;
-	}
+    private static KeyEventsManager instance;
+    // pressed keys
+    static Set<String> pressedKeys = new HashSet<>();
 
-	@Override
-	public void nativeKeyPressed(NativeKeyEvent e) {
-		timeLog.add(System.currentTimeMillis());
-		pressedKeys.add(KeyCodes.getNameByNativeCode(e.getKeyCode()));
-		pressedKeysLog.add(KeyCodes.getNameByNativeCode(e.getKeyCode()));
-		for (ShortcutHandler h : pressHandlers)
-			h.fire(pressedKeys);
-	}
+    // handlers
+    private static List<KeyboardListener> keyboardListeners = Collections.synchronizedList(new ArrayList<>());
 
-	@Override
-	public void nativeKeyReleased(NativeKeyEvent e) {
-		timeLog.add(System.currentTimeMillis());
-		releasedKeysLog.add(KeyCodes.getNameByNativeCode(e.getKeyCode()));
-		for (ShortcutHandler h : releaseHandlers)
-			h.fire(pressedKeys);
-		pressedKeys.remove(KeyCodes.getNameByNativeCode(e.getKeyCode()));
-	}
+    // logs
+    private static LimitedSizeQueue<KeyboardEvent> keyLog = new LimitedSizeQueue<>(
+            2);
 
-	@Override
-	public void nativeKeyTyped(NativeKeyEvent e) {}
-	/**
-	 * Adds press handler. Name of the handler must be unique
-	 * 
-	 * @param handler
-	 */
-	public void addPressListener(ShortcutHandler handler) {
-		ShortcutHandler existingHandler = null;
-		for (ShortcutHandler h : pressHandlers) {
-			if (h.getName().equals(handler.getName()))
-				existingHandler = h;
-		}
-		if (existingHandler != null) {
-			existingHandler.setShortcuts(handler.getShortcuts());
-			existingHandler.setHandler(handler.getHandler());
-		} else {
+    private KeyEventsManager() {
+    }
 
-			pressHandlers.add(handler);
-		}
-	}
-	
-	public void addReleaseListener(ShortcutHandler handler) {
-		ShortcutHandler existingHandler = null;
-		for (ShortcutHandler h : releaseHandlers) {
-			if (h.getName().equals(handler.getName()))
-				existingHandler = h;
-		}
-		if (existingHandler != null) {
-			existingHandler.setShortcuts(handler.getShortcuts());
-			existingHandler.setHandler(handler.getHandler());
-		} else {
+    public static KeyEventsManager getInstance() {
+        if (instance == null)
+            instance = new KeyEventsManager();
+        return instance;
+    }
 
-			releaseHandlers.add(handler);
-		}
-	}
-	/**
-	 * Remove all handlers with same prefix
-	 * 
-	 * @param prefix
-	 */
-	public void removePressListenersByPrefix(String prefix) {
-		Iterator<ShortcutHandler> it = pressHandlers.iterator();
-		while (it.hasNext()) {
-			if (it.next().getName().startsWith(prefix))
-				it.remove();
-		}
-	}
-	/**
-	 * Remove all handlers with same prefix
-	 * 
-	 * @param prefix
-	 */
-	public void removeReleaseListenersByPrefix(String prefix) {
-		Iterator<ShortcutHandler> it = releaseHandlers.iterator();
-		while (it.hasNext()) {
-			if (it.next().getName().startsWith(prefix))
-				it.remove();
-		}
-	}
-	/**
-	 * 
-	 * @return the name of the last pressed key
-	 */
-	public String getLastPressed() {
-		return pressedKeysLog.getLast();
-	}
-	/**
-	 * 
-	 * @return the name of the last released key
-	 */
-	public String getLastReleased() {
-		return releasedKeysLog.getLast();
-	}
-	/**
-	 * Return true if one of the pressed keys is 'key'
-	 * @param key
-	 * @return
-	 */
-	public boolean isPressed(String key) {
-		return pressedKeys.contains(key);
-	}
-	
-	public boolean isPressed(Set<String> keys) {
-		return pressedKeys.containsAll(keys);
-	}
-	/**
-	 * Return delay between last two key events
-	 * @return
-	 */
-	public int getLastDelay() {
-		if(timeLog.size()>1) {
-			return (int) (timeLog.getFromEnd(0) - timeLog.getFromEnd(1));
-		}else {
-			return 0;
-		}
-	}
-	/**
-	 * Resets the time log fo input events
-	 */
-	public void resetTimeLog() {
-		timeLog.clear();
-	}
+    @Override
+    public synchronized void nativeKeyPressed(NativeKeyEvent e) {
+        // build new key event
+        String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
+        if (key.isEmpty()) return;
+        // add to pressed buttons
+        pressedKeys.add(key);
+        long time = System.currentTimeMillis();
+        KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "PRESS", time);
+
+        // add to log
+        keyLog.add(keyboardEvent);
+
+        // fire
+        for (KeyboardListener h : keyboardListeners)
+            h.fire(keyboardEvent);
+    }
+
+    @Override
+    public synchronized void nativeKeyReleased(NativeKeyEvent e) {
+
+        // build new key event
+        String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
+        if (key.isEmpty()) return;
+        long time = System.currentTimeMillis();
+        KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "RELEASE", time);
+
+        // add to log
+        keyLog.add(keyboardEvent);
+
+        // fire
+        for (KeyboardListener h : keyboardListeners)
+            h.fire(keyboardEvent);
+
+        // add to pressed buttons
+        pressedKeys.remove(key);
+
+    }
+
+    @Override
+    public synchronized void nativeKeyTyped(NativeKeyEvent e) {
+    }
+
+
+    public synchronized void addKeyboardListener(KeyboardListener keyboardListener) {
+        System.out.println("add Listener");
+        Thread thread = new Thread(()->{
+            synchronized (this) {
+
+                KeyboardListener existingListener = null;
+                for (KeyboardListener h : keyboardListeners) {
+                    if (h.getName().equals(keyboardListener.getName()))
+                        existingListener = h;
+                }
+                if (existingListener != null) {
+                    existingListener.setShortcuts(keyboardListener.getShortcuts());
+                    existingListener.setHandler(keyboardListener.getHandler());
+                } else {
+                    keyboardListeners.add(keyboardListener);
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public synchronized  void removeKeyboardListenersByPrefix(String prefix) {
+        Iterator<KeyboardListener> it = keyboardListeners.iterator();
+        while (it.hasNext()) {
+            if (it.next().getName().startsWith(prefix))
+                it.remove();
+        }
+    }
+
+    public synchronized boolean isListenerExist(String name){
+        for (KeyboardListener h : keyboardListeners) {
+            if (h.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+    public synchronized boolean isListenerExistByPrefix(String prefix){
+        for (KeyboardListener h : keyboardListeners) {
+            if (h.getName().startsWith(prefix))
+                return true;
+        }
+        return false;
+    }
+
+    public synchronized void clearLog() {
+        keyLog.clear();
+    }
+    public synchronized boolean isPressed(String key) {
+        return pressedKeys.contains(key);
+    }
+
+    public synchronized boolean isPressed(Set<String> keys) {
+        return pressedKeys.containsAll(keys);
+    }
+
 }

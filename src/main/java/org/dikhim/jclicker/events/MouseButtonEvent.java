@@ -2,7 +2,7 @@ package org.dikhim.jclicker.events;
 
 import java.util.Set;
 
-public class MouseButtonEvent {
+public class MouseButtonEvent implements Event{
     private int x;
     private int y;
     private long time;

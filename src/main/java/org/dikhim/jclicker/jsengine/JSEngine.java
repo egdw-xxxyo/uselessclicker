@@ -44,7 +44,7 @@ public class JSEngine {
         }, 0, 17, TimeUnit.MILLISECONDS);
         
         addTask(()->{
-        	KeyEventsManager.getInstance().removePressListenersByPrefix("script.");
+        	KeyEventsManager.getInstance().removeKeyboardListenersByPrefix("script.");
             engine = new ScriptEngineManager().getEngineByName("nashorn");
             engine.put("mouse", new MouseObject(this.robot));
             engine.put("key", new KeyboardObject(this));

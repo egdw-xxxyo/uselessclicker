@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.events;
 
-public class MouseMoveEvent {
+public class MouseMoveEvent implements Event{
 	private int x;
 	private int y;
 	private long time;

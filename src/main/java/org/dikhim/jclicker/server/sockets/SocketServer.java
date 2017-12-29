@@ -60,6 +60,7 @@ public class SocketServer implements AbstractServer {
 
     @Override
     public void stop() {
+        if(serverThread==null)return;
         serverThread.interrupt();
         try {
             serverThread.join(1000);

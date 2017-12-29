@@ -1,0 +1,8 @@
+@font-face {
+    src: url("../../fonts/FreeMonoBold.ttf");
+}
+
+.root{
+    -fx-font-family: "FreeMono";
+    -fx-font-size: 14px;
+}

@@ -6,31 +6,38 @@ import javafx.beans.property.StringProperty;
 public class StringPropertyOutput implements CustomOutput {
     private StringProperty stringProperty;
 
-    public StringPropertyOutput(){
+    public StringPropertyOutput() {
         this.stringProperty = new SimpleStringProperty("");
     }
 
     @Override
     public void print(String text) {
-        if(stringProperty.get().length()>10000) {
+        if (stringProperty.get().length() > 10000) {
 
             stringProperty.set(stringProperty.get().substring(500) + text);
-        }else {
+        } else {
             stringProperty.set(stringProperty.get() + text);
         }
     }
 
     @Override
     public void println(String text) {
-        if(stringProperty.get().length()>10000) {
+        if (stringProperty.get().length() > 10000) {
 
             stringProperty.set(stringProperty.get().substring(500) + text + "\n");
-        }else {
+        } else {
             stringProperty.set(stringProperty.get() + text + "\n");
         }
     }
 
-    public StringProperty getProperty() {
+    @Override
+    public StringProperty getStringProperty() {
         return stringProperty;
     }
+
+    @Override
+    public void clear() {
+        stringProperty.set("");
+    }
+
 }

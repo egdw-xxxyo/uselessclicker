@@ -2,10 +2,6 @@ package org.dikhim.jclicker.server;
 
 import com.sun.net.httpserver.HttpHandler;
 
-import javax.xml.ws.spi.http.HttpExchange;
-import java.io.IOException;
-import java.util.function.Consumer;
-
 public class HttpContext {
     private String path;
     private HttpHandler handler;

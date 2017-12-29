@@ -3,7 +3,6 @@ package org.dikhim.jclicker.server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
-import com.sun.org.apache.xpath.internal.SourceTree;
 import org.dikhim.jclicker.jsengine.KeyboardObject;
 import org.dikhim.jclicker.jsengine.MouseObject;
 import org.dikhim.jclicker.jsengine.SystemObject;

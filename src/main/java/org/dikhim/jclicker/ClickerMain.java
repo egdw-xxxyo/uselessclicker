@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,13 +13,10 @@ import javax.script.ScriptException;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.text.Font;
 import org.dikhim.jclicker.events.KeyEventsManager;
 import org.dikhim.jclicker.events.MouseEventsManager;
-import org.dikhim.jclicker.events.ShortcutEqualsHandler;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.model.Script;
-import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.server.sockets.SocketServer;
 import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.output.Out;
@@ -41,10 +37,25 @@ import javafx.stage.Stage;
 public class ClickerMain extends Application {
     private static ClickerMain application;
 
+    public String getTitleProperty() {
+        return titleProperty.get();
+    }
+
+    public StringProperty titlePropertyProperty() {
+        return titleProperty;
+    }
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public JSEngine getJse() {
+        return jse;
+    }
+
     private StringProperty titleProperty = new SimpleStringProperty();
     private Stage primaryStage;
 
-    private MainController controller;
 
     private Robot robot;
     private JSEngine jse;
@@ -56,6 +67,7 @@ public class ClickerMain extends Application {
         String filePath =  getParameters().getNamed().get("filePath");
         String type = getParameters().getNamed().get("type");
         this.primaryStage = primaryStage;
+        primaryStage.setOnCloseRequest(e->Platform.exit());
         jNativeHookStart();
         createRobot();
         createJSEngine();
@@ -79,27 +91,36 @@ public class ClickerMain extends Application {
         super.stop();
     }
 
+
+    // gui
     private void startGuiApplication() throws Exception {
+        Out.setOutput(new SystemAndStringOutput());
         loadMainScene();
-
-        SystemAndStringOutput out = new SystemAndStringOutput();
-        controller.bindOutputProperty(out.getProperty());
-        controller.bindScriptProperty(script.getStringProperty());
-        Out.setOutput(out);
-
-        KeyEventsManager keyListener = KeyEventsManager.getInstance();
-        keyListener.addPressListener(
-                new ShortcutEqualsHandler("stopScript", "CONTROL ALT S", () -> {
-                    Platform.runLater(() ->{
-                        controller.stopScript();
-                    });
-                }));
     }
 
+    private void loadMainScene() {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/ui/main/MainScene.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+
+
+        primaryStage.getIcons().add(new Image(
+                getClass().getResourceAsStream("/images/cursor.png")));
+        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.titleProperty().bindBidirectional(titleProperty);
+        primaryStage.show();
+    }
+
+    // cli
     private void startCliApplication() {
         Out.setOutput(new SystemOutput());
         runScript();
     }
+
     public static ClickerMain getApplication() {
         return application;
     }
@@ -184,11 +205,11 @@ public class ClickerMain extends Application {
     public Script getScript() {
         return script;
     }
-
     public void loadScript(String filePath){
         script.loadScript(filePath);
         updateTitle();
     }
+
     public void newScript() {
         StringProperty prop;
         if (script != null) {
@@ -235,8 +256,8 @@ public class ClickerMain extends Application {
         }
         launch(params);
     }
-
     ///////////////////////
+
     private void createRobot() throws Exception {
         try {
             robot = new Robot();
@@ -260,25 +281,6 @@ public class ClickerMain extends Application {
     private void createScript() {
         script = new Script();
         updateTitle();
-    }
-
-    private void loadMainScene() {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        Parent root = null;
-        try {
-            root = fxmlLoader
-                    .load(getClass().getResource("/MainScene.fxml").openStream());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-
-
-        primaryStage.getIcons().add(new Image(
-                getClass().getResourceAsStream("/images/cursor.png")));
-        primaryStage.setScene(new Scene(root, 800, 600));
-        controller = fxmlLoader.getController();
-        primaryStage.titleProperty().bindBidirectional(titleProperty);
-        primaryStage.show();
     }
 
 }

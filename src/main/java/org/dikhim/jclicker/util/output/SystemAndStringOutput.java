@@ -32,7 +32,14 @@ public class SystemAndStringOutput implements CustomOutput {
         System.out.println(text);
     }
 
-    public StringProperty getProperty() {
+    @Override
+    public StringProperty getStringProperty() {
         return stringProperty;
     }
+
+    @Override
+    public void clear() {
+        stringProperty.set("");
+    }
+
 }

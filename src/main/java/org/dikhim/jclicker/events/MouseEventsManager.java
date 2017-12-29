@@ -243,6 +243,12 @@ public class MouseEventsManager
         }
     }
 
+    public void removeListenersByPrefix(String prefix) {
+        removeButtonListenersByPrefix(prefix);
+        removeWheelListenersByPrefix(prefix);
+        removeMoveListenersByPrefix(prefix);
+    }
+
 
     /////////////////////
     public MouseButtonEvent getLastButtonEvent() {

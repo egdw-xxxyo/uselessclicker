@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.events;
 
-public class MouseWheelEvent {
+public class MouseWheelEvent implements Event{
 	private int x;
 	private int y;
 	private String direction;

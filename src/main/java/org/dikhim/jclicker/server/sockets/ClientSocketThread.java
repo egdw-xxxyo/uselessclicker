@@ -18,10 +18,11 @@ public class ClientSocketThread extends Thread {
 
     private int soTimeout = 500;
 
-    private int threadTimeOut = 1800000; //30 minutes
+    private int threadTimeOut = 60000; //1 minute
     private MouseObject mouse;
+
     public ClientSocketThread(Socket socket) {
-        super("Client "+socket.getRemoteSocketAddress().toString().substring(1));
+        super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
         try {
             Robot robot = new Robot();
             mouse = new MouseObject(robot);
@@ -37,17 +38,20 @@ public class ClientSocketThread extends Thread {
 
     public void run() {
 
-        try {
+        try (PrintWriter out =
+                     new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in =
+                     new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
             // create out/in streams
-            out = new PrintWriter(socket.getOutputStream(), true);
-            in = new BufferedReader(
-                    new InputStreamReader(
-                            socket.getInputStream()));
+            this.out = out;
+            this.in = in;
+
             String inputLine;
             int inactiveTime = 0;
             while (true) {
                 try {
-                    if(isInterrupted())break;
+                    if (isInterrupted()) break;
                     inactiveTime = 0;
                     inputLine = in.readLine();
                     execute(inputLine);
@@ -58,9 +62,15 @@ public class ClientSocketThread extends Thread {
                     Out.println(e.getMessage());
                 }
             }
-            socket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -68,22 +78,23 @@ public class ClientSocketThread extends Thread {
 
     public void execute(String params) {
         try {
-            // if null socket is closed
-            if(params==null){
+            if (params == null || params.equals("bye")) {
+                // if null socket is closed
                 interrupt();
                 return;
-            }
-            // echo message "hi"
-            if (params.equals("hi")){
+            } else if (params.equals("hi")) {
+                // echo message "hi"
                 out.println("hi");
                 return;
+            } else {
+                // execute params list
+                executeParams(WebUtils.queryToMap(params));
             }
-            // execute params list
-            executeParams(WebUtils.queryToMap(params));
         } catch (NullPointerException | IllegalArgumentException e) {
             throw new IllegalArgumentException("incorrect parameter line \"" + params + "\" > " + e.getMessage());
         }
     }
+
     private void executeParams(Map<String, String> params) throws NullPointerException, IllegalArgumentException {
         String path = params.get("path");
         if (path == null) throw new IllegalArgumentException("undefined path param");
@@ -98,12 +109,11 @@ public class ClientSocketThread extends Thread {
                 mouse.release(params.get("button"));
                 break;
             case "/mouse/wheel":
-                mouse.wheel(params.get("direction"),Integer.parseInt(params.get("amount")));
+                mouse.wheel(params.get("direction"), Integer.parseInt(params.get("amount")));
                 break;
         }
 
     }
-
 
 
 }
