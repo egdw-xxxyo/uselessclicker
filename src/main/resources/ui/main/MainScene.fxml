@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
@@ -107,7 +108,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                  <children>
-                                    <TextArea fx:id="areaCode" maxHeight="1.7976931348623157E308" styleClass="code-text-area" text="....&#10;wwww&#10;AbAb" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TextArea fx:id="codeTextArea" maxHeight="1.7976931348623157E308" styleClass="code-text-area" text="....&#10;wwww&#10;AbAb" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <font>
                                           <Font name="Monospaced Bold" size="13.0" />
                                        </font>
@@ -217,19 +218,29 @@
                                                             <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePath" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Relative path" />
                                                             <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Absolute path with delays" />
                                                             <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePathWithDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Relative path with delays" />
+                                                            <ToggleButton fx:id="btnInsertAbsolutePathFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#insertAbsolutePathFixRate" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Absolute/fix rate">
+                                                               <graphic>
+                                                                  <TextField fx:id="txtAbsolutePathRate" maxWidth="40.0" text="30" />
+                                                               </graphic>
+                                                            </ToggleButton>
+                                                            <ToggleButton fx:id="btnInsertRelativePathFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#insertRelativePathFixRate" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="Relative/fix rate">
+                                                               <graphic>
+                                                                  <TextField fx:id="txtRelativePathRate" maxWidth="40.0" text="30" />
+                                                               </graphic>
+                                                            </ToggleButton>
                                                          </children>
                                                       </VBox>
                                                    </content>
                                                 </ScrollPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
+                                          <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined" visible="false">
                                              <content>
                                                 <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER">
                                                    <content>
                                                       <VBox>
                                                          <children>
-                                                            <ToggleButton fx:id="btnAllEventsRealtime" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAllEventsRealtime" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="All events realtime" />
+                                                            <ToggleButton fx:id="btnPressAtReleaseAtDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertPressAtReleaseAtDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="pressAt/releaseAt + delays" />
                                                          </children>
                                                       </VBox>
                                                    </content>
@@ -253,7 +264,7 @@
                                                             <Button fx:id="btnTemplateMouseClick" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="click" />
                                                             <Button fx:id="btnTemplateMouseClickAt" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="clickAt" />
                                                             <Button fx:id="btnTemplateMouseGetMoveDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getMoveDelay" />
-                                                            <Button fx:id="btnTemplateMouseGetPressDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getPressDelay" />
+                                                            <Button fx:id="btnTemplateMouseGetPressDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="mouse buttons" />
                                                             <Button fx:id="btnTemplateMouseGetReleaseDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getReleaseDelay" />
                                                             <Button fx:id="btnTemplateMouseGetWheelDelay" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getWheelDelay" />
                                                             <Button fx:id="btnTemplateMouseGetX" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="getX" />

@@ -74,10 +74,8 @@ public class KeyEventsManager implements NativeKeyListener {
 
 
     public synchronized void addKeyboardListener(KeyboardListener keyboardListener) {
-        System.out.println("add Listener");
         Thread thread = new Thread(()->{
             synchronized (this) {
-
                 KeyboardListener existingListener = null;
                 for (KeyboardListener h : keyboardListeners) {
                     if (h.getName().equals(keyboardListener.getName()))

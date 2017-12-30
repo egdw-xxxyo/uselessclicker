@@ -7,6 +7,8 @@ import org.dikhim.jclicker.events.MouseEventsManager;
 import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.output.Out;
 
+import javax.script.ScriptException;
+
 /**
  *
  */
@@ -16,12 +18,14 @@ public class MouseObject {
     private final int PRESS_DELAY = 10;
     private final int RELEASE_DELAY = 10;
     private final int MOVE_DELAY = 10;
-    private final int WHEEL_DELAY =10;
+    private final int WHEEL_DELAY = 10;
+    private final float MULTIPLIER = 1;
 
     private int pressDelay = PRESS_DELAY;
     private int releaseDelay = RELEASE_DELAY;
     private int moveDelay = MOVE_DELAY;
     private int wheelDelay = WHEEL_DELAY;
+    private float multiplier = MULTIPLIER;
 
     private Robot robot;
 
@@ -37,25 +41,38 @@ public class MouseObject {
         return MouseEventsManager.getInstance().getY();
     }
 
+
     // movement
     public void moveTo(int x, int y) {
+        if (x < 0 || y < 0) {
+            Out.println(String.format("Negative coordinates '%s,%s' at moveTo method", x, y));
+            return;
+        }
         robot.mouseMove(x, y);
-        robot.delay(moveDelay);
+        robot.delay(getMultipliedMoveDelay());
     }
 
-    public void move(int x, int y) {
-        robot.mouseMove(getX() + x, getY() + y);
-        robot.delay(moveDelay);
+    public void move(int dx, int dy) {
+        robot.mouseMove(getX() + dx, getY() + dy);
+        robot.delay(getMultipliedMoveDelay());
     }
 
-    public void setX(int x) {
+    public void setX(int x) throws ScriptException {
+        if (x < 0) {
+            Out.println(String.format("Negative coordinate '%s' at setX method", x));
+            return;
+        }
         robot.mouseMove(x, getY());
-        robot.delay(moveDelay);
+        robot.delay(getMultipliedMoveDelay());
     }
 
     public void setY(int y) {
+        if (y < 0) {
+            Out.println(String.format("Negative coordinate '%s' at setY method", y));
+            return;
+        }
         robot.mouseMove(getX(), y);
-        robot.delay(moveDelay);
+        robot.delay(getMultipliedMoveDelay());
     }
 
     // movement by path
@@ -67,7 +84,7 @@ public class MouseObject {
             x = mu.getNext();
             y = mu.getNext();
             robot.mouseMove(x, y);
-            robot.delay(moveDelay);
+            robot.delay(getMultipliedMoveDelay());
         }
     }
 
@@ -81,130 +98,150 @@ public class MouseObject {
             y = mu.getNext();
             delay = mu.getNext();
             robot.mouseMove(x, y);
-            robot.delay(delay);
+            robot.delay(multiply(delay));
         }
     }
 
     public void moveRelative(String path) {
-        int oldX = getX();
-        int oldY = getY();
         MouseMoveUtil mu = new MouseMoveUtil(path);
-        int x;
-        int y;
+        int dx;
+        int dy;
         while (mu.hasNext()) {
-            x = mu.getNext();
-            y = mu.getNext();
-            oldX += x;
-            oldY += y;
-            robot.mouseMove(oldX, oldY);
-            robot.delay(moveDelay);
+            dx = mu.getNext();
+            dy = mu.getNext();
+            robot.mouseMove(getX() + dx, getY() + dy);
+            robot.delay(getMultipliedMoveDelay());
         }
     }
 
     public void moveRelative_D(String path) {
-        int oldX = getX();
-        int oldY = getY();
         MouseMoveUtil mu = new MouseMoveUtil(path);
-        int x;
-        int y;
+        int dx;
+        int dy;
         int delay;
         while (mu.hasNext()) {
-            x = mu.getNext();
-            y = mu.getNext();
+            dx = mu.getNext();
+            dy = mu.getNext();
             delay = mu.getNext();
-            oldX += x;
-            oldY += y;
-            robot.mouseMove(oldX, oldY);
-            robot.delay(delay);
+            robot.mouseMove(getX() + dx, getY() + dy);
+            robot.delay(multiply(delay));
         }
     }
 
     // click
-    public void click(String key) {
-        int code = MouseCodes.getEventCodeByName(key);
-        robot.mousePress(code);
-        robot.delay(pressDelay);
-        robot.mouseRelease(code);
-        robot.delay(releaseDelay);
+
+    /**
+     * Clicks mouse button
+     *
+     * @param button - name of the mouse button that should be clicked
+     */
+    public void click(String button) {
+        int buttonEventCode = MouseCodes.getEventCodeByName(button);
+        if (buttonEventCode == -1) {
+            Out.println(String.format("Undefined mouse button '%s' in click method", button));
+            return;
+        }
+        robot.mousePress(buttonEventCode);
+        robot.delay(getMultipliedPressDelay());
+        robot.mouseRelease(buttonEventCode);
+        robot.delay(getMultipliedReleaseDelay());
     }
 
-    public void clickAt(String key, int x, int y) {
-        int code = MouseCodes.getEventCodeByName(key);
-        robot.mouseMove(x, y);
-        robot.delay(moveDelay);
-        robot.mousePress(code);
-        robot.delay(pressDelay);
-        robot.mouseRelease(code);
-        robot.delay(releaseDelay);
+    public void clickAt(String button, int x, int y) {
+        moveTo(x, y);
+        click(button);
     }
 
-    public void moveAndClick(String key, int x, int y) {
-        int code = MouseCodes.getEventCodeByName(key);
-        robot.mouseMove(getX() + x, getY() + y);
-        robot.delay(moveDelay);
-        robot.mousePress(code);
-        robot.delay(pressDelay);
-        robot.mouseRelease(code);
-        robot.delay(releaseDelay);
+    public void moveAndClick(String button, int dx, int dy) {
+        move(dx, dy);
+        click(button);
     }
 
     // press
+
+    /**
+     * Presses mouse button
+     *
+     * @param button - name of the mouse button that should be pressed
+     */
     public void press(String button) {
         int buttonEventCode = MouseCodes.getEventCodeByName(button);
-        if(buttonEventCode==-1) throw new IllegalArgumentException("undefined mouse button");
+        if (buttonEventCode == -1) {
+            Out.println(String.format("Undefined mouse button '%s' in press method", button));
+            return;
+        }
         robot.mousePress(buttonEventCode);
-        robot.delay(pressDelay);
+        robot.delay(getMultipliedPressDelay());
     }
 
-    public void pressAt(String key, int x, int y) {
-        robot.mouseMove(x, y);
-        robot.delay(moveDelay);
-        robot.mousePress(MouseCodes.getEventCodeByName(key));
-        robot.delay(pressDelay);
+    public void pressAt(String button, int x, int y) {
+        moveTo(x, y);
+        press(button);
     }
 
-    public void moveAndPress(String key, int x, int y) {
-        robot.mouseMove(getX() + x, getY() + y);
-        robot.delay(moveDelay);
-        robot.mousePress(MouseCodes.getEventCodeByName(key));
-        robot.delay(pressDelay);
+    public void moveAndPress(String button, int dx, int dy) {
+        move(dx, dy);
+        press(button);
     }
 
     // release
+
+    /**
+     * Releases mouse button
+     *
+     * @param button - name of the button that should be released
+     */
     public void release(String button) {
         int buttonEventCode = MouseCodes.getEventCodeByName(button);
-        if(buttonEventCode==-1) throw new IllegalArgumentException("undefined mouse button \""+button+"\"");
+        if (buttonEventCode == -1) {
+            Out.println(String.format("Undefined mouse button '%s' in release method", button));
+            return;
+        }
         robot.mouseRelease(buttonEventCode);
-        robot.delay(releaseDelay);
+        robot.delay(getMultipliedReleaseDelay());
     }
 
-    public void releaseAt(String key, int x, int y) {
-        robot.mouseMove(x, y);
-        robot.delay(moveDelay);
-        robot.mouseRelease(MouseCodes.getEventCodeByName(key));
-        robot.delay(releaseDelay);
+    public void releaseAt(String button, int x, int y) {
+        moveTo(x, y);
+        release(button);
     }
 
-    public void moveAndRelease(String key, int x, int y) {
-        robot.mouseMove(getX() + x, getY() + y);
-        robot.delay(moveDelay);
-        robot.mouseRelease(MouseCodes.getEventCodeByName(key));
-        robot.delay(pressDelay);
+    public void moveAndRelease(String button, int dx, int dy) {
+        move(dx, dy);
+        release(button);
     }
 
-    public void wheel(String direction,int amount){
-        if(amount<0){
-            Out.println("MouseWheelAmount can't be less then 0  :'"+amount+"'");
+    /**
+     * Rotates mouse wheel
+     *
+     * @param direction - 'UP' or 'DOWN'
+     * @param amount    - any non negative number
+     */
+    public void wheel(String direction, int amount) {
+        if (amount < 0) {
+            Out.println(String.format("Wheel amount '%s' can't be less then 0", amount));
             return;
         }
 
-        if(direction.equals("DOWN")){
+        if (direction.equals("DOWN")) {
             robot.mouseWheel(amount);
-        }else if(direction.equals("UP")){
-            robot.mouseWheel(amount*-1);
-        }else{
-            Out.println("Wrong wheel direction  :'"+direction+"'");
+            robot.delay(getMultipliedWheelDelay());
+        } else if (direction.equals("UP")) {
+            robot.mouseWheel(amount * -1);
+            robot.delay(getMultipliedWheelDelay());
+        } else {
+            Out.println(String.format("Wrong wheel direction '%s'", direction));
         }
+    }
+
+    public void wheeAt(String direction, int amount, int x, int y) {
+        moveTo(x, y);
+        wheel(direction, amount);
+    }
+
+    public void moveAndWheel(String direction, int amount, int dx, int dy) {
+        move(dx, dy);
+        wheel(direction, amount);
     }
     // Getters\setters
 
@@ -219,7 +256,11 @@ public class MouseObject {
      * @param pressDelay the pressDelay to set
      */
     public void setPressDelay(int pressDelay) {
-        this.pressDelay = pressDelay;
+        if (pressDelay < 0) {
+            this.pressDelay = 0;
+        } else {
+            this.pressDelay = pressDelay;
+        }
     }
 
     /**
@@ -233,7 +274,11 @@ public class MouseObject {
      * @param releaseDelay the releaseDelay to set
      */
     public void setReleaseDelay(int releaseDelay) {
-        this.releaseDelay = releaseDelay;
+        if (releaseDelay < 0) {
+            this.releaseDelay = 0;
+        } else {
+            this.releaseDelay = releaseDelay;
+        }
     }
 
 
@@ -248,7 +293,11 @@ public class MouseObject {
      * @param moveDelay the moveDelay to set
      */
     public void setMoveDelay(int moveDelay) {
-        this.moveDelay = moveDelay;
+        if (moveDelay < 0) {
+            this.moveDelay = 0;
+        } else {
+            this.moveDelay = moveDelay;
+        }
     }
 
     public int getWheelDelay() {
@@ -256,13 +305,62 @@ public class MouseObject {
     }
 
     public void setWheelDelay(int wheelDelay) {
-        this.wheelDelay = wheelDelay;
+        if (wheelDelay < 0) {
+            this.wheelDelay = 0;
+        } else {
+            this.wheelDelay = wheelDelay;
+        }
     }
 
-    public void setAllDelays(int delay){
-        this.moveDelay=delay;
-        this.pressDelay=delay;
-        this.releaseDelay=delay;
-        this.wheelDelay=delay;
+    public float getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(float multiplier) {
+        if (multiplier < 0) {
+            this.multiplier = 0;
+        } else {
+            this.multiplier = multiplier;
+        }
+    }
+
+    public void resetMultiplier() {
+        multiplier = MULTIPLIER;
+    }
+
+    public void setAllDelays(int delay) {
+        this.moveDelay = delay;
+        this.pressDelay = delay;
+        this.releaseDelay = delay;
+        this.wheelDelay = delay;
+    }
+
+    public void resetDelays() {
+        this.moveDelay = MOVE_DELAY;
+        this.pressDelay = PRESS_DELAY;
+        this.releaseDelay = RELEASE_DELAY;
+        this.wheelDelay = WHEEL_DELAY;
+    }
+
+    //////////////////// private
+
+    private int multiply(int delay){
+        return Math.round(delay*multiplier);
+    }
+
+    private int getMultipliedPressDelay() {
+        return (int) (pressDelay * multiplier);
+    }
+
+    private int getMultipliedReleaseDelay() {
+        return (int) (releaseDelay * multiplier);
+    }
+
+    private int getMultipliedMoveDelay() {
+        return (int) (moveDelay * multiplier);
+    }
+
+    private int getMultipliedWheelDelay() {
+        return (int) (wheelDelay * multiplier);
     }
 }

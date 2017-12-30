@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.events;
 
-public class MouseWheelEvent implements Event{
+public class MouseWheelEvent implements MouseEvent{
 	private int x;
 	private int y;
 	private String direction;
@@ -34,4 +34,11 @@ public class MouseWheelEvent implements Event{
 		this.time = time;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
 }

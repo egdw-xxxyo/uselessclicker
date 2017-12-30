@@ -10,6 +10,8 @@ public class EventLogger {
 
     private LimitedSizeQueue<KeyboardEvent> keyboardLog;
 
+    private LimitedSizeQueue<MouseEvent> mouseLog;
+
     private LimitedSizeQueue<MouseButtonEvent> mouseButtonLog;
     private LimitedSizeQueue<MouseWheelEvent> mouseWheelLog;
     private LimitedSizeQueue<MouseMoveEvent> mouseMoveLog;
@@ -18,11 +20,11 @@ public class EventLogger {
         if (n < 2) throw new IllegalArgumentException("EventLogger size cannot be less than 2");
         eventLog = new LimitedSizeQueue<>(n);
         keyboardLog = new LimitedSizeQueue<>(n);
+        mouseLog = new LimitedSizeQueue<>(n);
         mouseButtonLog = new LimitedSizeQueue<>(n);
         mouseWheelLog = new LimitedSizeQueue<>(n);
         mouseMoveLog = new LimitedSizeQueue<>(n);
     }
-
 
     public void add(KeyboardEvent event) {
         eventLog.add(event);
@@ -31,16 +33,19 @@ public class EventLogger {
 
     public void add(MouseButtonEvent event) {
         eventLog.add(event);
+        mouseLog.add(event);
         mouseButtonLog.add(event);
     }
 
     public void add(MouseWheelEvent event) {
         eventLog.add(event);
+        mouseLog.add(event);
         mouseWheelLog.add(event);
     }
 
     public void add(MouseMoveEvent event) {
         eventLog.add(event);
+        mouseLog.add(event);
         mouseMoveLog.add(event);
     }
 
@@ -57,5 +62,19 @@ public class EventLogger {
         return eventLog.getFromEnd(0).getTime() - eventLog.getFromEnd(1).getTime();
     }
 
+    public Event getEventFromEnd(int index) {
+        return eventLog.getFromEnd(index);
+    }
 
+    public MouseMoveEvent getMoveEventFromEnd(int index) {
+        return mouseMoveLog.getFromEnd(index);
+    }
+
+    public MouseEvent getLastMouseEvent() {
+        return mouseLog.getLast();
+    }
+
+    public LimitedSizeQueue<MouseMoveEvent> getMouseMoveLog() {
+        return mouseMoveLog;
+    }
 }

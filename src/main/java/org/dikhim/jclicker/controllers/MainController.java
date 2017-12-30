@@ -9,12 +9,14 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.events.*;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.util.MouseMoveEventUtil;
 import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
@@ -25,10 +27,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -37,7 +35,7 @@ import javafx.stage.FileChooser;
 public class MainController {
     private MouseMoveUtil movementPath;
     private MouseMoveEvent lastMoveEvent;
-    private EventLogger eventLog = new EventLogger(10);
+    private EventLogger eventLog = new EventLogger(10000);
     private ClickerMain application;
 
     @FXML
@@ -47,13 +45,13 @@ public class MainController {
         bindOutputProperty();
         bindScriptProperty();
 
-        areaCode.textProperty().bindBidirectional(codeTextProperty);
+        codeTextArea.textProperty().bindBidirectional(codeTextProperty);
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
         areaOut.textProperty().bindBidirectional(outTextProperty);
 
 
         // consume keyboard events for textArea while variable not true
-        areaCode.addEventFilter(KeyEvent.KEY_PRESSED,
+        codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
                 new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
@@ -61,7 +59,7 @@ public class MainController {
                             event.consume();
                     }
                 });
-        areaCode.addEventFilter(KeyEvent.KEY_TYPED,
+        codeTextArea.addEventFilter(KeyEvent.KEY_TYPED,
                 new EventHandler<KeyEvent>() {
                     @Override
                     public void handle(KeyEvent event) {
@@ -114,7 +112,7 @@ public class MainController {
     private Button btnShowSeverWindow;
 
     @FXML
-    private TextArea areaCode;
+    private TextArea codeTextArea;
     private StringProperty codeTextProperty = new SimpleStringProperty("");
     private boolean enableCodeType = true;
 
@@ -126,6 +124,12 @@ public class MainController {
     @FXML
     private TextArea areaOut;
     private StringProperty outTextProperty = new SimpleStringProperty(" ");
+
+    @FXML
+    private TextField txtAbsolutePathRate;
+
+    @FXML
+    private TextField txtRelativePathRate;
 
     public void bindOutputProperty() {
         outTextProperty.bindBidirectional(Out.getStringProperty());
@@ -176,7 +180,7 @@ public class MainController {
             prefs.put("last-opened-folder",
                     file.getParentFile().getAbsolutePath());
 
-            areaCode.textProperty()
+            codeTextArea.textProperty()
                     .bindBidirectional(script.getStringProperty());
         }
         updateScriptStatus();
@@ -352,9 +356,17 @@ public class MainController {
     @FXML
     private ToggleButton btnInsertRelativePathWithDelays;
 
+    @FXML
+    private ToggleButton btnInsertAbsolutePathFixRate;
+
+    @FXML
+    private ToggleButton btnInsertRelativePathFixRate;
+
+
     // Combined
     @FXML
-    private ToggleButton btnAllEventsRealtime;
+    private ToggleButton btnPressAtReleaseAtDelays;
+
 
     private List<ToggleButton> listOfToggles = new ArrayList<>();
 
@@ -390,11 +402,13 @@ public class MainController {
         // movement
         listOfToggles.add(btnInsertAbsolutePath);
         listOfToggles.add(btnInsertAbsolutePathWithDelays);
+        listOfToggles.add(btnInsertAbsolutePathFixRate);
         listOfToggles.add(btnInsertRelativePath);
         listOfToggles.add(btnInsertRelativePathWithDelays);
+        listOfToggles.add(btnInsertRelativePathFixRate);
 
         // combined
-        listOfToggles.add(btnAllEventsRealtime);
+        listOfToggles.add(btnPressAtReleaseAtDelays);
 
         // set user data 'String' hint
         for (ToggleButton b : listOfToggles) {
@@ -430,8 +444,8 @@ public class MainController {
 
             manager.addKeyboardListener(new ShortcutIncludesListener(
                     "insert.keyboard.name", "", "PRESS", (e) -> {
-                int caretPosition = areaCode.getCaretPosition();
-                areaCode.insertText(caretPosition,
+                int caretPosition = codeTextArea.getCaretPosition();
+                codeTextArea.insertText(caretPosition,
                         e.getKey() + " ");
 
             }));
@@ -454,16 +468,16 @@ public class MainController {
             enableCodeType = false;
             manager.addKeyboardListener(new ShortcutIncludesListener(
                     "insert.keyboard.code.press", "", "PRESS", (e) -> {
-                int caretPosition = areaCode.getCaretPosition();
-                areaCode.insertText(caretPosition, "key.press('"
+                int caretPosition = codeTextArea.getCaretPosition();
+                codeTextArea.insertText(caretPosition, "key.press('"
                         + e.getKey() + "');\n");
 
             }));
 
             manager.addKeyboardListener(new ShortcutIncludesListener(
                     "insert.keyboard.code.release", "", "RELEASE", (e) -> {
-                int caretPosition = areaCode.getCaretPosition();
-                areaCode.insertText(caretPosition, "key.release('"
+                int caretPosition = codeTextArea.getCaretPosition();
+                codeTextArea.insertText(caretPosition, "key.release('"
                         + e.getKey() + "');\n");
 
             }));
@@ -495,7 +509,7 @@ public class MainController {
                 long delay = eventLog.getDelay();
                 if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
                 sb.append("key.press('").append(e.getKey()).append("');\n");
-                putTextIntoCaretPosition(areaCode, sb.toString());
+                putTextIntoCaretPosition(codeTextArea, sb.toString());
             }));
 
             manager.addKeyboardListener(new ShortcutIncludesListener("insert.keyboard.code.release", "", "RELEASE", (e) -> {
@@ -506,7 +520,7 @@ public class MainController {
                 long delay = eventLog.getDelay();
                 if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
                 sb.append("key.release('").append(e.getKey()).append("');\n");
-                putTextIntoCaretPosition(areaCode, sb.toString());
+                putTextIntoCaretPosition(codeTextArea, sb.toString());
             }));
         } else {
             // if toggle has been deselected
@@ -531,9 +545,9 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
 
-                        areaCode.insertText(caretPosition,
+                        codeTextArea.insertText(caretPosition,
                                 "mouse.pressAt('" + e.getButton()
                                         + "'," + e.getX() + ","
                                         + e.getY() + ");\n");
@@ -543,9 +557,9 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
 
-                        areaCode.insertText(caretPosition,
+                        codeTextArea.insertText(caretPosition,
                                 "mouse.releaseAt('" + e.getButton()
                                         + "'," + e.getX() + ","
                                         + e.getY() + ");\n");
@@ -571,7 +585,7 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
 
                         MouseButtonEvent preLast = manager
@@ -585,7 +599,7 @@ public class MainController {
                                 .append(e.getButton()).append("',")
                                 .append(e.getX()).append(",")
                                 .append(e.getY()).append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
 
 
                     }));
@@ -594,7 +608,7 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         MouseButtonEvent last = manager.getLastButtonEvent();
                         MouseButtonEvent preLast = manager
@@ -608,7 +622,7 @@ public class MainController {
                                 .append(e.getButton()).append("',")
                                 .append(e.getX()).append(",")
                                 .append(e.getY()).append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -631,10 +645,10 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         sb.append(e.getButton()).append(" ");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -646,88 +660,70 @@ public class MainController {
 
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
+        String prefix = "insert.mouse.relative.code";
         ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
+        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
+        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
         if (toggle.isSelected()) {
             select(toggle);
             // if toggle has been selected
             enableCodeType = false;
             // Start record by set the first movement point
-            KeyEventsManager.getInstance().addKeyboardListener(
-                    new ShortcutEqualsListener("mouse.move.key.press", "CONTROL", "PRESS",
-                            (e) -> {
-                                lastMoveEvent = manager.getLastMoveEvent();
-                            }));
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    int dx,dy;
+                    try {
+                        org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
+                        dx = e.getX() - lastMouseEvent.getX();
+                        dy = e.getY() - lastMouseEvent.getY();
+                    } catch (IndexOutOfBoundsException ex) {
+                        dx = 0;
+                        dy =0;
+                    }
+                    eventLog.add(e);
+                    sb.append("mouse.moveAndPress('")
+                            .append(e.getButton()).append("',")
+                            .append(dx).append(",")
+                            .append(dy).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    StringBuilder sb = new StringBuilder();
 
-            // insert code on press button
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.press", "PRESS", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = areaCode.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
+                    int dx,dy;
+                    try {
+                        org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
+                        dx = e.getX() - lastMouseEvent.getX();
+                        dy = e.getY() - lastMouseEvent.getY();
+                    } catch (IndexOutOfBoundsException ex) {
+                        dx = 0;
+                        dy =0;
+                    }
+                    sb.append("mouse.moveAndRelease('")
+                            .append(e.getButton()).append("',")
+                            .append(dx).append(",")
+                            .append(dy).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
 
-                        int dx = (int) (e.getX()
-                                - lastMoveEvent.getX());
-                        int dy = (int) (e.getY()
-                                - lastMoveEvent.getY());
-                        lastMoveEvent = manager.getLastMoveEvent();
-                        sb.append("mouse.moveAndPress('")
-                                .append(e.getButton())
-                                .append("',").append(dx).append(",").append(dy)
-                                .append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix+".wheel","",(e)->{
 
-                    }));
-            // insert code on release button
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.release", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = areaCode.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
+                }));
 
-                        int dx = (int) (e.getX()
-                                - lastMoveEvent.getX());
-                        int dy = (int) (e.getY()
-                                - lastMoveEvent.getY());
-                        lastMoveEvent = manager.getLastMoveEvent();
-                        sb.append("mouse.moveAndRelease('")
-                                .append(e.getButton())
-                                .append("',").append(dx).append(",").append(dy)
-                                .append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
 
-                    }));
-            // Past code on release controll key
-            KeyEventsManager.getInstance().addKeyboardListener(
-                    new ShortcutEqualsListener("mouse.move.key.press", "CONTROL", "RELEASE",
-                            (e) -> {
-                                int caretPosition = areaCode.getCaretPosition();
-                                StringBuilder sb = new StringBuilder();
-                                MouseMoveEvent moveEvent = manager
-                                        .getLastMoveEvent();
-                                if (moveEvent == null)
-                                    return;
-                                int dx = (int) (moveEvent.getX()
-                                        - lastMoveEvent.getX());
-                                int dy = (int) (moveEvent.getY()
-                                        - lastMoveEvent.getY());
+            }));
 
-                                sb.append("mouse.move('").append(dx).append(",")
-                                        .append(dy).append(");\n");
-                                areaCode.insertText(caretPosition,
-                                        sb.toString());
-                            }));
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+
+
         } else {
             // if toggle has been deselected
-            KeyEventsManager.getInstance()
-                    .removeKeyboardListenersByPrefix("mouse.move");
-            KeyEventsManager.getInstance()
-                    .removeKeyboardListenersByPrefix("mouse.move");
-            manager.removeButtonListenersByPrefix("insert.mouse");
+            keyEventsManager.removeKeyboardListenersByPrefix(prefix);
+            mouseEventsManager.removeListenersByPrefix(prefix);
 
             enableCodeType = true;
         }
@@ -750,7 +746,7 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
 
                         MouseButtonEvent preLastButtonEvent = manager
@@ -766,7 +762,7 @@ public class MainController {
                                 .append("',").append(preLastButtonEvent.getX())
                                 .append(",").append(preLastButtonEvent.getY())
                                 .append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
 
                     }));
             // insert code on release button
@@ -775,7 +771,7 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
 
                         MouseButtonEvent preLastButtonEvent = manager
@@ -831,7 +827,7 @@ public class MainController {
                                     .append(",").append(e.getY())
                                     .append(");\n");
                         }
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
 
                     }));
         } else {
@@ -862,8 +858,8 @@ public class MainController {
             KeyEventsManager.getInstance().addKeyboardListener(
                     new ShortcutEqualsListener("mouse.move.key.release",
                             "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = areaCode.getCaretPosition();
-                        areaCode.insertText(caretPosition, movementPath
+                        int caretPosition = codeTextArea.getCaretPosition();
+                        codeTextArea.insertText(caretPosition, movementPath
                                 .getMoveCodeAbsolutePath(80));
                         movementPath = null;
                     }));
@@ -903,8 +899,8 @@ public class MainController {
             KeyEventsManager.getInstance().addKeyboardListener(
                     new ShortcutEqualsListener("mouse.move.key.release",
                             "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = areaCode.getCaretPosition();
-                        areaCode.insertText(caretPosition, movementPath
+                        int caretPosition = codeTextArea.getCaretPosition();
+                        codeTextArea.insertText(caretPosition, movementPath
                                 .getMoveCodeRelativePath(80));
                         movementPath = null;
                     }));
@@ -953,9 +949,9 @@ public class MainController {
             KeyEventsManager.getInstance().addKeyboardListener(
                     new ShortcutEqualsListener("mouse.move.key.release",
                             "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         movementPath.add((int) (System.currentTimeMillis() - lastMoveEvent.getTime()));
-                        areaCode.insertText(caretPosition, movementPath
+                        codeTextArea.insertText(caretPosition, movementPath
                                 .getMoveCodeAbsolutePathWithDelays(80));
                         movementPath = null;
                     }));
@@ -1007,10 +1003,10 @@ public class MainController {
             KeyEventsManager.getInstance().addKeyboardListener(
                     new ShortcutEqualsListener("mouse.move.key.release",
                             "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         movementPath.add((int) (System.currentTimeMillis() - lastMoveEvent.getTime()));
 
-                        areaCode.insertText(caretPosition, movementPath
+                        codeTextArea.insertText(caretPosition, movementPath
                                 .getMoveCodeRelativePathWithDelays(80));
                         movementPath = null;
                     }));
@@ -1037,6 +1033,109 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    @FXML
+    void insertAbsolutePathFixRate(ActionEvent event) {
+        String prefix = "insert.absolute.path.fix.rate";
+        ToggleButton toggle = (ToggleButton) event.getSource();
+        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
+        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
+        if (toggle.isSelected()) {
+            select(toggle);
+            // if toggle has been selected
+            enableCodeType = false;
+            // on press key start record path
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.press", "CONTROL", "PRESS",
+                    (controlEvent) -> {
+                        eventLog.clear();
+                        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
+                            eventLog.add(e);
+                        }));
+                    }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.release", "CONTROL", "RELEASE",
+                    (controlEvent) -> {
+                        mouseEventsManager.removeMoveListenersByPrefix(prefix);
+
+                        List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
+                        MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
+                        mouseMoveEventUtil.addAll(moveLog);
+                        int fps;
+                        try {
+                            fps = Integer.parseInt(txtAbsolutePathRate.getText());
+                            if (fps < 1) {
+                                fps = 1;
+                            } else if (fps > 60) {
+                                fps = 60;
+                            }
+                        } catch (Exception ex) {
+                            fps = 30;
+                        }
+                        String code = mouseMoveEventUtil.getAbsolutePathFixRateWithDelays(fps, 80);
+                        putTextIntoCaretPosition(codeTextArea, code);
+
+
+                    }));
+
+        } else {
+            // if toggle has been deselected
+            keyEventsManager.removeKeyboardListenersByPrefix(prefix);
+            mouseEventsManager.removeMoveListenersByPrefix(prefix);
+            enableCodeType = true;
+        }
+        setToggleStatus(toggle);
+    }
+
+    @FXML
+    void insertRelativePathFixRate(ActionEvent event) {
+        String prefix = "insert.absolute.path.fix.rate";
+        ToggleButton toggle = (ToggleButton) event.getSource();
+        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
+        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
+        if (toggle.isSelected()) {
+            select(toggle);
+            // if toggle has been selected
+            enableCodeType = false;
+            // on press key start record path
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.press", "CONTROL", "PRESS",
+                    (controlEvent) -> {
+                        eventLog.clear();
+                        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
+                            eventLog.add(e);
+                        }));
+                    }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.release", "CONTROL", "RELEASE",
+                    (controlEvent) -> {
+                        mouseEventsManager.removeMoveListenersByPrefix(prefix);
+
+                        List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
+                        MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
+                        mouseMoveEventUtil.addAll(moveLog);
+
+                        int fps;
+                        try {
+                            fps = Integer.parseInt(txtRelativePathRate.getText());
+                            if (fps < 1) {
+                                fps = 1;
+                            } else if (fps > 60) {
+                                fps = 60;
+                            }
+                        } catch (Exception ex) {
+                            fps = 30;
+                        }
+                        String code = mouseMoveEventUtil.getRelativePathFixRateWithDelays(fps, 80);
+                        putTextIntoCaretPosition(codeTextArea, code);
+
+
+                    }));
+
+        } else {
+            // if toggle has been deselected
+            keyEventsManager.removeKeyboardListenersByPrefix(prefix);
+            mouseEventsManager.removeMoveListenersByPrefix(prefix);
+            enableCodeType = true;
+        }
+        setToggleStatus(toggle);
+    }
+
     // mouse basics
     @FXML
     void insertMousePress(ActionEvent event) {
@@ -1050,12 +1149,12 @@ public class MainController {
             manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
                 if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
                     return;
-                int caretPosition = areaCode.getCaretPosition();
+                int caretPosition = codeTextArea.getCaretPosition();
                 StringBuilder sb = new StringBuilder();
                 sb.append("mouse.press('")
                         .append(e.getButton())
                         .append("');\n");
-                areaCode.insertText(caretPosition, sb.toString());
+                codeTextArea.insertText(caretPosition, sb.toString());
             }));
         } else {
             // if toggle has been deselected
@@ -1077,12 +1176,12 @@ public class MainController {
             manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
                 if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
                     return;
-                int caretPosition = areaCode.getCaretPosition();
+                int caretPosition = codeTextArea.getCaretPosition();
                 StringBuilder sb = new StringBuilder();
                 sb.append("mouse.pressAt('").append(e.getButton()).append("',")
                         .append(e.getX()).append(",").append(e.getY())
                         .append(");\n");
-                areaCode.insertText(caretPosition, sb.toString());
+                codeTextArea.insertText(caretPosition, sb.toString());
             }));
         } else {
             // if toggle has been deselected
@@ -1106,12 +1205,12 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         sb.append("mouse.release('").append(
                                 e.getButton())
                                 .append("');\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -1135,12 +1234,12 @@ public class MainController {
                         if (!KeyEventsManager.getInstance()
                                 .isPressed("CONTROL"))
                             return;
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         sb.append("mouse.releaseAt('").append(e.getButton())
                                 .append("',").append(e.getX()).append(",")
                                 .append(e.getY()).append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -1163,10 +1262,10 @@ public class MainController {
                 if (!KeyEventsManager.getInstance()
                         .isPressed("CONTROL"))
                     return;
-                int caretPosition = areaCode.getCaretPosition();
+                int caretPosition = codeTextArea.getCaretPosition();
                 StringBuilder sb = new StringBuilder();
                 sb.append("mouse.wheel('").append(e.getDirection()).append("',").append(e.getAmount()).append(");\n");
-                areaCode.insertText(caretPosition, sb.toString());
+                codeTextArea.insertText(caretPosition, sb.toString());
             }));
 
         } else {
@@ -1200,11 +1299,11 @@ public class MainController {
                                 || (e.getY() != preLastEvent.getY())) {
                             return;
                         }
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         sb.append("mouse.click('").append(e.getButton())
                                 .append("');\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -1236,13 +1335,13 @@ public class MainController {
                                 || (e.getY() != preLastEvent.getY())) {
                             return;
                         }
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         sb.append("mouse.clickAt('")
                                 .append(e.getButton()).append("',")
                                 .append(e.getX()).append(",")
                                 .append(e.getY()).append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
         } else {
             // if toggle has been deselected
@@ -1263,11 +1362,11 @@ public class MainController {
             manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
                 if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
                     return;
-                int caretPosition = areaCode.getCaretPosition();
+                int caretPosition = codeTextArea.getCaretPosition();
                 StringBuilder sb = new StringBuilder();
                 sb.append("mouse.moveAt(").append(e.getX()).append(",")
                         .append(e.getY()).append(");\n");
-                areaCode.insertText(caretPosition, sb.toString());
+                codeTextArea.insertText(caretPosition, sb.toString());
             }));
 
         } else {
@@ -1292,7 +1391,7 @@ public class MainController {
                     }));
             KeyEventsManager.getInstance().addKeyboardListener(
                     new ShortcutEqualsListener("key.release", "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = areaCode.getCaretPosition();
+                        int caretPosition = codeTextArea.getCaretPosition();
                         StringBuilder sb = new StringBuilder();
                         int dx = manager.getLastMoveEvent().getX()
                                 - lastMoveEvent.getX();
@@ -1300,7 +1399,7 @@ public class MainController {
                                 - lastMoveEvent.getY();
                         sb.append("mouse.move(").append(dx).append(",")
                                 .append(dy).append(");\n");
-                        areaCode.insertText(caretPosition, sb.toString());
+                        codeTextArea.insertText(caretPosition, sb.toString());
                     }));
 
         } else {
@@ -1317,8 +1416,8 @@ public class MainController {
     /*Combined*/
     @SuppressWarnings("Duplicates")
     @FXML
-    void insertAllEventsRealtime(ActionEvent event) {
-        String prefix = "insert.all.events.real.time";
+    void insertPressAtReleaseAtDelays(ActionEvent event) {
+        String prefix = "insert.press.at.release.at.delays";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseManager = MouseEventsManager.getInstance();
         KeyEventsManager keyManager = KeyEventsManager.getInstance();
@@ -1344,7 +1443,7 @@ public class MainController {
                                         long delay = eventLog.getDelay();
                                         if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
                                         sb.append("key.press('").append(e.getKey()).append("');\n");
-                                        putTextIntoCaretPosition(areaCode, sb.toString());
+                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
                                     }));
                             keyManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".release", "", "RELEASE",
                                     (e) -> {
@@ -1355,7 +1454,7 @@ public class MainController {
                                         long delay = eventLog.getDelay();
                                         if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
                                         sb.append("key.release('").append(e.getKey()).append("');\n");
-                                        putTextIntoCaretPosition(areaCode, sb.toString());
+                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
                                     }));
 
                             // mouse buttons
@@ -1372,7 +1471,7 @@ public class MainController {
                                                 .append(e.getX()).append(",")
                                                 .append(e.getY())
                                                 .append(");\n");
-                                        putTextIntoCaretPosition(areaCode, sb.toString());
+                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
                                     }));
                             mouseManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "",
                                     (e) -> {
@@ -1387,7 +1486,7 @@ public class MainController {
                                                 .append(e.getX()).append(",")
                                                 .append(e.getY())
                                                 .append(");\n");
-                                        putTextIntoCaretPosition(areaCode, sb.toString());
+                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
                                     }));
 
                             // mouse wheel
@@ -1403,7 +1502,7 @@ public class MainController {
                                                 .append(e.getDirection()).append("',")
                                                 .append(e.getAmount())
                                                 .append(");\n");
-                                        putTextIntoCaretPosition(areaCode, sb.toString());
+                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
                                     }));
                         }
                     }));
@@ -1417,6 +1516,7 @@ public class MainController {
         }
         setToggleStatus(toggle);
     }
+
 
     /**
      * Shows hint area with tex from userData in button
@@ -1637,8 +1737,8 @@ public class MainController {
         String[] data = (String[]) btn.getUserData();
         if (data == null)
             return;
-        int caretPosition = areaCode.getCaretPosition();
-        areaCode.insertText(caretPosition, data[1]);
+        int caretPosition = codeTextArea.getCaretPosition();
+        codeTextArea.insertText(caretPosition, data[1]);
 
     }
 
@@ -1766,7 +1866,7 @@ public class MainController {
 
     public void putTextIntoCaretPosition(TextArea textArea, String text) {
         int caretPosition = textArea.getCaretPosition();
-        areaCode.insertText(caretPosition, text);
+        codeTextArea.insertText(caretPosition, text);
     }
 
 }
