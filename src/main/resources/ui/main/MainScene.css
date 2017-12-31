@@ -128,8 +128,8 @@
 /*Hint area*/
 
 #hint-text-area{
-    -fx-max-width: 330;
-    -fx-min-width: 330;
+    -fx-max-width: 350;
+    -fx-min-width: 350;
 }
 
 /*text area */

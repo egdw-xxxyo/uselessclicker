@@ -12,6 +12,7 @@ import javax.script.ScriptException;
 /**
  *
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class MouseObject {
 
     // Constants
@@ -223,18 +224,22 @@ public class MouseObject {
             return;
         }
 
-        if (direction.equals("DOWN")) {
-            robot.mouseWheel(amount);
-            robot.delay(getMultipliedWheelDelay());
-        } else if (direction.equals("UP")) {
-            robot.mouseWheel(amount * -1);
-            robot.delay(getMultipliedWheelDelay());
-        } else {
-            Out.println(String.format("Wrong wheel direction '%s'", direction));
+        switch (direction) {
+            case "DOWN":
+                robot.mouseWheel(amount);
+                robot.delay(getMultipliedWheelDelay());
+                break;
+            case "UP":
+                robot.mouseWheel(amount * -1);
+                robot.delay(getMultipliedWheelDelay());
+                break;
+            default:
+                Out.println(String.format("Wrong wheel direction '%s'", direction));
+                break;
         }
     }
 
-    public void wheeAt(String direction, int amount, int x, int y) {
+    public void wheelAt(String direction, int amount, int x, int y) {
         moveTo(x, y);
         wheel(direction, amount);
     }
@@ -328,13 +333,23 @@ public class MouseObject {
         multiplier = MULTIPLIER;
     }
 
-    public void setAllDelays(int delay) {
+    public float getSpeed() {
+        return 1f/getMultiplier();
+    }
+
+    public void setSpeed(float multiplier) {
+        setMultiplier(1f/multiplier);
+    }
+
+    public void resetSpeed() {
+        resetMultiplier();
+    }
+    public void setDelays(int delay) {
         this.moveDelay = delay;
         this.pressDelay = delay;
         this.releaseDelay = delay;
         this.wheelDelay = delay;
     }
-
     public void resetDelays() {
         this.moveDelay = MOVE_DELAY;
         this.pressDelay = PRESS_DELAY;

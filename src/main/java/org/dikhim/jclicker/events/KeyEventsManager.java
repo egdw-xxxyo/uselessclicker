@@ -93,11 +93,16 @@ public class KeyEventsManager implements NativeKeyListener {
     }
 
     public synchronized  void removeKeyboardListenersByPrefix(String prefix) {
-        Iterator<KeyboardListener> it = keyboardListeners.iterator();
-        while (it.hasNext()) {
-            if (it.next().getName().startsWith(prefix))
-                it.remove();
-        }
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                Iterator<KeyboardListener> it = keyboardListeners.iterator();
+                while (it.hasNext()) {
+                    if (it.next().getName().startsWith(prefix))
+                        it.remove();
+                }
+            }
+        });
+        thread.start();
     }
 
     public synchronized boolean isListenerExist(String name){

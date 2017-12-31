@@ -33,7 +33,7 @@ public class ClientSocketThread extends Thread {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        mouse.setAllDelays(0);
+        mouse.setDelays(0);
     }
 
     public void run() {

@@ -36,8 +36,8 @@ public class Server {
             e.printStackTrace();
         }
 
-        mouse.setAllDelays(0);
-        keyboard.setAllDelays(0);
+        mouse.setDelays(0);
+        keyboard.setDelays(0);
     }
 
     public static Server getInstance() {

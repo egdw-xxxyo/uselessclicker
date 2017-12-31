@@ -32,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
+@SuppressWarnings({"unused", "Duplicates"})
 public class MainController {
     private MouseMoveUtil movementPath;
     private MouseMoveEvent lastMoveEvent;
@@ -99,15 +100,20 @@ public class MainController {
     }
 
     @FXML
+    private Button btnNewFile;
+
+    @FXML
     private Button btnRunScript;
+
     @FXML
     private Button btnStopScript;
-    @FXML
-    private Button btnNewFile;
+
     @FXML
     private Button btnOpenFile;
+
     @FXML
     private Button btnSaveFile;
+
     @FXML
     private Button btnShowSeverWindow;
 
@@ -330,7 +336,7 @@ public class MainController {
     @FXML
     private ToggleButton btnInsertMouseWheel;
 
-    // mouse code
+        // mouse code
     @FXML
     private ToggleButton btnInsertMouseCode;
 
@@ -673,14 +679,14 @@ public class MainController {
                 eventLog.clear();
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
                     StringBuilder sb = new StringBuilder();
-                    int dx,dy;
+                    int dx, dy;
                     try {
                         org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                         dx = e.getX() - lastMouseEvent.getX();
                         dy = e.getY() - lastMouseEvent.getY();
                     } catch (IndexOutOfBoundsException ex) {
                         dx = 0;
-                        dy =0;
+                        dy = 0;
                     }
                     eventLog.add(e);
                     sb.append("mouse.moveAndPress('")
@@ -692,14 +698,14 @@ public class MainController {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
                     StringBuilder sb = new StringBuilder();
 
-                    int dx,dy;
+                    int dx, dy;
                     try {
                         org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                         dx = e.getX() - lastMouseEvent.getX();
                         dy = e.getY() - lastMouseEvent.getY();
                     } catch (IndexOutOfBoundsException ex) {
                         dx = 0;
-                        dy =0;
+                        dy = 0;
                     }
                     sb.append("mouse.moveAndRelease('")
                             .append(e.getButton()).append("',")
@@ -708,7 +714,7 @@ public class MainController {
                     putTextIntoCaretPosition(codeTextArea, sb.toString());
                 }));
 
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix+".wheel","",(e)->{
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
 
                 }));
 
@@ -1553,10 +1559,16 @@ public class MainController {
     private Button btnTemplateMouseGetMoveDelay;
 
     @FXML
+    private Button btnTemplateMouseGetMultiplier;
+
+    @FXML
     private Button btnTemplateMouseGetPressDelay;
 
     @FXML
     private Button btnTemplateMouseGetReleaseDelay;
+
+    @FXML
+    private Button btnTemplateMouseGetSpeed;
 
     @FXML
     private Button btnTemplateMouseGetWheelDelay;
@@ -1586,6 +1598,9 @@ public class MainController {
     private Button btnTemplateMouseMoveAndRelease;
 
     @FXML
+    private Button btnTemplateMouseMoveAndWheel;
+
+    @FXML
     private Button btnTemplateMouseMoveRelative;
 
     @FXML
@@ -1607,13 +1622,31 @@ public class MainController {
     private Button btnTemplateMouseReleaseAt;
 
     @FXML
+    private Button btnTemplateMouseResetDelays;
+
+    @FXML
+    private Button btnTemplateMouseResetMultiplier;
+
+    @FXML
+    private Button btnTemplateMouseResetSpeed;
+
+    @FXML
+    private Button btnTemplateMouseSetDelays;
+
+    @FXML
     private Button btnTemplateMouseSetMoveDelay;
+
+    @FXML
+    private Button btnTemplateMouseSetMultiplier;
 
     @FXML
     private Button btnTemplateMouseSetPressDelay;
 
     @FXML
     private Button btnTemplateMouseSetReleaseDelay;
+
+    @FXML
+    private Button btnTemplateMouseSetSpeed;
 
     @FXML
     private Button btnTemplateMouseSetWheelDelay;
@@ -1627,12 +1660,21 @@ public class MainController {
     @FXML
     private Button btnTemplateMouseWheel;
 
+    @FXML
+    private Button btnTemplateMouseWheelAt;
+
     ////////////// KEYBOARD
+    @FXML
+    private Button btnTemplateKeyGetMultiplier;
+
     @FXML
     private Button btnTemplateKeyGetPressDelay;
 
     @FXML
     private Button btnTemplateKeyGetReleaseDelay;
+
+    @FXML
+    private Button btnTemplateKeyGetSpeed;
 
     @FXML
     private Button btnTemplateKeyIsPressed;
@@ -1644,13 +1686,31 @@ public class MainController {
     private Button btnTemplateKeyRelease;
 
     @FXML
+    private Button btnTemplateKeyResetDelays;
+
+    @FXML
+    private Button btnTemplateKeyResetMultiplier;
+
+    @FXML
+    private Button btnTemplateKeyResetSpeed;
+
+    @FXML
     private Button btnTemplateKeyType;
+
+    @FXML
+    private Button btnTemplateKeySetDelays;
+
+    @FXML
+    private Button btnTemplateKeySetMultiplier;
 
     @FXML
     private Button btnTemplateKeySetPressDelay;
 
     @FXML
     private Button btnTemplateKeySetReleaseDelay;
+
+    @FXML
+    private Button btnTemplateKeySetSpeed;
     // System
     @FXML
     private Button btnTemplateSystemSleep;
@@ -1675,8 +1735,10 @@ public class MainController {
         templateButtons.add(btnTemplateMouseClick);
         templateButtons.add(btnTemplateMouseClickAt);
         templateButtons.add(btnTemplateMouseGetMoveDelay);
+        templateButtons.add(btnTemplateMouseGetMultiplier);
         templateButtons.add(btnTemplateMouseGetPressDelay);
         templateButtons.add(btnTemplateMouseGetReleaseDelay);
+        templateButtons.add(btnTemplateMouseGetSpeed);
         templateButtons.add(btnTemplateMouseGetWheelDelay);
         templateButtons.add(btnTemplateMouseGetX);
         templateButtons.add(btnTemplateMouseGetY);
@@ -1686,6 +1748,7 @@ public class MainController {
         templateButtons.add(btnTemplateMouseMoveAndClick);
         templateButtons.add(btnTemplateMouseMoveAndPress);
         templateButtons.add(btnTemplateMouseMoveAndRelease);
+        templateButtons.add(btnTemplateMouseMoveAndWheel);
         templateButtons.add(btnTemplateMouseMoveRelative);
         templateButtons.add(btnTemplateMouseMoveRelative_D);
         templateButtons.add(btnTemplateMouseMoveTo);
@@ -1693,23 +1756,40 @@ public class MainController {
         templateButtons.add(btnTemplateMousePressAt);
         templateButtons.add(btnTemplateMouseRelease);
         templateButtons.add(btnTemplateMouseReleaseAt);
+        templateButtons.add(btnTemplateMouseResetDelays);
+        templateButtons.add(btnTemplateMouseResetMultiplier);
+        templateButtons.add(btnTemplateMouseResetSpeed);
+        templateButtons.add(btnTemplateMouseSetDelays);
         templateButtons.add(btnTemplateMouseSetMoveDelay);
+        templateButtons.add(btnTemplateMouseSetMultiplier);
         templateButtons.add(btnTemplateMouseSetPressDelay);
         templateButtons.add(btnTemplateMouseSetReleaseDelay);
+        templateButtons.add(btnTemplateMouseSetSpeed);
         templateButtons.add(btnTemplateMouseSetWheelDelay);
         templateButtons.add(btnTemplateMouseSetX);
         templateButtons.add(btnTemplateMouseSetY);
         templateButtons.add(btnTemplateMouseWheel);
+        templateButtons.add(btnTemplateMouseWheelAt);
+
 
         // keyboard
+        templateButtons.add(btnTemplateKeyGetMultiplier);
         templateButtons.add(btnTemplateKeyGetPressDelay);
         templateButtons.add(btnTemplateKeyGetReleaseDelay);
+        templateButtons.add(btnTemplateKeyGetSpeed);
         templateButtons.add(btnTemplateKeyIsPressed);
         templateButtons.add(btnTemplateKeyPress);
         templateButtons.add(btnTemplateKeyRelease);
         templateButtons.add(btnTemplateKeyType);
+        templateButtons.add(btnTemplateKeyResetDelays);
+        templateButtons.add(btnTemplateKeyResetMultiplier);
+        templateButtons.add(btnTemplateKeyResetSpeed);
+        templateButtons.add(btnTemplateKeySetDelays);
+        templateButtons.add(btnTemplateKeySetMultiplier);
         templateButtons.add(btnTemplateKeySetPressDelay);
         templateButtons.add(btnTemplateKeySetReleaseDelay);
+        templateButtons.add(btnTemplateKeySetSpeed);
+
 
         // System
         templateButtons.add(btnTemplateSystemSleep);

@@ -207,17 +207,8 @@ $btnInsertAbsolutePath:
 //по абсолютным координатам
 //
 //Пример:
-  mouse.moveAbsolute('010100100100100'+
-  '1101000101011101010010110101111010'+
-  '000111100011010101');
-
-$btnInsertRelativePath:
-//Вставляет код для движения курсора
-//по относительным координатам
-//
-//Пример:
-  mouse.moveRelative('010100100100100'+
-  '1101000101011101010010110101110010'+
+  mouse.moveAbsolute('0101001001000'+
+  '11010001010111010100101101011110'+
   '000111100011010101');
 
 $btnInsertAbsolutePathWithDelays:
@@ -226,8 +217,34 @@ $btnInsertAbsolutePathWithDelays:
 //задержками между событиями
 //
 //Пример:
-  mouse.moveAbsolute_D('0101001010100'+
-  '1101000101011101010010110101110010'+
+  mouse.moveAbsolute_D('01010010100'+
+  '11010001010111010100101101011010'+
+  '000111100011010101');
+
+$btnInsertAbsolutePathFixRate:
+//Вставляет код для движения курсора
+//по абсолютным координатам с
+//задержками между событиями. 
+//
+//Запись событий производится
+//указанное количество раз в секунду.
+//
+//Позволяет сократить объем кода,
+//но уменьшается качество
+//записанного пути.
+//
+//Пример:
+  mouse.moveAbsolute_D('01010010100'+
+  '11010001010111010100101101011010'+
+  '000111100011010101');
+
+$btnInsertRelativePath:
+//Вставляет код для движения курсора
+//по относительным координатам
+//
+//Пример:
+  mouse.moveRelative('0101001001000'+
+  '11010001010111010100101101011101'+
   '000111100011010101');
 
 $btnInsertRelativePathWithDelays:
@@ -236,14 +253,37 @@ $btnInsertRelativePathWithDelays:
 //задержками между событиями
 //
 //Пример:
-  mouse.moveRelative_D('0101001010100'+
-  '1101000101011101010010110010010010'+
+  mouse.moveRelative_D('01010010100'+
+  '11010001010111010100101100110010'+
+  '000111100011010101');
+
+$btnInsertRelativePathFixRate:
+//Вставляет код для движения курсора
+//по относительным координатам с
+//задержками между событиями
+//
+//Запись событий производится
+//указанное количество раз в секунду.
+//
+//Позволяет сократить объем кода,
+//но уменьшается качество
+//записанного пути.
+//
+//Пример:
+  mouse.moveRelative_D('01010010100'+
+  '11010001010111010100101100110010'+
   '000111100011010101');
 
 ///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
 ////////////TEMPLATES////////////////
 /////////////////////////////////////
-//MOUSE
+//////////////MOUSE//////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
 $btnTemplateMouseClick:
 mouse.click('');
 //Клик клавишей мыши
@@ -289,6 +329,20 @@ mouse.getMoveDelay();
 $btnTemplateMouseGetMoveDelayCode:
 mouse.getMoveDelay();
 
+$btnTemplateMouseGetMultiplier:
+mouse.getMultiplier();
+//Получить множитель задержек.
+//На данное число умножаются
+//все задержки
+//
+//Обратная величина к множителю
+//скорости
+//
+//mouse.getMultiplier():float
+
+$btnTemplateMouseGetMultiplierCode:
+mouse.getMultiplier();
+
 $btnTemplateMouseGetPressDelay:
 mouse.getPressDelay();
 //Получить задержку нажатия клавиши
@@ -307,6 +361,17 @@ mouse.getReleaseDelay();
 //
 //mouse.getReleaseDelay():int
 //
+
+$btnTemplateMouseGetSpeed:
+mouse.getSpeed();
+//Получить множитель скорости.
+//Обратная величина к множителю
+//задержек
+//
+//mouse.getSpeed():float
+
+$btnTemplateMouseGetSpeedCode:
+mouse.getSpeed();
 
 $btnTemplateMouseGetReleaseDelayCode:
 mouse.getReleaseDelay();
@@ -367,12 +432,30 @@ mouse.move(,);
 
 $btnTemplateMouseMoveAbsolute:
 mouse.moveAbsolute('');
+//Код для движения курсора по
+//заданному пути абсолютных
+//координат
+//
+//Состоит из групп символов юникода
+//Каждый 1й символ - координата 'x'
+//Каждый 2й символ - координата 'y'
 
 $btnTemplateMouseMoveAbsoluteCode:
 mouse.moveAbsolute('');
 
 $btnTemplateMouseMoveAbsolute_D:
 mouse.moveAbsolute_D('');
+//Код для движения курсора по
+//заданному пути абсолютных
+//координат с задержками
+//
+//Состоит из групп символов юникода
+//Каждый 1й символ - координата 'x'
+//Каждый 2й символ - координата 'y'
+//Каждый 3й символ - значение задержки
+//
+//Значение задержки не может быть
+//более 20000мс
 
 $btnTemplateMouseMoveAbsolute_DCode:
 mouse.moveAbsolute_D('');
@@ -437,14 +520,53 @@ mouse.moveAndRelease('',,);
 $btnTemplateMouseMoveAndReleaseCode:
 mouse.moveAndRelease('',,);
 
+$btnTemplateMouseMoveAndWheel:
+mouse.moveAndWheel('',,,);
+//Передвинуть курсор относительно
+//координат последнего события
+//и прокруть колесо мыши
+//
+//mouse.moveAndWheel
+//  (direction, amount, dx, dy);
+//  direction - направление UP/DOWN
+//  amount - количество строк
+//  dx, dy - смещения
+//
+//Метод состоит из:
+//  move(dx,dy);
+//    sleep(moveDelay);
+//  wheel(direction,amount);
+//    sleep(wheelDelay);
+
+$btnTemplateMouseMoveAndWheelCode:
+mouse.moveAndWheel('',,,);
+
 $btnTemplateMouseMoveRelative:
 mouse.moveRelative('');
+//Код для движения курсора по
+//заданному пути относительных
+//координат
+//
+//Состоит из групп символов юникода
+//Каждый 1й символ - смещение по 'x'
+//Каждый 2й символ - смещение по 'y'
 
 $btnTemplateMouseMoveRelativeCode:
 mouse.moveRelative('');
 
 $btnTemplateMouseMoveRelative_D:
 mouse.moveRelative_D('');
+//Код для движения курсора по
+//заданному пути относительных
+//координат с задержками
+//
+//Состоит из групп символов юникода
+//Каждый 1й символ - смещение по 'x'
+//Каждый 2й символ - смещение по 'y'
+//Каждый 3й символ - значение задержки
+//
+//Значение задержки не может быть
+//более 20000мс
 
 $btnTemplateMouseMoveRelative_DCode:
 mouse.moveRelative_D('');
@@ -528,6 +650,46 @@ mouse.releaseAt('',,);
 $btnTemplateMouseReleaseAtCode:
 mouse.releaseAt('',,);
 
+$btnTemplateMouseResetDelays:
+mouse.resetDelays();
+//Сбросить все задержки к
+//стандартному значению
+//
+//mouse.resetDelays()
+
+$btnTemplateMouseResetDelaysCode:
+mouse.resetDelays();
+
+$btnTemplateMouseResetMultiplier:
+mouse.resetMultiplier();
+//Сбросить множитель задержек к
+//стандартному значению
+//
+//mouse.resetMultiplier();
+
+$btnTemplateMouseResetMultiplierCode:
+mouse.resetMultiplier();
+
+$btnTemplateMouseResetSpeed:
+mouse.resetSpeed();
+//Сбросить множитель скорости к
+//стандартному значению
+//
+//mouse.resetSpeed()
+
+$btnTemplateMouseResetSpeedCode:
+mouse.resetSpeed();
+
+$btnTemplateMouseSetDelays:
+mouse.setDelays();
+//Приствоить всем задержкам
+//указанное значение
+//
+//mouse.setDelays(int delay)
+
+$btnTemplateMouseSetDelaysCode:
+mouse.setDelays();
+
 $btnTemplateMouseSetMoveDelay:
 mouse.setMoveDelay();
 //Установить задержку передвижения
@@ -538,6 +700,19 @@ mouse.setMoveDelay();
 
 $btnTemplateMouseSetMoveDelayCode:
 mouse.setMoveDelay();
+
+$btnTemplateMouseSetMultiplier:
+mouse.setMultiplier();
+//Установить множитель задержек.
+//
+//Обратная величина к множителю
+//скорости
+//
+//mouse.
+//  setMultiplier(float multiplier)
+
+$btnTemplateMouseSetMultiplierCode:
+mouse.setMultiplier();
 
 $btnTemplateMouseSetPressDelay:
 mouse.setPressDelay();
@@ -560,6 +735,18 @@ mouse.setReleaseDelay();
 
 $btnTemplateMouseSetReleaseDelayCode:
 mouse.setReleaseDelay();
+
+$btnTemplateMouseSetSpeed:
+mouse.setSpeed();
+//Установить множитель скорости.
+//
+//Обратная величина к множителю
+//задержек
+//
+//mouse.setSpeed(float speed)
+
+$btnTemplateMouseSetSpeedCode:
+mouse.setSpeed();
 
 $btnTemplateMouseSetWheelDelay:
 mouse.setWheelDelay();
@@ -607,20 +794,61 @@ mouse.wheel('',);
 //Прокрутить колесо мыши на указанное
 //количество строк
 //
-//mouse.wheel("DIRECTION", amount);
-//  DIRECTION - направление UP/DOWN
+//mouse.wheel(direction, amount);
+//  direction - направление UP/DOWN
 //  amount - количество строк
 //
 //Метод состоит из:
-//  wheel(amount);
+//  wheel(direction, amount);
 //    sleep(wheelDelay);
 
 $btnTemplateMouseWheelCode:
 mouse.wheel('',);
 
+$btnTemplateMouseWheelAt:
+mouse.wheelAt('',,,);
+//Прокрутить колесо мыши на указанное
+//количество строк
+//
+//mouse.wheelAt
+//  (direction, amount, x, y);
+//
+//  direction - направление UP/DOWN
+//  amount - количество строк
+//  x - координата 'x'
+//  y - координата 'y'
+//
+//Метод состоит из:
+//  mouveTo(x,y);
+//    sleep(moveDelay);
+//  wheel(direction,amount);
+//    sleep(wheelDelay);
+
+$btnTemplateMouseWheelAtCode:
+mouse.wheelAt('',,,);
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
-//KEYBOARD
+/////////////////////////////////////
+////////////KEYBOARD/////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateKeyGetMultiplier:
+key.getMultiplier();
+//Получить множитель задержек.
+//На данное число умножаются
+//все задержки
+//
+//Обратная величина к множителю
+//скорости
+//
+//key.getMultiplier():float
+
+$btnTemplateKeyGetMultiplierCode:
+key.getMultiplier();
+
 $btnTemplateKeyGetPressDelay:
 key.getPressDelay();
 //Получить задержку нажатия клавиши
@@ -641,6 +869,17 @@ key.getReleaseDelay();
 
 $btnTemplateKeyGetReleaseDelayCode:
 key.getReleaseDelay();
+
+$btnTemplateKeyGetSpeed:
+mouse.getSpeed();
+//Получить множитель скорости.
+//Обратная величина к множителю
+//задержек
+//
+//key.getSpeed():float
+
+$btnTemplateKeyGetSpeedCode:
+key.getSpeed();
 
 $btnTemplateKeyIsPressed:
 key.isPressed('');
@@ -682,6 +921,36 @@ key.release('');
 $btnTemplateKeyReleaseCode:
 key.release('');
 
+$btnTemplateKeyResetDelays:
+key.resetDelays();
+//Сбросить все задержки к
+//стандартному значению
+//
+//key.resetDelays()
+
+$btnTemplateKeyResetDelaysCode:
+key.resetDelays();
+
+$btnTemplateKeyResetMultiplier:
+key.resetMultiplier();
+//Сбросить множитель задержек к
+//стандартному значению
+//
+//key.resetMultiplier()
+
+$btnTemplateKeyResetMultiplierCode:
+key.resetMultiplier();
+
+$btnTemplateKeyResetSpeed:
+key.resetSpeed();
+//Сбросить множитель скорости к
+//стандартному значению
+//
+//key.resetSpeed()
+
+$btnTemplateKeyResetSpeedCode:
+key.resetSpeed();
+
 $btnTemplateKeyType:
 key.type('');
 //Последовательно нажать и отпустить
@@ -699,6 +968,29 @@ key.type('');
 
 $btnTemplateKeyTypeCode:
 key.type('');
+
+$btnTemplateKeySetDelays:
+key.setDelays();
+//Приствоить всем задержкам
+//указанное значение
+//
+//key.setDelays(int delay)
+
+$btnTemplateKeySetDelaysCode:
+key.setDelays();
+
+$btnTemplateKeySetMultiplier:
+key.setMultiplier();
+//Установить множитель задержек.
+//
+//Обратная величина к множителю
+//скорости
+//
+//key.
+//  setMultiplier(float multiplier)
+
+$btnTemplateKeySetMultiplierCode:
+key.setMultiplier();
 
 $btnTemplateKeySetPressDelay:
 key.setPressDelay();
@@ -722,9 +1014,26 @@ key.setReleaseDelay();
 $btnTemplateKeySetReleaseDelayCode:
 key.setReleaseDelay();
 
+$btnTemplateKeySetSpeed:
+key.setSpeed();
+//Установить множитель скорости.
+//
+//Обратная величина к множителю
+//задержек
+//
+//key.setSpeed(float speed)
+
+$btnTemplateKeySetSpeedCode:
+key.setSpeed();
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
-//SYSTEM
+/////////////////////////////////////
+/////////////SYSTEM//////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
 $btnTemplateSystemSleep:
 system.sleep();
 //Приостановить скрипт на заданное

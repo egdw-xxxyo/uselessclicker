@@ -52,7 +52,7 @@ public class MouseEventsManager
 
 
     @Override
-    public void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
+    public synchronized void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
         // build new button event
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
@@ -76,7 +76,7 @@ public class MouseEventsManager
     }
 
     @Override
-    public void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
+    public synchronized void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
         // build new button event
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
@@ -98,7 +98,7 @@ public class MouseEventsManager
     }
 
     @Override
-    public void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
+    public synchronized void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
         // build new move event
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
@@ -114,12 +114,12 @@ public class MouseEventsManager
     }
 
     @Override
-    public void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
+    public synchronized void nativeMouseDragged(NativeMouseEvent nativeMouseEvent) {
         nativeMouseMoved(nativeMouseEvent);
     }
 
     @Override
-    public void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
+    public synchronized void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
         // build new wheel event
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
@@ -142,7 +142,7 @@ public class MouseEventsManager
     }
 
     @Override
-    public void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
+    public synchronized void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
     }
 
     /////////////////
@@ -152,18 +152,23 @@ public class MouseEventsManager
      *
      * @param handler
      */
-    public void addButtonListener(MouseButtonHandler handler) {
-        MouseButtonHandler existingHandler = null;
-        for (MouseButtonHandler h : buttonHandlers) {
-            if (h.getName().equals(handler.getName()))
-                existingHandler = h;
-        }
-        if (existingHandler != null) {
-            existingHandler.setButtons(handler.getButtons());
-            existingHandler.setHandler(handler.getHandler());
-        } else {
-            buttonHandlers.add(handler);
-        }
+    public synchronized void addButtonListener(MouseButtonHandler handler) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                MouseButtonHandler existingHandler = null;
+                for (MouseButtonHandler h : buttonHandlers) {
+                    if (h.getName().equals(handler.getName()))
+                        existingHandler = h;
+                }
+                if (existingHandler != null) {
+                    existingHandler.setButtons(handler.getButtons());
+                    existingHandler.setHandler(handler.getHandler());
+                } else {
+                    buttonHandlers.add(handler);
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -171,17 +176,22 @@ public class MouseEventsManager
      *
      * @param handler mouse move handler
      */
-    public void addMoveListener(MouseMoveHandler handler) {
-        MouseMoveHandler existingHandler = null;
-        for (MouseMoveHandler h : moveHandlers) {
-            if (h.getName().equals(handler.getName()))
-                existingHandler = h;
-        }
-        if (existingHandler != null) {
-            existingHandler.setHandler(handler.getHandler());
-        } else {
-            moveHandlers.add(handler);
-        }
+    public synchronized void addMoveListener(MouseMoveHandler handler) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                MouseMoveHandler existingHandler = null;
+                for (MouseMoveHandler h : moveHandlers) {
+                    if (h.getName().equals(handler.getName()))
+                        existingHandler = h;
+                }
+                if (existingHandler != null) {
+                    existingHandler.setHandler(handler.getHandler());
+                } else {
+                    moveHandlers.add(handler);
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -189,18 +199,23 @@ public class MouseEventsManager
      *
      * @param handler mouse wheel listener
      */
-    public void addWheelListener(MouseWheelHandler handler) {
-        MouseWheelHandler existingHandler = null;
-        for (MouseWheelHandler h : wheelHandlers) {
-            if (h.getName().equals(handler.getName()))
-                existingHandler = h;
-        }
-        if (existingHandler != null) {
-            existingHandler.setDirection(handler.getDirection());
-            existingHandler.setHandler(handler.getHandler());
-        } else {
-            wheelHandlers.add(handler);
-        }
+    public synchronized void addWheelListener(MouseWheelHandler handler) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                MouseWheelHandler existingHandler = null;
+                for (MouseWheelHandler h : wheelHandlers) {
+                    if (h.getName().equals(handler.getName()))
+                        existingHandler = h;
+                }
+                if (existingHandler != null) {
+                    existingHandler.setDirection(handler.getDirection());
+                    existingHandler.setHandler(handler.getHandler());
+                } else {
+                    wheelHandlers.add(handler);
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -209,12 +224,18 @@ public class MouseEventsManager
      * @param prefix
      */
 
-    public void removeButtonListenersByPrefix(String prefix) {
-        Iterator<MouseButtonHandler> it = buttonHandlers.iterator();
-        while (it.hasNext()) {
-            if (it.next().getName().startsWith(prefix))
-                it.remove();
-        }
+    public synchronized void removeButtonListenersByPrefix(String prefix) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                Iterator<MouseButtonHandler> it = buttonHandlers.iterator();
+                while (it.hasNext()) {
+                    if (it.next().getName().startsWith(prefix)) {
+                        it.remove();
+                    }
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -222,12 +243,18 @@ public class MouseEventsManager
      *
      * @param prefix
      */
-    public void removeWheelListenersByPrefix(String prefix) {
-        Iterator<MouseWheelHandler> it = wheelHandlers.iterator();
-        while (it.hasNext()) {
-            if (it.next().getName().startsWith(prefix))
-                it.remove();
-        }
+    public synchronized void removeWheelListenersByPrefix(String prefix) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                Iterator<MouseWheelHandler> it = wheelHandlers.iterator();
+                while (it.hasNext()) {
+                    if (it.next().getName().startsWith(prefix)) {
+                        it.remove();
+                    }
+                }
+            }
+        });
+        thread.start();
     }
 
     /**
@@ -235,15 +262,20 @@ public class MouseEventsManager
      *
      * @param prefix
      */
-    public void removeMoveListenersByPrefix(String prefix) {
-        Iterator<MouseMoveHandler> it = moveHandlers.iterator();
-        while (it.hasNext()) {
-            if (it.next().getName().startsWith(prefix))
-                it.remove();
-        }
+    public synchronized void removeMoveListenersByPrefix(String prefix) {
+        Thread thread = new Thread(()-> {
+            synchronized (this) {
+                Iterator<MouseMoveHandler> it = moveHandlers.iterator();
+                while (it.hasNext()) {
+                    if (it.next().getName().startsWith(prefix))
+                        it.remove();
+                }
+            }
+        });
+        thread.start();
     }
 
-    public void removeListenersByPrefix(String prefix) {
+    public synchronized void removeListenersByPrefix(String prefix) {
         removeButtonListenersByPrefix(prefix);
         removeWheelListenersByPrefix(prefix);
         removeMoveListenersByPrefix(prefix);
