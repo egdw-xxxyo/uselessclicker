@@ -286,7 +286,7 @@ public class MainController {
             root = loader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml").openStream());
             Stage stage = new Stage();
             stage.setTitle("Server");
-            stage.setScene(new Scene(root, 600, 150));
+            stage.setScene(new Scene(root, 600, 400));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -1724,6 +1724,26 @@ public class MainController {
     @FXML
     private Button btnTemplateSystemRegisterShortcut;
 
+    // Language
+
+    @FXML
+    private Button btnTemplateLanguageClass;
+
+    @FXML
+    private Button btnTemplateLanguageFunctionVoid;
+
+    @FXML
+    private Button btnTemplateLanguageFunctionEcho;
+
+    @FXML
+    private Button btnTemplateLanguageLoopForPlus;
+
+    @FXML
+    private Button btnTemplateLanguageLoopForMinus;
+
+    @FXML
+    private Button btnTemplateLanguageLoopWhile;
+
     /**
      * Initializes template buttons
      * set hints and pasted code to user data from property file
@@ -1796,6 +1816,14 @@ public class MainController {
         templateButtons.add(btnTemplateSystemPrint);
         templateButtons.add(btnTemplateSystemPrintln);
         templateButtons.add(btnTemplateSystemRegisterShortcut);
+
+        //Language
+        templateButtons.add(btnTemplateLanguageClass);
+        templateButtons.add(btnTemplateLanguageFunctionEcho);
+        templateButtons.add(btnTemplateLanguageFunctionVoid);
+        templateButtons.add(btnTemplateLanguageLoopForPlus);
+        templateButtons.add(btnTemplateLanguageLoopForMinus);
+        templateButtons.add(btnTemplateLanguageLoopWhile);
 
         // Set user data 'String[]' to buttons
         // [0] - hint text

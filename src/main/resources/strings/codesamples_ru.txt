@@ -1077,3 +1077,95 @@ system.registerShortcut('','');
 
 $btnTemplateSystemRegisterShortcutCode:
 system.registerShortcut('','');
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////LANGUAGE/////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateLanguageClass:
+function Class (name) {
+  this.name = name;
+  this.echo = function(text){
+    return text;
+  };
+}
+//Шаблон класса с именем 'Class'
+//
+//Для создания объекта используйте
+//конструкцию типа
+//var obj = new Class('MyClass');
+//
+//Обращение к полю объекта:
+//var out = obj.name;
+//
+//Обращение к методу объекта:
+//var out = obj.echo('someText');
+
+$btnTemplateLanguageClassCode:
+function Class (name) {
+  this.name = name;
+  this.echo = function(text){
+    return text;
+  };
+}
+
+$btnTemplateLanguageFunctionEcho:
+function echo(text){
+  return text;
+}
+//Шаблон функции сполучением и
+//возвратом значения
+
+$btnTemplateLanguageFunctionEchoCode:
+function echo(text){
+  
+  return text;
+}
+
+$btnTemplateLanguageFunctionVoid:
+function void(){
+  
+}
+//Шаблон пустой функции
+
+$btnTemplateLanguageFunctionVoidCode:
+function void(){
+  
+}
+
+$btnTemplateLanguageLoopForPlus:
+for(i=0;i<10;i++){
+  
+}
+//Шаблон возрастающего цикла 'for'
+
+$btnTemplateLanguageLoopForPlusCode:
+for(i=0;i<10;i++){
+  
+}
+
+$btnTemplateLanguageLoopForMinus:
+for(i=10;i>0;i--){
+  
+}
+//Шаблон убывающего цикла 'for'
+
+$btnTemplateLanguageLoopForMinusCode:
+for(i=10;i>0;i--){
+  
+}
+
+$btnTemplateLanguageLoopWhile:
+while(true){
+  
+}
+//Шаблон цикла 'while'
+
+$btnTemplateLanguageLoopWhileCode:
+while(true){
+  
+}

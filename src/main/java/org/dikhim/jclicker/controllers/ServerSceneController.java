@@ -1,15 +1,13 @@
 package org.dikhim.jclicker.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.server.sockets.SocketServer;
-
-import java.net.Inet4Address;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
 public class ServerSceneController {
     private SocketServer server = SocketServer.getInstance();
@@ -20,20 +18,26 @@ public class ServerSceneController {
     private Button btnStopServer;
 
     @FXML
+    private Button btnRegresh;
+
+    @FXML
     private TextField txtPort;
 
     @FXML
     private TextField txtStatus;
 
     @FXML
-    private TextField txtHelp;
+    private ListView<String> listClients;
+    ObservableList<String> clientList = FXCollections.observableArrayList();
+
 
     @FXML
     private void initialize(){
+        listClients.setItems(clientList);
+
         String status = server.getStatus();
         txtPort.setText(String.valueOf(server.getPort()));
         txtStatus.setText(status);
-        txtHelp.setText("");
     }
 
     @FXML
@@ -57,6 +61,12 @@ public class ServerSceneController {
         }
         String status = server.getStatus();
         txtStatus.setText(status);
+        clientList.clear();
+        clientList.addAll(server.getClientsInfo());
     }
 
+    @FXML
+    void refreshInfo(ActionEvent event) {
+        refresh();
+    }
 }

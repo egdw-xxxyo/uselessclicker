@@ -234,7 +234,7 @@
                                                 </ScrollPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
+                                          <TitledPane animated="false" disable="true" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
                                              <content>
                                                 <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER">
                                                    <content>
@@ -349,6 +349,24 @@
                                                 </ScrollPane>
                                              </content>
                                         </TitledPane>
+                                          <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Language">
+                                             <content>
+                                                <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER">
+                                                   <content>
+                                                      <VBox>
+                                                         <children>
+                                                            <Button fx:id="btnTemplateLanguageClass" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="class" />
+                                                            <Button fx:id="btnTemplateLanguageFunctionEcho" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="function 'echo'" />
+                                                            <Button fx:id="btnTemplateLanguageFunctionVoid" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="function 'void'" />
+                                                            <Button fx:id="btnTemplateLanguageLoopForPlus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="loop 'for' i++" />
+                                                            <Button fx:id="btnTemplateLanguageLoopForMinus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="loop 'for' i--" />
+                                                            <Button fx:id="btnTemplateLanguageLoopWhile" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertTemplate" onMouseEntered="#showCodeTemplate" onMouseExited="#hideCodeTemplate" styleClass="templateButton" text="loop 'while'" />
+                                                         </children>
+                                                      </VBox>
+                                                   </content>
+                                                </ScrollPane>
+                                             </content>
+                                          </TitledPane>
                                       </panes>
                                     </Accordion>
                                  </content></TitledPane>
