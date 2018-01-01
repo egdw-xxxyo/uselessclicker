@@ -36,6 +36,21 @@ public class KeyboardObject {
         this.robot = robot;
     }
 
+    public void perform(String keys, String action) {
+        switch (action) {
+            case "PRESS":
+                press(keys);
+                break;
+            case "RELEASE":
+                release(keys);
+                break;
+            case "TYPE":
+                type(keys);
+            default:
+                Out.println(String.format("Undefined key action '%s' in perform method", action));
+        }
+    }
+
     public void press(String keys) {
         Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
         for (String key : keySet) {
@@ -44,7 +59,7 @@ public class KeyboardObject {
                 robot.keyPress(keyCode);
                 robot.delay(getMultipliedPressDelay());
             } else {
-                Out.println(String.format("Undefined key '%s' in press method", key));
+                Out.println(String.format("Undefined key '%s'in sequence '%s' in press method", key, keys));
             }
         }
     }
@@ -118,16 +133,17 @@ public class KeyboardObject {
     }
 
     public float getSpeed() {
-        return 1f/getMultiplier();
+        return 1f / getMultiplier();
     }
 
     public void setSpeed(float multiplier) {
-        setMultiplier(1f/multiplier);
+        setMultiplier(1f / multiplier);
     }
 
     public void resetSpeed() {
         resetMultiplier();
     }
+
     public void setDelays(int delay) {
         setPressDelay(delay);
         setReleaseDelay(delay);

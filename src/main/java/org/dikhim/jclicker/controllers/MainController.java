@@ -673,17 +673,15 @@ public class MainController {
             // Start record by set the first movement point
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
+                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
+
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
                     StringBuilder sb = new StringBuilder();
                     int dx, dy;
-                    try {
-                        org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
-                        dx = e.getX() - lastMouseEvent.getX();
-                        dy = e.getY() - lastMouseEvent.getY();
-                    } catch (IndexOutOfBoundsException ex) {
-                        dx = 0;
-                        dy = 0;
-                    }
+                    org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
+                    dx = e.getX() - lastMouseEvent.getX();
+                    dy = e.getY() - lastMouseEvent.getY();
+
                     eventLog.add(e);
                     sb.append("mouse.moveAndPress('")
                             .append(e.getButton()).append("',")
@@ -695,14 +693,9 @@ public class MainController {
                     StringBuilder sb = new StringBuilder();
 
                     int dx, dy;
-                    try {
-                        org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
-                        dx = e.getX() - lastMouseEvent.getX();
-                        dy = e.getY() - lastMouseEvent.getY();
-                    } catch (IndexOutOfBoundsException ex) {
-                        dx = 0;
-                        dy = 0;
-                    }
+                    org.dikhim.jclicker.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
+                    dx = e.getX() - lastMouseEvent.getX();
+                    dy = e.getY() - lastMouseEvent.getY();
                     sb.append("mouse.moveAndRelease('")
                             .append(e.getButton()).append("',")
                             .append(dx).append(",")
@@ -1969,7 +1962,7 @@ public class MainController {
     }
 
     private void putTextIntoCaretPosition(TextArea textArea, String text) {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             int caretPosition = textArea.getCaretPosition();
             codeTextArea.insertText(caretPosition, text);
         });

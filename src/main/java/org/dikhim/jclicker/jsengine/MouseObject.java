@@ -53,14 +53,18 @@ public class MouseObject {
                 release(button);
                 break;
             default:
-                Out.println(String.format("Undefined mouse action '%s' in click method", action));
-                return;
+                Out.println(String.format("Undefined mouse action '%s' in button method", action));
         }
     }
 
     public void buttonAt(String button, String action, int x, int y) {
         moveTo(x,y);
         button(button,action);
+    }
+
+    public void moveAndButton(String button, String action, int dx, int dy){
+        move(dx, dy);
+        button(button, action);
     }
 
     // movement
