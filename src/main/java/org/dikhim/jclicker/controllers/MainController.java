@@ -329,7 +329,7 @@ public class MainController {
     @FXML
     private ToggleButton btnInsertMouseWheel;
 
-        // mouse code
+    // mouse code
     @FXML
     private ToggleButton btnInsertMouseCode;
 
@@ -533,7 +533,7 @@ public class MainController {
     // Mouse buttons
     @FXML
     void insertMouseCode(ActionEvent event) {
-        String prefix = "inser.mouse.code";
+        String prefix = "insert.mouse.code";
         ToggleButton toggle = (ToggleButton) event.getSource();
         KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -541,29 +541,28 @@ public class MainController {
             select(toggle);
             // if toggle has been selected
             enableCodeType = false;
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix +".control.key.press","CONTROL","PRESS",(controlEvent)->{
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix+".buttons","","",(e)->{
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                     StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.");
-                    switch (e.getAction()){
-                        case "PRESS":
-                            sb.append("pressAt('");
-                            break;
-                        case "RELEASE":
-                            sb.append("releaseAt'");
-                            break;
-                    }
-                    sb.append(e.getButton()).append("',")
+                    sb.append("mouse.buttonAt('")
+                            .append(e.getButton()).append("','")
+                            .append(e.getAction()).append("',")
                             .append(e.getX()).append(",")
                             .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea,sb.toString());
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
                 }));
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix+".buttons","",(e)->{
-
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".buttons", "", (e) -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.wheelAt('")
+                            .append(e.getDirection()).append("',")
+                            .append(e.getAmount()).append(",")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
                 }));
             }));
 
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix +".control.key.release","CONTROL","RELEASE",(e)->{
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
                 System.out.println("Control released");
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
@@ -578,59 +577,58 @@ public class MainController {
 
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
+        String prefix = "insert.mouse.code.with.delays";
         ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
+        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
+        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
             select(toggle);
             // if toggle has been selected
             enableCodeType = false;
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.press", "PRESS", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
-                        MouseButtonEvent preLast = manager
-                                .getPreLastButtonEvent();
-                        int delay = (int) (e.getTime() - preLast.getTime());
-                        if (delay != 0) {
-                            sb.append("system.sleep(").append(delay)
-                                    .append(");\n");
-                        }
-                        sb.append("mouse.pressAt('")
-                                .append(e.getButton()).append("',")
-                                .append(e.getX()).append(",")
-                                .append(e.getY()).append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
+                    org.dikhim.jclicker.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
+                    eventLog.add(e);
+                    StringBuilder sb = new StringBuilder();
 
+                    long delay = e.getTime() - mouseEvent.getTime();
+                    if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
 
-                    }));
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.release", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-                        MouseButtonEvent last = manager.getLastButtonEvent();
-                        MouseButtonEvent preLast = manager
-                                .getPreLastButtonEvent();
-                        int delay = (int) (e.getTime() - preLast.getTime());
-                        if (delay != 0) {
-                            sb.append("system.sleep(").append(delay)
-                                    .append(");\n");
-                        }
-                        sb.append("mouse.releaseAt('")
-                                .append(e.getButton()).append("',")
-                                .append(e.getX()).append(",")
-                                .append(e.getY()).append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
+                    sb.append("mouse.buttonAt('")
+                            .append(e.getButton()).append("','")
+                            .append(e.getAction()).append("',")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
+                    org.dikhim.jclicker.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
+                    eventLog.add(e);
+                    StringBuilder sb = new StringBuilder();
+
+                    long delay = e.getTime() - mouseEvent.getTime();
+                    if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
+
+                    sb.append("mouse.wheelAt('")
+                            .append(e.getDirection()).append("',")
+                            .append(e.getAmount()).append(",")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
+                System.out.println("Control released");
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
         } else {
             // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("insert.mouse");
+            keyEventsManager.removeListenersByPrefix(prefix);
+            mouseEventsManager.removeListenersByPrefix(prefix);
             enableCodeType = true;
         }
         setToggleStatus(toggle);
@@ -1971,8 +1969,10 @@ public class MainController {
     }
 
     private void putTextIntoCaretPosition(TextArea textArea, String text) {
-        int caretPosition = textArea.getCaretPosition();
-        codeTextArea.insertText(caretPosition, text);
+        Platform.runLater(()->{
+            int caretPosition = textArea.getCaretPosition();
+            codeTextArea.insertText(caretPosition, text);
+        });
     }
 
 }

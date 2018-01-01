@@ -58,7 +58,7 @@ public class MouseObject {
         }
     }
 
-    public void button(String button, String action, int x, int y) {
+    public void buttonAt(String button, String action, int x, int y) {
         moveTo(x,y);
         button(button,action);
     }
