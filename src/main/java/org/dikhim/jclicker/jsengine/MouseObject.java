@@ -43,6 +43,26 @@ public class MouseObject {
     }
 
 
+    // basics
+    public void button(String button, String action) {
+        switch (action) {
+            case "PRESS":
+                press(button);
+                break;
+            case "RELEASE":
+                release(button);
+                break;
+            default:
+                Out.println(String.format("Undefined mouse action '%s' in click method", action));
+                return;
+        }
+    }
+
+    public void button(String button, String action, int x, int y) {
+        moveTo(x,y);
+        button(button,action);
+    }
+
     // movement
     public void moveTo(int x, int y) {
         if (x < 0 || y < 0) {
@@ -334,22 +354,24 @@ public class MouseObject {
     }
 
     public float getSpeed() {
-        return 1f/getMultiplier();
+        return 1f / getMultiplier();
     }
 
     public void setSpeed(float multiplier) {
-        setMultiplier(1f/multiplier);
+        setMultiplier(1f / multiplier);
     }
 
     public void resetSpeed() {
         resetMultiplier();
     }
+
     public void setDelays(int delay) {
         this.moveDelay = delay;
         this.pressDelay = delay;
         this.releaseDelay = delay;
         this.wheelDelay = delay;
     }
+
     public void resetDelays() {
         this.moveDelay = MOVE_DELAY;
         this.pressDelay = PRESS_DELAY;
@@ -359,8 +381,8 @@ public class MouseObject {
 
     //////////////////// private
 
-    private int multiply(int delay){
-        return Math.round(delay*multiplier);
+    private int multiply(int delay) {
+        return Math.round(delay * multiplier);
     }
 
     private int getMultipliedPressDelay() {

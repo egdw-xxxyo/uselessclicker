@@ -92,7 +92,7 @@ public class KeyEventsManager implements NativeKeyListener {
         thread.start();
     }
 
-    public synchronized  void removeKeyboardListenersByPrefix(String prefix) {
+    public synchronized  void removeListenersByPrefix(String prefix) {
         Thread thread = new Thread(()-> {
             synchronized (this) {
                 Iterator<KeyboardListener> it = keyboardListeners.iterator();

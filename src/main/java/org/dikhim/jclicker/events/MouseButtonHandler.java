@@ -9,13 +9,14 @@ public class MouseButtonHandler {
     private String action;
     private Set<String> buttons = new HashSet<>();
     private Consumer<MouseButtonEvent> handler;
-    public MouseButtonHandler(String name, String action, String buttons,  Consumer<MouseButtonEvent> handler) {
+
+    public MouseButtonHandler(String name, String action, String buttons, Consumer<MouseButtonEvent> handler) {
         this.name = name;
         this.action = action;
         this.handler = handler;
         String[] btns = buttons.split(" ");
-        for(String b:btns) {
-            if(!b.equals(""))this.buttons.add(b);
+        for (String b : btns) {
+            if (!b.equals("")) this.buttons.add(b);
         }
     }
 
@@ -52,14 +53,15 @@ public class MouseButtonHandler {
     }
 
     public void fire(MouseButtonEvent event) {
-        if(!action.equals(event.getAction()))return;
+        // if no action or actions are equals then continue
+        if (!action.isEmpty() && !action.equals(event.getAction())) return;
 
-        if(buttons.isEmpty()) {
+        if (buttons.isEmpty()) {
             handler.accept(event);
             return;
         }
 
-        if(buttons.equals(event.getPressed()))
+        if (buttons.equals(event.getPressed()))
             handler.accept(event);
     }
 }
