@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.utils;
 
 
 import java.util.ArrayList;
@@ -206,6 +206,10 @@ public class KeyCodes {
             this.nativeCode = nativeCode;
             this.eventCode = eventCode;
         }
+    }
+
+    public static List<KeyCode> getCodes() {
+        return codes;
     }
 }
 

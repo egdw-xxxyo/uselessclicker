@@ -13,8 +13,8 @@ import javax.script.ScriptException;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
-import org.dikhim.jclicker.events.KeyEventsManager;
-import org.dikhim.jclicker.events.MouseEventsManager;
+import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.server.sockets.SocketServer;

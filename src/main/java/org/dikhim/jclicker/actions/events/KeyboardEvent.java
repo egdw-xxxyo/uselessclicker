@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.events;
 
 import java.util.Set;
 
@@ -27,6 +27,11 @@ public class KeyboardEvent implements Event {
 
     public String getAction() {
         return action;
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.KEYBOARD;
     }
 
     @Override

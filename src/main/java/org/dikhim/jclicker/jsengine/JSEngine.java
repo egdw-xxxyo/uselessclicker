@@ -13,7 +13,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
-import org.dikhim.jclicker.events.KeyEventsManager;
+import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.util.output.Out;
 
 /**
@@ -49,6 +49,7 @@ public class JSEngine {
             engine.put("mouse", new MouseObject(this.robot));
             engine.put("key", new KeyboardObject(this));
             engine.put("system", new SystemObject(this));
+            engine.put("clipboard",new ClipboardObject());
             try {
                 engine.eval(code);
             } catch (ScriptException e) {
@@ -95,9 +96,13 @@ public class JSEngine {
 					e.printStackTrace();
 				}
 				if (!service.isTerminated() && thread != null) {
-					thread.stop();
-					service = null;
-				}
+                    try {
+                        thread.stop();
+                    } catch (ThreadDeath death) {
+
+                    }
+                    service = null;
+                }
 			}
 			thread = null;
     }

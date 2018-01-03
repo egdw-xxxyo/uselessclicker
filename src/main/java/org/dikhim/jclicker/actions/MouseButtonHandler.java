@@ -1,4 +1,6 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions;
+
+import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -53,7 +55,7 @@ public class MouseButtonHandler {
     }
 
     public void fire(MouseButtonEvent event) {
-        // if no action or actions are equals then continue
+        // if no actions or actions are equals then continue
         if (!action.isEmpty() && !action.equals(event.getAction())) return;
 
         if (buttons.isEmpty()) {

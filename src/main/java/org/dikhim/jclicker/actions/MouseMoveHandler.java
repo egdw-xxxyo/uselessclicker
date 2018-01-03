@@ -1,4 +1,6 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions;
+
+import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 
 import java.util.function.Consumer;
 

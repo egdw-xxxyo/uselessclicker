@@ -1,13 +1,13 @@
-package org.dikhim.jclicker.util;
+package org.dikhim.jclicker.actions.utils;
 
-import org.dikhim.jclicker.events.Event;
-import org.dikhim.jclicker.events.MouseMoveEvent;
+import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MouseMoveEventUtil {
     private List<MouseMoveEvent> eventLog = new ArrayList<>();
+
     private final int SHIFT = 13350;
 
     public void add(MouseMoveEvent mouseMoveEvent) {
@@ -16,6 +16,14 @@ public class MouseMoveEventUtil {
 
     public void addAll(List<MouseMoveEvent> list) {
         eventLog.addAll(list);
+    }
+
+    public List<MouseMoveEvent> getEventLog() {
+        return eventLog;
+    }
+
+    public void setEventLog(List<MouseMoveEvent> eventLog) {
+        this.eventLog = eventLog;
     }
 
 
@@ -55,7 +63,7 @@ public class MouseMoveEventUtil {
         return separateOnLines(sb, lineSize);
     }
 
-    private String getAbsolutePathWithDelays(int lineSize) {
+    public String getAbsolutePathWithDelays(int lineSize) {
         return getAbsolutePathWithDelays(eventLog, lineSize);
     }
 

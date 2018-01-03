@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.utils;
 
 import java.awt.event.InputEvent;
 import java.util.ArrayList;

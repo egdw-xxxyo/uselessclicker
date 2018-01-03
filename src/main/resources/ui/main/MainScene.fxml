@@ -180,15 +180,15 @@
                                                 </ScrollPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="Mouse 'press/release'">
+                                          <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="Mouse 'button/wheel'">
                                              <content>
                                                 <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER">
                                                    <content>
                                                       <VBox>
                                                          <children>
-                                                            <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="pressAt/releaseAt" />
-                                                            <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="pressAt/releaseAt + sleep" />
-                                                            <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelativeCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="moveAndPress/moveAndRelease" />
+                                                            <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="buttonAt/wheelAt" />
+                                                            <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="buttonAt/wheelAt + sleep" />
+                                                            <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelativeCode" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="moveAndButton/moveAndWheel" />
                                                          </children>
                                                       </VBox>
                                                    </content>

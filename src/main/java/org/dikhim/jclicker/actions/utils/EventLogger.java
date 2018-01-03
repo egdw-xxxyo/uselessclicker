@@ -1,9 +1,8 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.utils;
 
+import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 
 public class EventLogger {
     private LimitedSizeQueue<Event> eventLog;
@@ -15,6 +14,8 @@ public class EventLogger {
     private LimitedSizeQueue<MouseButtonEvent> mouseButtonLog;
     private LimitedSizeQueue<MouseWheelEvent> mouseWheelLog;
     private LimitedSizeQueue<MouseMoveEvent> mouseMoveLog;
+
+    private MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
 
     public EventLogger(int n) {
         if (n < 2) throw new IllegalArgumentException("EventLogger size cannot be less than 2");

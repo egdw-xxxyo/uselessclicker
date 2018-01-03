@@ -1,8 +1,11 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.managers;
 
 
 import java.util.*;
 
+import org.dikhim.jclicker.actions.utils.KeyCodes;
+import org.dikhim.jclicker.actions.events.KeyboardEvent;
+import org.dikhim.jclicker.actions.KeyboardListener;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
@@ -31,7 +34,7 @@ public class KeyEventsManager implements NativeKeyListener {
 
     @Override
     public synchronized void nativeKeyPressed(NativeKeyEvent e) {
-        // build new key event
+        // build new key events
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
         // add to pressed buttons
@@ -50,7 +53,7 @@ public class KeyEventsManager implements NativeKeyListener {
     @Override
     public synchronized void nativeKeyReleased(NativeKeyEvent e) {
 
-        // build new key event
+        // build new key events
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
         long time = System.currentTimeMillis();

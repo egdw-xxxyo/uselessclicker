@@ -1127,13 +1127,13 @@ function echo(text){
 }
 
 $btnTemplateLanguageFunctionVoid:
-function void(){
+function foo(){
   
 }
 //Шаблон пустой функции
 
 $btnTemplateLanguageFunctionVoidCode:
-function void(){
+function foo(){
   
 }
 
@@ -1169,3 +1169,4 @@ $btnTemplateLanguageLoopWhileCode:
 while(true){
   
 }
+

@@ -1,4 +1,6 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions;
+
+import org.dikhim.jclicker.actions.events.KeyboardEvent;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +24,7 @@ public class ShortcutIncludesListener implements KeyboardListener {
     }
 
     public void fire(KeyboardEvent keyboardEvent) {
-        if(!action.equals(keyboardEvent.getAction()))return;
+        if(!action.isEmpty() && !action.equals(keyboardEvent.getAction()))return;
         boolean contains = true;
         for (Shortcut sh : shortcuts) {
             if (!sh.containsIn(keyboardEvent.getPressedKeys()) ) contains = false;

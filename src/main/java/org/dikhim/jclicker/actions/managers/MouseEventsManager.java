@@ -1,5 +1,10 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.managers;
 
+import org.dikhim.jclicker.actions.*;
+import org.dikhim.jclicker.actions.events.MouseButtonEvent;
+import org.dikhim.jclicker.actions.events.MouseMoveEvent;
+import org.dikhim.jclicker.actions.events.MouseWheelEvent;
+import org.dikhim.jclicker.actions.utils.MouseCodes;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
@@ -53,7 +58,7 @@ public class MouseEventsManager
 
     @Override
     public synchronized void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
-        // build new button event
+        // build new button events
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
         if (button.isEmpty()) return;// return if button is unknown
@@ -77,7 +82,7 @@ public class MouseEventsManager
 
     @Override
     public synchronized void nativeMouseReleased(NativeMouseEvent nativeMouseEvent) {
-        // build new button event
+        // build new button events
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
         if (button.isEmpty()) return;// return if button is unknown
@@ -99,7 +104,7 @@ public class MouseEventsManager
 
     @Override
     public synchronized void nativeMouseMoved(NativeMouseEvent nativeMouseEvent) {
-        // build new move event
+        // build new move events
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
         long time = System.currentTimeMillis();
@@ -120,7 +125,7 @@ public class MouseEventsManager
 
     @Override
     public synchronized void nativeMouseWheelMoved(NativeMouseWheelEvent nativeMouseEvent) {
-        // build new wheel event
+        // build new wheel events
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
         int amount = nativeMouseEvent.getScrollAmount();

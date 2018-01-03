@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.dikhim.jclicker.events.KeyCodes;
-import org.dikhim.jclicker.events.KeyEventsManager;
+import org.dikhim.jclicker.actions.utils.KeyCodes;
+import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.util.output.Out;
 
 /**
@@ -47,7 +47,7 @@ public class KeyboardObject {
             case "TYPE":
                 type(keys);
             default:
-                Out.println(String.format("Undefined key action '%s' in perform method", action));
+                Out.println(String.format("Undefined key actions '%s' in perform method", action));
         }
     }
 

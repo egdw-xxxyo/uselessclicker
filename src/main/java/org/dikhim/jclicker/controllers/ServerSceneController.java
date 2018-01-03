@@ -35,9 +35,7 @@ public class ServerSceneController {
     private void initialize(){
         listClients.setItems(clientList);
 
-        String status = server.getStatus();
-        txtPort.setText(String.valueOf(server.getPort()));
-        txtStatus.setText(status);
+        refresh();
     }
 
     @FXML
@@ -61,6 +59,7 @@ public class ServerSceneController {
         }
         String status = server.getStatus();
         txtStatus.setText(status);
+        txtPort.setText(String.valueOf(server.getPort()));
         clientList.clear();
         clientList.addAll(server.getClientsInfo());
     }

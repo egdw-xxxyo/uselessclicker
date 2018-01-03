@@ -1,8 +1,10 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.events;
+
+import org.dikhim.jclicker.actions.events.MouseEvent;
 
 import java.util.Set;
 
-public class MouseButtonEvent implements MouseEvent{
+public class MouseButtonEvent implements MouseEvent {
     private int x;
     private int y;
     private long time;
@@ -67,6 +69,11 @@ public class MouseButtonEvent implements MouseEvent{
      */
     public void setButton(String button) {
         this.button = button;
+    }
+
+    @Override
+    public EventType getType() {
+        return EventType.MOUSE_BUTTON;
     }
 
     public long getTime() {

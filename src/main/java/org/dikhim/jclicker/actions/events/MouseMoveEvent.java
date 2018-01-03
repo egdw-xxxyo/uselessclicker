@@ -1,6 +1,6 @@
-package org.dikhim.jclicker.events;
+package org.dikhim.jclicker.actions.events;
 
-public class MouseMoveEvent implements MouseEvent{
+public class MouseMoveEvent implements MouseEvent {
 	private int x;
 	private int y;
 	private long time;
@@ -22,6 +22,13 @@ public class MouseMoveEvent implements MouseEvent{
 	public void setY(int y) {
 		this.y = y;
 	}
+
+
+	@Override
+	public EventType getType() {
+		return EventType.MOUSE_MOVE;
+	}
+
 	public long getTime() {
 		return time;
 	}

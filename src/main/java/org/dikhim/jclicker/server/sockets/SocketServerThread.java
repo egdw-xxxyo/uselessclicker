@@ -15,7 +15,7 @@ public class SocketServerThread extends Thread {
 
     private List<ClientSocketThread> connectedClients = Collections.synchronizedList(new ArrayList<>());
 
-    public SocketServerThread( int port) {
+    public SocketServerThread(int port) {
         super("SocketServerThread");
         this.port = port;
     }
@@ -42,9 +42,7 @@ public class SocketServerThread extends Thread {
 
                     // if server is interrupted
                     if (isInterrupted()) {
-                        for (Thread thread : connectedClients) {
-                            thread.interrupt();
-                        }
+                        interruptClientsThreads();
                         break;
                     }
                 }
@@ -64,11 +62,16 @@ public class SocketServerThread extends Thread {
         return clients;
     }
 
+    private synchronized void interruptClientsThreads() {
+        for (Thread thread : connectedClients) {
+            thread.interrupt();
+        }
+    }
 
-    private void removeDisconnectedClients(){
+    private synchronized void removeDisconnectedClients() {
         List<Thread> disconnectedClients = new ArrayList<>();
         for (Thread thread : connectedClients) {
-            if (!thread.isAlive()) {
+            if (!thread.isAlive() || thread.isInterrupted()) {
                 disconnectedClients.add(thread);
                 Out.println("Disconnected: " + thread.getName());
             }

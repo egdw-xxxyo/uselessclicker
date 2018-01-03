@@ -2,8 +2,8 @@ package org.dikhim.jclicker.jsengine;
 
 import java.awt.Robot;
 
-import org.dikhim.jclicker.events.MouseCodes;
-import org.dikhim.jclicker.events.MouseEventsManager;
+import org.dikhim.jclicker.actions.utils.MouseCodes;
+import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.output.Out;
 
@@ -21,12 +21,14 @@ public class MouseObject {
     private final int MOVE_DELAY = 10;
     private final int WHEEL_DELAY = 10;
     private final float MULTIPLIER = 1;
+    private final int MIN_DELAY = 5;
 
     private int pressDelay = PRESS_DELAY;
     private int releaseDelay = RELEASE_DELAY;
     private int moveDelay = MOVE_DELAY;
     private int wheelDelay = WHEEL_DELAY;
     private float multiplier = MULTIPLIER;
+    private int minDelay = MIN_DELAY;
 
     private Robot robot;
 
@@ -53,16 +55,16 @@ public class MouseObject {
                 release(button);
                 break;
             default:
-                Out.println(String.format("Undefined mouse action '%s' in button method", action));
+                Out.println(String.format("Undefined mouse actions '%s' in button method", action));
         }
     }
 
     public void buttonAt(String button, String action, int x, int y) {
-        moveTo(x,y);
-        button(button,action);
+        moveTo(x, y);
+        button(button, action);
     }
 
-    public void moveAndButton(String button, String action, int dx, int dy){
+    public void moveAndButton(String button, String action, int dx, int dy) {
         move(dx, dy);
         button(button, action);
     }
@@ -370,10 +372,10 @@ public class MouseObject {
     }
 
     public void setDelays(int delay) {
-        this.moveDelay = delay;
-        this.pressDelay = delay;
-        this.releaseDelay = delay;
-        this.wheelDelay = delay;
+        setPressDelay(delay);
+        setReleaseDelay(delay);
+        setMoveDelay(delay);
+        setWheelDelay(delay);
     }
 
     public void resetDelays() {
@@ -381,27 +383,42 @@ public class MouseObject {
         this.pressDelay = PRESS_DELAY;
         this.releaseDelay = RELEASE_DELAY;
         this.wheelDelay = WHEEL_DELAY;
+        this.minDelay = MIN_DELAY;
+    }
+
+    public int getMinDelay() {
+        return minDelay;
+    }
+
+    public void setMinDelay(int minDelay) {
+        this.minDelay = minDelay;
     }
 
     //////////////////// private
 
     private int multiply(int delay) {
-        return Math.round(delay * multiplier);
+        return checkDelay(Math.round(delay * multiplier));
     }
 
     private int getMultipliedPressDelay() {
-        return (int) (pressDelay * multiplier);
+        return checkDelay((int) (pressDelay * multiplier));
     }
 
     private int getMultipliedReleaseDelay() {
-        return (int) (releaseDelay * multiplier);
+        return checkDelay((int) (releaseDelay * multiplier));
     }
 
     private int getMultipliedMoveDelay() {
-        return (int) (moveDelay * multiplier);
+        return checkDelay((int) (moveDelay * multiplier));
     }
 
     private int getMultipliedWheelDelay() {
-        return (int) (wheelDelay * multiplier);
+        return checkDelay((int) (wheelDelay * multiplier));
+    }
+
+    private int checkDelay(int delay) {
+        if (delay < minDelay) return minDelay;
+
+        return delay;
     }
 }

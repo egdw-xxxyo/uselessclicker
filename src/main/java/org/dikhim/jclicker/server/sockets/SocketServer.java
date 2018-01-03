@@ -1,11 +1,12 @@
 package org.dikhim.jclicker.server.sockets;
 
-import org.dikhim.jclicker.server.AbstractServer;
+import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.util.WebUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class SocketServer implements AbstractServer {
+public class SocketServer implements Server {
     private int portNumber = 5000;
     private SocketServerThread serverThread;
 
@@ -61,6 +62,10 @@ public class SocketServer implements AbstractServer {
     }
 
     public List<String> getClientsInfo() {
-        return serverThread.getClientsInfo();
+        if(isActive()){
+            return serverThread.getClientsInfo();
+        }else{
+            return new ArrayList<>();
+        }
     }
 }
