@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine;
+package org.dikhim.jclicker.jsengine.objects;
 
 import java.awt.Robot;
 import java.util.Arrays;
@@ -8,13 +8,14 @@ import java.util.Set;
 
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 
 /**
  * Created by dikobraz on 31.03.17.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class KeyboardObject {
+public class JsKeyboardObject implements KeyboardObject{
 
     // Constants
     private final int PRESS_DELAY = 10;
@@ -28,11 +29,11 @@ public class KeyboardObject {
 
     private Robot robot;
 
-    public KeyboardObject(JSEngine engine) {
+    public JsKeyboardObject(JSEngine engine) {
         this.robot = engine.getRobot();
     }
 
-    public KeyboardObject(Robot robot) {
+    public JsKeyboardObject(Robot robot) {
         this.robot = robot;
     }
 

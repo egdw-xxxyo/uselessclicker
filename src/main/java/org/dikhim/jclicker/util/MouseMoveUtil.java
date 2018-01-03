@@ -27,7 +27,7 @@ public class MouseMoveUtil {
 	 * @param y
 	 */
 	public void add(int x, int y) {
-		builder.append((char) (x + SHIFT));
+
 		builder.append((char) (y + SHIFT));
 	}
 

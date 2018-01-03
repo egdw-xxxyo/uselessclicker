@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine;
+package org.dikhim.jclicker.jsengine.objects;
 
 import java.awt.Robot;
 
@@ -13,7 +13,7 @@ import javax.script.ScriptException;
  *
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class MouseObject {
+public class JsMouseObject implements MouseObject {
 
     // Constants
     private final int PRESS_DELAY = 10;
@@ -30,10 +30,15 @@ public class MouseObject {
     private float multiplier = MULTIPLIER;
     private int minDelay = MIN_DELAY;
 
+
     private Robot robot;
 
-    public MouseObject(Robot robot) {
+    public JsMouseObject(Robot robot) {
         this.robot = robot;
+    }
+
+    public JsMouseObject() {
+
     }
 
     public int getX() {
@@ -84,7 +89,7 @@ public class MouseObject {
         robot.delay(getMultipliedMoveDelay());
     }
 
-    public void setX(int x) throws ScriptException {
+    public void setX(int x) {
         if (x < 0) {
             Out.println(String.format("Negative coordinate '%s' at setX method", x));
             return;
@@ -420,5 +425,15 @@ public class MouseObject {
         if (delay < minDelay) return minDelay;
 
         return delay;
+    }
+
+    // getters/setters
+
+    public Robot getRobot() {
+        return robot;
+    }
+
+    public void setRobot(Robot robot) {
+        this.robot = robot;
     }
 }

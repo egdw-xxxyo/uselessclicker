@@ -2,9 +2,9 @@ package org.dikhim.jclicker.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import org.dikhim.jclicker.jsengine.KeyboardObject;
-import org.dikhim.jclicker.jsengine.MouseObject;
-import org.dikhim.jclicker.jsengine.SystemObject;
+import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
+import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
+import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
 import org.dikhim.jclicker.util.WebUtils;
 
 import java.awt.*;
@@ -14,9 +14,9 @@ import java.util.*;
 import java.util.List;
 
 public class HttpServer {
-    private MouseObject mouse;
-    private KeyboardObject keyboard;
-    private SystemObject system;
+    private JsMouseObject mouse;
+    private JsKeyboardObject keyboard;
+    private JsSystemObject system;
     private com.sun.net.httpserver.HttpServer httpHttpServer;
     private int port = 5000;
     private List<HttpContext> listOfContexts = new ArrayList<>();
@@ -27,9 +27,9 @@ public class HttpServer {
         try {
 
             Robot robot = new Robot();
-            mouse = new MouseObject(robot);
-            keyboard = new KeyboardObject(robot);
-            system = new SystemObject(robot);
+            mouse = new JsMouseObject(robot);
+            keyboard = new JsKeyboardObject(robot);
+            system = new JsSystemObject(robot);
 
 
         } catch (AWTException e) {

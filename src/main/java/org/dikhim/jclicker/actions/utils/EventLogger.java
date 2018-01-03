@@ -75,6 +75,13 @@ public class EventLogger {
         return mouseLog.getLast();
     }
 
+    public MouseButtonEvent getLastMouseButtonEvent() {
+        return mouseButtonLog.getLast();
+    }
+
+    public boolean isEmpty() {
+        return eventLog.isEmpty();
+    }
     public LimitedSizeQueue<MouseMoveEvent> getMouseMoveLog() {
         return mouseMoveLog;
     }

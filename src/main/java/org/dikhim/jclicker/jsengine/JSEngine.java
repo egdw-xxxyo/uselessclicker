@@ -14,6 +14,10 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.jsengine.objects.JsClipboardObject;
+import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
+import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
+import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
 import org.dikhim.jclicker.util.output.Out;
 
 /**
@@ -46,10 +50,10 @@ public class JSEngine {
         addTask(()->{
         	KeyEventsManager.getInstance().removeListenersByPrefix("script.");
             engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.put("mouse", new MouseObject(this.robot));
-            engine.put("key", new KeyboardObject(this));
-            engine.put("system", new SystemObject(this));
-            engine.put("clipboard",new ClipboardObject());
+            engine.put("mouse", new JsMouseObject(this.robot));
+            engine.put("key", new JsKeyboardObject(this));
+            engine.put("system", new JsSystemObject(this));
+            engine.put("clipboard",new JsClipboardObject());
             try {
                 engine.eval(code);
             } catch (ScriptException e) {

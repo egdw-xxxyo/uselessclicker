@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
 import javafx.application.Platform;
@@ -29,7 +30,6 @@ import org.dikhim.jclicker.util.SourcePropertyFile;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.input.KeyEvent;
@@ -62,22 +62,14 @@ public class MainController {
         // consume keyboard actions for textArea while variable not true
         codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
                 event -> {
-                    Platform.runLater(() -> {
-                        if (!enableCodeType)
-                            event.consume();
-                    });
+                    if (!enableCodeType)
+                        event.consume();
                 });
         codeTextArea.addEventFilter(KeyEvent.KEY_TYPED,
-                new EventHandler<KeyEvent>() {
-                    @Override
-                    public void handle(KeyEvent event) {
-                        Platform.runLater(() -> {
-                            if (!enableCodeType)
-                                event.consume();
-                        });
-                    }
+                event -> {
+                    if (!enableCodeType)
+                        event.consume();
                 });
-
 
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -440,37 +432,50 @@ public class MainController {
         setToggleStatus(selectedToggle);
     }
 
-    // Keyboard
-    @FXML
-    void insertKeyName(ActionEvent event) {
-        String prefix = "insert.key.name";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.isSelected()) {
-            select(toggle);
+    private void insertButtonCall(ActionEvent event, Consumer<String> consumer) {
+        ToggleButton toggleButton = (ToggleButton) event.getSource();
+        if (toggleButton == null) return;
+
+        String prefix = toggleButton.getId();
+        if (toggleButton.isSelected()) {
+            select(toggleButton);
             // if toggle has been selected
             enableCodeType = false;
-
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".press", "", "PRESS", (e) -> {
-                putTextIntoCaretPosition(codeTextArea, e.getKey() + " ");
-            }));
+            consumer.accept(prefix);
         } else {
             // if toggle has been deselected
             keyEventsManager.removeListenersByPrefix(prefix);
+            mouseEventsManager.removeListenersByPrefix(prefix);
             enableCodeType = true;
         }
-        setToggleStatus(toggle);
-
     }
 
+    // Keyboard
+
+    /**
+     * 'KEY1 KEY2 '
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertKeyName(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".press", "", "PRESS", e -> {
+                putTextIntoCaretPosition(codeTextArea, e.getKey() + " ");
+            }));
+        });
+    }
+
+    /**
+     * key.perform('KEY1','PRESS');<p>
+     * key.perform('KEY1','RELEASE');
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertKeyCode(ActionEvent event) {
-        String prefix = "insert.key.code";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".perform", "", "", (e) -> {
                 StringBuilder sb = new StringBuilder();
@@ -478,25 +483,21 @@ public class MainController {
                         .append(e.getKey()).append("',")
                         .append(e.getAction()).append(");\n");
                 putTextIntoCaretPosition(codeTextArea, sb.toString());
-
             }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
+    /**
+     * key.perform('KEY1','PRESS');<br>
+     * system.sleep(100);<br>
+     * key.perform('KEY1','RELEASE');<br>
+     * system.sleep(100);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
-        String prefix = "insert.key.code.with.delays";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
             eventLog.clear();
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
                 eventLog.add(e);
@@ -510,25 +511,22 @@ public class MainController {
                         .append(e.getAction()).append(");\n");
                 putTextIntoCaretPosition(codeTextArea, sb.toString());
             }));
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
     // Mouse buttons
+
+    /**
+     * mouse.buttonAt('LEFT','PRESS',1004,353);<br>
+     * mouse.buttonAt('LEFT','RELEASE',1004,353);<br>
+     * mouse.wheelAt('DOWN',3,1111,344);<br>
+     * mouse.wheelAt('DOWN',3,1211,348);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseCode(ActionEvent event) {
-        String prefix = "insert.mouse.code";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                     StringBuilder sb = new StringBuilder();
@@ -549,34 +547,31 @@ public class MainController {
                     putTextIntoCaretPosition(codeTextArea, sb.toString());
                 }));
             }));
-
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
+    /**
+     * system.sleep(232);<br>
+     * mouse.buttonAt('LEFT','PRESS',999,330);<br>
+     * system.sleep(96);<br>
+     * mouse.buttonAt('LEFT','RELEASE',999,330);<br>
+     * system.sleep(592);<br>
+     * mouse.wheelAt('DOWN',3,1191,353);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
-        String prefix = "insert.mouse.code.with.delays";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
+                    if (eventLog.isEmpty()) return;
                     org.dikhim.jclicker.actions.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
                     StringBuilder sb = new StringBuilder();
@@ -592,6 +587,7 @@ public class MainController {
                     putTextIntoCaretPosition(codeTextArea, sb.toString());
                 }));
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
+                    if (eventLog.isEmpty()) return;
                     org.dikhim.jclicker.actions.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
                     StringBuilder sb = new StringBuilder();
@@ -611,58 +607,28 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
-    @FXML
-    void insertMouseName(ActionEvent event) {
-        String prefix = "insert.mouse.name";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                mouseEventsManager.addButtonListener(
-                        new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
-                            putTextIntoCaretPosition(codeTextArea, e.getButton() + " ");
-                        }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
 
+    /**
+     * mouse.moveAndButton('LEFT',PRESS,-2,0);<br>
+     * mouse.moveAndButton('LEFT',RELEASE,94,-27);<br>
+     * mouse.moveAndWheel('DOWN',3,0,0);<br>
+     * mouse.moveAndWheel('DOWN',3,0,0);<br>
+     * mouse.moveAndWheel('DOWN',3,-13,22);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
-        String prefix = "insert.mouse.relative.code";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // Start record by set the first movement point
+        insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
-                    StringBuilder sb = new StringBuilder();
+                    if (eventLog.isEmpty()) return;
                     org.dikhim.jclicker.actions.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
 
@@ -670,6 +636,7 @@ public class MainController {
                     dx = e.getX() - lastMouseEvent.getX();
                     dy = e.getY() - lastMouseEvent.getY();
 
+                    StringBuilder sb = new StringBuilder();
                     sb.append("mouse.moveAndButton('")
                             .append(e.getButton()).append("',")
                             .append(e.getAction()).append(",")
@@ -679,7 +646,7 @@ public class MainController {
                 }));
 
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
-                    StringBuilder sb = new StringBuilder();
+                    if (eventLog.isEmpty()) return;
                     org.dikhim.jclicker.actions.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
 
@@ -687,6 +654,7 @@ public class MainController {
                     dx = e.getX() - lastMouseEvent.getX();
                     dy = e.getY() - lastMouseEvent.getY();
 
+                    StringBuilder sb = new StringBuilder();
                     sb.append("mouse.moveAndWheel('")
                             .append(e.getDirection()).append("',")
                             .append(e.getAmount()).append(",")
@@ -701,19 +669,18 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
-
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
     // Clicks
+
+    /**
+     * mouse.pressAt('LEFT',914,426);<br>
+     * mouse.releaseAt('LEFT',915,438);<br>
+     * mouse.clickAt('LEFT',918,502);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
@@ -823,6 +790,9 @@ public class MainController {
 
     // Movement
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertAbsolutePath(ActionEvent event) {
         String prefix = "insert.absolute.path";
@@ -862,6 +832,9 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertRelativePath(ActionEvent event) {
         String prefix = "insert.relative.path";
@@ -901,6 +874,9 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
         String prefix = "insert.relative.path.with.delays";
@@ -940,6 +916,9 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertRelativePathWithDelays(ActionEvent event) {
         String prefix = "insert.relative.path.with.delays";
@@ -979,6 +958,9 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertAbsolutePathFixRate(ActionEvent event) {
         String prefix = "insert.absolute.path.fix.rate";
@@ -1030,6 +1012,9 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
+    /**
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertRelativePathFixRate(ActionEvent event) {
         String prefix = "insert.absolute.path.fix.rate";
@@ -1083,390 +1068,321 @@ public class MainController {
     }
 
     // mouse basics
+
+    /**
+     * 'LEFT RIGHT MIDDLE '
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
-    void insertMousePress(ActionEvent event) {
-        String prefix = "insert.mouse.press";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
-                    String code = "mouse.press('" + e.getButton() + "');\n";
-                    putTextIntoCaretPosition(codeTextArea, code);
-                }));
+    void insertMouseName(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
+                mouseEventsManager.addButtonListener(
+                        new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                            putTextIntoCaretPosition(codeTextArea, e.getButton() + " ");
+                        }));
             }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
-    @FXML
-    void insertMousePressAt(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-
-            manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
-                if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
-                    return;
-                int caretPosition = codeTextArea.getCaretPosition();
-                StringBuilder sb = new StringBuilder();
-                sb.append("mouse.pressAt('").append(e.getButton()).append("',")
-                        .append(e.getX()).append(",").append(e.getY())
-                        .append(");\n");
-                codeTextArea.insertText(caretPosition, sb.toString());
-            }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.press");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
-
-    @FXML
-    void insertMouseRelease(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-
-            manager.addButtonListener(
-                    new MouseButtonHandler("mouse.release", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("mouse.release('").append(
-                                e.getButton())
-                                .append("');\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.release");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
-
-    @FXML
-    void insertMouseReleaseAt(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-
-            manager.addButtonListener(
-                    new MouseButtonHandler("mouse.release", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("mouse.releaseAt('").append(e.getButton())
-                                .append("',").append(e.getX()).append(",")
-                                .append(e.getY()).append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.release");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
-
-
-    @FXML
-    void insertMouseWheel(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            manager.addWheelListener(new MouseWheelHandler("mouse.wheel", "", e -> {
-                if (!KeyEventsManager.getInstance()
-                        .isPressed("CONTROL"))
-                    return;
-                int caretPosition = codeTextArea.getCaretPosition();
-                StringBuilder sb = new StringBuilder();
-                sb.append("mouse.wheel('").append(e.getDirection()).append("',").append(e.getAmount()).append(");\n");
-                codeTextArea.insertText(caretPosition, sb.toString());
-            }));
-
-        } else {
-            // if toggle has been deselected
-            manager.removeWheelListenersByPrefix("mouse.wheel");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
-
+    /**
+     * mouse.click('LEFT');<br>
+     * mouse.click('RIGHT');
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseClick(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
+                eventLog.clear();
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    eventLog.add(e);
+                }));
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    if (eventLog.isEmpty()) return;
+                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
 
-            manager.addButtonListener(
-                    new MouseButtonHandler("mouse.click", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-
-                        MouseButtonEvent preLastEvent = manager
-                                .getPreLastButtonEvent();
-                        if (preLastEvent == null)
-                            return;
-                        if ((e.getX() != preLastEvent.getX())
-                                || (e.getY() != preLastEvent.getY())) {
-                            return;
-                        }
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("mouse.click('").append(e.getButton())
-                                .append("');\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.click");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+                    if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
+                            lastMouseButtonEvent.getX() == e.getX() &&
+                            lastMouseButtonEvent.getY() == e.getY()) {
+                        putTextIntoCaretPosition(codeTextArea, "mouse.click('" + e.getButton() + "')\n");
+                    }
+                    eventLog.clear();
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
     }
 
+    /**
+     * mouse.clickAt('LEFT',685,375);<br>
+     * mouse.clickAt('RIGHT',951,295);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseClickAt(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-
-            manager.addButtonListener(
-                    new MouseButtonHandler("mouse.click", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        MouseButtonEvent preLastEvent = manager
-                                .getPreLastButtonEvent();
-                        if (preLastEvent == null)
-                            return;
-                        if ((e.getX() != preLastEvent.getX())
-                                || (e.getY() != preLastEvent.getY())) {
-                            return;
-                        }
-                        int caretPosition = codeTextArea.getCaretPosition();
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
+                eventLog.clear();
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    eventLog.add(e);
+                }));
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    if (eventLog.isEmpty()) return;
+                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
+                    if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
+                            lastMouseButtonEvent.getX() == e.getX() &&
+                            lastMouseButtonEvent.getY() == e.getY()) {
                         StringBuilder sb = new StringBuilder();
                         sb.append("mouse.clickAt('")
                                 .append(e.getButton()).append("',")
                                 .append(e.getX()).append(",")
                                 .append(e.getY()).append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.click");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
+                        putTextIntoCaretPosition(codeTextArea, sb.toString());
 
-    @FXML
-    void insertMouseMoveAt(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            manager.addButtonListener(new MouseButtonHandler("mouse.press", "PRESS", "", e -> {
-                if (!KeyEventsManager.getInstance().isPressed("CONTROL"))
-                    return;
-                int caretPosition = codeTextArea.getCaretPosition();
-                StringBuilder sb = new StringBuilder();
-                sb.append("mouse.moveAt(").append(e.getX()).append(",")
-                        .append(e.getY()).append(");\n");
-                codeTextArea.insertText(caretPosition, sb.toString());
+                    }
+                    eventLog.clear();
+                }));
             }));
-
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("mouse.press");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
     }
 
+    /**
+     * mouse.move(153,-1);
+     *
+     * @param event event from ToggleButton on scene
+     */
     @FXML
     void insertMouseMove(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            KeyEventsManager.getInstance().addKeyboardListener(
-                    new ShortcutEqualsListener("key.press", "CONTROL", "PRESS", (e) -> {
-                        lastMoveEvent = manager.getLastMoveEvent();
-                    }));
-            KeyEventsManager.getInstance().addKeyboardListener(
-                    new ShortcutEqualsListener("key.release", "CONTROL", "RELEASE", (e) -> {
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-                        int dx = manager.getLastMoveEvent().getX()
-                                - lastMoveEvent.getX();
-                        int dy = manager.getLastMoveEvent().getY()
-                                - lastMoveEvent.getY();
-                        sb.append("mouse.move(").append(dx).append(",")
-                                .append(dy).append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-                    }));
-
-        } else {
-            // if toggle has been deselected
-            KeyEventsManager.getInstance()
-                    .removeListenersByPrefix("key.press");
-            KeyEventsManager.getInstance()
-                    .removeListenersByPrefix("key.release");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                eventLog.clear();
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    eventLog.add(e);
+                }));
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    if (eventLog.isEmpty()) return;
+                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
+                    StringBuilder sb = new StringBuilder();
+                    int dx = e.getX() - lastMouseButtonEvent.getX();
+                    int dy = e.getY() - lastMouseButtonEvent.getY();
+                    sb.append("mouse.move(")
+                            .append(dx).append(",")
+                            .append(dy).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    eventLog.clear();
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
     }
 
+    /**
+     * mouse.moveAt(888,651);
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMouseMoveAt(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.moveAt('")
+                            .append(e.getButton()).append("',")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.press('LEFT');
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMousePress(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    String code = "mouse.press('" + e.getButton() + "');\n";
+                    putTextIntoCaretPosition(codeTextArea, code);
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.pressAt('LEFT',123,446);
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMousePressAt(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.pressAt('")
+                            .append(e.getButton()).append("',")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.release('LEFT');
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMouseRelease(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    String code = "mouse.release('" + e.getButton() + "');\n";
+                    putTextIntoCaretPosition(codeTextArea, code);
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.releaseAt('LEFT',838,450);
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMouseReleaseAt(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.releaseAt('")
+                            .append(e.getButton()).append("',")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.wheel('DOWN',3);
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMouseWheel(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.wheel('")
+                            .append(e.getDirection()).append("',")
+                            .append(e.getAmount()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * mouse.wheelAt('DOWN',3,562,823);
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertMouseWheelAt(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("mouse.wheelAt('")
+                            .append(e.getDirection()).append("',")
+                            .append(e.getAmount()).append(",")
+                            .append(e.getX()).append(",")
+                            .append(e.getY()).append(");\n");
+                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
+    }
+
+    /**
+     * @param event event from ToggleButton on scene
+     */
     /*Combined*/
     @SuppressWarnings("Duplicates")
     @FXML
     void insertPressAtReleaseAtDelays(ActionEvent event) {
-        String prefix = "insert.press.at.release.at.delays";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            keyManager.addKeyboardListener(new ShortcutEqualsListener("control.key", "CONTROL F12", "RELEASE",
-                    (startEvent) -> {
-                        if (keyManager.isListenerExistByPrefix(prefix)) {
-                            // if exist that means that combination was pressed second time
-                            // delete all another listeners and put last events
-                            keyManager.removeListenersByPrefix(prefix);
-                            mouseManager.removeListenersByPrefix(prefix);
-                        } else {
-                            // if not then add listeners for actions
-                            // keyboard
-                            keyManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".press", "", "PRESS",
-                                    (e) -> {
-                                        eventLog.add(e);
 
-                                        StringBuilder sb = new StringBuilder();
-
-                                        long delay = eventLog.getDelay();
-                                        if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                                        sb.append("key.press('").append(e.getKey()).append("');\n");
-                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-                                    }));
-                            keyManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".release", "", "RELEASE",
-                                    (e) -> {
-                                        eventLog.add(e);
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        long delay = eventLog.getDelay();
-                                        if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                                        sb.append("key.release('").append(e.getKey()).append("');\n");
-                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-                                    }));
-
-                            // mouse buttons
-                            mouseManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "",
-                                    (e) -> {
-                                        eventLog.add(e);
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        long delay = eventLog.getDelay();
-                                        if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                                        sb.append("mouse.pressAt('")
-                                                .append(e.getButton()).append("',")
-                                                .append(e.getX()).append(",")
-                                                .append(e.getY())
-                                                .append(");\n");
-                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-                                    }));
-                            mouseManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "",
-                                    (e) -> {
-                                        eventLog.add(e);
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        long delay = eventLog.getDelay();
-                                        if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                                        sb.append("mouse.releaseAt('")
-                                                .append(e.getButton()).append("',")
-                                                .append(e.getX()).append(",")
-                                                .append(e.getY())
-                                                .append(");\n");
-                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-                                    }));
-
-                            // mouse wheel
-                            mouseManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "",
-                                    (e) -> {
-                                        eventLog.add(e);
-
-                                        StringBuilder sb = new StringBuilder();
-
-                                        long delay = eventLog.getDelay();
-                                        if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                                        sb.append("mouse.wheel('")
-                                                .append(e.getDirection()).append("',")
-                                                .append(e.getAmount())
-                                                .append(");\n");
-                                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-                                    }));
-                        }
-                    }));
-
-        } else {
-            // if toggle has been deselected
-            keyManager.removeListenersByPrefix("control.key");
-            keyManager.removeListenersByPrefix(prefix);
-            mouseManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
     }
 
 
     /**
-     * Shows hint area with tex from userData in button
+     * Shows hint area with text from userData in button
      *
      * @param event - MouseEvent
      */

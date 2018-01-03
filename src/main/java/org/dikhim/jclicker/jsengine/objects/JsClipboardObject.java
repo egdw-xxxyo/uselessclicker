@@ -1,19 +1,10 @@
-package org.dikhim.jclicker.jsengine;
+package org.dikhim.jclicker.jsengine.objects;
 
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.io.IOException;
 
-public class ClipboardObject {
-    /**
-     * Place a String on the clipboard.
-     */
-    public void set(String aString){
-        StringSelection stringSelection = new StringSelection(aString);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(stringSelection, null);
-    }
-
+public class JsClipboardObject implements ClipboardObject{
     /**
      * Get the String residing on the clipboard.
      *
@@ -39,5 +30,14 @@ public class ClipboardObject {
             }
         }
         return result;
+    }
+
+    /**
+     * Place a String on the clipboard.
+     */
+    public void set(String str){
+        StringSelection stringSelection = new StringSelection(str);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
     }
 }

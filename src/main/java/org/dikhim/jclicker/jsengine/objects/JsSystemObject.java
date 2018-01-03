@@ -1,7 +1,8 @@
-package org.dikhim.jclicker.jsengine;
+package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
+import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 
 import java.awt.*;
@@ -9,16 +10,16 @@ import java.awt.datatransfer.*;
 import java.io.IOException;
 
 @SuppressWarnings("unused")
-public class SystemObject {
+public class JsSystemObject implements SystemObject {
     private JSEngine engine;
     private Robot robot;
 
-    public SystemObject(JSEngine engine) {
+    public JsSystemObject(JSEngine engine) {
         this.engine = engine;
         this.robot = engine.getRobot();
     }
 
-    public SystemObject(Robot robot) {
+    public JsSystemObject(Robot robot) {
         this.robot = robot;
     }
 

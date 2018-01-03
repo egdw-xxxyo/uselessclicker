@@ -1,13 +1,12 @@
 package org.dikhim.jclicker.server.sockets;
 
-import org.dikhim.jclicker.jsengine.MouseObject;
+import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.output.Out;
 
 import java.awt.*;
 import java.net.*;
 import java.io.*;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ClientSocketThread extends Thread {
@@ -19,13 +18,13 @@ public class ClientSocketThread extends Thread {
     private int soTimeout = 500;
 
     private int threadTimeOut = 60000; //1 minute
-    private MouseObject mouse;
+    private JsMouseObject mouse;
 
     public ClientSocketThread(Socket socket) {
         super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
         try {
             Robot robot = new Robot();
-            mouse = new MouseObject(robot);
+            mouse = new JsMouseObject(robot);
             this.socket = socket;
             this.socket.setSoTimeout(soTimeout);
         } catch (AWTException e) {
