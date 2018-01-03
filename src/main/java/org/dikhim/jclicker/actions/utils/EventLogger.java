@@ -58,9 +58,9 @@ public class EventLogger {
         mouseMoveLog.clear();
     }
 
-    public long getDelay() {
-        if (eventLog.size() < 2) return -1;
-        return eventLog.getFromEnd(0).getTime() - eventLog.getFromEnd(1).getTime();
+    public int getDelay() {
+        if (eventLog.size() < 2) return 0;
+        return (int)(eventLog.getFromEnd(0).getTime() - eventLog.getFromEnd(1).getTime());
     }
 
     public Event getEventFromEnd(int index) {
@@ -84,5 +84,17 @@ public class EventLogger {
     }
     public LimitedSizeQueue<MouseMoveEvent> getMouseMoveLog() {
         return mouseMoveLog;
+    }
+
+    public int size(){
+        return eventLog.size();
+    }
+
+    // Mouse Event methods
+    public int getMouseEventDx() {
+        return mouseLog.getFromEnd(0).getX()-mouseLog.getFromEnd(1).getX();
+    }
+    public int getMouseEventDy() {
+        return mouseLog.getFromEnd(0).getY()-mouseLog.getFromEnd(1).getY();
     }
 }

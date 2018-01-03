@@ -7,6 +7,10 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
         super(objectName, lineSize);
     }
 
+    public MouseObjectCodeGenerator(int lineSize) {
+        super("mouse", lineSize);
+    }
+
     public void button(String button, String action) {
         begin().append("('")
                 .append(button).append("','")

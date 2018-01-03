@@ -7,6 +7,10 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
         super(objectName, lineSize);
     }
 
+    public KeyboardObjectCodeGenerator(int lineSize) {
+        super("key", lineSize);
+    }
+
     public float getMultiplier() {
         begin().append("();\n");
         return 0;

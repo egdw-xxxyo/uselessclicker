@@ -21,6 +21,10 @@ import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
+import org.dikhim.jclicker.jsengine.objects.generators.ClipboardObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.util.MouseMoveUtil;
@@ -46,6 +50,12 @@ public class MainController {
 
     MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
     KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
+
+    private int lineSize = 60;
+    KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
+    MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
+    SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
+    ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
 
     @FXML
     private void initialize() {
@@ -478,11 +488,8 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".perform", "", "", (e) -> {
-                StringBuilder sb = new StringBuilder();
-                sb.append("key.perform('")
-                        .append(e.getKey()).append("',")
-                        .append(e.getAction()).append(");\n");
-                putTextIntoCaretPosition(codeTextArea, sb.toString());
+                keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
+                putTextIntoCaretPosition(codeTextArea, keyboardObjectCodeGenerator.getGeneratedCode());
             }));
         });
     }
@@ -502,14 +509,16 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
                 eventLog.add(e);
 
-                StringBuilder sb = new StringBuilder();
+                String code = "";
+                if (eventLog.size() > 1) {
+                    int delay = eventLog.getDelay();
+                    systemObjectCodeGenerator.sleep(delay);
+                    code += systemObjectCodeGenerator.getGeneratedCode();
+                }
 
-                long delay = eventLog.getDelay();
-                if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
-                sb.append("key.perform('")
-                        .append(e.getKey()).append("',")
-                        .append(e.getAction()).append(");\n");
-                putTextIntoCaretPosition(codeTextArea, sb.toString());
+                keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
+                code += keyboardObjectCodeGenerator.getGeneratedCode();
+                putTextIntoCaretPosition(codeTextArea, code);
             }));
         });
     }
@@ -527,27 +536,17 @@ public class MainController {
     @FXML
     void insertMouseCode(ActionEvent event) {
         insertButtonCall(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.buttonAt('")
-                            .append(e.getButton()).append("','")
-                            .append(e.getAction()).append("',")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.wheelAt('")
-                            .append(e.getDirection()).append("',")
-                            .append(e.getAmount()).append(",")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
         });
@@ -572,35 +571,30 @@ public class MainController {
 
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                     if (eventLog.isEmpty()) return;
-                    org.dikhim.jclicker.actions.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
-                    StringBuilder sb = new StringBuilder();
+                    String code = "";
 
-                    long delay = e.getTime() - mouseEvent.getTime();
-                    if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
+                    int delay = eventLog.getDelay();
+                    systemObjectCodeGenerator.sleep(delay);
+                    code += systemObjectCodeGenerator.getGeneratedCode();
 
-                    sb.append("mouse.buttonAt('")
-                            .append(e.getButton()).append("','")
-                            .append(e.getAction()).append("',")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
+                    code += mouseObjectCodeGenerator.getGeneratedCode();
+                    putTextIntoCaretPosition(codeTextArea, code);
                 }));
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
                     if (eventLog.isEmpty()) return;
-                    org.dikhim.jclicker.actions.events.MouseEvent mouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
-                    StringBuilder sb = new StringBuilder();
+                    String code = "";
 
-                    long delay = e.getTime() - mouseEvent.getTime();
-                    if (delay > 0) sb.append("system.sleep(").append(delay).append(");\n");
+                    int delay = eventLog.getDelay();
+                    systemObjectCodeGenerator.sleep(delay);
+                    code += systemObjectCodeGenerator.getGeneratedCode();
 
-                    sb.append("mouse.wheelAt('")
-                            .append(e.getDirection()).append("',")
-                            .append(e.getAmount()).append(",")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
+                    code += mouseObjectCodeGenerator.getGeneratedCode();
+
+                    putTextIntoCaretPosition(codeTextArea, code);
                 }));
             }));
 
@@ -629,41 +623,25 @@ public class MainController {
 
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
                     if (eventLog.isEmpty()) return;
-                    org.dikhim.jclicker.actions.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
 
-                    int dx, dy;
-                    dx = e.getX() - lastMouseEvent.getX();
-                    dy = e.getY() - lastMouseEvent.getY();
+                    int dx = eventLog.getMouseEventDx();
+                    int dy = eventLog.getMouseEventDy();
 
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.moveAndButton('")
-                            .append(e.getButton()).append("',")
-                            .append(e.getAction()).append(",")
-                            .append(dx).append(",")
-                            .append(dy).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.moveAndButton(e.getButton(), e.getAction(), dx, dy);
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
 
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
                     if (eventLog.isEmpty()) return;
-                    org.dikhim.jclicker.actions.events.MouseEvent lastMouseEvent = eventLog.getLastMouseEvent();
                     eventLog.add(e);
 
-                    int dx, dy;
-                    dx = e.getX() - lastMouseEvent.getX();
-                    dy = e.getY() - lastMouseEvent.getY();
+                    int dx = eventLog.getMouseEventDx();
+                    int dy = eventLog.getMouseEventDy();
 
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.moveAndWheel('")
-                            .append(e.getDirection()).append("',")
-                            .append(e.getAmount()).append(",")
-                            .append(dx).append(",")
-                            .append(dy).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.moveAndWheel(e.getDirection(), e.getAmount(), dx, dy);
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
-
-
             }));
 
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
@@ -683,6 +661,7 @@ public class MainController {
      */
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
+        // TODO
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager manager = MouseEventsManager.getInstance();
         if (toggle.isSelected()) {
@@ -795,6 +774,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePath(ActionEvent event) {
+        // TODO
         String prefix = "insert.absolute.path";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -837,6 +817,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePath(ActionEvent event) {
+        // TODO
         String prefix = "insert.relative.path";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -879,6 +860,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
+        // TODO
         String prefix = "insert.relative.path.with.delays";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -921,6 +903,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePathWithDelays(ActionEvent event) {
+        // TODO
         String prefix = "insert.relative.path.with.delays";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -963,6 +946,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePathFixRate(ActionEvent event) {
+        // TODO
         String prefix = "insert.absolute.path.fix.rate";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -1017,6 +1001,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePathFixRate(ActionEvent event) {
+        // TODO
         String prefix = "insert.absolute.path.fix.rate";
         ToggleButton toggle = (ToggleButton) event.getSource();
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -1111,7 +1096,8 @@ public class MainController {
                     if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
                             lastMouseButtonEvent.getX() == e.getX() &&
                             lastMouseButtonEvent.getY() == e.getY()) {
-                        putTextIntoCaretPosition(codeTextArea, "mouse.click('" + e.getButton() + "')\n");
+                        mouseObjectCodeGenerator.click(e.getButton());
+                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                     }
                     eventLog.clear();
                 }));
@@ -1144,13 +1130,8 @@ public class MainController {
                     if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
                             lastMouseButtonEvent.getX() == e.getX() &&
                             lastMouseButtonEvent.getY() == e.getY()) {
-                        StringBuilder sb = new StringBuilder();
-                        sb.append("mouse.clickAt('")
-                                .append(e.getButton()).append("',")
-                                .append(e.getX()).append(",")
-                                .append(e.getY()).append(");\n");
-                        putTextIntoCaretPosition(codeTextArea, sb.toString());
-
+                        mouseObjectCodeGenerator.clickAt(e.getButton(), e.getX(), e.getY());
+                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                     }
                     eventLog.clear();
                 }));
@@ -1178,14 +1159,10 @@ public class MainController {
                 }));
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
                     if (eventLog.isEmpty()) return;
-                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
-                    StringBuilder sb = new StringBuilder();
-                    int dx = e.getX() - lastMouseButtonEvent.getX();
-                    int dy = e.getY() - lastMouseButtonEvent.getY();
-                    sb.append("mouse.move(")
-                            .append(dx).append(",")
-                            .append(dy).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    int dx = eventLog.getMouseEventDx();
+                    int dy = eventLog.getMouseEventDy();
+                    mouseObjectCodeGenerator.move(dx, dy);
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                     eventLog.clear();
                 }));
             }));
@@ -1203,16 +1180,14 @@ public class MainController {
      */
     @FXML
     void insertMouseMoveAt(ActionEvent event) {
+        // TODO rename function name to 'moveTo'
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.moveAt('")
-                            .append(e.getButton()).append("',")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+
+                    mouseObjectCodeGenerator.moveTo(e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1233,8 +1208,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
-                    String code = "mouse.press('" + e.getButton() + "');\n";
-                    putTextIntoCaretPosition(codeTextArea, code);
+                    mouseObjectCodeGenerator.press(e.getButton());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1255,12 +1230,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.pressAt('")
-                            .append(e.getButton()).append("',")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.pressAt(e.getButton(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1281,8 +1252,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
-                    String code = "mouse.release('" + e.getButton() + "');\n";
-                    putTextIntoCaretPosition(codeTextArea, code);
+                    mouseObjectCodeGenerator.release(e.getButton());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1303,12 +1274,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.releaseAt('")
-                            .append(e.getButton()).append("',")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.releaseAt(e.getButton(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1329,11 +1296,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.wheel('")
-                            .append(e.getDirection()).append("',")
-                            .append(e.getAmount()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.wheel(e.getDirection(), e.getAmount());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1354,13 +1318,8 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("mouse.wheelAt('")
-                            .append(e.getDirection()).append("',")
-                            .append(e.getAmount()).append(",")
-                            .append(e.getX()).append(",")
-                            .append(e.getY()).append(");\n");
-                    putTextIntoCaretPosition(codeTextArea, sb.toString());
+                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
             }));
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -1708,9 +1667,9 @@ public class MainController {
     }
 
     /**
-     * Shows area with hints and sample code from userData in button
+     * Shows area with hints and code samples from userData when mouse is under a template button
      *
-     * @param event - MouseEvent
+     * @param event event from mouse hover button
      */
     @FXML
     public void showCodeTemplate(MouseEvent event) {

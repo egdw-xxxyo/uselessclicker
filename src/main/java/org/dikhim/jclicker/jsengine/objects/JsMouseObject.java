@@ -37,10 +37,6 @@ public class JsMouseObject implements MouseObject {
         this.robot = robot;
     }
 
-    public JsMouseObject() {
-
-    }
-
     public int getX() {
         return MouseEventsManager.getInstance().getX();
     }

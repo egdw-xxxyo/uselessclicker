@@ -7,6 +7,10 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
         super(objectName, lineSize);
     }
 
+    public SystemObjectCodeGenerator(int lineSize) {
+        super("system", lineSize);
+    }
+
     public void print(String s) {
         begin().append("('")
                 .append(s).append("');\n");
