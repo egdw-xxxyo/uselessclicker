@@ -122,7 +122,6 @@ public class MouseMoveEventUtil {
                 delay = 0;
             }
             sb.append((char) (delay + SHIFT));
-            System.out.println("oldx: "+oldX+" x:"+ eventLog.get(i).getX()+" dx:"+dx+ " delay"+delay);
         }
         sb.append("');\n");
 

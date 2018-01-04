@@ -19,10 +19,6 @@ public class KeyEventsManager implements NativeKeyListener {
     // handlers
     private static List<KeyboardListener> keyboardListeners = Collections.synchronizedList(new ArrayList<>());
 
-    // logs
-    private static LimitedSizeQueue<KeyboardEvent> keyLog = new LimitedSizeQueue<>(
-            2);
-
     private KeyEventsManager() {
     }
 
@@ -42,9 +38,6 @@ public class KeyEventsManager implements NativeKeyListener {
         long time = System.currentTimeMillis();
         KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "PRESS", time);
 
-        // add to log
-        keyLog.add(keyboardEvent);
-
         // fire
         for (KeyboardListener h : keyboardListeners)
             h.fire(keyboardEvent);
@@ -58,9 +51,6 @@ public class KeyEventsManager implements NativeKeyListener {
         if (key.isEmpty()) return;
         long time = System.currentTimeMillis();
         KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "RELEASE", time);
-
-        // add to log
-        keyLog.add(keyboardEvent);
 
         // fire
         for (KeyboardListener h : keyboardListeners)
@@ -98,11 +88,7 @@ public class KeyEventsManager implements NativeKeyListener {
     public synchronized  void removeListenersByPrefix(String prefix) {
         Thread thread = new Thread(()-> {
             synchronized (this) {
-                Iterator<KeyboardListener> it = keyboardListeners.iterator();
-                while (it.hasNext()) {
-                    if (it.next().getName().startsWith(prefix))
-                        it.remove();
-                }
+                keyboardListeners.removeIf(keyboardListener -> keyboardListener.getName().startsWith(prefix));
             }
         });
         thread.start();
@@ -123,9 +109,6 @@ public class KeyEventsManager implements NativeKeyListener {
         return false;
     }
 
-    public synchronized void clearLog() {
-        keyLog.clear();
-    }
     public synchronized boolean isPressed(String key) {
         return pressedKeys.contains(key);
     }

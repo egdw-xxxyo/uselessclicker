@@ -715,7 +715,8 @@ public class MainController {
                 }));
             }));
 
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
             }));
         });
@@ -724,21 +725,15 @@ public class MainController {
     // Movement
 
     /**
+     * mouse.moveAbsolute('㜥㕀㜦㕀㜩㕂㜬㕃㜰㕃');
+     *
      * @param event event from ToggleButton on scene
      */
     @FXML
     void insertAbsolutePath(ActionEvent event) {
-        // TODO
-        String prefix = "insert.absolute.path";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
@@ -747,7 +742,8 @@ public class MainController {
                 }));
             }));
 
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
 
                 List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
@@ -756,75 +752,19 @@ public class MainController {
                 String code = mouseMoveEventUtil.getAbsolutePath(80);
                 putTextIntoCaretPosition(codeTextArea, code);
             }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
     /**
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertRelativePath(ActionEvent event) {
-        // TODO
-        String prefix = "insert.relative.path";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
-                eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
-                    eventLog.add(e);
-                }));
-            }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-
-                List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
-                MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
-                mouseMoveEventUtil.addAll(moveLog);
-                String code = mouseMoveEventUtil.getRelativePath(80);
-                putTextIntoCaretPosition(codeTextArea, code);
-            }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
-    }
-
-    /**
+     * mouse.moveAbsolute_D('㝸㖚㓟㝸㖜㐮㝸㖝㐶㝸㖟㐶㝸㖠㐦');
+     *
      * @param event event from ToggleButton on scene
      */
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
-        // TODO
-        String prefix = "insert.relative.path.with.delays";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
@@ -833,7 +773,8 @@ public class MainController {
                 }));
             }));
 
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
 
                 List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
@@ -842,32 +783,20 @@ public class MainController {
                 String code = mouseMoveEventUtil.getAbsolutePathWithDelays(80);
                 putTextIntoCaretPosition(codeTextArea, code);
             }));
+        });
 
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
     }
 
     /**
+     * mouse.moveRelative('㐦㐦㐦㐨㐨㐪㐧㐧㐦㐨㐦㐧㐦㐧㐧㐧');
+     *
      * @param event event from ToggleButton on scene
      */
     @FXML
-    void insertRelativePathWithDelays(ActionEvent event) {
-        // TODO
-        String prefix = "insert.relative.path.with.delays";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+    void insertRelativePath(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
@@ -876,7 +805,40 @@ public class MainController {
                 }));
             }));
 
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+
+                List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
+                MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
+                mouseMoveEventUtil.addAll(moveLog);
+                String code = mouseMoveEventUtil.getRelativePath(80);
+                putTextIntoCaretPosition(codeTextArea, code);
+            }));
+        });
+    }
+
+
+    /**
+     * mouse.moveRelative_D('㐦㐧㐭㐦㐧㐮㐦㐧㐮㐦㐨㐮㐦㐧㐮㐦㐧㐮㐦㐩㐮㐦㐧㐮㐦㐨㐮㐦㐧㐮㐦㐧㐮㐦㐨㐦');
+     *
+     * @param event event from ToggleButton on scene
+     */
+    @FXML
+    void insertRelativePathWithDelays(ActionEvent event) {
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
+
+                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
+                    eventLog.add(e);
+                }));
+            }));
+
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
                 mouseEventsManager.removeListenersByPrefix(prefix);
 
                 List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
@@ -885,125 +847,87 @@ public class MainController {
                 String code = mouseMoveEventUtil.getRelativePathWithDelays(80);
                 putTextIntoCaretPosition(codeTextArea, code);
             }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+        });
     }
 
     /**
+     * mouse.moveAbsolute_D('㜬㘾㑮㝊㙁㑥㝵㘵㑦㞡㘥㑮㞭㘎㑦㞾㘋㑦㟘㘝㑦㟱㘶㑮㟿㙆㐦');
+     *
      * @param event event from ToggleButton on scene
      */
     @FXML
     void insertAbsolutePathFixRate(ActionEvent event) {
-        // TODO
-        String prefix = "insert.absolute.path.fix.rate";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.press", "CONTROL", "PRESS",
-                    (controlEvent) -> {
-                        eventLog.clear();
-                        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
-                            eventLog.add(e);
-                        }));
-                    }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.release", "CONTROL", "RELEASE",
-                    (controlEvent) -> {
-                        mouseEventsManager.removeMoveListenersByPrefix(prefix);
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
+                    eventLog.add(e);
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
 
-                        List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
-                        MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
-                        mouseMoveEventUtil.addAll(moveLog);
-                        int fps;
-                        try {
-                            fps = Integer.parseInt(txtAbsolutePathRate.getText());
-                            if (fps < 1) {
-                                fps = 1;
-                            } else if (fps > 60) {
-                                fps = 60;
-                            }
-                        } catch (Exception ex) {
-                            fps = 30;
-                        }
-                        String code = mouseMoveEventUtil.getAbsolutePathFixRateWithDelays(fps, 80);
-                        putTextIntoCaretPosition(codeTextArea, code);
+                List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
+                MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
+                mouseMoveEventUtil.addAll(moveLog);
+                int fps;
+                try {
+                    fps = Integer.parseInt(txtAbsolutePathRate.getText());
+                    if (fps < 1) {
+                        fps = 1;
+                    } else if (fps > 60) {
+                        fps = 60;
+                    }
+                } catch (Exception ex) {
+                    fps = 30;
+                }
+                String code = mouseMoveEventUtil.getAbsolutePathFixRateWithDelays(fps, 80);
+                putTextIntoCaretPosition(codeTextArea, code);
+            }));
+        });
 
-
-                    }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeMoveListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
     }
 
     /**
+     * mouse.moveRelative_D('㐟㐮㑦㐽㐬㑥㐷㐙㑯㐡㐠㑥㐁㑆㐦');
+     *
      * @param event event from ToggleButton on scene
      */
     @FXML
     void insertRelativePathFixRate(ActionEvent event) {
-        // TODO
-        String prefix = "insert.absolute.path.fix.rate";
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
-            // on press key start record path
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.press", "CONTROL", "PRESS",
-                    (controlEvent) -> {
-                        eventLog.clear();
-                        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
-                            eventLog.add(e);
-                        }));
-                    }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + "control.key.release", "CONTROL", "RELEASE",
-                    (controlEvent) -> {
-                        mouseEventsManager.removeMoveListenersByPrefix(prefix);
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
+                    eventLog.add(e);
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
 
-                        List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
-                        MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
-                        mouseMoveEventUtil.addAll(moveLog);
+                List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
+                MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
+                mouseMoveEventUtil.addAll(moveLog);
 
-                        int fps;
-                        try {
-                            fps = Integer.parseInt(txtRelativePathRate.getText());
-                            if (fps < 1) {
-                                fps = 1;
-                            } else if (fps > 60) {
-                                fps = 60;
-                            }
-                        } catch (Exception ex) {
-                            fps = 30;
-                        }
-                        String code = mouseMoveEventUtil.getRelativePathFixRateWithDelays(fps, 80);
-                        putTextIntoCaretPosition(codeTextArea, code);
-
-
-                    }));
-
-        } else {
-            // if toggle has been deselected
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeMoveListenersByPrefix(prefix);
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+                int fps;
+                try {
+                    fps = Integer.parseInt(txtRelativePathRate.getText());
+                    if (fps < 1) {
+                        fps = 1;
+                    } else if (fps > 60) {
+                        fps = 60;
+                    }
+                } catch (Exception ex) {
+                    fps = 30;
+                }
+                String code = mouseMoveEventUtil.getRelativePathFixRateWithDelays(fps, 80);
+                putTextIntoCaretPosition(codeTextArea, code);
+            }));
+        });
     }
 
     // mouse basics
