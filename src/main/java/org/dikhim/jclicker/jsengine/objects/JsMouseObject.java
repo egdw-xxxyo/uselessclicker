@@ -55,6 +55,9 @@ public class JsMouseObject implements MouseObject {
             case "RELEASE":
                 release(button);
                 break;
+            case "CLICK":
+                click(button);
+                break;
             default:
                 Out.println(String.format("Undefined mouse actions '%s' in button method", action));
         }

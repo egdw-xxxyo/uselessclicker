@@ -155,7 +155,7 @@ public class MouseEventsManager
     /**
      * Adds mouse buttons listener
      *
-     * @param handler
+     * @param handler mouseHandler
      */
     public synchronized void addButtonListener(MouseButtonHandler handler) {
         Thread thread = new Thread(()-> {
@@ -226,18 +226,13 @@ public class MouseEventsManager
     /**
      * Remove all button listeners with same prefix
      *
-     * @param prefix
+     * @param prefix prefix of listeners
      */
 
     public synchronized void removeButtonListenersByPrefix(String prefix) {
         Thread thread = new Thread(()-> {
             synchronized (this) {
-                Iterator<MouseButtonHandler> it = buttonHandlers.iterator();
-                while (it.hasNext()) {
-                    if (it.next().getName().startsWith(prefix)) {
-                        it.remove();
-                    }
-                }
+                buttonHandlers.removeIf(mouseButtonHandler -> mouseButtonHandler.getName().startsWith(prefix));
             }
         });
         thread.start();
@@ -246,17 +241,12 @@ public class MouseEventsManager
     /**
      * Remove all wheel listeners with same prefix
      *
-     * @param prefix
+     * @param prefix prefix of listeners
      */
-    public synchronized void removeWheelListenersByPrefix(String prefix) {
+    private synchronized void removeWheelListenersByPrefix(String prefix) {
         Thread thread = new Thread(()-> {
             synchronized (this) {
-                Iterator<MouseWheelHandler> it = wheelHandlers.iterator();
-                while (it.hasNext()) {
-                    if (it.next().getName().startsWith(prefix)) {
-                        it.remove();
-                    }
-                }
+                wheelHandlers.removeIf(mouseWheelHandler -> mouseWheelHandler.getName().startsWith(prefix));
             }
         });
         thread.start();
@@ -265,16 +255,12 @@ public class MouseEventsManager
     /**
      * Remove all move listeners with same prefix
      *
-     * @param prefix
+     * @param prefix  prefix of listeners
      */
     public synchronized void removeMoveListenersByPrefix(String prefix) {
         Thread thread = new Thread(()-> {
             synchronized (this) {
-                Iterator<MouseMoveHandler> it = moveHandlers.iterator();
-                while (it.hasNext()) {
-                    if (it.next().getName().startsWith(prefix))
-                        it.remove();
-                }
+                moveHandlers.removeIf(mouseMoveHandler -> mouseMoveHandler.getName().startsWith(prefix));
             }
         });
         thread.start();
@@ -288,58 +274,12 @@ public class MouseEventsManager
 
 
     /////////////////////
-    public MouseButtonEvent getLastButtonEvent() {
-        if (buttonLog.size() > 0) {
-            return buttonLog.getFromEnd(0);
-        } else
-            return null;
-    }
 
     public MouseButtonEvent getPreLastButtonEvent() {
         if (buttonLog.size() > 1) {
             return buttonLog.getFromEnd(1);
         } else
             return null;
-    }
-
-    public MouseWheelEvent getLastWheelEvent() {
-        if (wheelLog.size() > 0) {
-            return wheelLog.getFromEnd(0);
-        } else
-            return null;
-    }
-
-    public MouseWheelEvent getPreLastWheelEvent() {
-        if (wheelLog.size() > 1) {
-            return wheelLog.getFromEnd(1);
-        } else
-            return null;
-    }
-
-    public MouseMoveEvent getLastMoveEvent() {
-        if (moveLog.size() > 0) {
-            return moveLog.getFromEnd(0);
-        } else
-            return null;
-    }
-
-    public MouseMoveEvent getPreLastMoveEvent() {
-        if (moveLog.size() > 1) {
-            return moveLog.getFromEnd(1);
-        } else
-            return null;
-    }
-
-    public void clearButtonEventLog() {
-        buttonLog.clear();
-    }
-
-    public void clearMoveEventLog() {
-        moveLog.clear();
-    }
-
-    public void clearWheelEventLog() {
-        wheelLog.clear();
     }
 
 }

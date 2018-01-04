@@ -12,12 +12,12 @@ public class MouseButtonHandler {
     private Set<String> buttons = new HashSet<>();
     private Consumer<MouseButtonEvent> handler;
 
-    public MouseButtonHandler(String name, String action, String buttons, Consumer<MouseButtonEvent> handler) {
+    public MouseButtonHandler(String name, String buttons, String action, Consumer<MouseButtonEvent> handler) {
         this.name = name;
         this.action = action;
         this.handler = handler;
-        String[] btns = buttons.split(" ");
-        for (String b : btns) {
+        String[] buttonsArray = buttons.split(" ");
+        for (String b : buttonsArray) {
             if (!b.equals("")) this.buttons.add(b);
         }
     }

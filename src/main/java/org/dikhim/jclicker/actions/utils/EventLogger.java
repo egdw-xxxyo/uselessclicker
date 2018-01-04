@@ -90,6 +90,10 @@ public class EventLogger {
         return eventLog.size();
     }
 
+    public int getMouseButtonLogSize() {
+        return mouseButtonLog.size();
+    }
+
     // Mouse Event methods
     public int getMouseEventDx() {
         return mouseLog.getFromEnd(0).getX()-mouseLog.getFromEnd(1).getX();

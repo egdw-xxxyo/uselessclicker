@@ -27,7 +27,6 @@ import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
-import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
@@ -43,19 +42,18 @@ import javafx.stage.FileChooser;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
 public class MainController {
-    private MouseMoveUtil movementPath;
-    private MouseMoveEvent lastMoveEvent;
-    private EventLogger eventLog = new EventLogger(10000);
     private ClickerMain application;
 
-    MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-    KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
+    private EventLogger eventLog = new EventLogger(10000);
+
+    private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
+    private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
 
     private int lineSize = 60;
-    KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
-    MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
-    SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
-    ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
+    private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
+    private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
+    private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
+    private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
 
     @FXML
     private void initialize() {
@@ -95,7 +93,7 @@ public class MainController {
 
         // Init script
 
-        // Set satus suspended and reset toggles status
+        // Set status suspended and reset toggles status
         setScriptStatus(Status.SUSPENDED);
         setToggleStatus(null);
 
@@ -144,11 +142,11 @@ public class MainController {
     @FXML
     private TextField txtRelativePathRate;
 
-    public void bindOutputProperty() {
+    private void bindOutputProperty() {
         outTextProperty.bindBidirectional(Out.getStringProperty());
     }
 
-    public void bindScriptProperty() {
+    private void bindScriptProperty() {
         codeTextProperty.bindBidirectional(application.getScript().getStringProperty());
     }
 
@@ -661,110 +659,66 @@ public class MainController {
      */
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
-        // TODO
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        MouseEventsManager manager = MouseEventsManager.getInstance();
-        if (toggle.isSelected()) {
-            select(toggle);
-            // if toggle has been selected
-            enableCodeType = false;
+        insertButtonCall(event, prefix -> {
+            final int[] a = new int[1];
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
+                eventLog.clear();
+                // eventLog must be empty except when PRESS event occurs
 
-            // insert code on press button
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.press", "PRESS", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
+                    if (eventLog.getMouseButtonLogSize() > 0) {
+                        // if not empty put PRESS code for last event
+                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
+                        mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
+                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
+                    }
+                    eventLog.clear();
+                    eventLog.add(e);
+                }));
 
-                        MouseButtonEvent preLastButtonEvent = manager
-                                .getPreLastButtonEvent();
-                        if (preLastButtonEvent == null)
-                            return;
-                        if (!e.getAction()
-                                .equals(preLastButtonEvent.getAction())) {
-                            return;
-                        }
-                        sb.append("mouse.pressAt('")
-                                .append(preLastButtonEvent.getButton())
-                                .append("',").append(preLastButtonEvent.getX())
-                                .append(",").append(preLastButtonEvent.getY())
-                                .append(");\n");
-                        codeTextArea.insertText(caretPosition, sb.toString());
-
-                    }));
-            // insert code on release button
-            manager.addButtonListener(
-                    new MouseButtonHandler("insert.mouse.release", "RELEASE", "", e -> {
-                        if (!KeyEventsManager.getInstance()
-                                .isPressed("CONTROL"))
-                            return;
-                        int caretPosition = codeTextArea.getCaretPosition();
-                        StringBuilder sb = new StringBuilder();
-
-                        MouseButtonEvent preLastButtonEvent = manager
-                                .getPreLastButtonEvent();
-                        if (preLastButtonEvent == null)
-                            return;
-                        if (e.getButton()
-                                .equals(preLastButtonEvent.getButton())) {
-                            if (e.getX() == preLastButtonEvent
-                                    .getX()
-                                    && e
-                                    .getY() == preLastButtonEvent
-                                    .getY()) {
-                                sb.append("mouse.clickAt('")
-                                        .append(e.getButton())
-                                        .append("',")
-                                        .append(e.getX())
-                                        .append(",")
-                                        .append(e.getY())
-                                        .append(");\n");
-                            } else {
-                                sb.append("mouse.pressAt('")
-                                        .append(preLastButtonEvent.getButton())
-                                        .append("',")
-                                        .append(preLastButtonEvent.getX())
-                                        .append(",")
-                                        .append(preLastButtonEvent.getY())
-                                        .append(");\n");
-                                sb.append("mouse.releaseAt('")
-                                        .append(e.getButton())
-                                        .append("',")
-                                        .append(e.getX())
-                                        .append(",")
-                                        .append(e.getY())
-                                        .append(");\n");
-                            }
-
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
+                    if (eventLog.getMouseButtonLogSize() > 0) {
+                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
+                        if (lastE.getButton().equals(e.getButton()) &&
+                                lastE.getAction().equals("PRESS") &&
+                                lastE.getX() == e.getX() &&
+                                lastE.getY() == e.getY()) {
+                            // if last event equals to current and it is PRESS event then CLICK
+                            mouseObjectCodeGenerator.buttonAt(e.getButton(), "CLICK", e.getX(), e.getY());
+                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                         } else {
-
-                            if (preLastButtonEvent.getAction()
-                                    .equals("PRESS")) {
-                                sb.append("mouse.pressAt('")
-                                        .append(preLastButtonEvent.getButton())
-                                        .append("',")
-                                        .append(preLastButtonEvent.getX())
-                                        .append(",")
-                                        .append(preLastButtonEvent.getY())
-                                        .append(");\n");
-                            }
-                            sb.append("mouse.releaseAt('")
-                                    .append(e.getButton())
-                                    .append("',").append(e.getX())
-                                    .append(",").append(e.getY())
-                                    .append(");\n");
+                            // if not CLICK then put two RELEASE event for both events last and current
+                            mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
+                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
+                            mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
+                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                         }
-                        codeTextArea.insertText(caretPosition, sb.toString());
+                    } else {
+                        // if eventLog is empty put RELEASE code for current event
+                        mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
+                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
+                    }
+                    eventLog.clear();
+                }));
 
-                    }));
-        } else {
-            // if toggle has been deselected
-            manager.removeButtonListenersByPrefix("insert.mouse");
-            enableCodeType = true;
-        }
-        setToggleStatus(toggle);
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                    if (eventLog.getMouseButtonLogSize() > 0) {
+                        // if eventLog is not empty put PRESS code for last event
+                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
+                        mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
+                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
+                    }
+                    // finally put WHEEL code
+                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
+                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
+                    eventLog.clear();
+                }));
+            }));
+
+            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+            }));
+        });
     }
 
     // Movement
@@ -1064,7 +1018,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 mouseEventsManager.addButtonListener(
-                        new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                        new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                             putTextIntoCaretPosition(codeTextArea, e.getButton() + " ");
                         }));
             }));
@@ -1086,10 +1040,10 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                     eventLog.add(e);
                 }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                     if (eventLog.isEmpty()) return;
                     MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
 
@@ -1121,10 +1075,10 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                     eventLog.add(e);
                 }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                     if (eventLog.isEmpty()) return;
                     MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
                     if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
@@ -1154,10 +1108,10 @@ public class MainController {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                     eventLog.add(e);
                 }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                     if (eventLog.isEmpty()) return;
                     int dx = eventLog.getMouseEventDx();
                     int dy = eventLog.getMouseEventDy();
@@ -1184,7 +1138,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
 
                     mouseObjectCodeGenerator.moveTo(e.getX(), e.getY());
                     putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
@@ -1207,7 +1161,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                     mouseObjectCodeGenerator.press(e.getButton());
                     putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
@@ -1229,7 +1183,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "PRESS", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                     mouseObjectCodeGenerator.pressAt(e.getButton(), e.getX(), e.getY());
                     putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
@@ -1251,7 +1205,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                     mouseObjectCodeGenerator.release(e.getButton());
                     putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
@@ -1273,7 +1227,7 @@ public class MainController {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "RELEASE", "", e -> {
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                     mouseObjectCodeGenerator.releaseAt(e.getButton(), e.getX(), e.getY());
                     putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
                 }));
