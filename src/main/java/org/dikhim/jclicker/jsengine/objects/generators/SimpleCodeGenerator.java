@@ -1,13 +1,15 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
 public class SimpleCodeGenerator implements CodeGenerator {
-    private String objectName = "mouse";
-    private int lineSize = 40;
+    private String objectName;
+    private int lineSize;
     private StringBuilder sb;
+
+    private final int MIN_LINE_SIZE = 50;
 
     public SimpleCodeGenerator(String objectName, int lineSize) {
         this.objectName = objectName;
-        this.lineSize = lineSize;
+        setLineSize(lineSize);
     }
 
 
@@ -61,7 +63,11 @@ public class SimpleCodeGenerator implements CodeGenerator {
     }
 
     public void setLineSize(int lineSize) {
-        this.lineSize = lineSize;
+        if (lineSize < MIN_LINE_SIZE) {
+            this.lineSize = MIN_LINE_SIZE;
+        } else {
+            this.lineSize = lineSize;
+        }
     }
 
     public String getObjectName() {
@@ -69,6 +75,6 @@ public class SimpleCodeGenerator implements CodeGenerator {
     }
 
     public String getGeneratedCode() {
-        return sb.toString();
+        return separateOnLines(sb, lineSize);
     }
 }

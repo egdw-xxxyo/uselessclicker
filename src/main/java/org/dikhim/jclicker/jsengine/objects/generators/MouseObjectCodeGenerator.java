@@ -250,4 +250,5 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(x).append(",")
                 .append(y).append(");\n");
     }
+
 }
