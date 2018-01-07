@@ -24,10 +24,7 @@ import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
 import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
-import org.dikhim.jclicker.jsengine.objects.generators.ClipboardObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.util.output.Out;
@@ -57,6 +54,7 @@ public class MainController {
     private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
     private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
+    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
     private ToggleButton lastUsedToggleButton;
 
@@ -1267,20 +1265,40 @@ public class MainController {
      * @param event event from ToggleButton on scene
      */
     /*Combined*/
-    @SuppressWarnings("Duplicates")
     @FXML
     void insertPressAtReleaseAtDelays(ActionEvent event) {
         // TODO
         insertButtonCall(event, prefix -> {
+            final boolean[] recording = new boolean[1];
+
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".start", "CONTROL", "RELEASE", controlEvent -> {
+
+                if (recording[0]) {
+                    recording[0] = false;
+                    return;
+                }
+                // start recording on release
+                recording[0] = true;
+                eventLog.clear();
+
                 keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
-                    System.out.println(e.getKey());
-                    eventLog.add(e);
+                    if(e.getKey().equals("CONTROL") && e.getAction().equals("PRESS")){
+                        // stop on press
+                        keyEventsManager.removeListenersByPrefix(prefix + ".keys");
+                        mouseEventsManager.removeListenersByPrefix(prefix);
+                        UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
+                        String code = unicodeEncoder.addKeys().addMouse().addDelays().absolute().encode(eventLog.getEventLog());
+
+                        combinedObjectCodeGenerator.run(code);
+                        putTextIntoCaretPosition(codeTextArea,combinedObjectCodeGenerator.getGeneratedCode());
+                        eventLog.clear();
+                    }else {
+                        eventLog.add(e);
+                    }
                 }));
 
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
-                    System.out.println(e.getButton()+" "+e.getAction());
                     eventLog.add(e);
                 }));
 
@@ -1289,19 +1307,8 @@ public class MainController {
                 }));
 
                 mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    System.out.println(e.getDirection()+" "+e.getAmount());
                     eventLog.add(e);
                 }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".stop", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-                keyEventsManager.removeListenersByPrefix(prefix+".keys");
-                System.out.println("Stop. EventLog size: "+eventLog.size());
-                UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
-                String code = unicodeEncoder.begin().addKeys().addMouse().addDelays().absolute().encode(eventLog.getEventLog());
-                systemObjectCodeGenerator.runCode(code);
-                putTextIntoCaretPosition(codeTextArea,systemObjectCodeGenerator.getGeneratedCode());
             }));
         });
     }

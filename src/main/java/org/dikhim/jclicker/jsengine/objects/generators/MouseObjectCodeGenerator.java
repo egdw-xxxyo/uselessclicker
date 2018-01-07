@@ -2,7 +2,7 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.MouseObject;
 
-public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject  {
+public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
     public MouseObjectCodeGenerator(String objectName, int lineSize) {
         super(objectName, lineSize);
     }
@@ -12,6 +12,12 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     public void button(String button, String action) {
+        begin().append("('")
+                .append(button).append("','")
+                .append(action).append("');\n");
+    }
+
+    public void buttonIgnoringDelays(String button, String action) {
         begin().append("('")
                 .append(button).append("','")
                 .append(action).append("');\n");
@@ -88,6 +94,12 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(dy).append(");\n");
     }
 
+    public void moveIgnoringDelays(int dx, int dy) {
+        begin().append("(")
+                .append(dx).append(",")
+                .append(dy).append(");\n");
+    }
+
     public void moveAbsolute(String path) {
         begin().append("('")
                 .append(path).append("');\n");
@@ -146,6 +158,12 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     public void moveTo(int x, int y) {
+        begin().append("(")
+                .append(x).append(",")
+                .append(y).append(");\n");
+    }
+
+    public void moveToIgnoringDelays(int x, int y) {
         begin().append("(")
                 .append(x).append(",")
                 .append(y).append(");\n");
@@ -243,6 +261,12 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(amount).append(");\n");
     }
 
+    public void wheelIgnoringDelays(String direction, int amount) {
+        begin().append("('")
+                .append(direction).append("',")
+                .append(amount).append(");\n");
+    }
+
     public void wheelAt(String direction, int amount, int x, int y) {
         begin().append("('")
                 .append(direction).append("',")
@@ -250,5 +274,4 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(x).append(",")
                 .append(y).append(");\n");
     }
-
 }

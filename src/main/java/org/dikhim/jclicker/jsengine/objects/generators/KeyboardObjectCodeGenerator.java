@@ -11,6 +11,11 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
         super("key", lineSize);
     }
 
+    public int getMinDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
     public float getMultiplier() {
         begin().append("();\n");
         return 0;
@@ -43,6 +48,12 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
                 .append(action).append("');\n");
     }
 
+    public void performIgnoringDelays(String keys, String action) {
+        begin().append("('")
+                .append(keys).append("','")
+                .append(action).append("');\n");
+    }
+
     public void press(String keys) {
         begin().append("('")
                 .append(keys).append("');\n");
@@ -70,6 +81,11 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
                 .append(delay).append(");\n");
     }
 
+    public void setMinDelay(int delay) {
+        begin().append("(")
+                .append(delay).append(");\n");
+    }
+
     public void setMultiplier(float multiplier) {
         begin().append("(")
                 .append(multiplier).append(");\n");
@@ -93,5 +109,6 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     public void type(String keys) {
         begin().append("('")
                 .append(keys).append("');\n");
+
     }
 }

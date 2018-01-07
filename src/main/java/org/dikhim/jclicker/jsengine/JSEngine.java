@@ -14,10 +14,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.jsengine.objects.JsClipboardObject;
-import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
-import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
-import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
+import org.dikhim.jclicker.jsengine.objects.*;
 import org.dikhim.jclicker.util.output.Out;
 
 /**
@@ -50,9 +47,14 @@ public class JSEngine {
         addTask(()->{
         	KeyEventsManager.getInstance().removeListenersByPrefix("script.");
             engine = new ScriptEngineManager().getEngineByName("nashorn");
-            engine.put("mouse", new JsMouseObject(this.robot));
-            engine.put("key", new JsKeyboardObject(this));
-            engine.put("system", new JsSystemObject(this));
+            MouseObject mouseObject = new JsMouseObject(robot);
+            KeyboardObject keyboardObject = new JsKeyboardObject(robot);
+            SystemObject systemObject = new JsSystemObject(this);
+
+            engine.put("mouse", mouseObject);
+            engine.put("key", keyboardObject);
+            engine.put("system", systemObject);
+            engine.put("combined",new JsCombinedObject(mouseObject,keyboardObject, systemObject));
             engine.put("clipboard",new JsClipboardObject());
             try {
                 engine.eval(code);

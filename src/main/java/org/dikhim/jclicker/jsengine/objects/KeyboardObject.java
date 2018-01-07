@@ -3,6 +3,8 @@ package org.dikhim.jclicker.jsengine.objects;
 @SuppressWarnings("unused")
 public interface KeyboardObject {
     // G
+    int getMinDelay();
+
     float getMultiplier();
 
     int getPressDelay();
@@ -17,6 +19,8 @@ public interface KeyboardObject {
     // P
     void perform(String keys, String action);
 
+    void performIgnoringDelays(String keys, String action);
+
     void press(String keys);
 
     // R
@@ -30,6 +34,8 @@ public interface KeyboardObject {
 
     // S
     void setDelays(int delay);
+
+    void setMinDelay(int delay);
 
     void setMultiplier(float multiplier);
 

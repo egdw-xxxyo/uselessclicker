@@ -43,16 +43,10 @@ public class JsSystemObject implements SystemObject {
     }
 
     public void sleep(int ms) {
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-        }
+        if(ms<=0)return;
+        robot.delay(ms);
     }
 
-    public void runCode(String code) {
-        ActionDecoder actionDecoder = new UnicodeDecoder();
-        actionDecoder.run(robot,code);
-    }
 
     public void print(String s) {
         Out.print(s);

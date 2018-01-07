@@ -7,6 +7,8 @@ public interface MouseObject {
 
     void buttonAt(String button, String action, int x, int y);
 
+    void buttonIgnoringDelays(String button, String action);
+
     // C
     void click(String button);
 
@@ -49,11 +51,15 @@ public interface MouseObject {
 
     void moveAndWheel(String direction, int amount, int dx, int dy);
 
+    void moveIgnoringDelays(int dx, int dy);
+
     void moveRelative(String path);
 
     void moveRelative_D(String path);
 
     void moveTo(int x, int y);
+
+    void moveToIgnoringDelays(int x, int y);
 
     // P
     void press(String button);
@@ -94,6 +100,8 @@ public interface MouseObject {
 
     // W
     void wheel(String direction, int amount);
+
+    void wheelIgnoringDelays(String direction, int amount);
 
     void wheelAt(String direction, int amount, int x, int y);
 }

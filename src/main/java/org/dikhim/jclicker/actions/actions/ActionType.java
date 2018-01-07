@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.actions.utils.encoders;
+package org.dikhim.jclicker.actions.actions;
 
 public enum ActionType {
     KEYBOARD_PRESS,
@@ -18,6 +18,6 @@ public enum ActionType {
     MOUSE_WHEEL_UP,
     MOUSE_WHEEL_DOWN,
 
-    DELAY_MILISECONDS,
+    DELAY_MILLISECONDS,
     DELAY_SECONDS
 }

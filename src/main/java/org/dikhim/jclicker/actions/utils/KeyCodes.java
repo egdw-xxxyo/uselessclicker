@@ -212,6 +212,12 @@ public class KeyCodes {
         return k.getEventCode();
     }
 
+    public static String getNameByUselessCode(int code){
+        KeyCode k = getByUselessCode(code);
+        if(k==null)return "";
+        return k.getName();
+    }
+
     public static List<KeyCode> getCodes() {
         return codes;
     }

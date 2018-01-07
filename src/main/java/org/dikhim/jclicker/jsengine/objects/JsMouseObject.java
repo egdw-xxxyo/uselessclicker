@@ -63,9 +63,47 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
+    public void buttonIgnoringDelays(String button, String action) {
+        int tmpPressDelay = getPressDelay();
+        int tmpReleaseDelay = getReleaseDelay();
+        int tmpMinDelay = getMinDelay();
+        try {
+            setPressDelay(0);
+            setReleaseDelay(0);
+            setMinDelay(0);
+            button(button, action);
+        } finally {
+            setPressDelay(tmpPressDelay);
+            setReleaseDelay(tmpReleaseDelay);
+            setMinDelay(tmpMinDelay);
+        }
+    }
+
     public void buttonAt(String button, String action, int x, int y) {
         moveTo(x, y);
         button(button, action);
+    }
+
+    // movement
+
+    public void move(int dx, int dy) {
+        robot.mouseMove(getX() + dx, getY() + dy);
+        robot.delay(getMultipliedMoveDelay());
+    }
+
+    @Override
+    public void moveIgnoringDelays(int dx, int dy) {
+        int tmpMoveDelay = getMoveDelay();
+        int tmpMinDelay = getMinDelay();
+        try {
+            setMoveDelay(0);
+            setMinDelay(0);
+            move(dx, dy);
+        } finally {
+            setMoveDelay(tmpMoveDelay);
+            setMinDelay(tmpMinDelay);
+        }
     }
 
     public void moveAndButton(String button, String action, int dx, int dy) {
@@ -73,7 +111,6 @@ public class JsMouseObject implements MouseObject {
         button(button, action);
     }
 
-    // movement
     public void moveTo(int x, int y) {
         if (x < 0 || y < 0) {
             Out.println(String.format("Negative coordinates '%s,%s' at moveTo method", x, y));
@@ -83,9 +120,18 @@ public class JsMouseObject implements MouseObject {
         robot.delay(getMultipliedMoveDelay());
     }
 
-    public void move(int dx, int dy) {
-        robot.mouseMove(getX() + dx, getY() + dy);
-        robot.delay(getMultipliedMoveDelay());
+    @Override
+    public void moveToIgnoringDelays(int x, int y) {
+        int tmpMoveDelay = getMoveDelay();
+        int tmpMinDelay = getMinDelay();
+        try {
+            setMoveDelay(0);
+            setMinDelay(0);
+            moveTo(x, y);
+        } finally {
+            setMoveDelay(tmpMoveDelay);
+            setMinDelay(tmpMinDelay);
+        }
     }
 
     public void setX(int x) {
@@ -242,44 +288,12 @@ public class JsMouseObject implements MouseObject {
         release(button);
     }
 
-    /**
-     * Rotates mouse wheel
-     *
-     * @param direction - 'UP' or 'DOWN'
-     * @param amount    - any non negative number
-     */
-    public void wheel(String direction, int amount) {
-        if (amount < 0) {
-            Out.println(String.format("Wheel amount '%s' can't be less then 0", amount));
-            return;
-        }
-
-        switch (direction) {
-            case "DOWN":
-                robot.mouseWheel(amount);
-                robot.delay(getMultipliedWheelDelay());
-                break;
-            case "UP":
-                robot.mouseWheel(amount * -1);
-                robot.delay(getMultipliedWheelDelay());
-                break;
-            default:
-                Out.println(String.format("Wrong wheel direction '%s'", direction));
-                break;
-        }
-    }
-
-    public void wheelAt(String direction, int amount, int x, int y) {
-        moveTo(x, y);
-        wheel(direction, amount);
-    }
-
     public void moveAndWheel(String direction, int amount, int dx, int dy) {
         move(dx, dy);
         wheel(direction, amount);
     }
-    // Getters\setters
 
+    // Getters\setters
     /**
      * @return the pressDelay
      */
@@ -398,6 +412,52 @@ public class JsMouseObject implements MouseObject {
         this.minDelay = minDelay;
     }
 
+
+    /**
+     * Rotates mouse wheel
+     *
+     * @param direction - 'UP' or 'DOWN'
+     * @param amount    - any non negative number
+     */
+    public void wheel(String direction, int amount) {
+        if (amount < 0) {
+            Out.println(String.format("Wheel amount '%s' can't be less then 0", amount));
+            return;
+        }
+
+        switch (direction) {
+            case "DOWN":
+                robot.mouseWheel(amount);
+                robot.delay(getMultipliedWheelDelay());
+                break;
+            case "UP":
+                robot.mouseWheel(amount * -1);
+                robot.delay(getMultipliedWheelDelay());
+                break;
+            default:
+                Out.println(String.format("Wrong wheel direction '%s'", direction));
+                break;
+        }
+    }
+
+
+    public void wheelIgnoringDelays(String direction, int amount) {
+        int tmpWheelDelay = getWheelDelay();
+        int tmpMinDelay = getMinDelay();
+        try {
+            setWheelDelay(0);
+            setMinDelay(0);
+            wheel(direction,amount);
+        } finally {
+            setWheelDelay(tmpWheelDelay);
+            setMinDelay(tmpMinDelay);
+        }
+    }
+
+    public void wheelAt(String direction, int amount, int x, int y) {
+        moveTo(x, y);
+        wheel(direction, amount);
+    }
     //////////////////// private
 
     private int multiply(int delay) {

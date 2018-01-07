@@ -1,7 +1,10 @@
 package org.dikhim.jclicker.actions.utils.decoders;
 
-import java.awt.*;
+import org.dikhim.jclicker.actions.actions.Action;
+
+import java.util.List;
+
 
 public interface ActionDecoder {
-    void run(Robot robot, String code);
+    List<Action> decode(String code);
 }

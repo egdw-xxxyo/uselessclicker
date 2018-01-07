@@ -2,14 +2,13 @@ package org.dikhim.jclicker.actions.utils.encoders;
 
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
+import org.dikhim.jclicker.actions.actions.ActionType;
 import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static org.dikhim.jclicker.actions.utils.encoders.ActionType.*;
+import static org.dikhim.jclicker.actions.actions.ActionType.*;
 
 
 @SuppressWarnings("Duplicates")
@@ -36,7 +35,7 @@ public class UnicodeEncoder extends AbstractActionEncoder {
         actionCodes.put(MOUSE_WHEEL_UP, 'W');
         actionCodes.put(MOUSE_WHEEL_DOWN, 'w');
 
-        actionCodes.put(DELAY_MILISECONDS, 'D');
+        actionCodes.put(DELAY_MILLISECONDS, 'D');
         actionCodes.put(DELAY_SECONDS, 'S');
     }
 
@@ -59,6 +58,10 @@ public class UnicodeEncoder extends AbstractActionEncoder {
         for (int i = 0; i < eventList.size(); i++) {
             Event e = eventList.get(i);
 
+            if (isIncludesDelays() && i > 0) {
+                int delay = (int) (e.getTime() - eventList.get(i - 1).getTime());
+                appendDelay(sb, delay);
+            }
             switch (e.getType()) {
                 case KEYBOARD:
                     appendKeyboardCode(sb, e);
@@ -74,10 +77,6 @@ public class UnicodeEncoder extends AbstractActionEncoder {
                     break;
             }
 
-            if (isIncludesDelays() && i > 0) {
-                int delay = (int) (e.getTime() - eventList.get(i - 1).getTime());
-                appendDelay(sb, delay);
-            }
         }
         return sb.toString();
     }
@@ -160,7 +159,7 @@ public class UnicodeEncoder extends AbstractActionEncoder {
 
     private void appendDelay(StringBuilder sb, int delay) {
         if (delay <= 5000) {
-            sb.append(actionCodes.get(DELAY_MILISECONDS));
+            sb.append(actionCodes.get(DELAY_MILLISECONDS));
             sb.append(encode(delay));
         } else {
             int milliseconds = delay % 1000;
@@ -168,7 +167,7 @@ public class UnicodeEncoder extends AbstractActionEncoder {
             if (seconds > 3600) seconds = 3600;
             sb.append(actionCodes.get(DELAY_SECONDS));
             sb.append(encode(seconds));
-            sb.append(actionCodes.get(DELAY_MILISECONDS));
+            sb.append(actionCodes.get(DELAY_MILLISECONDS));
             sb.append(encode(milliseconds));
         }
     }

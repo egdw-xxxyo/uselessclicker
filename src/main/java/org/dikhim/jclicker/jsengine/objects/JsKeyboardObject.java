@@ -15,16 +15,18 @@ import org.dikhim.jclicker.util.output.Out;
  * Created by dikobraz on 31.03.17.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class JsKeyboardObject implements KeyboardObject{
+public class JsKeyboardObject implements KeyboardObject {
 
     // Constants
     private final int PRESS_DELAY = 10;
     private final int RELEASE_DELAY = 10;
     private final float MULTIPLIER = 1f;
+    private final int MIN_DELAY = 5;
 
     private int pressDelay = PRESS_DELAY;
     private int releaseDelay = RELEASE_DELAY;
     private float multiplier = MULTIPLIER;
+    private int minDelay = MIN_DELAY;
 
 
     private Robot robot;
@@ -35,6 +37,32 @@ public class JsKeyboardObject implements KeyboardObject{
 
     public JsKeyboardObject(Robot robot) {
         this.robot = robot;
+    }
+
+    @Override
+    public int getMinDelay() {
+        return minDelay;
+    }
+
+    public float getMultiplier() {
+        return multiplier;
+    }
+
+    public int getPressDelay() {
+        return pressDelay;
+    }
+
+    public int getReleaseDelay() {
+        return releaseDelay;
+    }
+
+    public float getSpeed() {
+        return 1f / getMultiplier();
+    }
+
+    public boolean isPressed(String keys) {
+        Set<String> keySet = new HashSet<>(Arrays.asList(keys.split(" ")));
+        return KeyEventsManager.getInstance().isPressed(keySet);
     }
 
     public void perform(String keys, String action) {
@@ -49,6 +77,22 @@ public class JsKeyboardObject implements KeyboardObject{
                 type(keys);
             default:
                 Out.println(String.format("Undefined key actions '%s' in perform method", action));
+        }
+    }
+
+    public void performIgnoringDelays(String keys, String action) {
+        int tmpPressDelay = getPressDelay();
+        int tmpReleaseDelay = getReleaseDelay();
+        int tmpMinDelay = getMinDelay();
+        try{
+            setPressDelay(0);
+            setReleaseDelay(0);
+            setMinDelay(0);
+            perform(keys,action);
+        }finally {
+            setMinDelay(tmpMinDelay);
+            setPressDelay(tmpPressDelay);
+            setReleaseDelay(tmpReleaseDelay);
         }
     }
 
@@ -78,6 +122,56 @@ public class JsKeyboardObject implements KeyboardObject{
         }
     }
 
+    public void resetDelays() {
+        this.pressDelay = PRESS_DELAY;
+        this.releaseDelay = RELEASE_DELAY;
+    }
+
+    public void resetMultiplier() {
+        this.multiplier = MULTIPLIER;
+    }
+
+    public void resetSpeed() {
+        resetMultiplier();
+    }
+
+    public void setDelays(int delay) {
+        setPressDelay(delay);
+        setReleaseDelay(delay);
+    }
+
+    public void setMinDelay(int delay) {
+        this.minDelay = delay;
+    }
+
+    public void setMultiplier(float multiplier) {
+        if (multiplier < 0) {
+            this.multiplier = 0;
+        } else {
+            this.multiplier = multiplier;
+        }
+    }
+
+    public void setPressDelay(int pressDelay) {
+        if (pressDelay < 0) {
+            this.pressDelay = 0;
+        } else {
+            this.pressDelay = pressDelay;
+        }
+    }
+
+    public void setReleaseDelay(int releaseDelay) {
+        if (releaseDelay < 0) {
+            this.releaseDelay = 0;
+        } else {
+            this.releaseDelay = releaseDelay;
+        }
+    }
+
+    public void setSpeed(float multiplier) {
+        setMultiplier(1f / multiplier);
+    }
+
     public void type(String keys) {
         Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
         for (String key : keySet) {
@@ -93,81 +187,20 @@ public class JsKeyboardObject implements KeyboardObject{
         }
     }
 
-    public int getPressDelay() {
-        return pressDelay;
-    }
-
-    public void setPressDelay(int pressDelay) {
-        if (pressDelay < 0) {
-            this.pressDelay = 0;
-        } else {
-            this.pressDelay = pressDelay;
-        }
-    }
-
-    public int getReleaseDelay() {
-        return releaseDelay;
-    }
-
-    public void setReleaseDelay(int releaseDelay) {
-        if (releaseDelay < 0) {
-            this.releaseDelay = 0;
-        } else {
-            this.releaseDelay = releaseDelay;
-        }
-    }
-
-    public float getMultiplier() {
-        return multiplier;
-    }
-
-    public void setMultiplier(float multiplier) {
-        if (multiplier < 0) {
-            this.multiplier = 0;
-        } else {
-            this.multiplier = multiplier;
-        }
-    }
-
-    public void resetMultiplier() {
-        this.multiplier = MULTIPLIER;
-    }
-
-    public float getSpeed() {
-        return 1f / getMultiplier();
-    }
-
-    public void setSpeed(float multiplier) {
-        setMultiplier(1f / multiplier);
-    }
-
-    public void resetSpeed() {
-        resetMultiplier();
-    }
-
-    public void setDelays(int delay) {
-        setPressDelay(delay);
-        setReleaseDelay(delay);
-    }
-
-    public void resetDelays() {
-        this.pressDelay = PRESS_DELAY;
-        this.releaseDelay = RELEASE_DELAY;
-    }
-
-    public boolean isPressed(String keys) {
-        Set<String> keySet = new HashSet<>(Arrays.asList(keys.split(" ")));
-        return KeyEventsManager.getInstance().isPressed(keySet);
-    }
-
     /// private
 
     private int getMultipliedPressDelay() {
-        return (int) (pressDelay * multiplier);
+        return checkDelay((int) (pressDelay * multiplier));
     }
 
     private int getMultipliedReleaseDelay() {
-        return (int) (releaseDelay * multiplier);
+       return checkDelay((int) (releaseDelay * multiplier));
+    }
+
+    private int checkDelay(int delay) {
+        if (delay < minDelay) return minDelay;
+
+        return delay;
     }
 
 }
