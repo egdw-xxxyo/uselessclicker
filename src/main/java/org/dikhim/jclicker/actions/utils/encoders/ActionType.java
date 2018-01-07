@@ -18,5 +18,6 @@ public enum ActionType {
     MOUSE_WHEEL_UP,
     MOUSE_WHEEL_DOWN,
 
-    DELAY
+    DELAY_MILISECONDS,
+    DELAY_SECONDS
 }

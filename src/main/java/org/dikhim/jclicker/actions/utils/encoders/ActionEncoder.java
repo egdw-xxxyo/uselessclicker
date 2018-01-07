@@ -1,32 +1,20 @@
 package org.dikhim.jclicker.actions.utils.encoders;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.dikhim.jclicker.actions.events.Event;
 
-public class ActionEncoder {
-    private final int SHIFT = 13500;
+import java.util.List;
 
-    private Map<ActionType,Integer> actionCodes = new HashMap<>();
+public interface ActionEncoder {
+    ActionEncoder begin();
+    ActionEncoder addKeys();
+    ActionEncoder addMouseMovement();
+    ActionEncoder addMouseButtons();
+    ActionEncoder addMouseWheel();
+    ActionEncoder addMouse();
+    ActionEncoder addDelays();
+    ActionEncoder relative();
+    ActionEncoder absolute();
+    ActionEncoder fixRate(int rate);
 
-    {
-        actionCodes.put(ActionType.KEYBOARD_PRESS,0);
-        actionCodes.put(ActionType.KEYBOARD_RELEASE,1);
-
-        actionCodes.put(ActionType.MOUSE_MOVE,2);
-        actionCodes.put(ActionType.MOUSE_MOVE_AT,3);
-
-        actionCodes.put(ActionType.MOUSE_PRESS_LEFT,4);
-        actionCodes.put(ActionType.MOUSE_PRESS_RIGHT,5);
-        actionCodes.put(ActionType.MOUSE_PRESS_MIDDLE,6);
-
-        actionCodes.put(ActionType.MOUSE_RELEASE_LEFT,7);
-        actionCodes.put(ActionType.MOUSE_RELEASE_RIGHT,8);
-        actionCodes.put(ActionType.MOUSE_RELEASE_MIDDLE,9);
-
-        actionCodes.put(ActionType.MOUSE_WHEEL_UP,10);
-
-        actionCodes.put(ActionType.MOUSE_WHEEL_DOWN,11);
-
-        actionCodes.put(ActionType.DELAY,12);
-    }
+    String encode(List<Event> eventList);
 }

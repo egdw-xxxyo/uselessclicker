@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
+import org.dikhim.jclicker.actions.utils.decoders.ActionDecoder;
+import org.dikhim.jclicker.actions.utils.decoders.UnicodeDecoder;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 
@@ -45,6 +47,11 @@ public class JsSystemObject implements SystemObject {
             Thread.sleep(ms);
         } catch (InterruptedException e) {
         }
+    }
+
+    public void runCode(String code) {
+        ActionDecoder actionDecoder = new UnicodeDecoder();
+        actionDecoder.run(robot,code);
     }
 
     public void print(String s) {

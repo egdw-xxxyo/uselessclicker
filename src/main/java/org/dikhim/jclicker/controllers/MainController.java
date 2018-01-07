@@ -16,11 +16,14 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.actions.*;
+import org.dikhim.jclicker.actions.events.Event;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
+import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
+import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
 import org.dikhim.jclicker.jsengine.objects.generators.ClipboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
@@ -54,6 +57,8 @@ public class MainController {
     private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
     private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
+
+    private ToggleButton lastUsedToggleButton;
 
     @FXML
     private void initialize() {
@@ -425,25 +430,75 @@ public class MainController {
         }
     }
 
+    private String getToggleButtonPath(Object button) {
+        String out = "";
+        Node n = (Node) button;
+        if (button instanceof Button) {
+            out = ((Button) button).getText();
+
+        } else if (button instanceof ToggleButton) {
+            out = ((ToggleButton) button).getText();
+        }
+
+        do {
+            if (n instanceof TitledPane) {
+                out = ((TitledPane) n).getText() + "> " + out;
+            }
+            n = n.getParent();
+        } while ((!(n instanceof AnchorPane)) && (n != null));
+        return out;
+    }
+
+    private void setToggleStatus(ToggleButton toggle) {
+        if (toggle == null) {
+            if (btnTogglesStatus.getUserData() == null) {
+                btnTogglesStatus.setText("Never used");
+                btnTogglesStatus.setUserData(null);
+                return;
+            }
+            return;
+        }
+        btnTogglesStatus.setSelected(toggle.isSelected());
+        String title = "";
+        if (toggle.isSelected()) {
+            title += "Active:    ";
+        } else {
+            title += "Last used: ";
+        }
+        title += getToggleButtonPath(toggle);
+        btnTogglesStatus.setText(title);
+        btnTogglesStatus.setUserData(toggle);
+    }
+
     /**
-     * Deselect all toggle except the parameter
+     * Deselect all toggles except the parameter
      *
-     * @param selectedToggle - ToggleButton tah one was pressed
+     * @param toggle ToggleButton
      */
-    private void select(ToggleButton selectedToggle) {
+    private void select(ToggleButton toggle) {
         for (ToggleButton t : listOfToggles) {
             if (t.isSelected()) {
-                if (t != selectedToggle)
+                if (t != toggle)
                     t.fire();
             }
         }
-        setToggleStatus(selectedToggle);
+        setToggleStatus(toggle);
+    }
+
+    /**
+     * When toggle has been deselected
+     *
+     * @param toggle ToggleButton
+     */
+    private void deselect(ToggleButton toggle) {
+        setToggleStatus(toggle);
     }
 
     private void insertButtonCall(ActionEvent event, Consumer<String> consumer) {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
         if (toggleButton == null) return;
 
+        lastUsedToggleButton = toggleButton;
         String prefix = toggleButton.getId();
         if (toggleButton.isSelected()) {
             select(toggleButton);
@@ -451,6 +506,7 @@ public class MainController {
             enableCodeType = false;
             consumer.accept(prefix);
         } else {
+            deselect(toggleButton);
             // if toggle has been deselected
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
@@ -1214,7 +1270,40 @@ public class MainController {
     @SuppressWarnings("Duplicates")
     @FXML
     void insertPressAtReleaseAtDelays(ActionEvent event) {
+        // TODO
+        insertButtonCall(event, prefix -> {
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".start", "CONTROL", "RELEASE", controlEvent -> {
+                keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
+                    System.out.println(e.getKey());
+                    eventLog.add(e);
+                }));
 
+                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
+                    System.out.println(e.getButton()+" "+e.getAction());
+                    eventLog.add(e);
+                }));
+
+                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", e -> {
+                    eventLog.add(e);
+                }));
+
+                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                    System.out.println(e.getDirection()+" "+e.getAmount());
+                    eventLog.add(e);
+                }));
+            }));
+            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                    prefix + ".stop", "CONTROL", "PRESS", controlEvent -> {
+                mouseEventsManager.removeListenersByPrefix(prefix);
+                keyEventsManager.removeListenersByPrefix(prefix+".keys");
+                System.out.println("Stop. EventLog size: "+eventLog.size());
+                UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
+                String code = unicodeEncoder.begin().addKeys().addMouse().addDelays().absolute().encode(eventLog.getEventLog());
+                systemObjectCodeGenerator.runCode(code);
+                putTextIntoCaretPosition(codeTextArea,systemObjectCodeGenerator.getGeneratedCode());
+            }));
+        });
     }
 
 
@@ -1582,7 +1671,6 @@ public class MainController {
     private ToggleButton btnTogglesStatus;
 
     private void setScriptStatus(Status status) {
-        btnScriptStatus.setUserData(status);
         if (status == Status.RUNNING) {
             btnScriptStatus.setSelected(true);
             btnScriptStatus
@@ -1604,45 +1692,6 @@ public class MainController {
         }
     }
 
-    private void setToggleStatus(ToggleButton toggle) {
-        if (toggle == null) {
-            if (btnTogglesStatus.getUserData() == null) {
-                btnTogglesStatus.setText("Never used");
-                btnTogglesStatus.setUserData(null);
-                return;
-            }
-            return;
-        }
-        btnTogglesStatus.setSelected(toggle.isSelected());
-        String title = "";
-        if (toggle.isSelected()) {
-            title += "Active:    ";
-        } else {
-            title += "Last used: ";
-        }
-        title += getTemplateButtonPath(toggle);
-        btnTogglesStatus.setText(title);
-        btnTogglesStatus.setUserData(toggle);
-    }
-
-    private String getTemplateButtonPath(Object button) {
-        String out = "";
-        Node n = (Node) button;
-        if (button instanceof Button) {
-            out = ((Button) button).getText();
-
-        } else if (button instanceof ToggleButton) {
-            out = ((ToggleButton) button).getText();
-        }
-
-        do {
-            if (n instanceof TitledPane) {
-                out = ((TitledPane) n).getText() + "> " + out;
-            }
-            n = n.getParent();
-        } while ((!(n instanceof AnchorPane)) && (n != null));
-        return out;
-    }
 
     @FXML
     private void onBtnStatusScript(ActionEvent event) {
@@ -1654,14 +1703,18 @@ public class MainController {
         }
     }
 
+    /**
+     * Invokes by toggle to insert code on main scene
+     *
+     * @param event actionEvent from toggle
+     */
     @FXML
     private void onBtnStatusToggles(ActionEvent event) {
         ToggleButton toggle = (ToggleButton) event.getSource();
         if (toggle.getUserData() == null) {
             toggle.setSelected(false);
             return;
-        }
-        if (toggle.getUserData() instanceof ToggleButton) {
+        } else if (toggle.getUserData() instanceof ToggleButton) {
             ((ToggleButton) toggle.getUserData()).fire();
         }
     }

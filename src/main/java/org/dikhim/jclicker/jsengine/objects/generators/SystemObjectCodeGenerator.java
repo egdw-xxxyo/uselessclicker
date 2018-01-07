@@ -31,4 +31,10 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
         begin().append("(")
                 .append(ms).append(");\n");
     }
+
+    @Override
+    public void runCode(String code) {
+        begin().append("('")
+                .append(code).append("');\n");
+    }
 }

@@ -234,7 +234,7 @@
                                                 </ScrollPane>
                                              </content>
                                           </TitledPane>
-                                          <TitledPane animated="false" disable="true" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
+                                          <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
                                              <content>
                                                 <ScrollPane fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER">
                                                    <content>

@@ -9,4 +9,6 @@ public interface SystemObject {
     void registerShortcut(String shortcut, String function);
 
     void sleep(int ms);
+
+    void runCode(String code);
 }

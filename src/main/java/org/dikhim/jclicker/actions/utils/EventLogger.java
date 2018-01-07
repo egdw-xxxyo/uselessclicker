@@ -17,6 +17,10 @@ public class EventLogger {
 
     private MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
 
+    public LimitedSizeQueue<Event> getEventLog() {
+        return eventLog;
+    }
+
     public EventLogger(int n) {
         if (n < 2) throw new IllegalArgumentException("EventLogger size cannot be less than 2");
         eventLog = new LimitedSizeQueue<>(n);
