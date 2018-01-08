@@ -5,6 +5,10 @@ public interface KeyboardObject {
     // G
     int getMinDelay();
 
+    int getMultipliedPressDelay();
+
+    int getMultipliedReleaseDelay();
+
     float getMultiplier();
 
     int getPressDelay();
@@ -18,8 +22,6 @@ public interface KeyboardObject {
 
     // P
     void perform(String keys, String action);
-
-    void performIgnoringDelays(String keys, String action);
 
     void press(String keys);
 

@@ -13,7 +13,7 @@ public interface ActionEncoder {
     ActionEncoder addDelays();
     ActionEncoder relative();
     ActionEncoder absolute();
-    ActionEncoder fixRate(int rate);
+    ActionEncoder fixedRate(int rate);
 
     String encode(List<Event> eventList);
 }

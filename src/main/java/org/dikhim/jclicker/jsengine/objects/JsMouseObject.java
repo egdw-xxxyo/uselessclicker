@@ -63,22 +63,6 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
-    @Override
-    public void buttonIgnoringDelays(String button, String action) {
-        int tmpPressDelay = getPressDelay();
-        int tmpReleaseDelay = getReleaseDelay();
-        int tmpMinDelay = getMinDelay();
-        try {
-            setPressDelay(0);
-            setReleaseDelay(0);
-            setMinDelay(0);
-            button(button, action);
-        } finally {
-            setPressDelay(tmpPressDelay);
-            setReleaseDelay(tmpReleaseDelay);
-            setMinDelay(tmpMinDelay);
-        }
-    }
 
     public void buttonAt(String button, String action, int x, int y) {
         moveTo(x, y);
@@ -90,20 +74,6 @@ public class JsMouseObject implements MouseObject {
     public void move(int dx, int dy) {
         robot.mouseMove(getX() + dx, getY() + dy);
         robot.delay(getMultipliedMoveDelay());
-    }
-
-    @Override
-    public void moveIgnoringDelays(int dx, int dy) {
-        int tmpMoveDelay = getMoveDelay();
-        int tmpMinDelay = getMinDelay();
-        try {
-            setMoveDelay(0);
-            setMinDelay(0);
-            move(dx, dy);
-        } finally {
-            setMoveDelay(tmpMoveDelay);
-            setMinDelay(tmpMinDelay);
-        }
     }
 
     public void moveAndButton(String button, String action, int dx, int dy) {
@@ -118,20 +88,6 @@ public class JsMouseObject implements MouseObject {
         }
         robot.mouseMove(x, y);
         robot.delay(getMultipliedMoveDelay());
-    }
-
-    @Override
-    public void moveToIgnoringDelays(int x, int y) {
-        int tmpMoveDelay = getMoveDelay();
-        int tmpMinDelay = getMinDelay();
-        try {
-            setMoveDelay(0);
-            setMinDelay(0);
-            moveTo(x, y);
-        } finally {
-            setMoveDelay(tmpMoveDelay);
-            setMinDelay(tmpMinDelay);
-        }
     }
 
     public void setX(int x) {
@@ -294,6 +250,7 @@ public class JsMouseObject implements MouseObject {
     }
 
     // Getters\setters
+
     /**
      * @return the pressDelay
      */
@@ -447,7 +404,7 @@ public class JsMouseObject implements MouseObject {
         try {
             setWheelDelay(0);
             setMinDelay(0);
-            wheel(direction,amount);
+            wheel(direction, amount);
         } finally {
             setWheelDelay(tmpWheelDelay);
             setMinDelay(tmpMinDelay);
@@ -464,19 +421,19 @@ public class JsMouseObject implements MouseObject {
         return checkDelay(Math.round(delay * multiplier));
     }
 
-    private int getMultipliedPressDelay() {
+    public int getMultipliedPressDelay() {
         return checkDelay((int) (pressDelay * multiplier));
     }
 
-    private int getMultipliedReleaseDelay() {
+    public int getMultipliedReleaseDelay() {
         return checkDelay((int) (releaseDelay * multiplier));
     }
 
-    private int getMultipliedMoveDelay() {
+    public int getMultipliedMoveDelay() {
         return checkDelay((int) (moveDelay * multiplier));
     }
 
-    private int getMultipliedWheelDelay() {
+    public int getMultipliedWheelDelay() {
         return checkDelay((int) (wheelDelay * multiplier));
     }
 

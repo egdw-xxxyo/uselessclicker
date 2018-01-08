@@ -25,6 +25,14 @@ public class JsSystemObject implements SystemObject {
         this.robot = robot;
     }
 
+    public void print(String s) {
+        Out.print(s);
+    }
+
+    public void println(String s) {
+        Out.println(s);
+    }
+
     /**
      * Register shortcut for call function
      *
@@ -44,16 +52,11 @@ public class JsSystemObject implements SystemObject {
 
     public void sleep(int ms) {
         if(ms<=0)return;
-        robot.delay(ms);
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+        }
     }
 
-
-    public void print(String s) {
-        Out.print(s);
-    }
-
-    public void println(String s) {
-        Out.println(s);
-    }
 
 }

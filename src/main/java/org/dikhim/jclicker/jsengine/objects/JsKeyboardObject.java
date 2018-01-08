@@ -80,22 +80,6 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
-    public void performIgnoringDelays(String keys, String action) {
-        int tmpPressDelay = getPressDelay();
-        int tmpReleaseDelay = getReleaseDelay();
-        int tmpMinDelay = getMinDelay();
-        try{
-            setPressDelay(0);
-            setReleaseDelay(0);
-            setMinDelay(0);
-            perform(keys,action);
-        }finally {
-            setMinDelay(tmpMinDelay);
-            setPressDelay(tmpPressDelay);
-            setReleaseDelay(tmpReleaseDelay);
-        }
-    }
-
     public void press(String keys) {
         Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
         for (String key : keySet) {
@@ -189,11 +173,11 @@ public class JsKeyboardObject implements KeyboardObject {
 
     /// private
 
-    private int getMultipliedPressDelay() {
+    public int getMultipliedPressDelay() {
         return checkDelay((int) (pressDelay * multiplier));
     }
 
-    private int getMultipliedReleaseDelay() {
+    public int getMultipliedReleaseDelay() {
        return checkDelay((int) (releaseDelay * multiplier));
     }
 

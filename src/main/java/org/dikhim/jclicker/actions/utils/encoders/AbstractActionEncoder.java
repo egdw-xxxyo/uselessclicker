@@ -9,6 +9,22 @@ import java.util.List;
 public abstract class AbstractActionEncoder implements ActionEncoder {
     private static final int SHIFT = 13500;
 
+    private boolean includeKeys = false;
+
+    private boolean includeMouseButtons = false;
+
+    private boolean includeMouseWheel = false;
+    private boolean includeDelays = false;
+
+    private boolean relative = false;
+
+    private boolean absolute = false;
+    private boolean isFixedRate = false;
+
+    private boolean isMinDistance = false;
+    private int fixedRate = 30;
+    private int minDistance = 30;
+
     public static int getSHIFT() {
         return SHIFT;
     }
@@ -37,26 +53,21 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return absolute;
     }
 
-    public boolean isFixRate() {
-        return fixRate;
+    public boolean isFixedRate() {
+        return isFixedRate;
     }
 
-    public int getRate() {
-        return rate;
+    public int getFixedRate() {
+        return fixedRate;
     }
 
-    private boolean includeKeys = false;
+    public boolean isMinDistance() {
+        return isMinDistance;
+    }
 
-    private boolean includeMouseButtons = false;
-    private boolean includeMouseWheel = false;
-
-    private boolean includeDelays = false;
-
-    private boolean relative = false;
-    private boolean absolute = false;
-
-    private boolean fixRate = false;
-    private int rate = 30;
+    public int getMinDistance() {
+        return minDistance;
+    }
 
 
     /**
@@ -84,8 +95,8 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         relative = false;
         absolute = false;
 
-        fixRate = false;
-        rate = 30;
+        isFixedRate = false;
+        fixedRate = 30;
         return this;
     }
 
@@ -99,7 +110,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return this;
     }
 
-      /**
+    /**
      * Add mouse buttons events
      *
      * @return a reference to this object.
@@ -163,13 +174,24 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     /**
-     * Filter movement events with fix rate
+     * Filter movement events with fix fixedRate
      *
      * @return a reference to this object.
      */
-    public AbstractActionEncoder fixRate(int rate) {
-        fixRate = true;
-        this.rate = rate;
+    public AbstractActionEncoder fixedRate(int fixedRate) {
+        isFixedRate = true;
+        this.fixedRate = fixedRate;
+        return this;
+    }
+
+    /**
+     * Filter movement events with fix minDistance
+     *
+     * @return a reference to this object.
+     */
+    public AbstractActionEncoder minDistance(int minDistance) {
+        this.isMinDistance = true;
+        this.minDistance = minDistance;
         return this;
     }
 
@@ -194,15 +216,16 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             }
         }
 
-        // filter for fix rate
-        if (fixRate) {
-            filteredEventList = filterEventListByRate(filteredEventList, rate);
+        // if absolute or relative path selected
+        if (relative || absolute) {
+            // then filter movement event
+            filteredEventList = filterMovementEvents(filteredEventList);
         }
 
         return filteredEventList;
     }
 
-    private List<Event> filterEventListByRate(List<Event> eventList, int rate) {
+    private List<Event> filterMovementEvents(List<Event> eventList) {
         List<Event> filteredEventList = new ArrayList<>();
         List<MouseMoveEvent> moveEventList = new ArrayList<>();
         for (int i = 0; i < eventList.size(); i++) {
@@ -214,13 +237,14 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
 
                 if (i == eventList.size() - 1) {
                     // if it is last event in the sequence filter mouse movement events
-                    List<MouseMoveEvent> filteredMoveEventList = filterMoveEventsByRate(moveEventList, rate);
+                    List<MouseMoveEvent> filteredMoveEventList = filterMovementPathWithOptions(moveEventList);
                     // add them to result list
                     filteredEventList.addAll(filteredMoveEventList);
                 }
             } else {
-                // if not filter mouse movement events
-                List<MouseMoveEvent> filteredMoveEventList = filterMoveEventsByRate(moveEventList, rate);
+                // if not
+                // filter mouse movement events
+                List<MouseMoveEvent> filteredMoveEventList = filterMovementPathWithOptions(moveEventList);
                 // add them to result list
                 filteredEventList.addAll(filteredMoveEventList);
                 // add current event
@@ -231,36 +255,85 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return filteredEventList;
     }
 
+    private List<MouseMoveEvent> filterMovementPathWithOptions(List<MouseMoveEvent> mouseMoveEvents) {
+        List<MouseMoveEvent> filteredMoveEventList = new ArrayList<>();
+        if (isFixedRate) {
+            filteredMoveEventList = filterMoveEventsByFixedRate(mouseMoveEvents, fixedRate);
+        }
+        if (isMinDistance) {
+            filteredMoveEventList = filterMoveEventsByMinDistance(mouseMoveEvents, minDistance);
+        }
+        // add them to result list
+        return filteredMoveEventList;
+    }
+
     /**
-     * Filter mouse movement event by rate. Always includes first and last event.
+     * Filter mouse movement event by fixedRate. Always includes first and last event.
      *
-     * @param eventList mouse movement events
-     * @param rate      rate per seconds
+     * @param mouseMoveEvents mouse movement events
+     * @param rate            fixedRate per seconds
      * @return filtered list of movement events
      */
-    private List<MouseMoveEvent> filterMoveEventsByRate(List<MouseMoveEvent> eventList, int rate) {
+    private List<MouseMoveEvent> filterMoveEventsByFixedRate(List<MouseMoveEvent> mouseMoveEvents, int rate) {
         // if event list size less then 3 return without changing
-        if (eventList.size() < 3) return eventList;
+        if (mouseMoveEvents.size() < 3) return mouseMoveEvents;
 
         long frameTime = 1000 / rate;
-        long currentTime = eventList.get(0).getTime();
+        long currentTime = mouseMoveEvents.get(0).getTime();
 
         List<MouseMoveEvent> filteredEventList = new ArrayList<>();
 
-        for (int i = 0; i < eventList.size(); i++) {
-            if (i == eventList.size() - 1) {
+        for (int i = 0; i < mouseMoveEvents.size(); i++) {
+            if (i == mouseMoveEvents.size() - 1) {
                 // if it is last event in the list add it to filtered list and break
-                filteredEventList.add(eventList.get(i));
+                filteredEventList.add(mouseMoveEvents.get(i));
                 break;
             }
 
-            if (eventList.get(i).getTime() >= currentTime) {
+            if (mouseMoveEvents.get(i).getTime() >= currentTime) {
                 // if event time bigger then current time then add it to filtered list
-                filteredEventList.add(eventList.get(i));
+                filteredEventList.add(mouseMoveEvents.get(i));
                 // increment current time while time of event bigger then current time
-                while (eventList.get(i).getTime() >= currentTime) {
+                while (mouseMoveEvents.get(i).getTime() >= currentTime) {
                     currentTime += frameTime;
                 }
+            }
+        }
+        return filteredEventList;
+    }
+
+    /**
+     * Filter mouse movement event by fixed minDistance. Always includes first and last event.
+     *
+     * @param mouseMoveEvents mouse movement events
+     * @param distance        minimal minDistance between two points
+     * @return filtered list of movement events
+     */
+    private List<MouseMoveEvent> filterMoveEventsByMinDistance(List<MouseMoveEvent> mouseMoveEvents, int distance) {
+        // if event list size less then 3 return without changing
+        if (mouseMoveEvents.size() < 3) return mouseMoveEvents;
+        MouseMoveEvent lastMouseMoveEvent = mouseMoveEvents.get(0);
+        int currentDistance;
+        List<MouseMoveEvent> filteredEventList = new ArrayList<>();
+
+        for (int i = 0; i < mouseMoveEvents.size(); i++) {
+            MouseMoveEvent e = mouseMoveEvents.get(i);
+            // if it is last or first event in the list
+            if ((i == mouseMoveEvents.size() - 1) || (i == 0)) {
+                // add it to filtered list and break
+                filteredEventList.add(e);
+                break;
+            }
+            // calculate minDistance to last mouse event
+            int dx = e.getX() - lastMouseMoveEvent.getX();
+            int dy = e.getY() - lastMouseMoveEvent.getY();
+            currentDistance = (int) Math.sqrt(dx * dx + dy * dy);
+            // if current minDistance bigger then specified
+            if (currentDistance > distance) {
+                // add event to filtered list
+                filteredEventList.add(e);
+                // set current mouse event as last event
+                lastMouseMoveEvent = e;
             }
         }
         return filteredEventList;

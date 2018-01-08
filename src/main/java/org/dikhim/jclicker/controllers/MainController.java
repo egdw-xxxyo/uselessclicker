@@ -1332,7 +1332,7 @@ public class MainController {
                         if(btnCombinedAbsolutePath.isSelected()) unicodeEncoder.absolute();
                         if(btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
                         if(btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
-                        if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixRate(Integer.parseInt(txtCombinedFixRate.getText()));
+                        if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixedRate(Integer.parseInt(txtCombinedFixRate.getText()));
                         String code = unicodeEncoder.encode(eventLog.getEventLog());
 
                         combinedObjectCodeGenerator.run(code);

@@ -20,63 +20,91 @@ public class JsCombinedObject implements CombinedObject {
     public void run(String code) {
         ActionDecoder actionDecoder = new UnicodeDecoder();
         List<Action> actions = actionDecoder.decode(code);
-        long startTime = System.currentTimeMillis();
+        // for delay compensation
+        long firstTimeStamp = System.currentTimeMillis();
+
         int currentTime;
         int scriptTime = 0;
+        int delayDiff = 0;
 
-        int delayDiff=0;
-        int intTmp;
+        int actionDelay;
+        int calculatedDelay;
+        int keyPressDelay = keyboardObject.getMultipliedPressDelay();
+        int keyReleaseDelay = keyboardObject.getMultipliedReleaseDelay();
+
+        int mousePressDelay = mouseObject.getMultipliedPressDelay();
+        int mouseReleaseDelay = mouseObject.getMultipliedReleaseDelay();
+        int mouseMoveDelay = mouseObject.getMultipliedMoveDelay();
+        int mouseWheelDelay = mouseObject.getMultipliedWheelDelay();
+
         for (Action a : actions) {
             switch (a.getType()) {
                 case KEYBOARD_PRESS:
-                    keyboardObject.performIgnoringDelays(((KeyboardPressAction) a).getKey(), "PRESS");
+                    keyboardObject.perform(((KeyboardPressAction) a).getKey(), "PRESS");
+                    scriptTime += keyPressDelay;
                     break;
                 case KEYBOARD_RELEASE:
-                    keyboardObject.performIgnoringDelays(((KeyboardReleaseAction) a).getKey(), "RELEASE");
+                    keyboardObject.perform(((KeyboardReleaseAction) a).getKey(), "RELEASE");
+                    scriptTime += keyReleaseDelay;
                     break;
                 case MOUSE_MOVE:
-                    mouseObject.moveIgnoringDelays(((MouseMoveAction) a).getDx(), ((MouseMoveAction) a).getDy());
+                    mouseObject.move(((MouseMoveAction) a).getDx(), ((MouseMoveAction) a).getDy());
+                    scriptTime += mouseMoveDelay;
                     break;
                 case MOUSE_MOVE_AT:
-                    mouseObject.moveToIgnoringDelays(((MouseMoveAtAction) a).getX(), ((MouseMoveAtAction) a).getY());
+                    mouseObject.moveTo(((MouseMoveAtAction) a).getX(), ((MouseMoveAtAction) a).getY());
+                    scriptTime += mouseMoveDelay;
                     break;
                 case MOUSE_PRESS_LEFT:
-                    mouseObject.buttonIgnoringDelays("LEFT", "PRESS");
+                    mouseObject.button("LEFT", "PRESS");
+                    scriptTime += mousePressDelay;
                     break;
                 case MOUSE_RELEASE_LEFT:
-                    mouseObject.buttonIgnoringDelays("LEFT", "RELEASE");
+                    mouseObject.button("LEFT", "RELEASE");
+                    scriptTime += mouseReleaseDelay;
                     break;
                 case MOUSE_PRESS_RIGHT:
-                    mouseObject.buttonIgnoringDelays("RIGHT", "PRESS");
+                    mouseObject.button("RIGHT", "PRESS");
+                    scriptTime += mousePressDelay;
                     break;
                 case MOUSE_RELEASE_RIGHT:
-                    mouseObject.buttonIgnoringDelays("RIGHT", "RELEASE");
+                    mouseObject.button("RIGHT", "RELEASE");
+                    scriptTime += mouseReleaseDelay;
                     break;
                 case MOUSE_PRESS_MIDDLE:
-                    mouseObject.buttonIgnoringDelays("MIDDLE", "PRESS");
+                    mouseObject.button("MIDDLE", "PRESS");
+                    scriptTime += mousePressDelay;
                     break;
                 case MOUSE_RELEASE_MIDDLE:
-                    mouseObject.buttonIgnoringDelays("MIDDLE", "RELEASE");
+                    mouseObject.button("MIDDLE", "RELEASE");
+                    scriptTime += mouseReleaseDelay;
                     break;
                 case MOUSE_WHEEL_UP:
-                    mouseObject.wheelIgnoringDelays("UP", ((MouseWheelUpAction) a).getAmount());
+                    mouseObject.wheel("UP", ((MouseWheelUpAction) a).getAmount());
+                    scriptTime += mouseWheelDelay;
                     break;
                 case MOUSE_WHEEL_DOWN:
-                    mouseObject.wheelIgnoringDelays("DOWN", ((MouseWheelDownAction) a).getAmount());
+                    mouseObject.wheel("DOWN", ((MouseWheelDownAction) a).getAmount());
+                    scriptTime += mouseWheelDelay;
                     break;
                 case DELAY_SECONDS:
-                    intTmp = ((DelaySecondsAction) a).getDelay() * 1000;
-                    systemObject.sleep(intTmp-delayDiff);
-                    scriptTime += intTmp;
+                    actionDelay = ((DelaySecondsAction) a).getDelay() * 1000;
+                    calculatedDelay = actionDelay - delayDiff;
+                    if (calculatedDelay < 2) calculatedDelay = 2;
+                    systemObject.sleep(calculatedDelay);
+                    scriptTime += calculatedDelay;
                     break;
                 case DELAY_MILLISECONDS:
-                    intTmp = ((DelayMillisecondsAction) a).getDelay();
-                    systemObject.sleep(intTmp-delayDiff);
-                    scriptTime += intTmp;
+                    actionDelay = ((DelayMillisecondsAction) a).getDelay();
+                    calculatedDelay = actionDelay - delayDiff;
+                    if (calculatedDelay < 2) calculatedDelay = 2;
+                    systemObject.sleep(calculatedDelay);
+                    scriptTime += calculatedDelay;
                     break;
             }
-            currentTime = (int) (System.currentTimeMillis() - startTime);
-            delayDiff = currentTime-scriptTime;
+            currentTime = (int) (System.currentTimeMillis() - firstTimeStamp);
+            delayDiff = currentTime - scriptTime;
+            if(delayDiff>100) delayDiff = 100;
         }
     }
 }
