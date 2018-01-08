@@ -17,10 +17,6 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return includeKeys;
     }
 
-    public boolean isIncludesMouseMovement() {
-        return includeMouseMovement;
-    }
-
     public boolean isIncludesMouseButtons() {
         return includeMouseButtons;
     }
@@ -37,6 +33,10 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return relative;
     }
 
+    public boolean isAbsolute() {
+        return absolute;
+    }
+
     public boolean isFixRate() {
         return fixRate;
     }
@@ -47,13 +47,13 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
 
     private boolean includeKeys = false;
 
-    private boolean includeMouseMovement = false;
     private boolean includeMouseButtons = false;
     private boolean includeMouseWheel = false;
 
     private boolean includeDelays = false;
 
     private boolean relative = false;
+    private boolean absolute = false;
 
     private boolean fixRate = false;
     private int rate = 30;
@@ -67,6 +67,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     public abstract String encode(List<Event> eventList);
 
     protected abstract String encode(int i);
+
     /**
      * Resets all options to default
      *
@@ -75,13 +76,13 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     public AbstractActionEncoder begin() {
         includeKeys = false;
 
-        includeMouseMovement = false;
         includeMouseButtons = false;
         includeMouseWheel = false;
 
         includeDelays = false;
 
         relative = false;
+        absolute = false;
 
         fixRate = false;
         rate = 30;
@@ -98,17 +99,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return this;
     }
 
-    /**
-     * Add movement events
-     *
-     * @return a reference to this object.
-     */
-    public AbstractActionEncoder addMouseMovement() {
-        includeMouseMovement = true;
-        return this;
-    }
-
-    /**
+      /**
      * Add mouse buttons events
      *
      * @return a reference to this object.
@@ -134,7 +125,6 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      * @return a reference to this object.
      */
     public AbstractActionEncoder addMouse() {
-        includeMouseMovement = true;
         includeMouseButtons = true;
         includeMouseWheel = true;
         return this;
@@ -157,6 +147,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      */
     public AbstractActionEncoder relative() {
         relative = true;
+        absolute = false;
         return this;
     }
 
@@ -166,6 +157,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      * @return a reference to this object.
      */
     public AbstractActionEncoder absolute() {
+        absolute = true;
         relative = false;
         return this;
     }
@@ -197,7 +189,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
                     if (includeMouseWheel) filteredEventList.add(e);
                     break;
                 case MOUSE_MOVE:
-                    if (includeMouseMovement) filteredEventList.add(e);
+                    if (relative || absolute) filteredEventList.add(e);
                     break;
             }
         }

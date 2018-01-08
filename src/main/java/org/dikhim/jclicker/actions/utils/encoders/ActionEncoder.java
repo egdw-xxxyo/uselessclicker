@@ -7,7 +7,6 @@ import java.util.List;
 public interface ActionEncoder {
     ActionEncoder begin();
     ActionEncoder addKeys();
-    ActionEncoder addMouseMovement();
     ActionEncoder addMouseButtons();
     ActionEncoder addMouseWheel();
     ActionEncoder addMouse();

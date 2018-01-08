@@ -42,8 +42,6 @@ public class UnicodeDecoder implements ActionDecoder {
                     i += 3;
                     if (intTmp1 < -10000 || intTmp1 > 10000) break;
                     if (intTmp2 < -10000 || intTmp2 > 10000) break;
-                    intTmp1 += MouseEventsManager.getInstance().getX();
-                    intTmp2 += MouseEventsManager.getInstance().getY();
                     actions.add(new MouseMoveAction( intTmp1, intTmp2));
                     break;
                 case MOUSE_MOVE_AT:

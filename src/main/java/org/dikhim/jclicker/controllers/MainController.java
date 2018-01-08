@@ -1318,6 +1318,7 @@ public class MainController {
                 // start recording on release
                 recording[0] = true;
                 eventLog.clear();
+                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(),mouseEventsManager.getY(),System.currentTimeMillis()));
 
                 keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
                     if (e.getKey().equals(controlKey) && e.getAction().equals("PRESS")) {
@@ -1332,7 +1333,7 @@ public class MainController {
                         if(btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
                         if(btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
                         if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixRate(Integer.parseInt(txtCombinedFixRate.getText()));
-                        String code = unicodeEncoder.addKeys().addMouse().addDelays().absolute().encode(eventLog.getEventLog());
+                        String code = unicodeEncoder.encode(eventLog.getEventLog());
 
                         combinedObjectCodeGenerator.run(code);
                         putTextIntoCaretPosition(codeTextArea, combinedObjectCodeGenerator.getGeneratedCode());

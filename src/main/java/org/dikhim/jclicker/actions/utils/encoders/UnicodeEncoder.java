@@ -17,11 +17,11 @@ public class UnicodeEncoder extends AbstractActionEncoder {
 
     private static BidiMap<ActionType, Character> actionCodes = new DualHashBidiMap<>();
 
-    {
+    static {
         actionCodes.put(KEYBOARD_PRESS, 'k');
         actionCodes.put(KEYBOARD_RELEASE, 'K');
 
-        actionCodes.put(MOUSE_MOVE, 'R');
+        actionCodes.put(MOUSE_MOVE, 'X');
         actionCodes.put(MOUSE_MOVE_AT, 'A');
 
         actionCodes.put(MOUSE_PRESS_LEFT, 'l');
@@ -73,7 +73,7 @@ public class UnicodeEncoder extends AbstractActionEncoder {
                     appendWheelCode(sb, e);
                     break;
                 case MOUSE_MOVE:
-                    appendMoveAtCode(sb, e);
+                    appendMoveAtCode(sb,  e);
                     break;
             }
 
@@ -82,8 +82,38 @@ public class UnicodeEncoder extends AbstractActionEncoder {
     }
 
     private String encodeRelative(List<Event> eventList) {
-        // TODO
-        return "";
+        StringBuilder sb = new StringBuilder();
+
+        Event lastMoveEvent = null;
+        for (int i = 0; i < eventList.size(); i++) {
+            Event e = eventList.get(i);
+
+            if (isIncludesDelays() && i > 0) {
+                int delay = (int) (e.getTime() - eventList.get(i - 1).getTime());
+                appendDelay(sb, delay);
+            }
+            switch (e.getType()) {
+                case KEYBOARD:
+                    appendKeyboardCode(sb, e);
+                    break;
+                case MOUSE_BUTTON:
+                    appendMouseButtonCode(sb, e);
+                    break;
+                case MOUSE_WHEEL:
+                    appendWheelCode(sb, e);
+                    break;
+                case MOUSE_MOVE:
+                    if (lastMoveEvent == null) {
+                        lastMoveEvent = e;
+                        break;
+                    }
+                    appendMoveCode(sb, lastMoveEvent, e);
+                    lastMoveEvent = e;
+                    break;
+            }
+
+        }
+        return sb.toString();
     }
 
     @Override
@@ -148,6 +178,16 @@ public class UnicodeEncoder extends AbstractActionEncoder {
                 sb.append(actionCodes.get(MOUSE_WHEEL_UP));
                 break;
         }
+    }
+
+    private void appendMoveCode(StringBuilder sb, Event event1, Event event2) {
+        MouseMoveEvent mouseMoveEvent1 = (MouseMoveEvent) event1;
+        MouseMoveEvent mouseMoveEvent2 = (MouseMoveEvent) event2;
+        sb.append(actionCodes.get(MOUSE_MOVE));
+        int dx = mouseMoveEvent2.getX() - mouseMoveEvent1.getX();
+        int dy = mouseMoveEvent2.getY() - mouseMoveEvent1.getY();
+        sb.append(encode(dx));
+        sb.append(encode(dy));
     }
 
     private void appendMoveAtCode(StringBuilder sb, Event event) {
