@@ -66,12 +66,12 @@ public class JsCombinedObject implements CombinedObject {
                     break;
                 case DELAY_SECONDS:
                     intTmp = ((DelaySecondsAction) a).getDelay() * 1000;
-                    systemObject.sleep(intTmp);
+                    systemObject.sleep(intTmp-delayDiff);
                     scriptTime += intTmp;
                     break;
                 case DELAY_MILLISECONDS:
                     intTmp = ((DelayMillisecondsAction) a).getDelay();
-                    systemObject.sleep(intTmp);
+                    systemObject.sleep(intTmp-delayDiff);
                     scriptTime += intTmp;
                     break;
             }

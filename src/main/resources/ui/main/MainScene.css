@@ -272,6 +272,11 @@
 
 /* Combined toggles*/
 
+.combined-label{
+    -fx-alignment: center;
+    -fx-max-width: infinity;
+}
+
 .combined-toggle{
     -fx-alignment: center-left;
     -fx-background-radius: 0;

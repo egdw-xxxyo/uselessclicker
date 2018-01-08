@@ -16,13 +16,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.actions.*;
-import org.dikhim.jclicker.actions.events.Event;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
 import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.Script;
@@ -377,53 +375,93 @@ public class MainController {
 
     // Combined
     @FXML
-    private ToggleButton btnPressAtReleaseAtDelays;
+    private ToggleButton btnInsertCombinedLog;
+
+    @FXML
+    TextField txtCombinedControl;
+
+    @FXML
+    TextField txtCombinedFixRate;
+
+    // Simple toggles
+    @FXML
+    ToggleButton btnCombinedKeys;
+
+    @FXML
+    ToggleButton btnCombinedMouseButtons;
+
+    @FXML
+    ToggleButton btnCombinedMouseWheel;
+
+    @FXML
+    ToggleButton btnCombinedAbsolutePath;
+
+    @FXML
+    ToggleButton btnCombinedRelativePath;
+
+    @FXML
+    ToggleButton btnCombinedDelays;
+
+    @FXML
+    ToggleButton btnCombinedFixRate;
 
 
-    private List<ToggleButton> listOfToggles = new ArrayList<>();
+    private List<ToggleButton> listOfInsertCodeToggles = new ArrayList<>();
+
+    private List<ToggleButton> simpleToggles = new ArrayList<>();
 
     /**
-     * Adds all toggles to listOfToggles and sets hints to user data from property file
+     * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
      */
     private void initToggles(SourcePropertyFile properties) {
         // keyboard
-        listOfToggles.add(btnInsertKeyName);
-        listOfToggles.add(btnInsertKeyCode);
-        listOfToggles.add(btnInsertKeyCodeWithDelay);
+        listOfInsertCodeToggles.add(btnInsertKeyName);
+        listOfInsertCodeToggles.add(btnInsertKeyCode);
+        listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
 
         // mouse basics
-        listOfToggles.add(btnInsertMouseClick);
-        listOfToggles.add(btnInsertMouseClickAt);
-        listOfToggles.add(btnInsertMouseName);
-        listOfToggles.add(btnInsertMouseMove);
-        listOfToggles.add(btnInsertMouseMoveAt);
-        listOfToggles.add(btnInsertMousePress);
-        listOfToggles.add(btnInsertMousePressAt);
-        listOfToggles.add(btnInsertMouseRelease);
-        listOfToggles.add(btnInsertMouseReleaseAt);
-        listOfToggles.add(btnInsertMouseWheel);
+        listOfInsertCodeToggles.add(btnInsertMouseClick);
+        listOfInsertCodeToggles.add(btnInsertMouseClickAt);
+        listOfInsertCodeToggles.add(btnInsertMouseName);
+        listOfInsertCodeToggles.add(btnInsertMouseMove);
+        listOfInsertCodeToggles.add(btnInsertMouseMoveAt);
+        listOfInsertCodeToggles.add(btnInsertMousePress);
+        listOfInsertCodeToggles.add(btnInsertMousePressAt);
+        listOfInsertCodeToggles.add(btnInsertMouseRelease);
+        listOfInsertCodeToggles.add(btnInsertMouseReleaseAt);
+        listOfInsertCodeToggles.add(btnInsertMouseWheel);
 
         // mouse press/release
-        listOfToggles.add(btnInsertMouseCode);
-        listOfToggles.add(btnInsertMouseCodeWithDelay);
-        listOfToggles.add(btnInsertMouseRelativeCode);
+        listOfInsertCodeToggles.add(btnInsertMouseCode);
+        listOfInsertCodeToggles.add(btnInsertMouseCodeWithDelay);
+        listOfInsertCodeToggles.add(btnInsertMouseRelativeCode);
 
         //mouse click
-        listOfToggles.add(btnInsertMouseCodeClick);
+        listOfInsertCodeToggles.add(btnInsertMouseCodeClick);
 
         // movement
-        listOfToggles.add(btnInsertAbsolutePath);
-        listOfToggles.add(btnInsertAbsolutePathWithDelays);
-        listOfToggles.add(btnInsertAbsolutePathFixRate);
-        listOfToggles.add(btnInsertRelativePath);
-        listOfToggles.add(btnInsertRelativePathWithDelays);
-        listOfToggles.add(btnInsertRelativePathFixRate);
+        listOfInsertCodeToggles.add(btnInsertAbsolutePath);
+        listOfInsertCodeToggles.add(btnInsertAbsolutePathWithDelays);
+        listOfInsertCodeToggles.add(btnInsertAbsolutePathFixRate);
+        listOfInsertCodeToggles.add(btnInsertRelativePath);
+        listOfInsertCodeToggles.add(btnInsertRelativePathWithDelays);
+        listOfInsertCodeToggles.add(btnInsertRelativePathFixRate);
 
         // combined
-        listOfToggles.add(btnPressAtReleaseAtDelays);
+        listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
+        simpleToggles.add(btnCombinedAbsolutePath);
+        simpleToggles.add(btnCombinedDelays);
+        simpleToggles.add(btnCombinedFixRate);
+        simpleToggles.add(btnCombinedKeys);
+        simpleToggles.add(btnCombinedMouseButtons);
+        simpleToggles.add(btnCombinedMouseWheel);
+        simpleToggles.add(btnCombinedRelativePath);
         // set user data 'String' hint
-        for (ToggleButton b : listOfToggles) {
+        for (ToggleButton b : listOfInsertCodeToggles) {
+            b.setUserData(properties.get(b.getId()));
+        }
+        for (ToggleButton b : simpleToggles) {
             b.setUserData(properties.get(b.getId()));
         }
     }
@@ -474,7 +512,7 @@ public class MainController {
      * @param toggle ToggleButton
      */
     private void select(ToggleButton toggle) {
-        for (ToggleButton t : listOfToggles) {
+        for (ToggleButton t : listOfInsertCodeToggles) {
             if (t.isSelected()) {
                 if (t != toggle)
                     t.fire();
@@ -1266,13 +1304,12 @@ public class MainController {
      */
     /*Combined*/
     @FXML
-    void insertPressAtReleaseAtDelays(ActionEvent event) {
-        // TODO
+    void insertCombinedLog(ActionEvent event) {
         insertButtonCall(event, prefix -> {
             final boolean[] recording = new boolean[1];
-
+            final String controlKey = txtCombinedControl.getText();
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".start", "CONTROL", "RELEASE", controlEvent -> {
+                    prefix + ".start", controlKey, "RELEASE", controlEvent -> {
 
                 if (recording[0]) {
                     recording[0] = false;
@@ -1283,17 +1320,24 @@ public class MainController {
                 eventLog.clear();
 
                 keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
-                    if(e.getKey().equals("CONTROL") && e.getAction().equals("PRESS")){
+                    if (e.getKey().equals(controlKey) && e.getAction().equals("PRESS")) {
                         // stop on press
                         keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                         mouseEventsManager.removeListenersByPrefix(prefix);
                         UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
+                        if(btnCombinedKeys.isSelected()) unicodeEncoder.addKeys();
+                        if(btnCombinedMouseButtons.isSelected()) unicodeEncoder.addMouseButtons();
+                        if(btnCombinedMouseWheel.isSelected()) unicodeEncoder.addMouseWheel();
+                        if(btnCombinedAbsolutePath.isSelected()) unicodeEncoder.absolute();
+                        if(btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
+                        if(btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
+                        if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixRate(Integer.parseInt(txtCombinedFixRate.getText()));
                         String code = unicodeEncoder.addKeys().addMouse().addDelays().absolute().encode(eventLog.getEventLog());
 
                         combinedObjectCodeGenerator.run(code);
-                        putTextIntoCaretPosition(codeTextArea,combinedObjectCodeGenerator.getGeneratedCode());
+                        putTextIntoCaretPosition(codeTextArea, combinedObjectCodeGenerator.getGeneratedCode());
                         eventLog.clear();
-                    }else {
+                    } else {
                         eventLog.add(e);
                     }
                 }));
@@ -1733,4 +1777,14 @@ public class MainController {
         });
     }
 
+
+    @FXML
+    private void onCombinedAbsolutePathAction(ActionEvent event) {
+        if (btnCombinedRelativePath.isSelected()) btnCombinedRelativePath.setSelected(false);
+    }
+
+    @FXML
+    private void onCombinedRelativePathAction(ActionEvent event) {
+        if (btnCombinedAbsolutePath.isSelected()) btnCombinedAbsolutePath.setSelected(false);
+    }
 }

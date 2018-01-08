@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
@@ -168,7 +169,7 @@
                                                             <ToggleButton fx:id="btnInsertMouseClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClick" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="click" />
                                                             <ToggleButton fx:id="btnInsertMouseClickAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClickAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="click at" />
                                                             <ToggleButton fx:id="btnInsertMouseMove" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMove" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="move" />
-                                                            <ToggleButton fx:id="btnInsertMouseMoveAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMoveAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="move at" />
+                                                            <ToggleButton fx:id="btnInsertMouseMoveAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMoveAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="moveTo" />
                                                             <ToggleButton fx:id="btnInsertMousePress" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePress" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press" />
                                                             <ToggleButton fx:id="btnInsertMousePressAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePressAt" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="press at" />
                                                             <ToggleButton fx:id="btnInsertMouseRelease" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelease" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="release" />
@@ -240,7 +241,24 @@
                                                    <content>
                                                       <VBox>
                                                          <children>
-                                                            <ToggleButton fx:id="btnPressAtReleaseAtDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertPressAtReleaseAtDelays" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="pressAt/releaseAt + delays" />
+                                                            <ToggleButton fx:id="btnInsertCombinedLog" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertCombinedLog" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Activate" />
+                                                            <Label styleClass="combined-label" text="Control key" />
+                                                            <TextField fx:id="txtCombinedControl" styleClass="templateButton" text="F12" />
+                                                            <Label styleClass="combined-label" text="Keyboard" />
+                                                            <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Keyboard keys" />
+                                                            <Label styleClass="combined-label" text="Mouse" />
+                                                            <ToggleButton fx:id="btnCombinedMouseButtons" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse buttons" />
+                                                            <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse wheel" />
+                                                            <Label styleClass="combined-label" text="Movement" />
+                                                            <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Absolute path" />
+                                                            <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Relative path" />
+                                                            <Label styleClass="combined-label" text="Other" />
+                                                            <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Delays" />
+                                                            <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="fix rate">
+                                                               <graphic>
+                                                                  <TextField fx:id="txtCombinedFixRate" maxWidth="40.0" text="30" />
+                                                               </graphic>
+                                                            </ToggleButton>
                                                          </children>
                                                       </VBox>
                                                    </content>
