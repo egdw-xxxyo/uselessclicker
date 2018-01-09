@@ -8,6 +8,12 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
         super("system", lineSize);
     }
 
+    @Override
+    public int getMultipliedDelay(int delay) {
+        begin().append("();\n");
+        return 0;
+    }
+
     public float getMultiplier() {
         begin().append("();\n");
         return 0;

@@ -25,9 +25,16 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     private boolean isMinDistance = false;
     private int minDistance = 30;
 
+    private boolean detectStopPoints = false;
+
+    private int stopPointThreshold = 50;
 
     public static int getSHIFT() {
         return SHIFT;
+    }
+
+    public boolean isDetectStopPoints() {
+        return detectStopPoints;
     }
 
     public boolean isIncludesKeys() {
@@ -197,6 +204,18 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     /**
+     * Filter movement events with minDistance
+     *
+     * @return a reference to this object.
+     */
+    public AbstractActionEncoder detectStopPoints(int stopPointDetectionThreshold) {
+        this.detectStopPoints = true;
+        this.stopPointThreshold = stopPointDetectionThreshold;
+        return this;
+    }
+
+
+    /**
      * Filter list of events with specified options
      *
      * @param eventList list of all recorded events
@@ -290,6 +309,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     private List<MouseMoveEvent> filterMoveEventsByFixedRate(List<MouseMoveEvent> mouseMoveEvents, int rate) {
         // if event list size less then 3 return without changing
         if (mouseMoveEvents.size() < 3) return mouseMoveEvents;
+        MouseMoveEvent lastMouseMoveEvent = mouseMoveEvents.get(0);
 
         long frameTime = 1000 / rate;
         long currentTime = mouseMoveEvents.get(0).getTime();
@@ -297,12 +317,24 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         List<MouseMoveEvent> filteredEventList = new ArrayList<>();
 
         for (int i = 0; i < mouseMoveEvents.size(); i++) {
-            if (i == mouseMoveEvents.size() - 1) {
-                // if it is last event in the list add it to filtered list and break
-                filteredEventList.add(mouseMoveEvents.get(i));
-                break;
+            MouseMoveEvent e = mouseMoveEvents.get(i);
+            // if it is last or first event in the list
+            if ((i == mouseMoveEvents.size() - 1) || (i == 0)) {
+                // add it to filtered list and break
+                filteredEventList.add(e);
+                continue;
             }
-
+            // if detection stop point option on
+            if (isDetectStopPoints()) {
+                // calculate delay to previous event
+                int delay = (int) (mouseMoveEvents.get(i+1).getTime()-e.getTime());
+                // id delay bigger then threshold for stop point detection
+                if (delay >= stopPointThreshold) {
+                    // add event to filtered list
+                    filteredEventList.add(e);
+                    continue;
+                }
+            }
             if (mouseMoveEvents.get(i).getTime() >= currentTime) {
                 // if event time bigger then current time then add it to filtered list
                 filteredEventList.add(mouseMoveEvents.get(i));
@@ -336,6 +368,17 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
                 // add it to filtered list and break
                 filteredEventList.add(e);
                 continue;
+            }
+            // if detection stop point option on
+            if (isDetectStopPoints()) {
+                // calculate delay to previous event
+                int delay = (int) (mouseMoveEvents.get(i+1).getTime()-e.getTime());
+                // id delay bigger then threshold for stop point detection
+                if (delay >= stopPointThreshold) {
+                    // add event to filtered list
+                    filteredEventList.add(e);
+                    continue;
+                }
             }
             // calculate minDistance to last mouse event
             int dx = e.getX() - lastMouseMoveEvent.getX();

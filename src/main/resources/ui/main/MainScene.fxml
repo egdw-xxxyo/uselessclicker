@@ -256,12 +256,17 @@
                                                             <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Delays" />
                                                             <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="fixed rate">
                                                                <graphic>
-                                                                  <TextField fx:id="txtCombinedFixRate" maxWidth="40.0" text="30" />
+                                                                  <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
                                                                </graphic>
                                                             </ToggleButton>
                                                             <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="min distance">
                                                                <graphic>
-                                                                  <TextField fx:id="txtCombinedMinDistance" maxWidth="40.0" text="5" />
+                                                                  <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" text="5" />
+                                                               </graphic>
+                                                            </ToggleButton>
+                                                            <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="detect stop points">
+                                                               <graphic>
+                                                                  <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" text="100" />
                                                                </graphic>
                                                             </ToggleButton>
                                                          </children>

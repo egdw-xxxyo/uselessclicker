@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects;
 
 @SuppressWarnings("unused")
 public interface SystemObject {
+    int getMultipliedDelay(int delay);
+
     float getMultiplier();
 
     void print(String s);

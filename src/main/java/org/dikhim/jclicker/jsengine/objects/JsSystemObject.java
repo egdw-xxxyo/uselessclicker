@@ -65,12 +65,13 @@ public class JsSystemObject implements SystemObject {
     public void sleep(int ms) {
         if (ms <= 0) return;
         try {
-            Thread.sleep(ms);
+            System.out.println(getMultipliedDelay(ms));
+            Thread.sleep(getMultipliedDelay(ms));
         } catch (InterruptedException e) {
         }
     }
 
-    private int getMultipliedDelay(int ms) {
+    public int getMultipliedDelay(int ms) {
         int result = ((int) (ms * multiplier));
         if (result <= 0) {
             return 0;

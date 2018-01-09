@@ -381,6 +381,9 @@ public class MainController {
     TextField txtCombinedControl;
 
     @FXML
+    TextField txtCombinedDetectStopPoints;
+
+    @FXML
     TextField txtCombinedFixRate;
 
     @FXML
@@ -401,6 +404,9 @@ public class MainController {
 
     @FXML
     ToggleButton btnCombinedRelativePath;
+
+    @FXML
+    ToggleButton btnCombinedDetectStopPoints;
 
     @FXML
     ToggleButton btnCombinedDelays;
@@ -458,6 +464,7 @@ public class MainController {
 
         simpleToggles.add(btnCombinedAbsolutePath);
         simpleToggles.add(btnCombinedDelays);
+        simpleToggles.add(btnCombinedDetectStopPoints);
         simpleToggles.add(btnCombinedFixRate);
         simpleToggles.add(btnCombinedKeys);
         simpleToggles.add(btnCombinedMinDistance);
@@ -1341,6 +1348,7 @@ public class MainController {
                         if(btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
                         if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixedRate(Integer.parseInt(txtCombinedFixRate.getText()));
                         if(btnCombinedMinDistance.isSelected()) unicodeEncoder.minDistance(Integer.parseInt(txtCombinedMinDistance.getText()));
+                        if(btnCombinedDetectStopPoints.isSelected()) unicodeEncoder.detectStopPoints(Integer.parseInt(txtCombinedDetectStopPoints.getText()));
                         String code = unicodeEncoder.encode(eventLog.getEventLog());
 
                         combinedObjectCodeGenerator.run(code);

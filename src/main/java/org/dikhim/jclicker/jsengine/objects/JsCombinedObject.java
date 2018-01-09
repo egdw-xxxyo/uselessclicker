@@ -92,14 +92,14 @@ public class JsCombinedObject implements CombinedObject {
                     calculatedDelay = actionDelay - delayDiff;
                     if (calculatedDelay < 2) calculatedDelay = 2;
                     systemObject.sleep(calculatedDelay);
-                    scriptTime += calculatedDelay;
+                    scriptTime += systemObject.getMultipliedDelay(calculatedDelay);
                     break;
                 case DELAY_MILLISECONDS:
                     actionDelay = ((DelayMillisecondsAction) a).getDelay();
                     calculatedDelay = actionDelay - delayDiff;
                     if (calculatedDelay < 2) calculatedDelay = 2;
                     systemObject.sleep(calculatedDelay);
-                    scriptTime += calculatedDelay;
+                    scriptTime += systemObject.getMultipliedDelay(calculatedDelay);
                     break;
             }
             currentTime = (int) (System.currentTimeMillis() - firstTimeStamp);
