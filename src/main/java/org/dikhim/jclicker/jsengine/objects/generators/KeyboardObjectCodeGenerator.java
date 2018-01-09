@@ -3,15 +3,22 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 
 public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements KeyboardObject {
-    public KeyboardObjectCodeGenerator(String objectName, int lineSize) {
-        super(objectName, lineSize);
-    }
 
     public KeyboardObjectCodeGenerator(int lineSize) {
         super("key", lineSize);
     }
 
     public int getMinDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
+    public int getMultipliedPressDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
+    public int getMultipliedReleaseDelay() {
         begin().append("();\n");
         return 0;
     }
@@ -43,12 +50,6 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     public void perform(String keys, String action) {
-        begin().append("('")
-                .append(keys).append("','")
-                .append(action).append("');\n");
-    }
-
-    public void performIgnoringDelays(String keys, String action) {
         begin().append("('")
                 .append(keys).append("','")
                 .append(action).append("');\n");

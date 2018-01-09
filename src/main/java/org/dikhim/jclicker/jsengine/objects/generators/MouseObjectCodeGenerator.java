@@ -3,21 +3,12 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 import org.dikhim.jclicker.jsengine.objects.MouseObject;
 
 public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
-    public MouseObjectCodeGenerator(String objectName, int lineSize) {
-        super(objectName, lineSize);
-    }
 
     public MouseObjectCodeGenerator(int lineSize) {
         super("mouse", lineSize);
     }
 
     public void button(String button, String action) {
-        begin().append("('")
-                .append(button).append("','")
-                .append(action).append("');\n");
-    }
-
-    public void buttonIgnoringDelays(String button, String action) {
         begin().append("('")
                 .append(button).append("','")
                 .append(action).append("');\n");
@@ -53,10 +44,31 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
         return 0;
     }
 
+    public int getMultipliedMoveDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
+    public int getMultipliedPressDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
+    public int getMultipliedReleaseDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
+    public int getMultipliedWheelDelay() {
+        begin().append("();\n");
+        return 0;
+    }
+
     public float getMultiplier() {
         begin().append("();\n");
         return 0;
     }
+
 
     public int getPressDelay() {
         begin().append("();\n");
@@ -89,12 +101,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     public void move(int dx, int dy) {
-        begin().append("(")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
-    }
-
-    public void moveIgnoringDelays(int dx, int dy) {
         begin().append("(")
                 .append(dx).append(",")
                 .append(dy).append(");\n");
@@ -158,12 +164,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     public void moveTo(int x, int y) {
-        begin().append("(")
-                .append(x).append(",")
-                .append(y).append(");\n");
-    }
-
-    public void moveToIgnoringDelays(int x, int y) {
         begin().append("(")
                 .append(x).append(",")
                 .append(y).append(");\n");
@@ -261,12 +261,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(amount).append(");\n");
     }
 
-    public void wheelIgnoringDelays(String direction, int amount) {
-        begin().append("('")
-                .append(direction).append("',")
-                .append(amount).append(");\n");
-    }
-
     public void wheelAt(String direction, int amount, int x, int y) {
         begin().append("('")
                 .append(direction).append("',")
@@ -274,4 +268,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
                 .append(x).append(",")
                 .append(y).append(");\n");
     }
+
+
 }

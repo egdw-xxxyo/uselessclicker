@@ -254,9 +254,14 @@
                                                             <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Relative path" />
                                                             <Label styleClass="combined-label" text="Other" />
                                                             <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Delays" />
-                                                            <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="fix rate">
+                                                            <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="fixed rate">
                                                                <graphic>
                                                                   <TextField fx:id="txtCombinedFixRate" maxWidth="40.0" text="30" />
+                                                               </graphic>
+                                                            </ToggleButton>
+                                                            <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onMouseEntered="#showCodeSample" onMouseExited="#hideCodeSample" styleClass="templateButton" text="min distance">
+                                                               <graphic>
+                                                                  <TextField fx:id="txtCombinedMinDistance" maxWidth="40.0" text="5" />
                                                                </graphic>
                                                             </ToggleButton>
                                                          </children>

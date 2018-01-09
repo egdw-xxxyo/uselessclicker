@@ -9,21 +9,22 @@ import java.util.List;
 public abstract class AbstractActionEncoder implements ActionEncoder {
     private static final int SHIFT = 13500;
 
+    private boolean isAbsolute = false;
+    private boolean isRelative = false;
+
+
     private boolean includeKeys = false;
-
     private boolean includeMouseButtons = false;
-
     private boolean includeMouseWheel = false;
     private boolean includeDelays = false;
 
-    private boolean relative = false;
 
-    private boolean absolute = false;
     private boolean isFixedRate = false;
+    private int fixedRate = 30;
 
     private boolean isMinDistance = false;
-    private int fixedRate = 30;
     private int minDistance = 30;
+
 
     public static int getSHIFT() {
         return SHIFT;
@@ -46,11 +47,11 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     public boolean isRelative() {
-        return relative;
+        return isRelative;
     }
 
     public boolean isAbsolute() {
-        return absolute;
+        return isAbsolute;
     }
 
     public boolean isFixedRate() {
@@ -92,8 +93,8 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
 
         includeDelays = false;
 
-        relative = false;
-        absolute = false;
+        isRelative = false;
+        isAbsolute = false;
 
         isFixedRate = false;
         fixedRate = 30;
@@ -152,24 +153,24 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     /**
-     * Movement path should be relative
+     * Movement path should be isRelative
      *
      * @return a reference to this object.
      */
     public AbstractActionEncoder relative() {
-        relative = true;
-        absolute = false;
+        isRelative = true;
+        isAbsolute = false;
         return this;
     }
 
     /**
-     * Movement path should be absolute
+     * Movement path should be isAbsolute
      *
      * @return a reference to this object.
      */
     public AbstractActionEncoder absolute() {
-        absolute = true;
-        relative = false;
+        isAbsolute = true;
+        isRelative = false;
         return this;
     }
 
@@ -185,7 +186,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     /**
-     * Filter movement events with fix minDistance
+     * Filter movement events with minDistance
      *
      * @return a reference to this object.
      */
@@ -195,6 +196,12 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return this;
     }
 
+    /**
+     * Filter list of events with specified options
+     *
+     * @param eventList list of all recorded events
+     * @return filtered list
+     */
     List<Event> filter(List<Event> eventList) {
         List<Event> filteredEventList = new ArrayList<>();
 
@@ -211,21 +218,27 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
                     if (includeMouseWheel) filteredEventList.add(e);
                     break;
                 case MOUSE_MOVE:
-                    if (relative || absolute) filteredEventList.add(e);
+                    if (isRelative() || isAbsolute()) filteredEventList.add(e);
                     break;
             }
         }
 
-        // if absolute or relative path selected
-        if (relative || absolute) {
-            // then filter movement event
-            filteredEventList = filterMovementEvents(filteredEventList);
-        }
+
+        // filter movement events
+        filteredEventList = filterMovementEvents(filteredEventList);
 
         return filteredEventList;
     }
 
+    /**
+     * Filter movement events with specified options.<br>
+     * All not movement events always are included to the result list
+     *
+     * @param eventList list of all recorded events
+     * @return filtered list
+     */
     private List<Event> filterMovementEvents(List<Event> eventList) {
+        if (!isRelative && !isAbsolute) return eventList;
         List<Event> filteredEventList = new ArrayList<>();
         List<MouseMoveEvent> moveEventList = new ArrayList<>();
         for (int i = 0; i < eventList.size(); i++) {
@@ -256,12 +269,12 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     private List<MouseMoveEvent> filterMovementPathWithOptions(List<MouseMoveEvent> mouseMoveEvents) {
-        List<MouseMoveEvent> filteredMoveEventList = new ArrayList<>();
-        if (isFixedRate) {
-            filteredMoveEventList = filterMoveEventsByFixedRate(mouseMoveEvents, fixedRate);
+        List<MouseMoveEvent> filteredMoveEventList = new ArrayList<>(mouseMoveEvents);
+        if (isFixedRate()) {
+            filteredMoveEventList = filterMoveEventsByFixedRate(filteredMoveEventList, fixedRate);
         }
-        if (isMinDistance) {
-            filteredMoveEventList = filterMoveEventsByMinDistance(mouseMoveEvents, minDistance);
+        if (isMinDistance()) {
+            filteredMoveEventList = filterMoveEventsByMinDistance(filteredMoveEventList, minDistance);
         }
         // add them to result list
         return filteredMoveEventList;
@@ -303,13 +316,13 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     /**
-     * Filter mouse movement event by fixed minDistance. Always includes first and last event.
+     * Filter mouse movement event by minDistance. Always includes first and last event.
      *
      * @param mouseMoveEvents mouse movement events
-     * @param distance        minimal minDistance between two points
+     * @param minDistance     minimal minDistance between two points
      * @return filtered list of movement events
      */
-    private List<MouseMoveEvent> filterMoveEventsByMinDistance(List<MouseMoveEvent> mouseMoveEvents, int distance) {
+    private List<MouseMoveEvent> filterMoveEventsByMinDistance(List<MouseMoveEvent> mouseMoveEvents, int minDistance) {
         // if event list size less then 3 return without changing
         if (mouseMoveEvents.size() < 3) return mouseMoveEvents;
         MouseMoveEvent lastMouseMoveEvent = mouseMoveEvents.get(0);
@@ -322,14 +335,14 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             if ((i == mouseMoveEvents.size() - 1) || (i == 0)) {
                 // add it to filtered list and break
                 filteredEventList.add(e);
-                break;
+                continue;
             }
             // calculate minDistance to last mouse event
             int dx = e.getX() - lastMouseMoveEvent.getX();
             int dy = e.getY() - lastMouseMoveEvent.getY();
             currentDistance = (int) Math.sqrt(dx * dx + dy * dy);
             // if current minDistance bigger then specified
-            if (currentDistance > distance) {
+            if (currentDistance > minDistance) {
                 // add event to filtered list
                 filteredEventList.add(e);
                 // set current mouse event as last event
