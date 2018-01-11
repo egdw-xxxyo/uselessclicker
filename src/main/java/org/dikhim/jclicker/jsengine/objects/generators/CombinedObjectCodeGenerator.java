@@ -10,7 +10,6 @@ public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements 
 
     @Override
     public void run(String code) {
-        begin().append("('")
-                .append(code).append("');\n");
+        buildStringForCurrentMethod(code);
     }
 }

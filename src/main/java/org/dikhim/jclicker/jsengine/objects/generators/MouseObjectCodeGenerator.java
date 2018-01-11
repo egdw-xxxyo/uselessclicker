@@ -9,264 +9,205 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     public void button(String button, String action) {
-        begin().append("('")
-                .append(button).append("','")
-                .append(action).append("');\n");
+        buildStringForCurrentMethod(button, action);
     }
 
     public void buttonAt(String button, String action, int x, int y) {
-        begin().append("('")
-                .append(button).append("','")
-                .append(action).append("',")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(button, action, x, y);
     }
 
     public void click(String button) {
-        begin().append("('")
-                .append(button).append("');\n");
+        buildStringForCurrentMethod(button);
     }
 
     public void clickAt(String button, int x, int y) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(button, x, y) ;
     }
 
     public int getMinDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMoveDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedMoveDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedPressDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedReleaseDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedWheelDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public float getMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
 
     public int getPressDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getReleaseDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public float getSpeed() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getWheelDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getX() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getY() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public void move(int dx, int dy) {
-        begin().append("(")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(dx, dy);
     }
 
     public void moveAbsolute(String path) {
-        begin().append("('")
-                .append(path).append("');\n");
+        buildStringForCurrentMethod(path);
     }
 
     public void moveAbsolute_D(String path) {
-        begin().append("('")
-                .append(path).append("');\n");
+        buildStringForCurrentMethod(path);
     }
 
     public void moveAndButton(String button, String action, int dx, int dy) {
-        begin().append("('")
-                .append(button).append("','")
-                .append(action).append("',")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(button, action, dx, dy);
     }
 
     public void moveAndClick(String button, int dx, int dy) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(button, dx, dy);
     }
 
     public void moveAndPress(String button, int dx, int dy) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(button, dx, dy);
     }
 
     public void moveAndRelease(String button, int dx, int dy) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(button, dx, dy);
     }
 
     public void moveAndWheel(String direction, int amount, int dx, int dy) {
-        begin().append("('")
-                .append(direction).append("',")
-                .append(amount).append(",")
-                .append(dx).append(",")
-                .append(dy).append(");\n");
+        buildStringForCurrentMethod(direction, amount, dx, dy);
     }
 
     public void moveRelative(String path) {
-        begin().append("('")
-                .append(path).append("');\n");
+        buildStringForCurrentMethod(path);
     }
 
     public void moveRelative_D(String path) {
-        begin().append("('")
-                .append(path).append("');\n");
+        buildStringForCurrentMethod(path);
     }
 
     public void moveTo(int x, int y) {
-        begin().append("(")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(x, y);
     }
 
     public void press(String button) {
-        begin().append("('")
-                .append(button).append("');\n");
+        buildStringForCurrentMethod(button);
     }
 
     public void pressAt(String button, int x, int y) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(button, x, y);
     }
 
     public void release(String button) {
-        begin().append("('")
-                .append(button).append("');\n");
+        buildStringForCurrentMethod(button);
     }
 
     public void releaseAt(String button, int x, int y) {
-        begin().append("('")
-                .append(button).append("',")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(button, x, y);
     }
 
     public void resetDelays() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void resetMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void resetSpeed() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void setDelays(int delay) {
-        begin().append("(")
-                .append(delay).append(");\n");
+        buildStringForCurrentMethod(delay);
     }
 
     public void setMinDelay(int minDelay) {
-        begin().append("(")
-                .append(minDelay).append(");\n");
+        buildStringForCurrentMethod(minDelay);
     }
 
     public void setMoveDelay(int moveDelay) {
-        begin().append("(")
-                .append(moveDelay).append(");\n");
+        buildStringForCurrentMethod(moveDelay);
     }
 
     public void setMultiplier(float multiplier) {
-        begin().append("(")
-                .append(multiplier).append(");\n");
+        buildStringForCurrentMethod(multiplier);
     }
 
     public void setPressDelay(int pressDelay) {
-        begin().append("(")
-                .append(pressDelay).append(");\n");
+        buildStringForCurrentMethod(pressDelay);
     }
 
     public void setReleaseDelay(int releaseDelay) {
-        begin().append("(")
-                .append(releaseDelay).append(");\n");
+        buildStringForCurrentMethod(releaseDelay);
     }
 
     public void setSpeed(float multiplier) {
-        begin().append("(")
-                .append(multiplier).append(");\n");
+        buildStringForCurrentMethod(multiplier);
     }
 
     public void setWheelDelay(int wheelDelay) {
-        begin().append("(")
-                .append(wheelDelay).append(");\n");
+        buildStringForCurrentMethod(wheelDelay);
     }
 
     public void setX(int x) {
-        begin().append("(")
-                .append(x).append(");\n");
+        buildStringForCurrentMethod(x);
     }
 
     public void setY(int y) {
-        begin().append("(")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(y);
     }
 
     public void wheel(String direction, int amount) {
-        begin().append("('")
-                .append(direction).append("',")
-                .append(amount).append(");\n");
+        buildStringForCurrentMethod(direction, amount);
     }
 
     public void wheelAt(String direction, int amount, int x, int y) {
-        begin().append("('")
-                .append(direction).append("',")
-                .append(amount).append(",")
-                .append(x).append(",")
-                .append(y).append(");\n");
+        buildStringForCurrentMethod(direction, amount, x, y);
     }
 
 

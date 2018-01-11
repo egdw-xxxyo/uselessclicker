@@ -2,13 +2,13 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 public interface CodeGenerator {
 
-    int getLineSize();
-
-    void setLineSize(int lineSize);
-
-    String getObjectName();
+    void buildStringForCurrentMethod(Object... params);
 
     String getGeneratedCode();
+
+    int getLineSize();
+
+    String getObjectName();
 
     /**
      * @return
@@ -18,7 +18,7 @@ public interface CodeGenerator {
     }
 
     default String separateOnLines(StringBuilder inputStringBuilder, int lineSize) {
-        if(inputStringBuilder.length()<=lineSize) return inputStringBuilder.toString();
+        if (inputStringBuilder.length() <= lineSize) return inputStringBuilder.toString();
 
         char[] c = inputStringBuilder.toString().toCharArray();
         StringBuilder sb = new StringBuilder("");
@@ -35,4 +35,7 @@ public interface CodeGenerator {
         sb.append("');\n");
         return sb.toString();
     }
+
+    void setLineSize(int lineSize);
+
 }

@@ -9,107 +9,95 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     public int getMinDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedPressDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getMultipliedReleaseDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public float getMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getPressDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public int getReleaseDelay() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public float getSpeed() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public boolean isPressed(String keys) {
-        begin().append("('")
-                .append(keys).append("');\n");
+        buildStringForCurrentMethod(keys);
         return false;
     }
 
     public void perform(String keys, String action) {
-        begin().append("('")
-                .append(keys).append("','")
-                .append(action).append("');\n");
+        buildStringForCurrentMethod(keys, action);
     }
 
     public void press(String keys) {
-        begin().append("('")
-                .append(keys).append("');\n");
+        buildStringForCurrentMethod(keys);
     }
 
     public void release(String keys) {
-        begin().append("('")
-                .append(keys).append("');\n");
+        buildStringForCurrentMethod(keys);
     }
 
     public void resetDelays() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void resetMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void resetSpeed() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void setDelays(int delay) {
-        begin().append("(")
-                .append(delay).append(");\n");
+        buildStringForCurrentMethod(delay);
     }
 
     public void setMinDelay(int delay) {
-        begin().append("(")
-                .append(delay).append(");\n");
+        buildStringForCurrentMethod(delay);
     }
 
     public void setMultiplier(float multiplier) {
-        begin().append("(")
-                .append(multiplier).append(");\n");
+        buildStringForCurrentMethod(multiplier);
     }
 
     public void setPressDelay(int pressDelay) {
-        begin().append("(")
-                .append(pressDelay).append(");\n");
+        buildStringForCurrentMethod(pressDelay);
     }
 
     public void setReleaseDelay(int releaseDelay) {
-        begin().append("(")
-                .append(releaseDelay).append(");\n");
+        buildStringForCurrentMethod(releaseDelay);
     }
 
     public void setSpeed(float multiplier) {
-        begin().append("(")
-                .append(multiplier).append(");\n");
+        buildStringForCurrentMethod(multiplier);
     }
 
     public void type(String keys) {
-        begin().append("('")
-                .append(keys).append("');\n");
+        buildStringForCurrentMethod(keys);
 
     }
 }

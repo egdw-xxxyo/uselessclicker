@@ -10,42 +10,36 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
 
     @Override
     public int getMultipliedDelay(int delay) {
-        begin().append("();\n");
+        buildStringForCurrentMethod(delay);
         return 0;
     }
 
     public float getMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return 0;
     }
 
     public void print(String s) {
-        begin().append("('")
-                .append(s).append("');\n");
+        buildStringForCurrentMethod(s);
     }
 
     public void println(String s) {
-        begin().append("('")
-                .append(s).append("');\n");
+        buildStringForCurrentMethod(s);
     }
 
     public void registerShortcut(String shortcut, String function) {
-        begin().append("('")
-                .append(shortcut).append("','")
-                .append(function).append("');\n");
+        buildStringForCurrentMethod(shortcut,function);
     }
 
     public void resetMultiplier() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
     }
 
     public void setMultiplier(float multiplier) {
-        begin().append("(")
-                .append(multiplier).append(");\n");
+        buildStringForCurrentMethod(multiplier);
     }
 
     public void sleep(int ms) {
-        begin().append("(")
-                .append(ms).append(");\n");
+        buildStringForCurrentMethod(ms);
     }
 }

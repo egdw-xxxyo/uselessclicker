@@ -12,12 +12,11 @@ public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements
     }
 
     public String get() {
-        begin().append("();\n");
+        buildStringForCurrentMethod();
         return null;
     }
 
     public void set(String str) {
-        begin().append("('")
-                .append(str).append("');\n");
+        buildStringForCurrentMethod(str);
     }
 }
