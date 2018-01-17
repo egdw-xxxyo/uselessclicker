@@ -19,7 +19,7 @@ public class Out {
 	public static String getString() {
 		return output.getStringProperty().toString();
 	}
-	public static StringProperty getStringProperty() {
+	public static StringProperty outProperty() {
 		return output.getStringProperty();
 	}
 	public static void clear() {

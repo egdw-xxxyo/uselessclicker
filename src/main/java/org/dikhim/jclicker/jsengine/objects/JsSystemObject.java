@@ -29,8 +29,21 @@ public class JsSystemObject implements SystemObject {
         this.robot = robot;
     }
 
+    public int getMultipliedDelay(int ms) {
+        int result = ((int) (ms * multiplier));
+        if (result <= 0) {
+            return 0;
+        } else {
+            return result;
+        }
+    }
+
     public float getMultiplier() {
         return multiplier;
+    }
+
+    public float getSpeed() {
+        return 1f / multiplier;
     }
 
     public void print(String s) {
@@ -58,6 +71,11 @@ public class JsSystemObject implements SystemObject {
         this.multiplier = MULTIPLIER;
     }
 
+
+    public void resetSpeed() {
+        this.multiplier = MULTIPLIER;
+    }
+
     public void setMultiplier(float multiplier) {
         this.multiplier = multiplier;
     }
@@ -70,14 +88,7 @@ public class JsSystemObject implements SystemObject {
         }
     }
 
-    public int getMultipliedDelay(int ms) {
-        int result = ((int) (ms * multiplier));
-        if (result <= 0) {
-            return 0;
-        } else {
-            return result;
-        }
+    public void setSpeed(float multiplier) {
+        this.multiplier = 1f / multiplier;
     }
-
-
 }

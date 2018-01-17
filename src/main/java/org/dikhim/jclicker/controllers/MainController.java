@@ -7,12 +7,14 @@ import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.actions.*;
@@ -23,6 +25,7 @@ import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
+import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.util.output.Out;
@@ -40,8 +43,11 @@ import javafx.stage.FileChooser;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
 public class MainController {
-    private ClickerMain application;
 
+    private ClickerMain application = ClickerMain.getApplication();
+
+    private MainApplication mainApplication = ClickerMain.getApplication().getMainApplication();
+    private Preferences preferences = Preferences.userRoot().node(getClass().getName());
     private EventLogger eventLog = new EventLogger(10000);
 
     private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -54,30 +60,57 @@ public class MainController {
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
-    private ToggleButton lastUsedToggleButton;
 
     @FXML
     private void initialize() {
-        application = ClickerMain.getApplication();
         // init text areas
-        bindOutputProperty();
-        bindScriptProperty();
-
-        codeTextArea.textProperty().bindBidirectional(codeTextProperty);
+        codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
+        outTextArea.textProperty().bindBidirectional(Out.outProperty());
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
-        areaOut.textProperty().bindBidirectional(outTextProperty);
 
+        btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
+        btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
         // consume keyboard actions for textArea while variable not true
         codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
-                event -> {
-                    if (!enableCodeType)
-                        event.consume();
-                });
-        codeTextArea.addEventFilter(KeyEvent.KEY_TYPED,
-                event -> {
-                    if (!enableCodeType)
-                        event.consume();
+                e -> {
+                    if (!enableCodeType) {
+                        e.consume();
+                        return;
+                    }
+
+                    switch (e.getCode()) {
+                        case TAB:
+                            String s = "    ";
+                            codeTextArea.insertText(codeTextArea.getCaretPosition(), s);
+                            e.consume();
+                            break;
+                        case ENTER:
+                            char[] charArray = codeTextArea.getText().toCharArray();
+                            int caret = codeTextArea.getCaretPosition();
+                            StringBuilder sb = new StringBuilder();
+                            for (int i = caret-1; i >= 0; i--) {
+                                if (charArray[i] != '\n') {
+                                    sb.append(charArray[i]);
+                                } else {
+                                    break;
+                                }
+                            }
+                            System.out.println("lineSize: "+sb.length());
+                            charArray = sb.reverse().toString().toCharArray();
+                            sb = new StringBuilder("\n");
+                            for (char ch : charArray) {
+                                if(ch == ' ') {
+                                    sb.append(ch);
+                                }else {
+                                    break;
+                                }
+                            }
+                            System.out.println("spaces: "+sb.length());
+                            codeTextArea.insertText(codeTextArea.getCaretPosition(), sb.toString());
+                            e.consume();
+                            break;
+                    }
                 });
 
         // init toggles and template buttons
@@ -93,9 +126,6 @@ public class MainController {
         initTemplateButtons(propertyFile);
 
         // Init script
-
-        // Set status suspended and reset toggles status
-        setScriptStatus(Status.SUSPENDED);
         setToggleStatus(null);
 
         KeyEventsManager keyListener = KeyEventsManager.getInstance();
@@ -125,7 +155,7 @@ public class MainController {
 
     @FXML
     private TextArea codeTextArea;
-    private StringProperty codeTextProperty = new SimpleStringProperty("");
+    private StringProperty codeTextProperty = new SimpleStringProperty();
     private boolean enableCodeType = true;
 
 
@@ -134,7 +164,7 @@ public class MainController {
     private StringProperty codeSampleProperty = new SimpleStringProperty("");
 
     @FXML
-    private TextArea areaOut;
+    private TextArea outTextArea;
     private StringProperty outTextProperty = new SimpleStringProperty(" ");
 
     @FXML
@@ -143,33 +173,21 @@ public class MainController {
     @FXML
     private TextField txtRelativePathRate;
 
-    private void bindOutputProperty() {
-        outTextProperty.bindBidirectional(Out.getStringProperty());
-    }
-
-    private void bindScriptProperty() {
-        codeTextProperty.bindBidirectional(application.getScript().getStringProperty());
-    }
-
     @FXML
     public void stopScript() {
-        application.stopScript();
-        setScriptStatus(Status.SUSPENDED);
+        mainApplication.stopScript();
     }
 
     @FXML
     public void runScript() {
         Out.clear();
         select(null);
-        setScriptStatus(Status.RUNNING);
-        application.runScript();
+        mainApplication.runScript();
     }
 
     @FXML
     public void newFile() {
-        stopScript();
-        application.newScript();
-        updateScriptStatus();
+        mainApplication.newFile();
     }
 
     @FXML
@@ -180,68 +198,37 @@ public class MainController {
                 new FileChooser.ExtensionFilter("All types", "*.*"),
                 new FileChooser.ExtensionFilter("JavaScript", "*.js"));
 
-        Preferences prefs = Preferences.userNodeForPackage(ClickerMain.class);
-        String pathFolder = prefs.get("last-opened-folder", null);
-        if (pathFolder != null)
+        String pathFolder = preferences.get("last-opened-folder", "");
+        if (!pathFolder.isEmpty()) {
             fileChooser.setInitialDirectory(new File(pathFolder));
-
+        }
         File file = fileChooser.showOpenDialog(application.getPrimaryStage());
         if (file != null) {
-            Script script = new Script(file);
-            application.setScript(script);
-            prefs.put("last-opened-folder",
-                    file.getParentFile().getAbsolutePath());
-
-            codeTextArea.textProperty()
-                    .bindBidirectional(script.getStringProperty());
+            mainApplication.openFile(file);
+            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
         }
-        updateScriptStatus();
     }
 
     @FXML
     public void saveFile() {
-        Preferences prefs = Preferences.userNodeForPackage(ClickerMain.class);
-
-        Script script = application.getScript();
-        if (script == null)
-            return;
-
-        if (script.getFile() == null) {
+        Script script = mainApplication.getScript();
+        if (script.isOpened()) {
+            mainApplication.saveFile();
+        } else {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Save file");
             fileChooser.setInitialFileName("newFile.js");
 
-            String pathFolder = prefs.get("last-saved-folder", null);
-            if (pathFolder != null)
+            String pathFolder = preferences.get("last-saved-folder", "");
+            if (!pathFolder.isEmpty())
                 fileChooser.setInitialDirectory(new File(pathFolder));
 
             File file = fileChooser.showSaveDialog(application.getPrimaryStage());
-
             if (file != null) {
-                try {
-                    FileUtils.writeStringToFile(file,
-                            script.getStringProperty().get(),
-                            "UTF-8");
-                    script.setFile(file);
-                    prefs.put("last-saved-folder", script.getFile()
-                            .getParentFile().getAbsolutePath());
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        } else {
-            try {
-                FileUtils.writeStringToFile(script.getFile(),
-                        script.getStringProperty().get(),
-                        "UTF-8");
-            } catch (IOException e) {
-                e.printStackTrace();
+                mainApplication.saveFileAs(file);
+                preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
             }
         }
-        application.updateTitle();
-        updateScriptStatus();
     }
 
     /**
@@ -249,36 +236,19 @@ public class MainController {
      */
     @FXML
     public void saveFileAs() {
-        System.out.println("Save as");
-        Preferences prefs = Preferences.userNodeForPackage(ClickerMain.class);
-
-        Script script = application.getScript();
-        if (script == null)
-            return;
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save file");
         fileChooser.setInitialFileName("newFile.js");
 
-        String pathFolder = prefs.get("last-saved-folder", null);
-        if (pathFolder != null)
+        String pathFolder = preferences.get("last-saved-folder", "");
+        if (!pathFolder.isEmpty())
             fileChooser.setInitialDirectory(new File(pathFolder));
 
         File file = fileChooser.showSaveDialog(application.getPrimaryStage());
-
         if (file != null) {
-            script.setFile(file);
-            try {
-                FileUtils.writeStringToFile(script.getFile(),
-                        script.getStringProperty().get(),
-                        "UTF-8");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            mainApplication.saveFileAs(file);
+            preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
         }
-        application.updateTitle();
-        prefs.put("last-saved-folder",
-                script.getFile().getParentFile().getAbsolutePath());
     }
 
     @FXML
@@ -335,7 +305,7 @@ public class MainController {
     private ToggleButton btnInsertMouseMove;
 
     @FXML
-    private ToggleButton btnInsertMouseMoveAt;
+    private ToggleButton btnInsertMouseMoveTo;
 
     @FXML
     private ToggleButton btnInsertMouseWheel;
@@ -436,7 +406,7 @@ public class MainController {
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
         listOfInsertCodeToggles.add(btnInsertMouseName);
         listOfInsertCodeToggles.add(btnInsertMouseMove);
-        listOfInsertCodeToggles.add(btnInsertMouseMoveAt);
+        listOfInsertCodeToggles.add(btnInsertMouseMoveTo);
         listOfInsertCodeToggles.add(btnInsertMousePress);
         listOfInsertCodeToggles.add(btnInsertMousePressAt);
         listOfInsertCodeToggles.add(btnInsertMouseRelease);
@@ -472,11 +442,13 @@ public class MainController {
         simpleToggles.add(btnCombinedMouseWheel);
         simpleToggles.add(btnCombinedRelativePath);
         // set user data 'String' hint
-        for (ToggleButton b : listOfInsertCodeToggles) {
-            b.setUserData(properties.get(b.getId()));
-        }
-        for (ToggleButton b : simpleToggles) {
-            b.setUserData(properties.get(b.getId()));
+        List<ToggleButton> listOfToggles = new ArrayList<>();
+        listOfToggles.addAll(simpleToggles);
+        listOfToggles.addAll(listOfInsertCodeToggles);
+        for (ToggleButton b : listOfToggles) {
+            b.setUserData(new String[]{properties.get(b.getId()), ""});
+            b.setOnMouseEntered(this::showCodeSample);
+            b.setOnMouseExited(this::hideCodeSample);
         }
     }
 
@@ -548,7 +520,6 @@ public class MainController {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
         if (toggleButton == null) return;
 
-        lastUsedToggleButton = toggleButton;
         String prefix = toggleButton.getId();
         if (toggleButton.isSelected()) {
             select(toggleButton);
@@ -1163,8 +1134,7 @@ public class MainController {
      * @param event event from ToggleButton on scene
      */
     @FXML
-    void insertMouseMoveAt(ActionEvent event) {
-        // TODO rename function name to 'moveTo'
+    void insertMouseMoveTo(ActionEvent event) {
         insertButtonCall(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
@@ -1332,7 +1302,7 @@ public class MainController {
                 // start recording on release
                 recording[0] = true;
                 eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(),mouseEventsManager.getY(),System.currentTimeMillis()));
+                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
 
                 keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
                     if (e.getKey().equals(controlKey) && e.getAction().equals("PRESS")) {
@@ -1340,15 +1310,18 @@ public class MainController {
                         keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                         mouseEventsManager.removeListenersByPrefix(prefix);
                         UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
-                        if(btnCombinedKeys.isSelected()) unicodeEncoder.addKeys();
-                        if(btnCombinedMouseButtons.isSelected()) unicodeEncoder.addMouseButtons();
-                        if(btnCombinedMouseWheel.isSelected()) unicodeEncoder.addMouseWheel();
-                        if(btnCombinedAbsolutePath.isSelected()) unicodeEncoder.absolute();
-                        if(btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
-                        if(btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
-                        if(btnCombinedFixRate.isSelected()) unicodeEncoder.fixedRate(Integer.parseInt(txtCombinedFixRate.getText()));
-                        if(btnCombinedMinDistance.isSelected()) unicodeEncoder.minDistance(Integer.parseInt(txtCombinedMinDistance.getText()));
-                        if(btnCombinedDetectStopPoints.isSelected()) unicodeEncoder.detectStopPoints(Integer.parseInt(txtCombinedDetectStopPoints.getText()));
+                        if (btnCombinedKeys.isSelected()) unicodeEncoder.addKeys();
+                        if (btnCombinedMouseButtons.isSelected()) unicodeEncoder.addMouseButtons();
+                        if (btnCombinedMouseWheel.isSelected()) unicodeEncoder.addMouseWheel();
+                        if (btnCombinedAbsolutePath.isSelected()) unicodeEncoder.absolute();
+                        if (btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
+                        if (btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
+                        if (btnCombinedFixRate.isSelected())
+                            unicodeEncoder.fixedRate(Integer.parseInt(txtCombinedFixRate.getText()));
+                        if (btnCombinedMinDistance.isSelected())
+                            unicodeEncoder.minDistance(Integer.parseInt(txtCombinedMinDistance.getText()));
+                        if (btnCombinedDetectStopPoints.isSelected())
+                            unicodeEncoder.detectStopPoints(Integer.parseInt(txtCombinedDetectStopPoints.getText()));
                         String code = unicodeEncoder.encode(eventLog.getEventLog());
 
                         combinedObjectCodeGenerator.run(code);
@@ -1374,226 +1347,24 @@ public class MainController {
         });
     }
 
+    //
+    // TEMPLATES
+    //
 
-    /**
-     * Shows hint area with text from userData in button
-     *
-     * @param event - MouseEvent
-     */
-    @FXML
-    public void showCodeSample(MouseEvent event) {
-        ToggleButton btn = (ToggleButton) event.getSource();
-        areaCodeSample.setText((String) btn.getUserData());
-        areaCodeSample.setVisible(true);
-    }
-
-    /**
-     * Hides hint area
-     *
-     * @param event - MouseEvent
-     */
-    @FXML
-    public void hideCodeSample(MouseEvent event) {
-        areaCodeSample.setVisible(false);
-    }
-
-    //// template buttons
-    private List<Button> templateButtons = new ArrayList<>();
-
-    @FXML
-    private Button btnTemplateMouseClick;
-
-    @FXML
-    private Button btnTemplateMouseClickAt;
-
-    @FXML
-    private Button btnTemplateMouseGetMoveDelay;
-
-    @FXML
-    private Button btnTemplateMouseGetMultiplier;
-
-    @FXML
-    private Button btnTemplateMouseGetPressDelay;
-
-    @FXML
-    private Button btnTemplateMouseGetReleaseDelay;
-
-    @FXML
-    private Button btnTemplateMouseGetSpeed;
-
-    @FXML
-    private Button btnTemplateMouseGetWheelDelay;
-
-    @FXML
-    private Button btnTemplateMouseGetX;
-
-    @FXML
-    private Button btnTemplateMouseGetY;
-
-    @FXML
-    private Button btnTemplateMouseMove;
-
-    @FXML
-    private Button btnTemplateMouseMoveAbsolute;
-
-    @FXML
-    private Button btnTemplateMouseMoveAbsolute_D;
-
-    @FXML
-    private Button btnTemplateMouseMoveAndClick;
-
-    @FXML
-    private Button btnTemplateMouseMoveAndPress;
-
-    @FXML
-    private Button btnTemplateMouseMoveAndRelease;
-
-    @FXML
-    private Button btnTemplateMouseMoveAndWheel;
-
-    @FXML
-    private Button btnTemplateMouseMoveRelative;
-
-    @FXML
-    private Button btnTemplateMouseMoveRelative_D;
-
-    @FXML
-    private Button btnTemplateMouseMoveTo;
-
-    @FXML
-    private Button btnTemplateMousePress;
-
-    @FXML
-    private Button btnTemplateMousePressAt;
-
-    @FXML
-    private Button btnTemplateMouseRelease;
-
-    @FXML
-    private Button btnTemplateMouseReleaseAt;
-
-    @FXML
-    private Button btnTemplateMouseResetDelays;
-
-    @FXML
-    private Button btnTemplateMouseResetMultiplier;
-
-    @FXML
-    private Button btnTemplateMouseResetSpeed;
-
-    @FXML
-    private Button btnTemplateMouseSetDelays;
-
-    @FXML
-    private Button btnTemplateMouseSetMoveDelay;
-
-    @FXML
-    private Button btnTemplateMouseSetMultiplier;
-
-    @FXML
-    private Button btnTemplateMouseSetPressDelay;
-
-    @FXML
-    private Button btnTemplateMouseSetReleaseDelay;
-
-    @FXML
-    private Button btnTemplateMouseSetSpeed;
-
-    @FXML
-    private Button btnTemplateMouseSetWheelDelay;
-
-    @FXML
-    private Button btnTemplateMouseSetX;
-
-    @FXML
-    private Button btnTemplateMouseSetY;
-
-    @FXML
-    private Button btnTemplateMouseWheel;
-
-    @FXML
-    private Button btnTemplateMouseWheelAt;
-
-    ////////////// KEYBOARD
-    @FXML
-    private Button btnTemplateKeyGetMultiplier;
-
-    @FXML
-    private Button btnTemplateKeyGetPressDelay;
-
-    @FXML
-    private Button btnTemplateKeyGetReleaseDelay;
-
-    @FXML
-    private Button btnTemplateKeyGetSpeed;
-
-    @FXML
-    private Button btnTemplateKeyIsPressed;
-
-    @FXML
-    private Button btnTemplateKeyPress;
+    private List<Node> templateButtonNodes = new ArrayList<>();
 
     @FXML
-    private Button btnTemplateKeyRelease;
+    public VBox keyboardTemplateButtonContainer;
 
     @FXML
-    private Button btnTemplateKeyResetDelays;
+    public VBox languageTemplateButtonContainer;
 
     @FXML
-    private Button btnTemplateKeyResetMultiplier;
+    public VBox mouseTemplateButtonContainer;
 
     @FXML
-    private Button btnTemplateKeyResetSpeed;
+    public VBox systemTemplateButtonContainer;
 
-    @FXML
-    private Button btnTemplateKeyType;
-
-    @FXML
-    private Button btnTemplateKeySetDelays;
-
-    @FXML
-    private Button btnTemplateKeySetMultiplier;
-
-    @FXML
-    private Button btnTemplateKeySetPressDelay;
-
-    @FXML
-    private Button btnTemplateKeySetReleaseDelay;
-
-    @FXML
-    private Button btnTemplateKeySetSpeed;
-    // System
-    @FXML
-    private Button btnTemplateSystemSleep;
-
-    @FXML
-    private Button btnTemplateSystemPrint;
-
-    @FXML
-    private Button btnTemplateSystemPrintln;
-
-    @FXML
-    private Button btnTemplateSystemRegisterShortcut;
-
-    // Language
-
-    @FXML
-    private Button btnTemplateLanguageClass;
-
-    @FXML
-    private Button btnTemplateLanguageFunctionVoid;
-
-    @FXML
-    private Button btnTemplateLanguageFunctionEcho;
-
-    @FXML
-    private Button btnTemplateLanguageLoopForPlus;
-
-    @FXML
-    private Button btnTemplateLanguageLoopForMinus;
-
-    @FXML
-    private Button btnTemplateLanguageLoopWhile;
 
     /**
      * Initializes template buttons
@@ -1602,86 +1373,18 @@ public class MainController {
      * @param prop - property file
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
-        // mouse
-        templateButtons.add(btnTemplateMouseClick);
-        templateButtons.add(btnTemplateMouseClickAt);
-        templateButtons.add(btnTemplateMouseGetMoveDelay);
-        templateButtons.add(btnTemplateMouseGetMultiplier);
-        templateButtons.add(btnTemplateMouseGetPressDelay);
-        templateButtons.add(btnTemplateMouseGetReleaseDelay);
-        templateButtons.add(btnTemplateMouseGetSpeed);
-        templateButtons.add(btnTemplateMouseGetWheelDelay);
-        templateButtons.add(btnTemplateMouseGetX);
-        templateButtons.add(btnTemplateMouseGetY);
-        templateButtons.add(btnTemplateMouseMove);
-        templateButtons.add(btnTemplateMouseMoveAbsolute);
-        templateButtons.add(btnTemplateMouseMoveAbsolute_D);
-        templateButtons.add(btnTemplateMouseMoveAndClick);
-        templateButtons.add(btnTemplateMouseMoveAndPress);
-        templateButtons.add(btnTemplateMouseMoveAndRelease);
-        templateButtons.add(btnTemplateMouseMoveAndWheel);
-        templateButtons.add(btnTemplateMouseMoveRelative);
-        templateButtons.add(btnTemplateMouseMoveRelative_D);
-        templateButtons.add(btnTemplateMouseMoveTo);
-        templateButtons.add(btnTemplateMousePress);
-        templateButtons.add(btnTemplateMousePressAt);
-        templateButtons.add(btnTemplateMouseRelease);
-        templateButtons.add(btnTemplateMouseReleaseAt);
-        templateButtons.add(btnTemplateMouseResetDelays);
-        templateButtons.add(btnTemplateMouseResetMultiplier);
-        templateButtons.add(btnTemplateMouseResetSpeed);
-        templateButtons.add(btnTemplateMouseSetDelays);
-        templateButtons.add(btnTemplateMouseSetMoveDelay);
-        templateButtons.add(btnTemplateMouseSetMultiplier);
-        templateButtons.add(btnTemplateMouseSetPressDelay);
-        templateButtons.add(btnTemplateMouseSetReleaseDelay);
-        templateButtons.add(btnTemplateMouseSetSpeed);
-        templateButtons.add(btnTemplateMouseSetWheelDelay);
-        templateButtons.add(btnTemplateMouseSetX);
-        templateButtons.add(btnTemplateMouseSetY);
-        templateButtons.add(btnTemplateMouseWheel);
-        templateButtons.add(btnTemplateMouseWheelAt);
-
-
-        // keyboard
-        templateButtons.add(btnTemplateKeyGetMultiplier);
-        templateButtons.add(btnTemplateKeyGetPressDelay);
-        templateButtons.add(btnTemplateKeyGetReleaseDelay);
-        templateButtons.add(btnTemplateKeyGetSpeed);
-        templateButtons.add(btnTemplateKeyIsPressed);
-        templateButtons.add(btnTemplateKeyPress);
-        templateButtons.add(btnTemplateKeyRelease);
-        templateButtons.add(btnTemplateKeyType);
-        templateButtons.add(btnTemplateKeyResetDelays);
-        templateButtons.add(btnTemplateKeyResetMultiplier);
-        templateButtons.add(btnTemplateKeyResetSpeed);
-        templateButtons.add(btnTemplateKeySetDelays);
-        templateButtons.add(btnTemplateKeySetMultiplier);
-        templateButtons.add(btnTemplateKeySetPressDelay);
-        templateButtons.add(btnTemplateKeySetReleaseDelay);
-        templateButtons.add(btnTemplateKeySetSpeed);
-
-
-        // System
-        templateButtons.add(btnTemplateSystemSleep);
-        templateButtons.add(btnTemplateSystemPrint);
-        templateButtons.add(btnTemplateSystemPrintln);
-        templateButtons.add(btnTemplateSystemRegisterShortcut);
-
-        //Language
-        templateButtons.add(btnTemplateLanguageClass);
-        templateButtons.add(btnTemplateLanguageFunctionEcho);
-        templateButtons.add(btnTemplateLanguageFunctionVoid);
-        templateButtons.add(btnTemplateLanguageLoopForPlus);
-        templateButtons.add(btnTemplateLanguageLoopForMinus);
-        templateButtons.add(btnTemplateLanguageLoopWhile);
-
+        templateButtonNodes.addAll(keyboardTemplateButtonContainer.getChildren());
+        templateButtonNodes.addAll(mouseTemplateButtonContainer.getChildren());
+        templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
+        templateButtonNodes.addAll(systemTemplateButtonContainer.getChildren());
         // Set user data 'String[]' to buttons
         // [0] - hint text
         // [1] - code
-        for (Button b : templateButtons) {
-            b.setUserData(new String[]{prop.get(b.getId()),
-                    prop.get(b.getId() + "Code")});
+        for (Node n : templateButtonNodes) {
+            n.setUserData(new String[]{prop.get(n.getId()),
+                    prop.get(n.getId() + "Code")});
+            n.setOnMouseEntered(this::showCodeSample);
+            n.setOnMouseExited(this::hideCodeSample);
         }
     }
 
@@ -1696,9 +1399,7 @@ public class MainController {
         String[] data = (String[]) btn.getUserData();
         if (data == null)
             return;
-        int caretPosition = codeTextArea.getCaretPosition();
-        codeTextArea.insertText(caretPosition, data[1]);
-
+        putTextIntoCaretPosition(codeTextArea, data[1]);
     }
 
     /**
@@ -1707,8 +1408,8 @@ public class MainController {
      * @param event event from mouse hover button
      */
     @FXML
-    public void showCodeTemplate(MouseEvent event) {
-        Button btn = (Button) event.getSource();
+    private void showCodeSample(MouseEvent event) {
+        Node btn = (Node) event.getSource();
         String[] data = (String[]) btn.getUserData();
         if (data == null)
             return;
@@ -1722,14 +1423,8 @@ public class MainController {
      * @param event - MouseEvent
      */
     @FXML
-    public void hideCodeTemplate(MouseEvent event) {
+    private void hideCodeSample(MouseEvent event) {
         areaCodeSample.setVisible(false);
-    }
-
-    // Status control
-
-    private enum Status {
-        RUNNING, SUSPENDED
     }
 
     @FXML
@@ -1737,29 +1432,6 @@ public class MainController {
 
     @FXML
     private ToggleButton btnTogglesStatus;
-
-    private void setScriptStatus(Status status) {
-        if (status == Status.RUNNING) {
-            btnScriptStatus.setSelected(true);
-            btnScriptStatus
-                    .setText("Running:   " + application.getScript().getName());
-        } else if (status == Status.SUSPENDED) {
-            btnScriptStatus.setSelected(false);
-            btnScriptStatus
-                    .setText("Suspended: " + application.getScript().getName());
-        }
-    }
-
-    private void updateScriptStatus() {
-        if (btnScriptStatus.isSelected()) {
-            btnScriptStatus
-                    .setText("Running:   " + application.getScript().getName());
-        } else {
-            btnScriptStatus
-                    .setText("Suspended: " + application.getScript().getName());
-        }
-    }
-
 
     @FXML
     private void onBtnStatusScript(ActionEvent event) {

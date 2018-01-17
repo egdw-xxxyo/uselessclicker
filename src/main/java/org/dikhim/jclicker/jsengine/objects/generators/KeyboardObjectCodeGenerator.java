@@ -5,8 +5,13 @@ import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements KeyboardObject {
 
     public KeyboardObjectCodeGenerator(int lineSize) {
-        super("key", lineSize);
+        super("key", lineSize, KeyboardObject.class);
     }
+
+    public KeyboardObjectCodeGenerator() {
+        super("key", KeyboardObject.class);
+    }
+
 
     public int getMinDelay() {
         buildStringForCurrentMethod();

@@ -4,7 +4,11 @@ import org.dikhim.jclicker.jsengine.objects.CombinedObject;
 
 public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements CombinedObject{
     public CombinedObjectCodeGenerator(int lineSize) {
-        super("combined", lineSize);
+        super("combined", lineSize, CombinedObject.class);
+    }
+
+    public CombinedObjectCodeGenerator() {
+        super("combined",  CombinedObject.class);
     }
 
 

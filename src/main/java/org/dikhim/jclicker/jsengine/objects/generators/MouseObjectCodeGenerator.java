@@ -5,8 +5,13 @@ import org.dikhim.jclicker.jsengine.objects.MouseObject;
 public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
 
     public MouseObjectCodeGenerator(int lineSize) {
-        super("mouse", lineSize);
+        super("mouse", lineSize, MouseObject.class);
     }
+
+    public MouseObjectCodeGenerator() {
+        super("mouse",  MouseObject.class);
+    }
+
 
     public void button(String button, String action) {
         buildStringForCurrentMethod(button, action);

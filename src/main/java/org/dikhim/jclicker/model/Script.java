@@ -2,7 +2,6 @@ package org.dikhim.jclicker.model;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 
@@ -11,94 +10,79 @@ import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.util.output.Out;
 
 public class Script {
-	private File file;
-	private StringProperty stringProperty;
-	private String name;
-	public Script() {
-		stringProperty = new SimpleStringProperty();
-		name = "newFile.js";
-	}
+    private File file;
+    private StringProperty name = new SimpleStringProperty("");
+    private StringProperty code = new SimpleStringProperty("");
 
-	public Script(String filePath){
-		if(filePath.equals("")){
-			stringProperty = new SimpleStringProperty();
-			name = "newFile.js";
-		}else{
-			file = new File(filePath);
-			name = file.getName();
-			try {
-				this.stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
-			} catch (IOException e) {
-				Out.println(e.getMessage());
-			}
-		}
-	}
-	public Script(File file) {
-		stringProperty = new SimpleStringProperty();
-		this.file = file;
-		name = file.getName();
-		try {
-			this.stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
-		} catch (IOException e) {
-			Out.println(e.getMessage());
-		}
-	}
-	/**
-	 * @return the file
-	 */
-	public File getFile() {
-		return file;
-	}
-	/**
-	 * @param file
-	 *            the file to set
-	 */
-	public void setFile(File file) {
-		this.file = file;
-		name = file.getName();
-	}
-	/**
-	 * @return the stringProperty
-	 */
-	public StringProperty getStringProperty() {
-		return stringProperty;
-	}
-	/**
-	 * @param stringProperty
-	 *            the stringProperty to set
-	 */
-	public void setStringProperty(StringProperty stringProperty) {
-		this.stringProperty = stringProperty;
-	}
-	
-	public String getName() {
-		return name;
-	}
+    public Script() {
+        newScriptFile();
+    }
 
-	/**
-	 * Loads script without crating new StringProperty
-	 * @param path of a file
-	 */
-	public void loadScript(String path){
-		Out.println("Open file:" +path);
-		if(path.equals("")){
-			file = null;
-			name = "newFile.js";
-			stringProperty.set("");
-		}
-		File oldFile = file;
-		String oldName = name;
-		String oldText = stringProperty.getValue();
-		try {
-			file = new File(path);
-			name = file.getName();
-			stringProperty.set(FileUtils.readFileToString(file, "UTF-8"));
-		} catch (NullPointerException|IOException e) {
-			Out.println(e.getMessage());
-			file = oldFile;
-			name = oldName;
-			stringProperty.set(oldText);
-		}
-	}
+    void newScriptFile() {
+        this.file = null;
+        this.name.set("newFile.js");
+        this.code.set("");
+    }
 
+    void openScriptFile(File file) {
+        if (file != null) {
+            try {
+                String code = FileUtils.readFileToString(file, "UTF-8");
+                this.code.set(code);
+                this.file = file;
+                this.name.set(file.getName());
+            } catch (IOException e) {
+                Out.println(e.getMessage());
+            }
+        }
+    }
+
+    void saveScriptFile() {
+        if (file != null) {
+            saveScriptFileAs(file);
+        }
+    }
+
+    void saveScriptFileAs(File file) {
+        try {
+            String code = this.code.get();
+            FileUtils.writeStringToFile(file, code, "UTF-8");
+            this.file = file;
+            this.name.set(file.getName());
+        } catch (IOException e) {
+            Out.println(e.getMessage());
+        }
+    }
+
+
+    /**
+     * @return the code
+     */
+    public StringProperty codeProperty() {
+        return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(StringProperty code) {
+        this.code = code;
+    }
+
+
+    public String getCode() {
+        return code.get();
+    }
+
+    public String getName() {
+        return name.get();
+    }
+
+    StringProperty nameProperty() {
+        return name;
+    }
+
+    public boolean isOpened() {
+        return file != null;
+    }
 }

@@ -1,12 +1,19 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
+import java.util.List;
+
 public interface CodeGenerator {
 
     void buildStringForCurrentMethod(Object... params);
 
+    void invokeMethodWithDefaultParams(String methodName);
+
     String getGeneratedCode();
 
     int getLineSize();
+
+    List<String> getMethodsNames();
+
 
     String getObjectName();
 

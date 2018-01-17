@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class SimpleCodeGenerator implements CodeGenerator {
@@ -12,15 +13,21 @@ public class SimpleCodeGenerator implements CodeGenerator {
     private int lineSize;
     private StringBuilder sb;
 
-    private Method[] allMethods = getClass().getMethods();
+    private Method[] allMethods;
 
     private final int MIN_LINE_SIZE = 50;
 
-    public SimpleCodeGenerator(String objectName, int lineSize) {
+    public SimpleCodeGenerator(String objectName, int lineSize, Class c) {
         this.objectName = objectName;
         setLineSize(lineSize);
+        allMethods = c.getDeclaredMethods();
     }
 
+    public SimpleCodeGenerator(String objectName,  Class c) {
+        this.objectName = objectName;
+        allMethods = c.getDeclaredMethods();
+        setLineSize(MIN_LINE_SIZE);
+    }
 
     /**
      * Appends the specified string to character sequence.
@@ -131,15 +138,16 @@ public class SimpleCodeGenerator implements CodeGenerator {
             e.printStackTrace();
         }
     }
-
     public List<String> getMethodsNames() {
         List<String> methodsNames = new ArrayList<>();
         for (Method m : allMethods) {
-            if (Modifier.isPublic(m.getModifiers()) && !m.getName().equals("getMethodsNames") && !m.getName().equals("invokeMethodWithDefaultParams"))
-                methodsNames.add(mGenerator.getName());
+            if (Modifier.isPublic(m.getModifiers()))
+                methodsNames.add(m.getName());
         }
+        methodsNames.sort(Comparator.naturalOrder());
         return methodsNames;
     }
+
 
     private Method getMethodWithName(String methodName) {
         for (Method m : allMethods) {

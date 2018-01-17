@@ -5,8 +5,13 @@ import org.dikhim.jclicker.jsengine.objects.SystemObject;
 public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
 
     public SystemObjectCodeGenerator(int lineSize) {
-        super("system", lineSize);
+        super("system", lineSize, SystemObject.class);
     }
+
+    public SystemObjectCodeGenerator() {
+        super("system", SystemObject.class);
+    }
+
 
     @Override
     public int getMultipliedDelay(int delay) {
@@ -15,6 +20,11 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     public float getMultiplier() {
+        buildStringForCurrentMethod();
+        return 0;
+    }
+
+    public float getSpeed() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -28,10 +38,14 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     public void registerShortcut(String shortcut, String function) {
-        buildStringForCurrentMethod(shortcut,function);
+        buildStringForCurrentMethod(shortcut, function);
     }
 
     public void resetMultiplier() {
+        buildStringForCurrentMethod();
+    }
+
+    public void resetSpeed() {
         buildStringForCurrentMethod();
     }
 
@@ -39,7 +53,12 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
         buildStringForCurrentMethod(multiplier);
     }
 
+    public void setSpeed(float multiplier) {
+        buildStringForCurrentMethod(multiplier);
+    }
+
     public void sleep(int ms) {
         buildStringForCurrentMethod(ms);
     }
+
 }

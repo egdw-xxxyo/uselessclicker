@@ -6,6 +6,8 @@ public interface SystemObject {
 
     float getMultiplier();
 
+    float getSpeed();
+
     void print(String s);
 
     void println(String s);
@@ -14,7 +16,11 @@ public interface SystemObject {
 
     void resetMultiplier();
 
+    void resetSpeed();
+
     void setMultiplier(float multiplier);
+
+    void setSpeed(float multiplier);
 
     void sleep(int ms);
 }
