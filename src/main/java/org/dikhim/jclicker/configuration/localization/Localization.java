@@ -3,8 +3,6 @@ package org.dikhim.jclicker.configuration.localization;
 import org.dikhim.jclicker.configuration.values.StringValue;
 
 import javax.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Localization {

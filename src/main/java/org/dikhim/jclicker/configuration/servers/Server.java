@@ -6,7 +6,7 @@ import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
 public class Server {
-    String name;
+    private String name;
 
     private Preferences preferences;
 

@@ -7,7 +7,7 @@ import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
 public class Combined {
-    String name;
+    private String name;
 
     private Preferences preferences;
 

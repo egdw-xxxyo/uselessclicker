@@ -1,9 +1,5 @@
 package org.dikhim.jclicker.configuration.hotkeys;
 
-import org.dikhim.jclicker.configuration.recordingparams.Global;
-import org.dikhim.jclicker.configuration.values.StringValue;
-
-import javax.json.JsonArray;
 import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,15 +1,13 @@
 package org.dikhim.jclicker.configuration.servers;
 
-import org.dikhim.jclicker.configuration.localization.Language;
-
 import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Servers {
-
     private String name;
+
     private Preferences preferences;
     private final List<Server> serverList = new ArrayList<>();
 

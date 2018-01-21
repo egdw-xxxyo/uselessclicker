@@ -13,7 +13,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.prefs.Preferences;
 
-public class MainConfiguration implements Configuration {
+public class MainConfiguration  {
     private String name;
 
     private Preferences preferences;
