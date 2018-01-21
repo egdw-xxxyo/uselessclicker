@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.server.sockets;
 
+import javafx.collections.ObservableList;
+import org.dikhim.jclicker.server.Client;
 import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.util.WebUtils;
 
@@ -67,5 +69,10 @@ public class SocketServer implements Server {
         }else{
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public ObservableList<Client> getConnectedClients() {
+        return socketServer.getConnectedClients();
     }
 }

@@ -10,9 +10,10 @@ import java.io.*;
 import java.util.Map;
 
 public class ClientSocketThread extends Thread {
+    private SocketServerThread socketServerThread;
     private Socket socket = null;
-    PrintWriter out;
-    BufferedReader in;
+    private PrintWriter out;
+    private BufferedReader in;
 
 
     private int soTimeout = 500;
@@ -20,27 +21,28 @@ public class ClientSocketThread extends Thread {
     private int threadTimeOut = 60000; //1 minute
     private JsMouseObject mouse;
 
-    public ClientSocketThread(Socket socket) {
+    ClientSocketThread(Socket socket, SocketServerThread socketServerThread) {
         super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
+        this.socketServerThread = socketServerThread;
         try {
             Robot robot = new Robot();
             mouse = new JsMouseObject(robot);
             this.socket = socket;
             this.socket.setSoTimeout(soTimeout);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        } catch (SocketException e) {
+            mouse.setDelays(0);
+        } catch (AWTException | SocketException e) {
             e.printStackTrace();
         }
-        mouse.setDelays(0);
     }
 
     public void run() {
+        socketServerThread.addClient(this);
 
         try (PrintWriter out =
                      new PrintWriter(socket.getOutputStream(), true);
              BufferedReader in =
                      new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
 
             // create out/in streams
             this.out = out;
@@ -65,26 +67,20 @@ public class ClientSocketThread extends Thread {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            try {
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            close();
         }
     }
 
     // executes input line from client
 
-    public void execute(String params) {
+    private void execute(String params) {
         try {
             if (params == null || params.equals("bye")) {
                 // if null socket is closed
                 interrupt();
-                return;
             } else if (params.equals("hi")) {
                 // echo message "hi"
                 out.println("hi");
-                return;
             } else {
                 // execute params list
                 executeParams(WebUtils.queryToMap(params));
@@ -112,6 +108,16 @@ public class ClientSocketThread extends Thread {
                 break;
         }
 
+    }
+
+    private void close() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            socketServerThread.removeClient(this);
+        }
     }
 
 

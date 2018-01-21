@@ -1,5 +1,8 @@
 package org.dikhim.jclicker.server.sockets;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.output.Out;
 
@@ -11,7 +14,7 @@ import java.util.List;
 public class SocketServerThread extends Thread {
     private int port;
 
-    private List<ClientSocketThread> connectedClients = Collections.synchronizedList(new ArrayList<>());
+    private ObservableList<ClientSocketThread> connectedClients = FXCollections.observableArrayList();
 
     public SocketServerThread(int port) {
         super("SocketServerThread");
@@ -28,16 +31,9 @@ public class SocketServerThread extends Thread {
                 try {
                     Socket clientSocket = serverSocket.accept();
 
-
-                    ClientSocketThread clientThread = new ClientSocketThread(clientSocket);
-                    Out.println("Connected: " + clientThread.getName());
+                    ClientSocketThread clientThread = new ClientSocketThread(clientSocket,this);
                     clientThread.start();
-                    connectedClients.add(clientThread);
                 } catch (SocketTimeoutException timeOutE) {
-
-                    // Remove all disconnected clients threads
-                    removeDisconnectedClients();
-
                     // if server is interrupted
                     if (isInterrupted()) {
                         interruptClientsThreads();
@@ -52,7 +48,6 @@ public class SocketServerThread extends Thread {
     }
 
     public List<String> getClientsInfo() {
-        removeDisconnectedClients();
         List<String> clients = new ArrayList<>();
         for (Thread t : connectedClients) {
             clients.add(t.getName());
@@ -66,15 +61,22 @@ public class SocketServerThread extends Thread {
         }
     }
 
-    private synchronized void removeDisconnectedClients() {
-        List<Thread> disconnectedClients = new ArrayList<>();
-        for (Thread thread : connectedClients) {
-            if (!thread.isAlive() || thread.isInterrupted()) {
-                disconnectedClients.add(thread);
-                Out.println("Disconnected: " + thread.getName());
-            }
-        }
-        connectedClients.removeAll(disconnectedClients);
+    void addClient(ClientSocketThread clientSocketThread) {
+        Platform.runLater(() -> {
+            connectedClients.add(clientSocketThread);
+            Out.println("Connected: " + clientSocketThread.getName());
+        });
     }
 
+    void removeClient(ClientSocketThread clientSocketThread){
+        Platform.runLater(() -> {
+            connectedClients.remove(clientSocketThread);
+            Out.println("Disconnected: " + clientSocketThread.getName());
+        });
+    }
+
+
+    public ObservableList<ClientSocketThread> getConnectedClients() {
+        return connectedClients;
+    }
 }

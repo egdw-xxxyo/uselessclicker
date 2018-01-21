@@ -1,19 +1,20 @@
 package org.dikhim.jclicker.controllers;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
-import java.util.prefs.Preferences;
-
 import javafx.application.Platform;
-import javafx.event.EventHandler;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
@@ -23,23 +24,21 @@ import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
+import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
-import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
-import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
+import org.dikhim.jclicker.util.output.Out;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.prefs.Preferences;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
 public class MainController {
@@ -96,7 +95,6 @@ public class MainController {
                                     break;
                                 }
                             }
-                            System.out.println("lineSize: "+sb.length());
                             charArray = sb.reverse().toString().toCharArray();
                             sb = new StringBuilder("\n");
                             for (char ch : charArray) {
@@ -106,7 +104,6 @@ public class MainController {
                                     break;
                                 }
                             }
-                            System.out.println("spaces: "+sb.length());
                             codeTextArea.insertText(codeTextArea.getCaretPosition(), sb.toString());
                             e.consume();
                             break;

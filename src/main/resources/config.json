@@ -1,0 +1,56 @@
+{
+  "hotKeys": {
+    "runScript": {
+      "keys": "CONTROL ALT A"
+    },
+    "stopScript": {
+      "keys": "CONTROL ALT S"
+    },
+    "combinedControl": {
+      "keys": "F12"
+    },
+    "mouseControl": {
+      "keys": "CONTROL"
+    }
+  },
+  "localization": {
+    "defaultLanguage": "en",
+    "selectedLanguage": "ru_RU",
+    "languages": {
+      "Russian": {
+        "nativeName": "Русский",
+        "id": "ru_RU"
+      },
+      "English": {
+        "nativeName": "English",
+        "id": "en"
+      }
+    }
+  },
+  "recordingParams": {
+    "global": {
+      "fixedRate": 30,
+      "stopDetectionTime": 30,
+      "minDistance": 50
+    },
+    "combined": {
+      "fixedRate": 30,
+      "minDistance": 50,
+      "stopDetectionTime": 30,
+      "includeDelays": true,
+      "includeKeyboard": true,
+      "includeMouseButtons": true,
+      "includeMouseWheel": true,
+      "includeMouseMovement": true,
+      "absolute": true,
+      "fixedRateOn": false,
+      "minDistanceOn": false,
+      "stopDetectionOn": false
+    }
+  },
+  "servers": {
+    "socketServer": {
+      "port": 5000
+    }
+  }
+}
