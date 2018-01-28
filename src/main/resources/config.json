@@ -29,20 +29,21 @@
   },
   "recordingParams": {
     "global": {
-      "fixedRate": 30,
-      "stopDetectionTime": 30,
-      "minDistance": 50
+      "fixedRate": 32,
+      "stopDetectionTime": 32,
+      "minDistance": 52
     },
     "combined": {
-      "fixedRate": 30,
-      "minDistance": 50,
-      "stopDetectionTime": 30,
+      "controlKey": "F12",
+      "fixedRate": 31,
+      "minDistance": 51,
+      "stopDetectionTime": 101,
       "includeDelays": true,
       "includeKeyboard": true,
       "includeMouseButtons": true,
       "includeMouseWheel": true,
-      "includeMouseMovement": true,
       "absolute": true,
+      "relative": false,
       "fixedRateOn": false,
       "minDistanceOn": false,
       "stopDetectionOn": false

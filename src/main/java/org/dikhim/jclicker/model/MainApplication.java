@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 import org.jnativehook.GlobalScreen;
@@ -14,31 +15,32 @@ import org.jnativehook.NativeHookException;
 
 import javax.script.ScriptException;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("Duplicates")
 public class MainApplication {
+    MainConfiguration config;
+
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
     private Robot robot;
-
     private JSEngine jse;
-    private Script script = new Script();
 
+    private Script script = new Script();
     public Script getScript() {
         return script;
     }
 
-    public MainApplication() {
+    public MainApplication() throws FileNotFoundException {
         jNativeHookStart();
         createRobot();
         jse = new JSEngine(robot);
         bindProperties();
+
+        File file = new File(getClass().getResource("/config.json").getFile());
+        config = new MainConfiguration(file, "main");
     }
 
     public void newFile() {
@@ -170,5 +172,9 @@ public class MainApplication {
 
     public StringProperty statusProperty() {
         return status;
+    }
+
+    public MainConfiguration getConfig() {
+        return config;
     }
 }

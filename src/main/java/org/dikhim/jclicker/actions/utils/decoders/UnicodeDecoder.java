@@ -2,17 +2,16 @@ package org.dikhim.jclicker.actions.utils.decoders;
 
 import org.apache.commons.collections4.BidiMap;
 import org.dikhim.jclicker.actions.actions.*;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
-import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
+import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UnicodeDecoder implements ActionDecoder {
 
-    private BidiMap<ActionType, Character> actionCodes = UnicodeEncoder.getActionCodes();
-    private final int SHIFT = UnicodeEncoder.getSHIFT();
+    private BidiMap<ActionType, Character> actionCodes = UnicodeActionEncoder.getActionCodes();
+    private final int SHIFT = UnicodeActionEncoder.getSHIFT();
 
     public List<Action> decode(String code) {
         List<Action> actions = new ArrayList<>();

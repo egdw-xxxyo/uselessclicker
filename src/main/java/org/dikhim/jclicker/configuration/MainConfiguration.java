@@ -11,6 +11,7 @@ import javax.json.JsonReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class MainConfiguration  {
@@ -64,6 +65,13 @@ public class MainConfiguration  {
         servers.loadOrSetDefault();
     }
 
+    public void flush() {
+        try {
+            preferences.flush();
+        } catch (BackingStoreException e) {
+            e.printStackTrace();
+        }
+    }
     //
 
     public String getName() {

@@ -20,439 +20,202 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import sample.CodeTextArea?>
 
 <!--suppress ALL -->
+
 <BorderPane prefHeight="800.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
     
     <center>
        <GridPane BorderPane.alignment="CENTER">
           <columnConstraints>
-             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-             <ColumnConstraints/>
+             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+             <ColumnConstraints />
           </columnConstraints>
           <rowConstraints>
-             <RowConstraints/>
-             <RowConstraints maxHeight="734.0" minHeight="10.0" prefHeight="719.0" vgrow="SOMETIMES"/>
+             <RowConstraints />
+             <RowConstraints maxHeight="734.0" minHeight="10.0" prefHeight="719.0" vgrow="SOMETIMES" />
           </rowConstraints>
           <VBox>
-             <FlowPane maxWidth="1.7976931348623157E308" rowValignment="TOP"
-                       style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;"
-                       vgap="4.0">
-                <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0"
-                        mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0" text="New">
+             <FlowPane maxWidth="1.7976931348623157E308" rowValignment="TOP" style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" vgap="4.0">
+                <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0" mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0" text="New">
                    <font>
-                      <Font size="14.0"/>
+                      <Font size="14.0" />
                    </font>
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false"
-                        mnemonicParsing="false" onAction="#openFile" text="Open">
+                <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false" onAction="#openFile" text="Open">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false"
-                        mnemonicParsing="false" onAction="#saveFile" text="Save">
+                <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false" onAction="#saveFile" text="Save">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="save-as-script-button" fx:id="btnSaveFileAs" focusTraversable="false"
-                        mnemonicParsing="false" onAction="#saveFileAs" text="Save as">
+                <Button id="save-as-script-button" fx:id="btnSaveFileAs" focusTraversable="false" mnemonicParsing="false" onAction="#saveFileAs" text="Save as">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false"
-                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
-                        minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="Run">
+                <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="Run">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false"
-                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
-                        minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="Stop">
+                <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="Stop">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
-                <Button id="server-button" fx:id="btnShowServerWindow" focusTraversable="false"
-                        maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
-                        minWidth="32.0" mnemonicParsing="false" onAction="#showServerWindow" text="Server">
+                <Button id="server-button" fx:id="btnShowServerWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showServerWindow" text="Server">
                    <styleClass>
-                      <String fx:value="script-button"/>
-                      <String fx:value="gray-element"/>
+                      <String fx:value="script-button" />
+                      <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
              </FlowPane>
              <HBox>
-                <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"
-                              onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton"
-                              text="Running:   newFile.js">
+                <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton" text="Running:   newFile.js">
                    <font>
-                      <Font name="FreeMono Bold" size="13.0"/>
+                      <Font name="FreeMono Bold" size="13.0" />
                    </font>
                 </ToggleButton>
-                <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                              onAction="#onBtnStatusToggles" styleClass="templateButton"
-                              text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease"
-                              HBox.hgrow="SOMETIMES">
+                <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnStatusToggles" styleClass="templateButton" text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
                    <font>
-                      <Font name="FreeMono Bold" size="13.0"/>
+                      <Font name="FreeMono Bold" size="13.0" />
                    </font>
                 </ToggleButton>
              </HBox>
           </VBox>
           <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">
              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                <SplitPane dividerPositions="0.8" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0"
-                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <SplitPane dividerPositions="0.8" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                      <TextArea fx:id="codeTextArea" maxHeight="1.7976931348623157E308"
-                                styleClass="code-text-area" text="....&#10;wwww&#10;AbAb"
-                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                         <font>
-                            <Font name="Monospaced Bold" size="13.0"/>
-                         </font>
-                      </TextArea>
+                     <CodeTextArea fx:id="codeTextArea" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                    </AnchorPane>
                    <AnchorPane minHeight="0.0" minWidth="0.0">
-                      <TextArea fx:id="outTextArea" styleClass="code-text-area" text="....&#10;wwww&#10;"
-                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                                AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <TextArea fx:id="outTextArea" styleClass="code-text-area" text="....&#10;wwww&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                          <font>
-                            <Font name="Monospaced Bold" size="13.0"/>
+                            <Font name="Monospaced Bold" size="13.0" />
                          </font>
                       </TextArea>
                    </AnchorPane>
                 </SplitPane>
-                <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false"
-                          maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0"
-                          prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false"
-                          wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0"
-                          AnchorPane.topAnchor="10.0">
+                <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                    <effect>
-                      <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0"/>
+                      <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
                    </effect>
                    <font>
-                      <Font name="FreeMono Bold" size="13.0"/>
+                      <Font name="FreeMono Bold" size="13.0" />
                    </font>
                 </TextArea>
              </AnchorPane>
              <AnchorPane id="insertCodePane" fx:id="templatePane">
-                <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0"
-                           AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                    <panes>
-                      <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane"
-                                  text="Record events">
+                      <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Record events">
                          <Accordion styleClass="childAccordion">
                             <panes>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Keyboard">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Keyboard">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false" onAction="#insertKeyName"
-                                                      styleClass="templateButton" text="key name"/>
-                                        <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false" onAction="#insertKeyCode"
-                                                      styleClass="templateButton"
-                                                      text="press/release"/>
-                                        <ToggleButton fx:id="btnInsertKeyCodeWithDelay"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertKeyCodeWithDelay"
-                                                      styleClass="templateButton"
-                                                      text="press/release + sleep"/>
+                                        <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyName" styleClass="templateButton" text="key name" />
+                                        <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCode" styleClass="templateButton" text="press/release" />
+                                        <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" styleClass="templateButton" text="press/release + sleep" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
-                                           prefWidth="200.0" styleClass="insert-code-titled-pane"
-                                           text="Mouse basics">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="Mouse basics">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertMouseName"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseName"
-                                                      styleClass="templateButton" text="button name"/>
-                                        <ToggleButton fx:id="btnInsertMouseClick"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseClick"
-                                                      styleClass="templateButton" text="click"/>
-                                        <ToggleButton fx:id="btnInsertMouseClickAt"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseClickAt"
-                                                      styleClass="templateButton" text="click at"/>
-                                        <ToggleButton fx:id="btnInsertMouseMove"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseMove"
-                                                      styleClass="templateButton" text="move"/>
-                                        <ToggleButton fx:id="btnInsertMouseMoveTo"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseMoveTo"
-                                                      styleClass="templateButton" text="moveTo"/>
-                                        <ToggleButton fx:id="btnInsertMousePress"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMousePress"
-                                                      styleClass="templateButton" text="press"/>
-                                        <ToggleButton fx:id="btnInsertMousePressAt"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMousePressAt"
-                                                      styleClass="templateButton" text="press at"/>
-                                        <ToggleButton fx:id="btnInsertMouseRelease"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseRelease"
-                                                      styleClass="templateButton" text="release"/>
-                                        <ToggleButton fx:id="btnInsertMouseReleaseAt"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseReleaseAt"
-                                                      styleClass="templateButton" text="releaseAt"/>
-                                        <ToggleButton fx:id="btnInsertMouseWheel"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseWheel"
-                                                      styleClass="templateButton" text="wheel"/>
+                                        <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseName" styleClass="templateButton" text="button name" />
+                                        <ToggleButton fx:id="btnInsertMouseClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClick" styleClass="templateButton" text="click" />
+                                        <ToggleButton fx:id="btnInsertMouseClickAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClickAt" styleClass="templateButton" text="click at" />
+                                        <ToggleButton fx:id="btnInsertMouseMove" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMove" styleClass="templateButton" text="move" />
+                                        <ToggleButton fx:id="btnInsertMouseMoveTo" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMoveTo" styleClass="templateButton" text="moveTo" />
+                                        <ToggleButton fx:id="btnInsertMousePress" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePress" styleClass="templateButton" text="press" />
+                                        <ToggleButton fx:id="btnInsertMousePressAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePressAt" styleClass="templateButton" text="press at" />
+                                        <ToggleButton fx:id="btnInsertMouseRelease" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelease" styleClass="templateButton" text="release" />
+                                        <ToggleButton fx:id="btnInsertMouseReleaseAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseReleaseAt" styleClass="templateButton" text="releaseAt" />
+                                        <ToggleButton fx:id="btnInsertMouseWheel" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseWheel" styleClass="templateButton" text="wheel" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
-                                           prefWidth="200.0" styleClass="insert-code-titled-pane"
-                                           text="Mouse 'button/wheel'">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="Mouse 'button/wheel'">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertMouseCode"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseCode"
-                                                      styleClass="templateButton"
-                                                      text="buttonAt/wheelAt"/>
-                                        <ToggleButton fx:id="btnInsertMouseCodeWithDelay"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseCodeWithDelay"
-                                                      styleClass="templateButton"
-                                                      text="buttonAt/wheelAt + sleep"/>
-                                        <ToggleButton fx:id="btnInsertMouseRelativeCode"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseRelativeCode"
-                                                      styleClass="templateButton"
-                                                      text="moveAndButton/moveAndWheel"/>
+                                        <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCode" styleClass="templateButton" text="buttonAt/wheelAt" />
+                                        <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" styleClass="templateButton" text="buttonAt/wheelAt + sleep" />
+                                        <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelativeCode" styleClass="templateButton" text="moveAndButton/moveAndWheel" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
-                                           prefWidth="200.0" styleClass="insert-code-titled-pane"
-                                           text="Mouse 'click'">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="Mouse 'click'">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertMouseCodeClick"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertMouseCodeClick"
-                                                      styleClass="templateButton"
-                                                      text="pressAt/releaseAt + clickAt"/>
+                                        <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeClick" styleClass="templateButton" text="pressAt/releaseAt + clickAt" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Mouse movement">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Mouse movement">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertAbsolutePath"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertAbsolutePath"
-                                                      styleClass="templateButton"
-                                                      text="Absolute path"/>
-                                        <ToggleButton fx:id="btnInsertRelativePath"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertRelativePath"
-                                                      styleClass="templateButton"
-                                                      text="Relative path"/>
-                                        <ToggleButton fx:id="btnInsertAbsolutePathWithDelays"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertAbsolutePathWithDelays"
-                                                      styleClass="templateButton"
-                                                      text="Absolute path with delays"/>
-                                        <ToggleButton fx:id="btnInsertRelativePathWithDelays"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertRelativePathWithDelays"
-                                                      styleClass="templateButton"
-                                                      text="Relative path with delays"/>
-                                        <ToggleButton fx:id="btnInsertAbsolutePathFixRate"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                      onAction="#insertAbsolutePathFixRate"
-                                                      styleClass="templateButton"
-                                                      text="Absolute/fix rate">
+                                        <ToggleButton fx:id="btnInsertAbsolutePath" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAbsolutePath" styleClass="templateButton" text="Absolute path" />
+                                        <ToggleButton fx:id="btnInsertRelativePath" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePath" styleClass="templateButton" text="Relative path" />
+                                        <ToggleButton fx:id="btnInsertAbsolutePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertAbsolutePathWithDelays" styleClass="templateButton" text="Absolute path with delays" />
+                                        <ToggleButton fx:id="btnInsertRelativePathWithDelays" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertRelativePathWithDelays" styleClass="templateButton" text="Relative path with delays" />
+                                        <ToggleButton fx:id="btnInsertAbsolutePathFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#insertAbsolutePathFixRate" styleClass="templateButton" text="Absolute/fix rate">
                                            <graphic>
-                                              <TextField fx:id="txtAbsolutePathRate" maxWidth="40.0"
-                                                         text="30"/>
+                                              <TextField fx:id="txtAbsolutePathRate" maxWidth="40.0" text="30" />
                                            </graphic>
                                         </ToggleButton>
-                                        <ToggleButton fx:id="btnInsertRelativePathFixRate"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                      onAction="#insertRelativePathFixRate"
-                                                      styleClass="templateButton"
-                                                      text="Relative/fix rate">
+                                        <ToggleButton fx:id="btnInsertRelativePathFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#insertRelativePathFixRate" styleClass="templateButton" text="Relative/fix rate">
                                            <graphic>
-                                              <TextField fx:id="txtRelativePathRate" maxWidth="40.0"
-                                                         text="30"/>
+                                              <TextField fx:id="txtRelativePathRate" maxWidth="40.0" text="30" />
                                            </graphic>
                                         </ToggleButton>
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Combined">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Combined">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox>
-                                        <ToggleButton fx:id="btnInsertCombinedLog"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#insertCombinedLog"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      styleClass="templateButton" text="Activate"/>
-                                        <Label styleClass="combined-label" text="Control key"/>
-                                        <TextField fx:id="txtCombinedControl"
-                                                   styleClass="templateButton" text="F12"/>
-                                        <Label styleClass="combined-label" text="Keyboard"/>
-                                        <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false"
-                                                      maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      selected="true" styleClass="templateButton"
-                                                      text="Keyboard keys"/>
-                                        <Label styleClass="combined-label" text="Mouse"/>
-                                        <ToggleButton fx:id="btnCombinedMouseButtons"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      selected="true" styleClass="templateButton"
-                                                      text="Mouse buttons"/>
-                                        <ToggleButton fx:id="btnCombinedMouseWheel"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      selected="true" styleClass="templateButton"
-                                                      text="Mouse wheel"/>
-                                        <Label styleClass="combined-label" text="Movement"/>
-                                        <ToggleButton fx:id="btnCombinedAbsolutePath"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#onCombinedAbsolutePathAction"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      selected="true" styleClass="templateButton"
-                                                      text="Absolute path"/>
-                                        <ToggleButton fx:id="btnCombinedRelativePath"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      onAction="#onCombinedRelativePathAction"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      styleClass="templateButton"
-                                                      text="Relative path"/>
-                                        <Label styleClass="combined-label" text="Other"/>
-                                        <ToggleButton fx:id="btnCombinedDelays"
-                                                      focusTraversable="false" maxHeight="100.0"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      prefHeight="100.0" prefWidth="250.0"
-                                                      selected="true" styleClass="templateButton"
-                                                      text="Delays"/>
-                                        <ToggleButton fx:id="btnCombinedFixRate"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                      styleClass="templateButton" text="fixed rate">
+                                        <ToggleButton fx:id="btnInsertCombinedLog" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertCombinedLog" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Activate" />
+                                        <Label styleClass="combined-label" text="Control key" />
+                                        <TextField fx:id="txtCombinedControl" styleClass="templateButton" text="F12" />
+                                        <Label styleClass="combined-label" text="Keyboard" />
+                                        <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Keyboard keys" />
+                                        <Label styleClass="combined-label" text="Mouse" />
+                                        <ToggleButton fx:id="btnCombinedMouseButtons" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse buttons" />
+                                        <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse wheel" />
+                                        <Label styleClass="combined-label" text="Movement" />
+                                        <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Absolute path" />
+                                        <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Relative path" />
+                                        <Label styleClass="combined-label" text="Other" />
+                                        <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Delays" />
+                                        <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="fixed rate">
                                            <graphic>
-                                              <TextField fx:id="txtCombinedFixRate" maxWidth="50.0"
-                                                         text="30"/>
+                                              <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
                                            </graphic>
                                         </ToggleButton>
-                                        <ToggleButton fx:id="btnCombinedMinDistance"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                      styleClass="templateButton" text="min distance">
+                                        <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="min distance">
                                            <graphic>
-                                              <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0"
-                                                         text="5"/>
+                                              <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" text="5" />
                                            </graphic>
                                         </ToggleButton>
-                                        <ToggleButton fx:id="btnCombinedDetectStopPoints"
-                                                      focusTraversable="false"
-                                                      maxWidth="1.7976931348623157E308"
-                                                      mnemonicParsing="false"
-                                                      nodeOrientation="LEFT_TO_RIGHT"
-                                                      styleClass="templateButton"
-                                                      text="detect stop points">
+                                        <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="detect stop points">
                                            <graphic>
-                                              <TextField fx:id="txtCombinedDetectStopPoints"
-                                                         maxWidth="50.0" text="100"/>
+                                              <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" text="100" />
                                            </graphic>
                                         </ToggleButton>
                                      </VBox>
@@ -461,252 +224,101 @@
                             </panes>
                          </Accordion>
                       </TitledPane>
-                      <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane"
-                                  text="Templates">
+                      <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Templates">
                          <Accordion styleClass="childAccordion">
                             <panes>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Mouse">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Mouse">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox fx:id="mouseTemplateButtonContainer">
-                                        <Button fx:id="btnTemplateMouseClick"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="click"/>
-                                        <Button fx:id="btnTemplateMouseClickAt"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="clickAt"/>
-                                        <Button fx:id="btnTemplateMouseGetMoveDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getMoveDelay"/>
-                                        <Button fx:id="btnTemplateMouseGetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getMultiplier"/>
-                                        <Button fx:id="btnTemplateMouseGetPressDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getPressDelay"/>
-                                        <Button fx:id="btnTemplateMouseGetReleaseDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getReleaseDelay"/>
-                                        <Button fx:id="btnTemplateMouseGetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getSpeed"/>
-                                        <Button fx:id="btnTemplateMouseGetWheelDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getWheelDelay"/>
-                                        <Button fx:id="btnTemplateMouseGetX"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getX"/>
-                                        <Button fx:id="btnTemplateMouseGetY"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getY"/>
-                                        <Button fx:id="btnTemplateMouseMove"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="move"/>
-                                        <Button fx:id="btnTemplateMouseMoveAbsolute"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAbsolute"/>
-                                        <Button fx:id="btnTemplateMouseMoveAbsolute_D"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAbsolute_D"/>
-                                        <Button fx:id="btnTemplateMouseMoveAndClick"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAndClick"/>
-                                        <Button fx:id="btnTemplateMouseMoveAndPress"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAndPress"/>
-                                        <Button fx:id="btnTemplateMouseMoveAndRelease"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAndRelease"/>
-                                        <Button fx:id="btnTemplateMouseMoveAndWheel"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveAndWheel"/>
-                                        <Button fx:id="btnTemplateMouseMoveRelative"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveRelative"/>
-                                        <Button fx:id="btnTemplateMouseMoveRelative_D"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveRelative_D"/>
-                                        <Button fx:id="btnTemplateMouseMoveTo"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="moveTo"/>
-                                        <Button fx:id="btnTemplateMousePress"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="press"/>
-                                        <Button fx:id="btnTemplateMousePressAt"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="pressAt"/>
-                                        <Button fx:id="btnTemplateMouseRelease"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="release"/>
-                                        <Button fx:id="btnTemplateMouseReleaseAt"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="releaseAt"/>
-                                        <Button fx:id="btnTemplateMouseResetDelays"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetDelays"/>
-                                        <Button fx:id="btnTemplateMouseResetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetMultiplier"/>
-                                        <Button fx:id="btnTemplateMouseResetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetSpeed"/>
-                                        <Button fx:id="btnTemplateMouseSetDelays"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setDelays"/>
-                                        <Button fx:id="btnTemplateMouseSetMoveDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setMoveDelay"/>
-                                        <Button fx:id="btnTemplateMouseSetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setMultiplier"/>
-                                        <Button fx:id="btnTemplateMouseSetPressDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setPressDelay"/>
-                                        <Button fx:id="btnTemplateMouseSetReleaseDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setReleaseDelay"/>
-                                        <Button fx:id="btnTemplateMouseSetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setSpeed"/>
-                                        <Button fx:id="btnTemplateMouseSetWheelDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setWheelDelay"/>
-                                        <Button fx:id="btnTemplateMouseSetX"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setX"/>
-                                        <Button fx:id="btnTemplateMouseSetY"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setY"/>
-                                        <Button fx:id="btnTemplateMouseWheel"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="wheel"/>
-                                        <Button fx:id="btnTemplateMouseWheelAt"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="wheelAt"/>
+                                        <Button fx:id="btnTemplateMouseClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="click" />
+                                        <Button fx:id="btnTemplateMouseClickAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="clickAt" />
+                                        <Button fx:id="btnTemplateMouseGetMoveDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMoveDelay" />
+                                        <Button fx:id="btnTemplateMouseGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
+                                        <Button fx:id="btnTemplateMouseGetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getPressDelay" />
+                                        <Button fx:id="btnTemplateMouseGetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getReleaseDelay" />
+                                        <Button fx:id="btnTemplateMouseGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
+                                        <Button fx:id="btnTemplateMouseGetWheelDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getWheelDelay" />
+                                        <Button fx:id="btnTemplateMouseGetX" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getX" />
+                                        <Button fx:id="btnTemplateMouseGetY" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getY" />
+                                        <Button fx:id="btnTemplateMouseMove" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="move" />
+                                        <Button fx:id="btnTemplateMouseMoveAbsolute" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAbsolute" />
+                                        <Button fx:id="btnTemplateMouseMoveAbsolute_D" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAbsolute_D" />
+                                        <Button fx:id="btnTemplateMouseMoveAndClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndClick" />
+                                        <Button fx:id="btnTemplateMouseMoveAndPress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndPress" />
+                                        <Button fx:id="btnTemplateMouseMoveAndRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndRelease" />
+                                        <Button fx:id="btnTemplateMouseMoveAndWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndWheel" />
+                                        <Button fx:id="btnTemplateMouseMoveRelative" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveRelative" />
+                                        <Button fx:id="btnTemplateMouseMoveRelative_D" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveRelative_D" />
+                                        <Button fx:id="btnTemplateMouseMoveTo" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveTo" />
+                                        <Button fx:id="btnTemplateMousePress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="press" />
+                                        <Button fx:id="btnTemplateMousePressAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="pressAt" />
+                                        <Button fx:id="btnTemplateMouseRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="release" />
+                                        <Button fx:id="btnTemplateMouseReleaseAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="releaseAt" />
+                                        <Button fx:id="btnTemplateMouseResetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetDelays" />
+                                        <Button fx:id="btnTemplateMouseResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
+                                        <Button fx:id="btnTemplateMouseResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
+                                        <Button fx:id="btnTemplateMouseSetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setDelays" />
+                                        <Button fx:id="btnTemplateMouseSetMoveDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMoveDelay" />
+                                        <Button fx:id="btnTemplateMouseSetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
+                                        <Button fx:id="btnTemplateMouseSetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setPressDelay" />
+                                        <Button fx:id="btnTemplateMouseSetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setReleaseDelay" />
+                                        <Button fx:id="btnTemplateMouseSetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
+                                        <Button fx:id="btnTemplateMouseSetWheelDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setWheelDelay" />
+                                        <Button fx:id="btnTemplateMouseSetX" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setX" />
+                                        <Button fx:id="btnTemplateMouseSetY" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setY" />
+                                        <Button fx:id="btnTemplateMouseWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheel" />
+                                        <Button fx:id="btnTemplateMouseWheelAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheelAt" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Keyboard">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Keyboard">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox fx:id="keyboardTemplateButtonContainer">
-                                        <Button fx:id="btnTemplateKeyGetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getMultiplier"/>
-                                        <Button fx:id="btnTemplateKeyGetPressDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getPressDelay"/>
-                                        <Button fx:id="btnTemplateKeyGetReleaseDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getReleaseDelay"/>
-                                        <Button fx:id="btnTemplateKeyGetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getSpeed"/>
-                                        <Button fx:id="btnTemplateKeyIsPressed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="isPressed"/>
-                                        <Button fx:id="btnTemplateKeyPress"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="press"/>
-                                        <Button fx:id="btnTemplateKeyRelease"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="release"/>
-                                        <Button fx:id="btnTemplateKeyResetDelays"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetDelays"/>
-                                        <Button fx:id="btnTemplateKeyResetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetMultiplier"/>
-                                        <Button fx:id="btnTemplateKeyResetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetSpeed"/>
-                                        <Button fx:id="btnTemplateKeyType"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="type"/>
-                                        <Button fx:id="btnTemplateKeySetDelays"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setDelays"/>
-                                        <Button fx:id="btnTemplateKeySetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setMultiplier"/>
-                                        <Button fx:id="btnTemplateKeySetPressDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setPressDelay"/>
-                                        <Button fx:id="btnTemplateKeySetReleaseDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setReleaseDelay"/>
-                                        <Button fx:id="btnTemplateKeySetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setSpeed"/>
+                                        <Button fx:id="btnTemplateKeyGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
+                                        <Button fx:id="btnTemplateKeyGetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getPressDelay" />
+                                        <Button fx:id="btnTemplateKeyGetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getReleaseDelay" />
+                                        <Button fx:id="btnTemplateKeyGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
+                                        <Button fx:id="btnTemplateKeyIsPressed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="isPressed" />
+                                        <Button fx:id="btnTemplateKeyPress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="press" />
+                                        <Button fx:id="btnTemplateKeyRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="release" />
+                                        <Button fx:id="btnTemplateKeyResetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetDelays" />
+                                        <Button fx:id="btnTemplateKeyResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
+                                        <Button fx:id="btnTemplateKeyResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
+                                        <Button fx:id="btnTemplateKeyType" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="type" />
+                                        <Button fx:id="btnTemplateKeySetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setDelays" />
+                                        <Button fx:id="btnTemplateKeySetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
+                                        <Button fx:id="btnTemplateKeySetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setPressDelay" />
+                                        <Button fx:id="btnTemplateKeySetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setReleaseDelay" />
+                                        <Button fx:id="btnTemplateKeySetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="System">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="System">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox fx:id="systemTemplateButtonContainer">
-                                        <Button fx:id="btnTemplateSystemGetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getMultiplier"/>
-                                        <Button fx:id="btnTemplateSystemGetMultipliedDelay"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getMultipliedDelay"/>
-                                        <Button fx:id="btnTemplateSystemGetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="getSpeed"/>
-                                        <Button fx:id="btnTemplateSystemPrint"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="print"/>
-                                        <Button fx:id="btnTemplateSystemPrintln"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="println"/>
-                                        <Button fx:id="btnTemplateSystemRegisterShortcut"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="registerShortcut"/>
-                                        <Button fx:id="btnTemplateSystemResetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetMultiplier"/>
-                                        <Button fx:id="btnTemplateSystemResetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="resetSpeed"/>
-                                        <Button fx:id="btnTemplateSystemSetMultiplier"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setMultiplier"/>
-                                        <Button fx:id="btnTemplateSystemSetSpeed"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="setSpeed"/>
-                                        <Button fx:id="btnTemplateSystemSleep"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="sleep"/>
+                                        <Button fx:id="btnTemplateSystemGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
+                                        <Button fx:id="btnTemplateSystemGetMultipliedDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultipliedDelay" />
+                                        <Button fx:id="btnTemplateSystemGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
+                                        <Button fx:id="btnTemplateSystemPrint" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="print" />
+                                        <Button fx:id="btnTemplateSystemPrintln" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="println" />
+                                        <Button fx:id="btnTemplateSystemRegisterShortcut" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="registerShortcut" />
+                                        <Button fx:id="btnTemplateSystemResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
+                                        <Button fx:id="btnTemplateSystemResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
+                                        <Button fx:id="btnTemplateSystemSetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
+                                        <Button fx:id="btnTemplateSystemSetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
+                                        <Button fx:id="btnTemplateSystemSleep" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="sleep" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>
-                               <TitledPane animated="false" focusTraversable="false"
-                                           styleClass="insert-code-titled-pane" text="Language">
-                                  <ScrollPane fitToWidth="true"
-                                              hbarPolicy="NEVER">
+                               <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Language">
+                                  <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                      <VBox fx:id="languageTemplateButtonContainer">
-                                        <Button fx:id="btnTemplateLanguageClass"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="class"/>
-                                        <Button fx:id="btnTemplateLanguageFunctionEcho"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="function 'echo'"/>
-                                        <Button fx:id="btnTemplateLanguageFunctionVoid"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="function 'void'"/>
-                                        <Button fx:id="btnTemplateLanguageLoopForPlus"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="loop 'for' i++"/>
-                                        <Button fx:id="btnTemplateLanguageLoopForMinus"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="loop 'for' i--"/>
-                                        <Button fx:id="btnTemplateLanguageLoopWhile"
-                                                mnemonicParsing="false" onAction="#insertTemplate"
-                                                styleClass="templateButton" text="loop 'while'"/>
+                                        <Button fx:id="btnTemplateLanguageClass" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="class" />
+                                        <Button fx:id="btnTemplateLanguageFunctionEcho" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="function 'echo'" />
+                                        <Button fx:id="btnTemplateLanguageFunctionVoid" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="function 'void'" />
+                                        <Button fx:id="btnTemplateLanguageLoopForPlus" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'for' i++" />
+                                        <Button fx:id="btnTemplateLanguageLoopForMinus" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'for' i--" />
+                                        <Button fx:id="btnTemplateLanguageLoopWhile" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'while'" />
                                      </VBox>
                                   </ScrollPane>
                                </TitledPane>

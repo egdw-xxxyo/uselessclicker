@@ -12,7 +12,7 @@ import static org.dikhim.jclicker.actions.actions.ActionType.*;
 
 
 @SuppressWarnings("Duplicates")
-public class UnicodeEncoder extends AbstractActionEncoder {
+public class UnicodeActionEncoder extends AbstractActionEncoder {
 
 
     private static BidiMap<ActionType, Character> actionCodes = new DualHashBidiMap<>();

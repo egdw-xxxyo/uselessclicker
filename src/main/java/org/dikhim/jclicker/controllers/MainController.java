@@ -1,6 +1,7 @@
 package org.dikhim.jclicker.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -10,12 +11,13 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
+import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.ClickerMain;
 import org.dikhim.jclicker.actions.*;
@@ -25,12 +27,15 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
-import org.dikhim.jclicker.actions.utils.encoders.UnicodeEncoder;
+import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
+import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.dikhim.jclicker.util.output.Out;
+import sample.CodeTextArea;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +64,7 @@ public class MainController {
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
+    private EventsRecorder eventsRecorder = new EventsRecorder(mainApplication.getConfig().getRecordingParams());
 
     @FXML
     private void initialize() {
@@ -69,46 +75,6 @@ public class MainController {
 
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
-
-        // consume keyboard actions for textArea while variable not true
-        codeTextArea.addEventFilter(KeyEvent.KEY_PRESSED,
-                e -> {
-                    if (!enableCodeType) {
-                        e.consume();
-                        return;
-                    }
-
-                    switch (e.getCode()) {
-                        case TAB:
-                            String s = "    ";
-                            codeTextArea.insertText(codeTextArea.getCaretPosition(), s);
-                            e.consume();
-                            break;
-                        case ENTER:
-                            char[] charArray = codeTextArea.getText().toCharArray();
-                            int caret = codeTextArea.getCaretPosition();
-                            StringBuilder sb = new StringBuilder();
-                            for (int i = caret-1; i >= 0; i--) {
-                                if (charArray[i] != '\n') {
-                                    sb.append(charArray[i]);
-                                } else {
-                                    break;
-                                }
-                            }
-                            charArray = sb.reverse().toString().toCharArray();
-                            sb = new StringBuilder("\n");
-                            for (char ch : charArray) {
-                                if(ch == ' ') {
-                                    sb.append(ch);
-                                }else {
-                                    break;
-                                }
-                            }
-                            codeTextArea.insertText(codeTextArea.getCaretPosition(), sb.toString());
-                            e.consume();
-                            break;
-                    }
-                });
 
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -130,6 +96,53 @@ public class MainController {
                 new ShortcutEqualsListener("stopScript", "CONTROL ALT S", "PRESS", (e) -> {
                     Platform.runLater(this::stopScript);
                 }));
+
+        bindConfig();
+
+    }
+
+
+    private void bindConfig() {
+        StringConverter<Number> stringConverter = new StringConverter<Number>() {
+            @Override
+            public String toString(Number object) {
+                try {
+                    return String.valueOf(object);
+                } catch (Exception e) {
+                    System.out.println(object);
+                    return "";
+                }
+            }
+
+
+            @Override
+            public Integer fromString(String string) {
+                try {
+                    return Integer.parseInt(string);
+                } catch (Exception e) {
+                    System.out.println(string);
+                    return 0;
+                }
+            }
+        };
+
+        MainConfiguration config = mainApplication.getConfig();
+        Combined combined = config.getRecordingParams().getCombined();
+        Bindings.bindBidirectional(txtCombinedControl.textProperty(), combined.getControlKeyValue().valueProperty());
+        Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combined.getFixedRateValue().valueProperty(), stringConverter);
+        Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combined.getMinDistanceValue().valueProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combined.getStopDetectionTimeValue().valueProperty(), new NumberStringConverter());
+
+        Bindings.bindBidirectional(btnCombinedDelays.selectedProperty(), combined.getIncludeDelaysValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedKeys.selectedProperty(), combined.getIncludeKeyboardValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedMouseButtons.selectedProperty(), combined.getIncludeMouseButtonsValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedMouseWheel.selectedProperty(), combined.getIncludeMouseWheelValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedAbsolutePath.selectedProperty(), combined.getAbsoluteValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedRelativePath.selectedProperty(), combined.getRelative().valueProperty());
+
+        Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combined.getFixedRateOnValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combined.getMinDistanceOnValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combined.getStopDetectionOnValue().valueProperty());
     }
 
     @FXML
@@ -151,10 +164,7 @@ public class MainController {
     private Button btnShowSeverWindow;
 
     @FXML
-    private TextArea codeTextArea;
-    private StringProperty codeTextProperty = new SimpleStringProperty();
-    private boolean enableCodeType = true;
-
+    private CodeTextArea codeTextArea;
 
     @FXML
     private TextArea areaCodeSample;
@@ -517,18 +527,26 @@ public class MainController {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
         if (toggleButton == null) return;
 
-        String prefix = toggleButton.getId();
+        String prefix = eventsRecorder.getPrefix();
         if (toggleButton.isSelected()) {
             select(toggleButton);
             // if toggle has been selected
-            enableCodeType = false;
+            codeTextArea.setActive(false);
             consumer.accept(prefix);
         } else {
             deselect(toggleButton);
             // if toggle has been deselected
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
-            enableCodeType = true;
+            codeTextArea.setActive(true);
+        }
+    }
+
+    private void recordEventCodeFor(String buttonName, Consumer<String> onRecordingComplete) {
+        switch (buttonName) {
+            case "combined":
+                eventsRecorder.combined(onRecordingComplete);
+                break;
         }
     }
 
@@ -1287,60 +1305,9 @@ public class MainController {
     @FXML
     void insertCombinedLog(ActionEvent event) {
         insertButtonCall(event, prefix -> {
-            final boolean[] recording = new boolean[1];
-            final String controlKey = txtCombinedControl.getText();
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".start", controlKey, "RELEASE", controlEvent -> {
-
-                if (recording[0]) {
-                    recording[0] = false;
-                    return;
-                }
-                // start recording on release
-                recording[0] = true;
-                eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-                keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".keys", "", "", e -> {
-                    if (e.getKey().equals(controlKey) && e.getAction().equals("PRESS")) {
-                        // stop on press
-                        keyEventsManager.removeListenersByPrefix(prefix + ".keys");
-                        mouseEventsManager.removeListenersByPrefix(prefix);
-                        UnicodeEncoder unicodeEncoder = new UnicodeEncoder();
-                        if (btnCombinedKeys.isSelected()) unicodeEncoder.addKeys();
-                        if (btnCombinedMouseButtons.isSelected()) unicodeEncoder.addMouseButtons();
-                        if (btnCombinedMouseWheel.isSelected()) unicodeEncoder.addMouseWheel();
-                        if (btnCombinedAbsolutePath.isSelected()) unicodeEncoder.absolute();
-                        if (btnCombinedRelativePath.isSelected()) unicodeEncoder.relative();
-                        if (btnCombinedDelays.isSelected()) unicodeEncoder.addDelays();
-                        if (btnCombinedFixRate.isSelected())
-                            unicodeEncoder.fixedRate(Integer.parseInt(txtCombinedFixRate.getText()));
-                        if (btnCombinedMinDistance.isSelected())
-                            unicodeEncoder.minDistance(Integer.parseInt(txtCombinedMinDistance.getText()));
-                        if (btnCombinedDetectStopPoints.isSelected())
-                            unicodeEncoder.detectStopPoints(Integer.parseInt(txtCombinedDetectStopPoints.getText()));
-                        String code = unicodeEncoder.encode(eventLog.getEventLog());
-
-                        combinedObjectCodeGenerator.run(code);
-                        putTextIntoCaretPosition(codeTextArea, combinedObjectCodeGenerator.getGeneratedCode());
-                        eventLog.clear();
-                    } else {
-                        eventLog.add(e);
-                    }
-                }));
-
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
-                    eventLog.add(e);
-                }));
-
-                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", e -> {
-                    eventLog.add(e);
-                }));
-
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    eventLog.add(e);
-                }));
-            }));
+            eventsRecorder.combined((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 

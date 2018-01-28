@@ -39,7 +39,7 @@ public class ClickerMain extends Application {
     }
 
 
-    // gui
+    // ui
     private void startGuiApplication() throws Exception {
         Out.setOutput(new SystemAndStringOutput());
         loadMainScene();
