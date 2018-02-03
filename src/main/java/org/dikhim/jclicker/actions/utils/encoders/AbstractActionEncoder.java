@@ -277,6 +277,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
                 // if not
                 // filter mouse movement events
                 List<MouseMoveEvent> filteredMoveEventList = filterMovementPathWithOptions(moveEventList);
+                moveEventList.clear();
                 // add them to result list
                 filteredEventList.addAll(filteredMoveEventList);
                 // add current event

@@ -1,0 +1,915 @@
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////TEMPLATES////////////////
+/////////////////////////////////////
+//////////////MOUSE//////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateMouseClick:
+mouse.click('');
+Клик клавишей мыши
+
+mouse.click('BTN');
+   BTN - имя клавиши
+
+Метод состоит из двух вызовов
+нажатия и отпускания клавиши мыши:
+  press('BTN');
+    sleep(pressDelay);
+  release('BTN');
+    sleep(releaseDelay);
+
+$btnTemplateMouseClickCode:
+mouse.click('');
+
+$btnTemplateMouseClickAt:
+mouse.clickAt('',,);
+Клик клавишей мыши в укзанной точке
+
+mouse.clickAt('BTN',x,y);
+  BTN - имя клавиши
+  x,y - координаты
+
+Метод состоит из двух вызовов
+нажатия и отпускания клавиши мыши:
+  pressAt('BTN',x,y);
+    sleep(pressDelay);
+  releaseAt('BTN',x,y);
+    sleep(releaseDelay);
+
+$btnTemplateMouseClickAtCode:
+mouse.clickAt('',,);
+
+$btnTemplateMouseGetMoveDelay:
+mouse.getMoveDelay();
+Получить задержку передвижения
+курсора мыши в мс. (moveDelay)
+
+mouse.getMoveDelay():int
+
+$btnTemplateMouseGetMoveDelayCode:
+mouse.getMoveDelay();
+
+$btnTemplateMouseGetMultiplier:
+mouse.getMultiplier();
+Получить множитель задержек.
+На данное число умножаются
+все задержки
+
+Обратная величина к множителю
+скорости
+
+mouse.getMultiplier():float
+
+$btnTemplateMouseGetMultiplierCode:
+mouse.getMultiplier();
+
+$btnTemplateMouseGetPressDelay:
+mouse.getPressDelay();
+Получить задержку нажатия клавиши
+мыши в мс. (pressDelay)
+
+mouse.getPressDelay():int
+
+
+$btnTemplateMouseGetPressDelayCode:
+mouse.getPressDelay();
+
+$btnTemplateMouseGetReleaseDelay:
+mouse.getReleaseDelay();
+Получить задержку отпускания
+клавиши мыши в мс. (releaseDelay)
+
+mouse.getReleaseDelay():int
+
+
+$btnTemplateMouseGetSpeed:
+mouse.getSpeed();
+Получить множитель скорости.
+Обратная величина к множителю
+задержек
+
+mouse.getSpeed():float
+
+$btnTemplateMouseGetSpeedCode:
+mouse.getSpeed();
+
+$btnTemplateMouseGetReleaseDelayCode:
+mouse.getReleaseDelay();
+
+$btnTemplateMouseGetWheelDelay:
+mouse.getWheelDelay();
+Получить задержку колеса мыши
+в мс. (wheelDelay)
+
+mouse.getWheelDelay():int
+
+
+$btnTemplateMouseGetWheelDelayCode:
+mouse.getWheelDelay();
+
+$btnTemplateMouseGetX:
+mouse.getX();
+Получить координату 'x' последнего
+события мыши.
+
+mouse.getX():int
+
+Если после запуска программы курсор
+не перемещался и клавиши не
+нажимались возвращает: 0
+
+$btnTemplateMouseGetXCode:
+mouse.getX();
+
+$btnTemplateMouseGetY:
+mouse.getY();
+Получить координату 'y' последнего
+события мыши
+
+mouse.getY():int
+
+Если после запуска программы курсор
+не перемещался и клавиши не
+нажимались возвращает: 0
+
+$btnTemplateMouseGetYCode:
+mouse.getY();
+
+$btnTemplateMouseMove:
+mouse.move(,);
+Передвинуть курсор относительно
+координат последнего события
+
+mouse.move(x,y);
+  x, y - смещения
+
+Метод состоит из:
+  move(x,y);
+    sleep(moveDelay);
+
+$btnTemplateMouseMoveCode:
+mouse.move(,);
+
+$btnTemplateMouseMoveAbsolute:
+mouse.moveAbsolute('');
+Код для движения курсора по
+заданному пути абсолютных
+координат
+
+Состоит из групп символов юникода
+Каждый 1й символ - координата 'x'
+Каждый 2й символ - координата 'y'
+
+$btnTemplateMouseMoveAbsoluteCode:
+mouse.moveAbsolute('');
+
+$btnTemplateMouseMoveAbsolute_D:
+mouse.moveAbsolute_D('');
+Код для движения курсора по
+заданному пути абсолютных
+координат с задержками
+
+Состоит из групп символов юникода
+Каждый 1й символ - координата 'x'
+Каждый 2й символ - координата 'y'
+Каждый 3й символ - значение задержки
+
+Значение задержки не может быть
+более 20000мс
+
+$btnTemplateMouseMoveAbsolute_DCode:
+mouse.moveAbsolute_D('');
+
+$btnTemplateMouseMoveAndClick:
+mouse.moveAndClick('',,);
+Передвинуть курсор относительно
+координат последнего события
+и кликнуть
+
+mouse.moveAndClick('BTN',x,y);
+  BTN - имя клавиши
+  x, y - смещения
+
+Метод состоит из:
+  move(x,y);
+    sleep(moveDelay);
+  press('BTN');
+    sleep(pressDelay);
+  release('BTN');
+    sleep(releaseDelay);
+
+$btnTemplateMouseMoveAndClickCode:
+mouse.moveAndClick('',,);
+
+$btnTemplateMouseMoveAndPress:
+mouse.moveAndPress('',,);
+Передвинуть курсор относительно
+координат последнего события
+и нажать клавишу мыши
+
+mouse.moveAndPress('BTN',x,y);
+  BTN - имя клавиши
+  x, y - смещения
+
+Метод состоит из:
+  move(x,y);
+    sleep(moveDelay);
+  press('BTN');
+    sleep(pressDelay);
+
+$btnTemplateMouseMoveAndPressCode:
+mouse.moveAndPress('',,);
+
+$btnTemplateMouseMoveAndRelease:
+mouse.moveAndRelease('',,);
+Передвинуть курсор относительно
+координат последнего события
+и отпустить клавишу мыши
+
+mouse.moveAndPress('BTN',x,y);
+  BTN - имя клавиши
+  x, y - смещения
+
+Метод состоит из:
+  move(x,y);
+    sleep(moveDelay);
+  release('BTN');
+    sleep(releaseDelay);
+
+$btnTemplateMouseMoveAndReleaseCode:
+mouse.moveAndRelease('',,);
+
+$btnTemplateMouseMoveAndWheel:
+mouse.moveAndWheel('',,,);
+Передвинуть курсор относительно
+координат последнего события
+и прокруть колесо мыши
+
+mouse.moveAndWheel
+  (direction, amount, x, y);
+  direction - направление UP/DOWN
+  amount - количество строк
+  x, y - смещения
+
+Метод состоит из:
+  move(x,y);
+    sleep(moveDelay);
+  wheel(direction,amount);
+    sleep(wheelDelay);
+
+$btnTemplateMouseMoveAndWheelCode:
+mouse.moveAndWheel('',,,);
+
+$btnTemplateMouseMoveRelative:
+mouse.moveRelative('');
+Код для движения курсора по
+заданному пути относительных
+координат
+
+Состоит из групп символов юникода
+//Каждый 1й символ - смещение по 'x'
+//Каждый 2й символ - смещение по 'y'
+
+$btnTemplateMouseMoveRelativeCode:
+mouse.moveRelative('');
+
+$btnTemplateMouseMoveRelative_D:
+mouse.moveRelative_D('');
+//Код для движения курсора по
+//заданному пути относительных
+//координат с задержками
+//
+//Состоит из групп символов юникода
+//Каждый 1й символ - смещение по 'x'
+//Каждый 2й символ - смещение по 'y'
+//Каждый 3й символ - значение задержки
+//
+//Значение задержки не может быть
+//более 20000мс
+
+$btnTemplateMouseMoveRelative_DCode:
+mouse.moveRelative_D('');
+
+$btnTemplateMouseMoveTo:
+mouse.moveTo(,);
+//Передвинуть курсор в указанную
+//точку
+//
+//mouse.moveTo(x,y);
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
+
+$btnTemplateMouseMoveToCode:
+mouse.moveTo(,);
+
+$btnTemplateMousePress:
+mouse.press('');
+//Нажать клавишу мыши
+//
+//mouse.press('BTN');
+//  BTN - имя клавиши
+//
+//Метод состоит из:
+//  press('BTN');
+//    sleep(pressDelay);
+
+$btnTemplateMousePressCode:
+mouse.press('');
+
+$btnTemplateMousePressAt:
+mouse.pressAt('',,);
+//Передвинуть курсор в указанную
+//точку и нажать клавишу мыши
+//
+//mouse.pressAt('BTN',x,y);
+//  BTN - имя клавиши
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
+//  press('BTN');
+//    sleep(pressDelay);
+
+$btnTemplateMousePressAtCode:
+mouse.pressAt('',,);
+
+$btnTemplateMouseRelease:
+mouse.release('');
+//Отпустить клавишу мыши
+//
+//mouse.release('BTN');
+//  BTN - имя клавиши
+//
+//Метод состоит из:
+//  press('BTN');
+//    sleep(pressDelay);
+
+$btnTemplateMouseReleaseCode:
+mouse.release('');
+
+$btnTemplateMouseReleaseAt:
+mouse.releaseAt('',,);
+//Передвинуть курсор в указанную
+//точку и отпустить клавишу мыши
+//
+//mouse.releaseAt('BTN',x,y);
+//  BTN - имя клавиши
+//  x, y - координаты
+//
+//Метод состоит из:
+//  moveTo(x,y);
+//    sleep(moveDelay);
+//  release('BTN');
+//    sleep(releaseDelay);
+
+$btnTemplateMouseReleaseAtCode:
+mouse.releaseAt('',,);
+
+$btnTemplateMouseResetDelays:
+mouse.resetDelays();
+//Сбросить все задержки к
+//стандартному значению
+//
+//mouse.resetDelays()
+
+$btnTemplateMouseResetDelaysCode:
+mouse.resetDelays();
+
+$btnTemplateMouseResetMultiplier:
+mouse.resetMultiplier();
+//Сбросить множитель задержек к
+//стандартному значению
+//
+//mouse.resetMultiplier();
+
+$btnTemplateMouseResetMultiplierCode:
+mouse.resetMultiplier();
+
+$btnTemplateMouseResetSpeed:
+mouse.resetSpeed();
+//Сбросить множитель скорости к
+//стандартному значению
+//
+//mouse.resetSpeed()
+
+$btnTemplateMouseResetSpeedCode:
+mouse.resetSpeed();
+
+$btnTemplateMouseSetDelays:
+mouse.setDelays();
+//Приствоить всем задержкам
+//указанное значение
+//
+//mouse.setDelays(int delay)
+
+$btnTemplateMouseSetDelaysCode:
+mouse.setDelays();
+
+$btnTemplateMouseSetMoveDelay:
+mouse.setMoveDelay();
+//Установить задержку передвижения
+//курсора мыши в мс.
+//
+//mouse.setMoveDelay(moveDelay)
+//  moveDelay - задержка
+
+$btnTemplateMouseSetMoveDelayCode:
+mouse.setMoveDelay();
+
+$btnTemplateMouseSetMultiplier:
+mouse.setMultiplier();
+//Установить множитель задержек.
+//
+//Обратная величина к множителю
+//скорости
+//
+//mouse.
+//  setMultiplier(float multiplier)
+
+$btnTemplateMouseSetMultiplierCode:
+mouse.setMultiplier();
+
+$btnTemplateMouseSetPressDelay:
+mouse.setPressDelay();
+//Установить задержку нажатия
+//клавиши мыши в мс.
+//
+//mouse.setPressDelay(pressDelay)
+//  pressDelay - задержка
+
+$btnTemplateMouseSetPressDelayCode:
+mouse.setPressDelay();
+
+$btnTemplateMouseSetReleaseDelay:
+mouse.setReleaseDelay();
+//Установить задержку отпускания
+//клавиши мыши в мс.
+//
+//mouse.setReleaseDelay(releaseDelay)
+//  releaseDelay - задержка
+
+$btnTemplateMouseSetReleaseDelayCode:
+mouse.setReleaseDelay();
+
+$btnTemplateMouseSetSpeed:
+mouse.setSpeed();
+//Установить множитель скорости.
+//
+//Обратная величина к множителю
+//задержек
+//
+//mouse.setSpeed(float speed)
+
+$btnTemplateMouseSetSpeedCode:
+mouse.setSpeed();
+
+$btnTemplateMouseSetWheelDelay:
+mouse.setWheelDelay();
+//Установить задержку колеса мыши
+//в мс.
+//
+//mouse.setWheelDelay(wheelDelay)
+//  wheelDelay - задержка
+
+$btnTemplateMouseSetWheelDelayCode:
+mouse.setWheelDelay();
+
+$btnTemplateMouseSetX:
+mouse.setX();
+//Передвинуть курсор мыши по оси 'x'
+//в указанную координату
+//
+//mouse.setX(x);
+//  x - координата
+//
+//Метод состоит из:
+//  moveTo(x,getY());
+//    sleep(moveDelay);
+
+$btnTemplateMouseSetXCode:
+mouse.setX();
+
+$btnTemplateMouseSetY:
+mouse.setY();
+//Передвинуть курсор мыши по оси 'y'
+//в указанную координату
+//
+//mouse.setY(y);
+//  y - координата
+//
+//Метод состоит из:
+//  moveTo(x,getY());
+//    sleep(moveDelay);
+
+$btnTemplateMouseSetYCode:
+mouse.setY();
+
+$btnTemplateMouseWheel:
+mouse.wheel('',);
+//Прокрутить колесо мыши на указанное
+//количество строк
+//
+//mouse.wheel(direction, amount);
+//  direction - направление UP/DOWN
+//  amount - количество строк
+//
+//Метод состоит из:
+//  wheel(direction, amount);
+//    sleep(wheelDelay);
+
+$btnTemplateMouseWheelCode:
+mouse.wheel('',);
+
+$btnTemplateMouseWheelAt:
+mouse.wheelAt('',,,);
+//Прокрутить колесо мыши на указанное
+//количество строк
+//
+//mouse.wheelAt
+//  (direction, amount, x, y);
+//
+//  direction - направление UP/DOWN
+//  amount - количество строк
+//  x - координата 'x'
+//  y - координата 'y'
+//
+//Метод состоит из:
+//  mouveTo(x,y);
+//    sleep(moveDelay);
+//  wheel(direction,amount);
+//    sleep(wheelDelay);
+
+$btnTemplateMouseWheelAtCode:
+mouse.wheelAt('',,,);
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////KEYBOARD/////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateKeyGetMultiplier:
+key.getMultiplier();
+//Получить множитель задержек.
+//На данное число умножаются
+//все задержки
+//
+//Обратная величина к множителю
+//скорости
+//
+//key.getMultiplier():float
+
+$btnTemplateKeyGetMultiplierCode:
+key.getMultiplier();
+
+$btnTemplateKeyGetPressDelay:
+key.getPressDelay();
+//Получить задержку нажатия клавиши
+//клавиатуры в мс. (pressDelay)
+//
+//key.getPressDelay():int
+
+$btnTemplateKeyGetPressDelayCode:
+key.getPressDelay();
+
+$btnTemplateKeyGetReleaseDelay:
+key.getReleaseDelay();
+//Получить задержку отпускания
+//клавиши клавиатуры в мс.
+//(releaseDelay)
+//
+//key.getReleaseDelay():int
+
+$btnTemplateKeyGetReleaseDelayCode:
+key.getReleaseDelay();
+
+$btnTemplateKeyGetSpeed:
+mouse.getSpeed();
+//Получить множитель скорости.
+//Обратная величина к множителю
+//задержек
+//
+//key.getSpeed():float
+
+$btnTemplateKeyGetSpeedCode:
+key.getSpeed();
+
+$btnTemplateKeyIsPressed:
+key.isPressed('');
+//Узнать зажаты ли указанные клавиши
+//клавиатуры
+//
+//key.isPressed('KEY1 KEY2'):boolean
+//  KEY1, KEY2 - имена клавишь через
+//    пробел
+
+$btnTemplateKeyIsPressedCode:
+key.isPressed('');
+
+$btnTemplateKeyPress:
+key.press('');
+//Нажать клавишу клавиатуры
+//
+//key.press('KEY');
+//  KEY - имя клавиши
+//
+//Метод состоит из:
+//  press('KEY');
+//    sleep(pressDelay);
+
+$btnTemplateKeyPressCode:
+key.press('');
+
+$btnTemplateKeyRelease:
+key.release('');
+//Отпустить клавишу клавиатуры
+//
+//key.release('KEY');
+//  KEY - имя клавиши
+//
+//Метод состоит из:
+//  release('KEY');
+//    sleep(releaseDelay);
+
+$btnTemplateKeyReleaseCode:
+key.release('');
+
+$btnTemplateKeyResetDelays:
+key.resetDelays();
+//Сбросить все задержки к
+//стандартному значению
+//
+//key.resetDelays()
+
+$btnTemplateKeyResetDelaysCode:
+key.resetDelays();
+
+$btnTemplateKeyResetMultiplier:
+key.resetMultiplier();
+//Сбросить множитель задержек к
+//стандартному значению
+//
+//key.resetMultiplier()
+
+$btnTemplateKeyResetMultiplierCode:
+key.resetMultiplier();
+
+$btnTemplateKeyResetSpeed:
+key.resetSpeed();
+//Сбросить множитель скорости к
+//стандартному значению
+//
+//key.resetSpeed()
+
+$btnTemplateKeyResetSpeedCode:
+key.resetSpeed();
+
+$btnTemplateKeyType:
+key.type('');
+//Последовательно нажать и отпустить
+//каждую укзанную клавишу
+//
+//key.release('KEY1 KEY2');
+//  KEY1, KEY2 - имена клавишь через
+//    пробел
+//
+//Метод выполняет для каждой клавиши:
+//  press('KEY');
+//    sleep(pressDelay);
+//  release('KEY');
+//    sleep(releaseDelay);
+
+$btnTemplateKeyTypeCode:
+key.type('');
+
+$btnTemplateKeySetDelays:
+key.setDelays();
+//Приствоить всем задержкам
+//указанное значение
+//
+//key.setDelays(int delay)
+
+$btnTemplateKeySetDelaysCode:
+key.setDelays();
+
+$btnTemplateKeySetMultiplier:
+key.setMultiplier();
+//Установить множитель задержек.
+//
+//Обратная величина к множителю
+//скорости
+//
+//key.
+//  setMultiplier(float multiplier)
+
+$btnTemplateKeySetMultiplierCode:
+key.setMultiplier();
+
+$btnTemplateKeySetPressDelay:
+key.setPressDelay();
+//Установить задержку нажатия
+//клавиши клавиатуры в мс.
+//
+//key.setPressDelay(pressDelay)
+//  pressDelay - задержка
+
+$btnTemplateKeySetPressDelayCode:
+key.setPressDelay();
+
+$btnTemplateKeySetReleaseDelay:
+key.setReleaseDelay();
+//Установить задержку отпускания
+//клавиши клавиатуры в мс.
+//
+//key.setReleaseDelay(releaseDelay)
+//  releaseDelay - задержка
+
+$btnTemplateKeySetReleaseDelayCode:
+key.setReleaseDelay();
+
+$btnTemplateKeySetSpeed:
+key.setSpeed();
+//Установить множитель скорости.
+//
+//Обратная величина к множителю
+//задержек
+//
+//key.setSpeed(float speed)
+
+$btnTemplateKeySetSpeedCode:
+key.setSpeed();
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+////////////TEMPLATES////////////////
+/////////////SYSTEM//////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateSystemSleep:
+system.sleep();
+//Приостановить скрипт на заданное
+//время в мс.
+//
+//system.sleep(ms);
+//  ms - время в мс.
+
+$btnTemplateSystemSleepCode:
+system.sleep();
+
+$btnTemplateSystemPrint:
+system.print('');
+//Вывести сообщение в поле вывода
+//
+//system.print('TEXT');
+
+$btnTemplateSystemPrintCode:
+system.print('');
+
+$btnTemplateSystemPrintln:
+system.println('');
+//Вывести сообщение в поле вывода
+//и перейти на новую строку
+//
+//system.println('TEXT');
+
+$btnTemplateSystemPrintlnCode:
+system.println('');
+
+$btnTemplateSystemRegisterShortcut:
+system.registerShortcut('','');
+//Зарегистрировать сочетание клавишь
+//для вызова метода
+//
+//system.registerShortcut
+//    ('BTN2 BTN2','FUNCT');
+//  BTN1, BTN2 - имена клавишь через
+//    пробел
+//  FUNCT - имя вызываемого метода
+
+$btnTemplateSystemRegisterShortcutCode:
+system.registerShortcut('','');
+
+$btnTemplateSystemGetMultiplier:
+TODO
+
+$btnTemplateSystemGetMultipliedDelay:
+TODO
+
+$btnTemplateSystemGetSpeed:
+TODO
+
+$btnTemplateSystemResetMultiplier:
+TODO
+
+$btnTemplateSystemResetSpeed:
+TODO
+
+$btnTemplateSystemSetMultiplier:
+TODO
+
+$btnTemplateSystemSetSpeed:
+TODO
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////LANGUAGE/////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+/////////////////////////////////////
+$btnTemplateLanguageClass:
+function Class (name) {
+  this.name = name;
+  this.echo = function(text){
+    return text;
+  };
+}
+//Шаблон класса с именем 'Class'
+//
+//Для создания объекта используйте
+//конструкцию типа
+//var obj = new Class('MyClass');
+//
+//Обращение к полю объекта:
+//var out = obj.name;
+//
+//Обращение к методу объекта:
+//var out = obj.echo('someText');
+
+$btnTemplateLanguageClassCode:
+function Class (name) {
+  this.name = name;
+  this.echo = function(text){
+    return text;
+  };
+}
+
+$btnTemplateLanguageFunctionEcho:
+function echo(text){
+  return text;
+}
+//Шаблон функции сполучением и
+//возвратом значения
+
+$btnTemplateLanguageFunctionEchoCode:
+function echo(text){
+
+  return text;
+}
+
+$btnTemplateLanguageFunctionVoid:
+function foo(){
+
+}
+//Шаблон пустой функции
+
+$btnTemplateLanguageFunctionVoidCode:
+function foo(){
+
+}
+
+$btnTemplateLanguageLoopForPlus:
+for(i=0;i<10;i++){
+
+}
+//Шаблон возрастающего цикла 'for'
+
+$btnTemplateLanguageLoopForPlusCode:
+for(i=0;i<10;i++){
+
+}
+
+$btnTemplateLanguageLoopForMinus:
+for(i=10;i>0;i--){
+
+}
+Шаблон убывающего цикла 'for'
+
+$btnTemplateLanguageLoopForMinusCode:
+for(i=10;i>0;i--){
+
+}
+
+$btnTemplateLanguageLoopWhile:
+while(true){
+
+}
+Шаблон цикла 'while'
+
+$btnTemplateLanguageLoopWhileCode:
+while(true){
+
+}

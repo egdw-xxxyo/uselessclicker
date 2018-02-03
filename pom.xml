@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.dikhim</groupId>
-    <artifactId>jclicker</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>useless_clicker</artifactId>
+    <version>0.1.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.9</maven.compiler.target>
@@ -70,6 +70,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>uselessClicker_${project.version}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>org.dikhim.jclicker.ClickerMain</mainClass>
@@ -78,6 +79,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>

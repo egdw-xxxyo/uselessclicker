@@ -44,7 +44,7 @@ public class Cli {
     }
 
     public void parse() {
-        CommandLineParser parser = new BasicParser();
+        CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd;
         try {

@@ -27,9 +27,9 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
-import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
+import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -542,13 +542,6 @@ public class MainController {
         }
     }
 
-    private void recordEventCodeFor(String buttonName, Consumer<String> onRecordingComplete) {
-        switch (buttonName) {
-            case "combined":
-                eventsRecorder.combined(onRecordingComplete);
-                break;
-        }
-    }
 
     // Keyboard
 

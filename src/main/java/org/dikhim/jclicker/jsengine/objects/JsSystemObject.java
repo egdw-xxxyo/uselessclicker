@@ -88,6 +88,14 @@ public class JsSystemObject implements SystemObject {
         }
     }
 
+    public void sleepNonMultiplied(int ms) {
+        if (ms <= 0) return;
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+        }
+    }
+
     public void setSpeed(float multiplier) {
         this.multiplier = 1f / multiplier;
     }
