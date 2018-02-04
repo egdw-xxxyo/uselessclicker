@@ -54,7 +54,6 @@ public class JsCombinedObject implements CombinedObject {
                 case MOUSE_MOVE_AT:
                     mouseObject.moveTo(((MouseMoveAtAction) a).getX(), ((MouseMoveAtAction) a).getY());
                     scriptTime += mouseMoveDelay;
-                    System.out.println("mouse moveT + "+mouseMoveDelay);
                     break;
                 case MOUSE_PRESS_LEFT:
                     mouseObject.button("LEFT", "PRESS");
@@ -93,14 +92,14 @@ public class JsCombinedObject implements CombinedObject {
                     calculatedDelay = actionDelay - delayDiff;
                     if (calculatedDelay < 2) calculatedDelay = 2;
                     systemObject.sleep(calculatedDelay);
-                    scriptTime += actionDelay;
+                    scriptTime += systemObject.getMultipliedDelay(actionDelay);
                     break;
                 case DELAY_MILLISECONDS:
                     actionDelay = ((DelayMillisecondsAction) a).getDelay();
                     calculatedDelay = actionDelay - delayDiff;
                     if (calculatedDelay < 5) calculatedDelay = 5;
                     systemObject.sleep(calculatedDelay);
-                    scriptTime += actionDelay;
+                    scriptTime += systemObject.getMultipliedDelay(actionDelay);
                     break;
             }
             currentTime = (int) (System.currentTimeMillis() - firstTimeStamp);

@@ -132,10 +132,6 @@
     -fx-min-width: 350;
 }
 
-#hint-text-area *.text{
-    -fx-text-alignment: justify;
-}
-
 /*text area */
 .code-text-area {
     -fx-text-fill: #666;

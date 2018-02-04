@@ -271,14 +271,14 @@ $btnCombinedDelays:
 $btnCombinedFixRate:
   Включить опцию записи с фиксированной частотой
   
-  Если включена данная опция, то события движения мыши будут "просеяны" таким образом, чтобы их количество не привышало заданного значения fixedRate
+  Если включена данная опция, то события движения мыши будут "просеяны" таким образом, чтобы их количество в секунду не привышало заданного значения fixedRate
   
   Эта опция поможет сократить объем кода за счет уменьшения "качества" пути
 
 $btnCombinedMinDistance:
   Включить опцию запси с ограничением на минимальное расстояние
   
-  Если данная опция включена, то событие передвижения мыши не будет включено в результат если расстояние до него меньше чем заданное значение minDistance
+  Если данная опция включена, то событие передвижения мыши не будет включено в результат если расстояние до предыдущего события меньше чем заданное значение minDistance
   
   Эта опция поможет сократить объем кода в случае, когда потребуется точно и медленно обвести некий контур
 
@@ -1009,25 +1009,63 @@ $btnTemplateSystemRegisterShortcutCode:
 system.registerShortcut('F1','foo');
 
 $btnTemplateSystemGetMultiplier:
-TODO
+system.getMultiplier();
+Получить множитель задержек (multiplier)
+  
+На данное число умножаются все задержки
+  
+Обратная величина к множителю скорости
+
+$btnTemplateSystemGetMultiplierCode:
+system.getMultiplier();
 
 $btnTemplateSystemGetMultipliedDelay:
-TODO
+system.getMultipliedDelay(delay);
+Получить значение задержки пермноженое на множитель задержек
+
+$btnTemplateSystemGetMultipliedDelayCode:
+system.getMultipliedDelay(delay);
 
 $btnTemplateSystemGetSpeed:
-TODO
+system.getSpeed();
+Получить значение параметра скорости
+  
+Обратная величина к множителю задержек
+
+$btnTemplateSystemGetSpeedCode:
+system.getSpeed();
 
 $btnTemplateSystemResetMultiplier:
-TODO
+system.resetMultiplier();
+  Сбросить множитель задержек к стандартному значению
+
+$btnTemplateSystemResetMultiplierCode:
+system.resetMultiplier();
 
 $btnTemplateSystemResetSpeed:
-TODO
+system.resetSpeed();
+Сбросить множитель скорости к стандартному значению
+
+$btnTemplateSystemResetSpeedCode:
+system.resetSpeed();
 
 $btnTemplateSystemSetMultiplier:
-TODO
+system.setMultiplier(1);
+Установить множитель задержек
+  
+Обратная величина к множителю скорости
+
+$btnTemplateSystemSetMultiplierCode:
+system.setMultiplier(1);
 
 $btnTemplateSystemSetSpeed:
-TODO
+system.setSpeed(1);
+Установить множитель скорости
+  
+Обратная величина к множителю задержек
+
+$btnTemplateSystemSetMultiplierCode:
+system.setSpeed(1);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
