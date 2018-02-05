@@ -41,6 +41,33 @@ public class EventsRecorder {
         this.recordingParams = recordingParams;
     }
 
+    public void wheel(Consumer<String> onGenerateCode) {
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+            mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                mouseObjectCodeGenerator.wheel(e.getDirection(), e.getAmount());
+                putCode(onGenerateCode,mouseObjectCodeGenerator.getGeneratedCode());
+            }));
+        }));
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+            mouseEventsManager.removeListenersByPrefix(prefix);
+        }));
+    }
+    
+    public void wheelAt(Consumer<String> onGenerateCode) {
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
+            mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
+                mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
+                putCode(onGenerateCode,mouseObjectCodeGenerator.getGeneratedCode());
+            }));
+        }));
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
+            mouseEventsManager.removeListenersByPrefix(prefix);
+        }));
+    }
 
     public void combined(Consumer<String> onGenerateCode) {
         Combined combinedConfig = recordingParams.getCombined();
@@ -79,7 +106,7 @@ public class EventsRecorder {
 
                     String rawCode = unicodeActionEncoder.encode(eventLog.getEventLog());
                     combinedObjectCodeGenerator.run(rawCode);
-                    Platform.runLater(() -> onGenerateCode.accept(combinedObjectCodeGenerator.getGeneratedCode()));
+                    putCode(onGenerateCode,combinedObjectCodeGenerator.getGeneratedCode());
                 } else {
                     eventLog.add(e);
                 }
@@ -99,7 +126,12 @@ public class EventsRecorder {
         }));
     }
 
+
     public String getPrefix() {
         return prefix;
+    }
+
+    private void putCode(Consumer<String> consumer, String code) {
+        Platform.runLater(()->consumer.accept(code));
     }
 }

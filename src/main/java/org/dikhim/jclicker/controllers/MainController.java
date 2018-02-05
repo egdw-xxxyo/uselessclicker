@@ -98,7 +98,7 @@ public class MainController {
                 }));
 
         bindConfig();
-
+        
     }
 
 
@@ -162,6 +162,9 @@ public class MainController {
 
     @FXML
     private Button btnShowSeverWindow;
+
+    @FXML
+    private Button btnShowConfigWindow;
 
     @FXML
     private CodeTextArea codeTextArea;
@@ -260,6 +263,23 @@ public class MainController {
 
     @FXML
     public void showServerWindow() {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader();
+
+            root = loader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml").openStream());
+            Stage stage = new Stage();
+            stage.setTitle("Server");
+            stage.setScene(new Scene(root, 600, 200));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void showConfigWindow() {
         Parent root;
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -478,27 +498,8 @@ public class MainController {
         return out;
     }
 
-    private void setToggleStatus(ToggleButton toggle) {
-        if (toggle == null) {
-            if (btnTogglesStatus.getUserData() == null) {
-                btnTogglesStatus.setText("Never used");
-                btnTogglesStatus.setUserData(null);
-                return;
-            }
-            return;
-        }
-        btnTogglesStatus.setSelected(toggle.isSelected());
-        String title = "";
-        if (toggle.isSelected()) {
-            title += "Active:    ";
-        } else {
-            title += "Last used: ";
-        }
-        title += getToggleButtonPath(toggle);
-        btnTogglesStatus.setText(title);
-        btnTogglesStatus.setUserData(toggle);
-    }
-
+   
+    
     /**
      * Deselect all toggles except the parameter
      *
@@ -523,7 +524,28 @@ public class MainController {
         setToggleStatus(toggle);
     }
 
-    private void insertButtonCall(ActionEvent event, Consumer<String> consumer) {
+    private void setToggleStatus(ToggleButton toggle) {
+        if (toggle == null) {
+            if (btnTogglesStatus.getUserData() == null) {
+                btnTogglesStatus.setText("Never used");
+                btnTogglesStatus.setUserData(null);
+                return;
+            }
+            return;
+        }
+        btnTogglesStatus.setSelected(toggle.isSelected());
+        String title = "";
+        if (toggle.isSelected()) {
+            title += "Active:    ";
+        } else {
+            title += "Last used: ";
+        }
+        title += getToggleButtonPath(toggle);
+        btnTogglesStatus.setText(title);
+        btnTogglesStatus.setUserData(toggle);
+    }
+
+    private void onToggleButtonPerformed(ActionEvent event, Consumer<String> consumer) {
         ToggleButton toggleButton = (ToggleButton) event.getSource();
         if (toggleButton == null) return;
 
@@ -552,7 +574,7 @@ public class MainController {
      */
     @FXML
     void insertKeyName(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".press", "", "PRESS", e -> {
                 putTextIntoCaretPosition(codeTextArea, e.getKey() + " ");
@@ -568,7 +590,7 @@ public class MainController {
      */
     @FXML
     void insertKeyCode(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".perform", "", "", (e) -> {
                 keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
@@ -587,7 +609,7 @@ public class MainController {
      */
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             eventLog.clear();
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
                 eventLog.add(e);
@@ -618,7 +640,7 @@ public class MainController {
      */
     @FXML
     void insertMouseCode(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                     mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
@@ -647,7 +669,7 @@ public class MainController {
      */
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -699,7 +721,7 @@ public class MainController {
      */
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
                 eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -744,7 +766,7 @@ public class MainController {
      */
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             final int[] a = new int[1];
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -816,7 +838,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePath(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -847,7 +869,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -879,7 +901,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePath(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -911,7 +933,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePathWithDelays(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -942,7 +964,7 @@ public class MainController {
      */
     @FXML
     void insertAbsolutePathFixRate(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -982,7 +1004,7 @@ public class MainController {
      */
     @FXML
     void insertRelativePathFixRate(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -1024,7 +1046,7 @@ public class MainController {
      */
     @FXML
     void insertMouseName(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
                 mouseEventsManager.addButtonListener(
                         new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -1045,7 +1067,7 @@ public class MainController {
      */
     @FXML
     void insertMouseClick(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
@@ -1080,7 +1102,7 @@ public class MainController {
      */
     @FXML
     void insertMouseClickAt(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
@@ -1113,7 +1135,7 @@ public class MainController {
      */
     @FXML
     void insertMouseMove(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 eventLog.clear();
@@ -1143,7 +1165,7 @@ public class MainController {
      */
     @FXML
     void insertMouseMoveTo(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -1166,7 +1188,7 @@ public class MainController {
      */
     @FXML
     void insertMousePress(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -1188,7 +1210,7 @@ public class MainController {
      */
     @FXML
     void insertMousePressAt(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -1210,7 +1232,7 @@ public class MainController {
      */
     @FXML
     void insertMouseRelease(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
@@ -1232,7 +1254,7 @@ public class MainController {
      */
     @FXML
     void insertMouseReleaseAt(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                     prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
                 mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
@@ -1254,18 +1276,10 @@ public class MainController {
      */
     @FXML
     void insertMouseWheel(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    mouseObjectCodeGenerator.wheel(e.getDirection(), e.getAmount());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+        onToggleButtonPerformed(event, prefix -> {
+           eventsRecorder.wheel((code)->{
+               codeTextArea.insertTextIntoCaretPosition(code);
+           });
         });
     }
 
@@ -1276,18 +1290,10 @@ public class MainController {
      */
     @FXML
     void insertMouseWheelAt(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+        onToggleButtonPerformed(event, prefix -> {
+            eventsRecorder.wheelAt((code)->{
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -1297,7 +1303,7 @@ public class MainController {
     /*Combined*/
     @FXML
     void insertCombinedLog(ActionEvent event) {
-        insertButtonCall(event, prefix -> {
+        onToggleButtonPerformed(event, prefix -> {
             eventsRecorder.combined((code) -> {
                 codeTextArea.insertTextIntoCaretPosition(code);
             });

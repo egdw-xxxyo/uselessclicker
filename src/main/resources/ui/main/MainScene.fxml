@@ -83,6 +83,12 @@
                       <String fx:value="gray-element" />
                    </styleClass>
                 </Button>
+               <Button id="server-button" fx:id="btnShowConfigWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showConfigWindow" text="Config">
+                  <styleClass>
+                     <String fx:value="script-button" />
+                     <String fx:value="gray-element" />
+                  </styleClass>
+               </Button>
              </FlowPane>
              <HBox>
                 <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton" text="Running:   newFile.js">

@@ -1,15 +1,19 @@
 {
   "hotKeys": {
     "runScript": {
+      "category":"script",
       "keys": "CONTROL ALT A"
     },
     "stopScript": {
+      "category":"script",
       "keys": "CONTROL ALT S"
     },
     "combinedControl": {
+      "category":"recording",
       "keys": "F12"
     },
     "mouseControl": {
+      "category":"recording",
       "keys": "CONTROL"
     }
   },
