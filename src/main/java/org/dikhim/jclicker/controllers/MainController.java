@@ -98,7 +98,7 @@ public class MainController {
                 }));
 
         bindConfig();
-        
+
     }
 
 
@@ -498,8 +498,7 @@ public class MainController {
         return out;
     }
 
-   
-    
+
     /**
      * Deselect all toggles except the parameter
      *
@@ -575,10 +574,10 @@ public class MainController {
     @FXML
     void insertKeyName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".press", "", "PRESS", e -> {
-                putTextIntoCaretPosition(codeTextArea, e.getKey() + " ");
-            }));
+            eventsRecorder.keyName((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
+
         });
     }
 
@@ -591,11 +590,9 @@ public class MainController {
     @FXML
     void insertKeyCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".perform", "", "", (e) -> {
-                keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
-                putTextIntoCaretPosition(codeTextArea, keyboardObjectCodeGenerator.getGeneratedCode());
-            }));
+            eventsRecorder.keyPerform((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -610,21 +607,9 @@ public class MainController {
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventLog.clear();
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
-                eventLog.add(e);
-
-                String code = "";
-                if (eventLog.size() > 1) {
-                    int delay = eventLog.getDelay();
-                    systemObjectCodeGenerator.sleep(delay);
-                    code += systemObjectCodeGenerator.getGeneratedCode();
-                }
-
-                keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
-                code += keyboardObjectCodeGenerator.getGeneratedCode();
-                putTextIntoCaretPosition(codeTextArea, code);
-            }));
+            eventsRecorder.keyPerformWithDelays((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -641,19 +626,9 @@ public class MainController {
     @FXML
     void insertMouseCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
-                    mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
-                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.mouseButtonAndWheelAt((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -670,42 +645,9 @@ public class MainController {
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
-                eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
-                    if (eventLog.isEmpty()) return;
-                    eventLog.add(e);
-                    String code = "";
-
-                    int delay = eventLog.getDelay();
-                    systemObjectCodeGenerator.sleep(delay);
-                    code += systemObjectCodeGenerator.getGeneratedCode();
-
-                    mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
-                    code += mouseObjectCodeGenerator.getGeneratedCode();
-                    putTextIntoCaretPosition(codeTextArea, code);
-                }));
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
-                    if (eventLog.isEmpty()) return;
-                    eventLog.add(e);
-                    String code = "";
-
-                    int delay = eventLog.getDelay();
-                    systemObjectCodeGenerator.sleep(delay);
-                    code += systemObjectCodeGenerator.getGeneratedCode();
-
-                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                    code += mouseObjectCodeGenerator.getGeneratedCode();
-
-                    putTextIntoCaretPosition(codeTextArea, code);
-                }));
-            }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.release", "CONTROL", "RELEASE", (e) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.mouseButtonAndWheelAtWithDelays((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -722,36 +664,9 @@ public class MainController {
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", e -> {
-                    if (eventLog.isEmpty()) return;
-                    eventLog.add(e);
-
-                    int dx = eventLog.getMouseEventDx();
-                    int dy = eventLog.getMouseEventDy();
-
-                    mouseObjectCodeGenerator.moveAndButton(e.getButton(), e.getAction(), dx, dy);
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    if (eventLog.isEmpty()) return;
-                    eventLog.add(e);
-
-                    int dx = eventLog.getMouseEventDx();
-                    int dy = eventLog.getMouseEventDy();
-
-                    mouseObjectCodeGenerator.moveAndWheel(e.getDirection(), e.getAmount(), dx, dy);
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.mouseMoveAndButtonAndWheel((code)->{
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -767,65 +682,9 @@ public class MainController {
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            final int[] a = new int[1];
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                eventLog.clear();
-                // eventLog must be empty except when PRESS event occurs
-
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    if (eventLog.getMouseButtonLogSize() > 0) {
-                        // if not empty put PRESS code for last event
-                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
-                        mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
-                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    }
-                    eventLog.clear();
-                    eventLog.add(e);
-                }));
-
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    if (eventLog.getMouseButtonLogSize() > 0) {
-                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
-                        if (lastE.getButton().equals(e.getButton()) &&
-                                lastE.getAction().equals("PRESS") &&
-                                lastE.getX() == e.getX() &&
-                                lastE.getY() == e.getY()) {
-                            // if last event equals to current and it is PRESS event then CLICK
-                            mouseObjectCodeGenerator.buttonAt(e.getButton(), "CLICK", e.getX(), e.getY());
-                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                        } else {
-                            // if not CLICK then put two RELEASE event for both events last and current
-                            mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
-                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                            mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
-                            putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                        }
-                    } else {
-                        // if eventLog is empty put RELEASE code for current event
-                        mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
-                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    }
-                    eventLog.clear();
-                }));
-
-                mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
-                    if (eventLog.getMouseButtonLogSize() > 0) {
-                        // if eventLog is not empty put PRESS code for last event
-                        MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
-                        mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
-                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    }
-                    // finally put WHEEL code
-                    mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    eventLog.clear();
-                }));
-            }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.click((code)->{
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -839,26 +698,9 @@ public class MainController {
     @FXML
     void insertAbsolutePath(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
-                    prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
-                eventLog.clear();
-                eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-                mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
-                    eventLog.add(e);
-                }));
-            }));
-
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
-                    prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-
-                List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
-                MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
-                mouseMoveEventUtil.addAll(moveLog);
-                String code = mouseMoveEventUtil.getAbsolutePath(80);
-                putTextIntoCaretPosition(codeTextArea, code);
-            }));
+            eventsRecorder.mouseMovementAbsolute((code)->{
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -870,6 +712,7 @@ public class MainController {
     @FXML
     void insertAbsolutePathWithDelays(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
+            // TODO bug in absolute with delay recording
             keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                     prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
                 eventLog.clear();
@@ -1277,9 +1120,9 @@ public class MainController {
     @FXML
     void insertMouseWheel(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-           eventsRecorder.wheel((code)->{
-               codeTextArea.insertTextIntoCaretPosition(code);
-           });
+            eventsRecorder.wheel((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -1291,7 +1134,7 @@ public class MainController {
     @FXML
     void insertMouseWheelAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.wheelAt((code)->{
+            eventsRecorder.wheelAt((code) -> {
                 codeTextArea.insertTextIntoCaretPosition(code);
             });
         });
