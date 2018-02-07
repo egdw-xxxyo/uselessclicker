@@ -49,7 +49,7 @@ public class SourcePropertyFile {
 		return out;
 	}
 	public void setSource(String source){
-		this.source=source;
+		this.source = source.replaceAll("(\\r\\n|\\n)", "\\\n");
 		parse();
 	}
 

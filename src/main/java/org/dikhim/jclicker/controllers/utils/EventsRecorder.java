@@ -132,7 +132,7 @@ public class EventsRecorder {
         }));
     }
 
-    public void mouseMoveAndButtonAndWheel(Consumer<String> onGenerateCode){
+    public void mouseMoveAndButtonAndWheel(Consumer<String> onGenerateCode) {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
             eventLog.clear();
             eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -145,7 +145,7 @@ public class EventsRecorder {
                 int dy = eventLog.getMouseEventDy();
 
                 mouseObjectCodeGenerator.moveAndButton(e.getButton(), e.getAction(), dx, dy);
-                putCode(onGenerateCode,mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
             }));
 
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
@@ -156,7 +156,7 @@ public class EventsRecorder {
                 int dy = eventLog.getMouseEventDy();
 
                 mouseObjectCodeGenerator.moveAndWheel(e.getDirection(), e.getAmount(), dx, dy);
-                putCode(onGenerateCode,mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
 
@@ -164,9 +164,9 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
+    // TODO bug in click recording
 
     public void click(Consumer<String> onGenerateCode) {
-        // TODO bug in click recording
         final int[] a = new int[1];
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
             eventLog.clear();
@@ -177,7 +177,7 @@ public class EventsRecorder {
                     // if not empty put PRESS code for last event
                     MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
                     mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
-                    putCode(onGenerateCode,mouseObjectCodeGenerator.getGeneratedCode());
+                    putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
                 }
                 eventLog.clear();
                 eventLog.add(e);
@@ -206,7 +206,7 @@ public class EventsRecorder {
                     mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
                     code += mouseObjectCodeGenerator.getGeneratedCode();
                 }
-                putCode(onGenerateCode,code);
+                putCode(onGenerateCode, code);
                 eventLog.clear();
             }));
 
@@ -228,32 +228,6 @@ public class EventsRecorder {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
                 prefix + ".control.release", "CONTROL", "RELEASE", (e) -> {
             mouseEventsManager.removeListenersByPrefix(prefix);
-        }));
-    }
-
-    // movement
-
-    public void mouseMovementAbsolute(Consumer<String> onGenerateCode) {
-        // TODO bug in move absolute path recording
-        keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
-                prefix + "control.key.press", "CONTROL", "PRESS", (controlEvent) -> {
-            eventLog.clear();
-            eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
-
-            mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", (e) -> {
-                eventLog.add(e);
-            }));
-        }));
-
-        keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(
-                prefix + "control.key.release", "CONTROL", "RELEASE", (controlEvent) -> {
-            mouseEventsManager.removeListenersByPrefix(prefix);
-
-            List<MouseMoveEvent> moveLog = eventLog.getMouseMoveLog();
-            MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
-            mouseMoveEventUtil.addAll(moveLog);
-            String code = mouseMoveEventUtil.getAbsolutePath(80);
-            putCode(onGenerateCode,code);
         }));
     }
 
