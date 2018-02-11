@@ -1,13 +1,19 @@
 package org.dikhim.jclicker.actions.utils.encoders;
 
-import org.dikhim.jclicker.actions.events.Event;
-import org.dikhim.jclicker.actions.events.MouseMoveEvent;
+import org.dikhim.jclicker.actions.actions.*;
+import org.dikhim.jclicker.actions.events.*;
+import org.dikhim.jclicker.util.output.Out;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractActionEncoder implements ActionEncoder {
-    private static final int SHIFT = 13500;
+    private final int MAX_DELAY_MILLISECONDS = 1000;
+    private final int MAX_DELAY_SECONDS = 3600;
+    private final int MAX_COORDINATE = 10000;
+    private final int MAX_D_COORDINATE = 10000;
+    private final int MIN_D_COORDINATE = -10000;
+    private final int MAX_WHEEL_AMOUNT = 100;
 
     private boolean isAbsolute = false;
     private boolean isRelative = false;
@@ -29,9 +35,6 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
 
     private int stopPointThreshold = 50;
 
-    public static int getSHIFT() {
-        return SHIFT;
-    }
 
     public boolean isDetectStopPoints() {
         return detectStopPoints;
@@ -83,9 +86,19 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      *
      * @return a string representation of included events
      */
-    public abstract String encode(List<Event> eventList);
+    public String encode(List<Event> eventList){
+        List<Event> filteredEventList = filter(eventList);
 
-    protected abstract String encode(int i);
+        List<Action> actions = convertToActionList(filteredEventList);
+
+        StringBuilder sb = new StringBuilder();
+        for (Action a : actions) {
+            sb.append(encodeAction(a));
+        }
+        return sb.toString();
+    }
+
+    protected abstract String encodeAction(Action parameter);
 
     /**
      * Resets all options to default
@@ -228,20 +241,19 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         for (Event e : eventList) {
             switch (e.getType()) {
                 case KEYBOARD:
-                    if (includeKeys) filteredEventList.add(e);
+                    if (isIncludesKeys()) filteredEventList.add(e);
                     break;
                 case MOUSE_BUTTON:
-                    if (includeMouseButtons) filteredEventList.add(e);
+                    if (isIncludesMouseButtons()) filteredEventList.add(e);
                     break;
                 case MOUSE_WHEEL:
-                    if (includeMouseWheel) filteredEventList.add(e);
+                    if (isIncludesMouseWheel()) filteredEventList.add(e);
                     break;
                 case MOUSE_MOVE:
                     if (isRelative() || isAbsolute()) filteredEventList.add(e);
                     break;
             }
         }
-
 
         // filter movement events
         filteredEventList = filterMovementEvents(filteredEventList);
@@ -327,7 +339,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             // if detection stop point option on
             if (isDetectStopPoints()) {
                 // calculate delay to previous event
-                int delay = (int) (mouseMoveEvents.get(i+1).getTime()-e.getTime());
+                int delay = (int) (mouseMoveEvents.get(i + 1).getTime() - e.getTime());
                 // id delay bigger then threshold for stop point detection
                 if (delay >= stopPointThreshold) {
                     // add event to filtered list
@@ -370,7 +382,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             // if detection stop point option on
             if (isDetectStopPoints()) {
                 // calculate delay to previous event
-                int delay = (int) (mouseMoveEvents.get(i+1).getTime()-e.getTime());
+                int delay = (int) (mouseMoveEvents.get(i + 1).getTime() - e.getTime());
                 // id delay bigger then threshold for stop point detection
                 if (delay >= stopPointThreshold) {
                     // add event to filtered list
@@ -379,8 +391,8 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
                 }
             }
             // calculate minDistance to last mouse event
-            int dx = e.getX() - filteredEventList.get(filteredEventList.size()-1).getX();
-            int dy = e.getY() - filteredEventList.get(filteredEventList.size()-1).getY();
+            int dx = e.getX() - filteredEventList.get(filteredEventList.size() - 1).getX();
+            int dy = e.getY() - filteredEventList.get(filteredEventList.size() - 1).getY();
             currentDistance = (int) Math.sqrt(dx * dx + dy * dy);
             // if current minDistance bigger then specified
             if (currentDistance > getMinDistance()) {
@@ -389,6 +401,181 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             }
         }
         return filteredEventList;
+    }
+
+
+    private List<Action> convertToActionList(List<Event> events) {
+        List<Action> actions = new ArrayList<>();
+        Event lastMoveEvent = null;
+
+        for (int i = 0; i < events.size(); i++) {
+            Event e = events.get(i);
+
+            if (isIncludesDelays() && i > 0) {
+                actions.addAll(createDelayActions(events.get(i - 1), e));
+            }
+            switch (e.getType()) {
+                case KEYBOARD:
+                    actions.add(createKeyboardAction((KeyboardEvent) e));
+                    break;
+                case MOUSE_BUTTON:
+                    actions.add(createMouseButtonAction((MouseButtonEvent) e));
+                    break;
+                case MOUSE_WHEEL:
+                    actions.add(createMouseWheelAction((MouseWheelEvent) e));
+                    break;
+                case MOUSE_MOVE:
+
+                    if (isAbsolute()) {
+                        actions.add(createMouseMoveToAction((MouseMoveEvent) e));
+                    } else {
+                        if (lastMoveEvent == null) {
+                            lastMoveEvent = e;
+                            break;
+                        }
+                        actions.add(createMouseMoveAction((MouseMoveEvent) lastMoveEvent, (MouseMoveEvent) e));
+                        lastMoveEvent = e;
+                    }
+                    break;
+            }
+
+        }
+        return actions;
+    }
+
+    private List<Action> createDelayActions(Event previousEvent, Event event) {
+        List<Action> actions = new ArrayList<>();
+        int delay = (int) (event.getTime() - previousEvent.getTime());
+        if (delay < 0) {
+            delay = 0;
+            Out.println(String.format("delay=%s is less then 0, it has been set to 0", delay));
+        }
+        if (delay <= MAX_DELAY_MILLISECONDS) {
+            actions.add(new DelayMillisecondsAction(delay));
+        } else {
+            int milliseconds = delay % 1000;
+            int seconds = delay / 1000;
+            if (seconds > MAX_DELAY_SECONDS) {
+                seconds = MAX_DELAY_SECONDS;
+                Out.println(String.format("delay=%s is bigger then %s seconds, " +
+                        "it has been set to %s seconds", delay, MAX_DELAY_SECONDS, MAX_DELAY_SECONDS));
+            }
+            actions.add(new DelaySecondsAction(seconds));
+            actions.add(new DelayMillisecondsAction(milliseconds));
+        }
+        return actions;
+    }
+
+
+    private Action createKeyboardAction(KeyboardEvent keyboardEvent) {
+        Action result;
+        if (keyboardEvent.getAction().equals("PRESS")) {
+            result = new KeyboardPressAction(keyboardEvent.getKey());
+        } else {
+            result = new KeyboardReleaseAction(keyboardEvent.getKey());
+        }
+        return result;
+    }
+
+    private Action createMouseButtonAction(MouseButtonEvent mouseButtonEvent) {
+        Action result = null;
+        switch (mouseButtonEvent.getButton()) {
+            case "LEFT":
+                switch (mouseButtonEvent.getAction()) {
+                    case "PRESS":
+                        result = new MousePressLeftAction();
+                        break;
+                    case "RELEASE":
+                        result = new MouseReleaseLeftAction();
+                        break;
+                }
+                break;
+            case "RIGHT":
+                switch (mouseButtonEvent.getAction()) {
+                    case "PRESS":
+                        result = new MousePressRightAction();
+                        break;
+                    case "RELEASE":
+                        result = new MouseReleaseRightAction();
+                        break;
+                }
+                break;
+            case "MIDDLE":
+                switch (mouseButtonEvent.getAction()) {
+                    case "PRESS":
+                        result = new MousePressMiddleAction();
+                        break;
+                    case "RELEASE":
+                        result = new MouseReleaseMiddleAction();
+                        break;
+                }
+                break;
+        }
+        return result;
+    }
+
+    private Action createMouseWheelAction(MouseWheelEvent mouseWheelEvent) {
+        Action result = null;
+        int amount = mouseWheelEvent.getAmount();
+        if (amount > MAX_WHEEL_AMOUNT) {
+            amount = MAX_WHEEL_AMOUNT;
+            Out.println(String.format("wheel amount=%s is bigger then %s, it has been set to %s", amount, MAX_WHEEL_AMOUNT, MAX_WHEEL_AMOUNT));
+        }
+        switch (mouseWheelEvent.getDirection()) {
+            case "DOWN":
+                result = new MouseWheelDownAction(amount);
+                break;
+            case "UP":
+                result = new MouseWheelUpAction(amount);
+                break;
+        }
+
+        return result;
+    }
+
+    private Action createMouseMoveToAction(MouseMoveEvent mouseMoveEvent) {
+        int x = mouseMoveEvent.getX();
+        int y = mouseMoveEvent.getY();
+        if (x < 0) {
+            x = 0;
+            Out.println(String.format("x=%s is less then 0, it has been set to 0", x));
+        }
+        if (y < 0) {
+            y = 0;
+            Out.println(String.format("y=%s is less then 0, it has been set to 0", y));
+        }
+        if (x > MAX_COORDINATE) {
+            x = MAX_COORDINATE;
+            Out.println(String.format("x=%s is bigger then %s, it has been set to %s", x, MAX_COORDINATE, MAX_COORDINATE));
+        }
+        if (y > MAX_COORDINATE) {
+            y = MAX_COORDINATE;
+            Out.println(String.format("y=%s is bigger then %s, it has been set to %s", y, MAX_COORDINATE, MAX_COORDINATE));
+        }
+        return new MouseMoveAtAction(x, y);
+    }
+
+    private Action createMouseMoveAction(MouseMoveEvent previousEvent, MouseMoveEvent mouseMoveEvent){
+        int dx = mouseMoveEvent.getX() - previousEvent.getX();
+        int dy = mouseMoveEvent.getY() - previousEvent.getY();
+        if (dx < MIN_D_COORDINATE) {
+            dx = MIN_D_COORDINATE;
+            Out.println(String.format("dx=%s is less then %s, it has been set to %s", dx, MIN_D_COORDINATE, MIN_D_COORDINATE));
+        }
+        if (dy < MIN_D_COORDINATE) {
+            dy = MIN_D_COORDINATE;
+            Out.println(String.format("dy=%s is less then %s, it has been set to %s", dy, MIN_D_COORDINATE, MIN_D_COORDINATE));
+
+        }
+        if (dx > MAX_D_COORDINATE) {
+            dx = MAX_D_COORDINATE;
+            Out.println(String.format("dx=%s is bigger then %s, it has been set to %s", dx, MAX_D_COORDINATE, MAX_D_COORDINATE));
+        }
+        if (dy > MAX_D_COORDINATE) {
+            dy = MAX_D_COORDINATE;
+            Out.println(String.format("dy=%s is bigger then %s, it has been set to %s", dy, MAX_D_COORDINATE, MAX_D_COORDINATE));
+        }
+        return new MouseMoveAction(dx, dy);
     }
 
 

@@ -12,9 +12,9 @@ public class MouseCodes {
 
     static {
         codes = new ArrayList<>();
-        codes.add(new MouseCode("LEFT", BUTTON1, InputEvent.BUTTON1_MASK));
-        codes.add(new MouseCode("MIDDLE", BUTTON2, InputEvent.BUTTON2_MASK));
-        codes.add(new MouseCode("RIGHT", BUTTON3, InputEvent.BUTTON3_MASK));
+        codes.add(new MouseCode("LEFT", BUTTON1, InputEvent.getMaskForButton(1)));
+        codes.add(new MouseCode("MIDDLE", BUTTON2, InputEvent.getMaskForButton(2)));
+        codes.add(new MouseCode("RIGHT", BUTTON3, InputEvent.getMaskForButton(3)));
     }
 
 
