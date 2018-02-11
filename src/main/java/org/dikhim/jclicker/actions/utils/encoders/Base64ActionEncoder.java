@@ -3,14 +3,13 @@ package org.dikhim.jclicker.actions.utils.encoders;
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 
+import java.util.Base64;
+
 import static org.dikhim.jclicker.actions.actions.ActionType.*;
+import static org.dikhim.jclicker.actions.actions.ActionType.DELAY_SECONDS;
 
-@SuppressWarnings("Duplicates")
-public class UnicodeActionEncoder extends AbstractActionEncoder {
-
-    public static final int SHIFT = 13500;
-    
-    public UnicodeActionEncoder() {
+public class Base64ActionEncoder extends AbstractActionEncoder {
+    public Base64ActionEncoder() {
         putActionCode(KEYBOARD_PRESS, "k");
         putActionCode(KEYBOARD_RELEASE, "K");
 
@@ -33,6 +32,10 @@ public class UnicodeActionEncoder extends AbstractActionEncoder {
     }
 
     protected String encodeParameter(int i) {
-        return Character.toString((char) (i + SHIFT));
+        short param = (short) i;
+        byte[] byteArray = new byte[2];
+        byteArray[0] = (byte) (param & 0xff);
+        byteArray[1] = (byte) ((param >> 8) & 0xff); 
+        return Base64.getEncoder().encodeToString(byteArray);
     }
 }
