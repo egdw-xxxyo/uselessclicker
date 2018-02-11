@@ -2,14 +2,10 @@ package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
-import org.dikhim.jclicker.actions.utils.decoders.ActionDecoder;
-import org.dikhim.jclicker.actions.utils.decoders.UnicodeDecoder;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 
 import java.awt.*;
-import java.awt.datatransfer.*;
-import java.io.IOException;
 
 @SuppressWarnings("unused")
 public class JsSystemObject implements SystemObject {

@@ -2,7 +2,9 @@ package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.decoders.ActionDecoder;
-import org.dikhim.jclicker.actions.utils.decoders.UnicodeDecoder;
+import org.dikhim.jclicker.actions.utils.decoders.ActionDecoderFactory;
+import org.dikhim.jclicker.actions.utils.decoders.UnicodeActionDecoder;
+import org.dikhim.jclicker.util.output.Out;
 
 import java.util.List;
 
@@ -18,8 +20,14 @@ public class JsCombinedObject implements CombinedObject {
     }
 
     public void run(String code) {
-        ActionDecoder actionDecoder = new UnicodeDecoder();
-        List<Action> actions = actionDecoder.decode(code);
+        ActionDecoder actionDecoder = ActionDecoderFactory.get("unicode");
+        List<Action> actions;
+        try {
+            actions = actionDecoder.decode(code);
+        } catch (IllegalArgumentException e) {
+            Out.println(e.getMessage());
+            return;
+        }
         // for delay compensation
         long firstTimeStamp = System.currentTimeMillis();
 
@@ -42,7 +50,7 @@ public class JsCombinedObject implements CombinedObject {
                     mouseObject.move(((MouseMoveAction) a).getDx(), ((MouseMoveAction) a).getDy());
                     break;
                 case MOUSE_MOVE_TO:
-                    mouseObject.moveTo(((MouseMoveAtAction) a).getX(), ((MouseMoveAtAction) a).getY());
+                    mouseObject.moveTo(((MouseMoveToAction) a).getX(), ((MouseMoveToAction) a).getY());
                     break;
                 case MOUSE_PRESS_LEFT:
                     mouseObject.button("LEFT", "PRESS");

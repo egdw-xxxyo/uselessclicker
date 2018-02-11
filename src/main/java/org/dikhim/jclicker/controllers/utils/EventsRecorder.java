@@ -8,6 +8,8 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
+import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
+import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
@@ -280,7 +282,7 @@ public class EventsRecorder {
                     keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                     mouseEventsManager.removeListenersByPrefix(prefix);
 
-                    UnicodeActionEncoder unicodeActionEncoder = new UnicodeActionEncoder();
+                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("unicode");
                     if (combinedConfig.isKeysIncluded()) unicodeActionEncoder.addKeys();
                     if (combinedConfig.isMouseButtonsIncluded()) unicodeActionEncoder.addMouseButtons();
                     if (combinedConfig.isMouseWheelIncluded()) unicodeActionEncoder.addMouseWheel();

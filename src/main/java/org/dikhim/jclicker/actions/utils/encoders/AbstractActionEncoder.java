@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.actions.utils.encoders;
 
+import org.apache.commons.collections4.BidiMap;
+import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.util.output.Out;
@@ -8,12 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractActionEncoder implements ActionEncoder {
-    private final int MAX_DELAY_MILLISECONDS = 1000;
-    private final int MAX_DELAY_SECONDS = 3600;
-    private final int MAX_COORDINATE = 10000;
-    private final int MAX_D_COORDINATE = 10000;
-    private final int MIN_D_COORDINATE = -10000;
-    private final int MAX_WHEEL_AMOUNT = 100;
+    private static final BidiMap<ActionType, String> actionCodes = new DualHashBidiMap<>();
+    
+    public static final int MAX_DELAY_MILLISECONDS = 1000;
+    public static final int MAX_DELAY_SECONDS = 3600;
+    public static final int MAX_COORDINATE = 10000;
+    public static final int MAX_D_COORDINATE = 10000;
+    public static final int MIN_D_COORDINATE = -10000;
+    public static final int MAX_WHEEL_AMOUNT = 100;
+
+
 
     private boolean isAbsolute = false;
     private boolean isRelative = false;
@@ -36,49 +42,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     private int stopPointThreshold = 50;
 
 
-    public boolean isDetectStopPoints() {
-        return detectStopPoints;
-    }
-
-    public boolean isIncludesKeys() {
-        return includeKeys;
-    }
-
-    public boolean isIncludesMouseButtons() {
-        return includeMouseButtons;
-    }
-
-    public boolean isIncludesMouseWheel() {
-        return includeMouseWheel;
-    }
-
-    public boolean isIncludesDelays() {
-        return includeDelays;
-    }
-
-    public boolean isRelative() {
-        return isRelative;
-    }
-
-    public boolean isAbsolute() {
-        return isAbsolute;
-    }
-
-    public boolean isFixedRate() {
-        return isFixedRate;
-    }
-
-    public int getFixedRate() {
-        return fixedRate;
-    }
-
-    public boolean isMinDistance() {
-        return isMinDistance;
-    }
-
-    public int getMinDistance() {
-        return minDistance;
-    }
+    
 
 
     /**
@@ -86,7 +50,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      *
      * @return a string representation of included events
      */
-    public String encode(List<Event> eventList){
+    public String encode(List<Event> eventList) {
         List<Event> filteredEventList = filter(eventList);
 
         List<Action> actions = convertToActionList(filteredEventList);
@@ -147,17 +111,6 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      * @return a reference to this object.
      */
     public AbstractActionEncoder addMouseWheel() {
-        includeMouseWheel = true;
-        return this;
-    }
-
-    /**
-     * Add mouse events
-     *
-     * @return a reference to this object.
-     */
-    public AbstractActionEncoder addMouse() {
-        includeMouseButtons = true;
         includeMouseWheel = true;
         return this;
     }
@@ -234,7 +187,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
      * @param eventList list of all recorded events
      * @return filtered list
      */
-    List<Event> filter(List<Event> eventList) {
+    private List<Event> filter(List<Event> eventList) {
         List<Event> filteredEventList = new ArrayList<>();
 
         // filter not selected events
@@ -552,10 +505,10 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             y = MAX_COORDINATE;
             Out.println(String.format("y=%s is bigger then %s, it has been set to %s", y, MAX_COORDINATE, MAX_COORDINATE));
         }
-        return new MouseMoveAtAction(x, y);
+        return new MouseMoveToAction(x, y);
     }
 
-    private Action createMouseMoveAction(MouseMoveEvent previousEvent, MouseMoveEvent mouseMoveEvent){
+    private Action createMouseMoveAction(MouseMoveEvent previousEvent, MouseMoveEvent mouseMoveEvent) {
         int dx = mouseMoveEvent.getX() - previousEvent.getX();
         int dy = mouseMoveEvent.getY() - previousEvent.getY();
         if (dx < MIN_D_COORDINATE) {
@@ -578,5 +531,61 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         return new MouseMoveAction(dx, dy);
     }
 
+    protected void putActionCode(ActionType actionType, String actionCode) {
+        actionCodes.put(actionType, actionCode);
+    }
+
+    protected String getActionCode(ActionType actionType) {
+        return actionCodes.get(actionType);
+    }
+    
+    // getters
+    public static BidiMap<ActionType, String> getActionCodes() {
+        return actionCodes;
+    }
+    
+    public boolean isDetectStopPoints() {
+        return detectStopPoints;
+    }
+
+    public boolean isIncludesKeys() {
+        return includeKeys;
+    }
+
+    public boolean isIncludesMouseButtons() {
+        return includeMouseButtons;
+    }
+
+    public boolean isIncludesMouseWheel() {
+        return includeMouseWheel;
+    }
+
+    public boolean isIncludesDelays() {
+        return includeDelays;
+    }
+
+    public boolean isRelative() {
+        return isRelative;
+    }
+
+    public boolean isAbsolute() {
+        return isAbsolute;
+    }
+
+    public boolean isFixedRate() {
+        return isFixedRate;
+    }
+
+    public int getFixedRate() {
+        return fixedRate;
+    }
+
+    public boolean isMinDistance() {
+        return isMinDistance;
+    }
+
+    public int getMinDistance() {
+        return minDistance;
+    }
 
 }

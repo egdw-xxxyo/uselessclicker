@@ -1,11 +1,11 @@
 package org.dikhim.jclicker.actions.actions;
 
-public class MouseMoveAtAction implements Action{
+public class MouseMoveToAction implements Action{
     private ActionType actionType = ActionType.MOUSE_MOVE_TO;
     private int x;
     private int y;
 
-    public MouseMoveAtAction(int x, int y) {
+    public MouseMoveToAction(int x, int y) {
         this.x = x;
         this.y = y;
     }
