@@ -3,11 +3,7 @@ package org.dikhim.jclicker.actions.utils.encoders;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.dikhim.jclicker.actions.actions.*;
-import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.dikhim.jclicker.actions.actions.ActionType.*;
 
@@ -16,33 +12,33 @@ import static org.dikhim.jclicker.actions.actions.ActionType.*;
 public class UnicodeActionEncoder extends AbstractActionEncoder {
     private static final int SHIFT = 13500;
     
-    private static final BidiMap<ActionType, Character> actionCodes;
+    private static final BidiMap<ActionType, String> actionCodes;
 
     static {
         actionCodes = new DualHashBidiMap<>();
         
-        actionCodes.put(KEYBOARD_PRESS, 'k');
-        actionCodes.put(KEYBOARD_RELEASE, 'K');
+        actionCodes.put(KEYBOARD_PRESS, "k");
+        actionCodes.put(KEYBOARD_RELEASE, "K");
 
-        actionCodes.put(MOUSE_MOVE, 'X');
-        actionCodes.put(MOUSE_MOVE_AT, 'A');
+        actionCodes.put(MOUSE_MOVE, "X");
+        actionCodes.put(MOUSE_MOVE_TO, "A");
 
-        actionCodes.put(MOUSE_PRESS_LEFT, 'l');
-        actionCodes.put(MOUSE_PRESS_RIGHT, 'r');
-        actionCodes.put(MOUSE_PRESS_MIDDLE, 'm');
+        actionCodes.put(MOUSE_PRESS_LEFT, "l");
+        actionCodes.put(MOUSE_PRESS_RIGHT, "r");
+        actionCodes.put(MOUSE_PRESS_MIDDLE, "m");
 
-        actionCodes.put(MOUSE_RELEASE_LEFT, 'L');
-        actionCodes.put(MOUSE_RELEASE_RIGHT, 'R');
-        actionCodes.put(MOUSE_RELEASE_MIDDLE, 'M');
+        actionCodes.put(MOUSE_RELEASE_LEFT, "L");
+        actionCodes.put(MOUSE_RELEASE_RIGHT, "R");
+        actionCodes.put(MOUSE_RELEASE_MIDDLE, "M");
 
-        actionCodes.put(MOUSE_WHEEL_UP, 'W');
-        actionCodes.put(MOUSE_WHEEL_DOWN, 'w');
+        actionCodes.put(MOUSE_WHEEL_UP, "W");
+        actionCodes.put(MOUSE_WHEEL_DOWN, "w");
 
-        actionCodes.put(DELAY_MILLISECONDS, 'D');
-        actionCodes.put(DELAY_SECONDS, 'S');
+        actionCodes.put(DELAY_MILLISECONDS, "D");
+        actionCodes.put(DELAY_SECONDS, "S");
     }
 
-    public static BidiMap<ActionType, Character> getActionCodes() {
+    public static BidiMap<ActionType, String> getActionCodes() {
         return actionCodes;
     }
 
@@ -64,8 +60,8 @@ public class UnicodeActionEncoder extends AbstractActionEncoder {
                 result += encodeParameter(((MouseMoveAction) action).getDx());
                 result += encodeParameter(((MouseMoveAction) action).getDy());
                 break;
-            case MOUSE_MOVE_AT:
-                result += encodeActionType(MOUSE_MOVE_AT);
+            case MOUSE_MOVE_TO:
+                result += encodeActionType(MOUSE_MOVE_TO);
                 result += encodeParameter(((MouseMoveAtAction) action).getX());
                 result += encodeParameter(((MouseMoveAtAction) action).getY());
                 break;
@@ -97,6 +93,7 @@ public class UnicodeActionEncoder extends AbstractActionEncoder {
                 break;
             case DELAY_MILLISECONDS:
                 result += encodeActionType(DELAY_MILLISECONDS);
+                System.out.println(((DelayMillisecondsAction) action).getDelay());
                 result += encodeParameter(((DelayMillisecondsAction) action).getDelay());
                 break;
             case DELAY_SECONDS:
@@ -108,7 +105,7 @@ public class UnicodeActionEncoder extends AbstractActionEncoder {
     }
 
     private String encodeActionType(ActionType actionType) {
-        return Character.toString(actionCodes.get(actionType));
+        return actionCodes.get(actionType);
     }
     
     private String encodeParameter(int i) {

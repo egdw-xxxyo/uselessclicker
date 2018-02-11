@@ -10,7 +10,7 @@ import java.util.List;
 
 public class UnicodeDecoder implements ActionDecoder {
 
-    private BidiMap<ActionType, Character> actionCodes = UnicodeActionEncoder.getActionCodes();
+    private BidiMap<ActionType, String> actionCodes = UnicodeActionEncoder.getActionCodes();
     private final int SHIFT = UnicodeActionEncoder.getSHIFT();
 
     public List<Action> decode(String code) {
@@ -20,7 +20,7 @@ public class UnicodeDecoder implements ActionDecoder {
         int i = 0;
         while (i < codeArray.length) {
             char c = codeArray[i];
-            ActionType actionType = actionCodes.getKey(c);
+            ActionType actionType = actionCodes.getKey(Character.toString(c));
 
             int intTmp1, intTmp2;
             String strTmp;
@@ -43,7 +43,7 @@ public class UnicodeDecoder implements ActionDecoder {
                     if (intTmp2 < -10000 || intTmp2 > 10000) break;
                     actions.add(new MouseMoveAction( intTmp1, intTmp2));
                     break;
-                case MOUSE_MOVE_AT:
+                case MOUSE_MOVE_TO:
                     intTmp1 = decode(codeArray[i + 1]);
                     intTmp2 = decode(codeArray[i + 2]);
                     i += 3;

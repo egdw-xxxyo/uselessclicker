@@ -5,7 +5,7 @@ public enum ActionType {
     KEYBOARD_RELEASE,
 
     MOUSE_MOVE,
-    MOUSE_MOVE_AT,
+    MOUSE_MOVE_TO,
 
     MOUSE_PRESS_LEFT,
     MOUSE_PRESS_RIGHT,
