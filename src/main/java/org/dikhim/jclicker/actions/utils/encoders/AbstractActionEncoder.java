@@ -133,6 +133,9 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
 
     protected abstract String encodeParameter(int i);
 
+    protected String encodeKeyboardKey(int i) {
+       return encodeParameter(i);
+    }
     /**
      * Resets all options to default
      *

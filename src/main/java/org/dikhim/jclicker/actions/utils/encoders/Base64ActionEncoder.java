@@ -11,26 +11,27 @@ import static org.dikhim.jclicker.actions.actions.ActionType.DELAY_SECONDS;
 
 public class Base64ActionEncoder extends AbstractActionEncoder {
     private Base64Encoder encoder = new Base64Encoder();
+
     public Base64ActionEncoder() {
-        putActionCode(KEYBOARD_PRESS, "<");
-        putActionCode(KEYBOARD_RELEASE, ">");
+        putActionCode(KEYBOARD_PRESS, "k");
+        putActionCode(KEYBOARD_RELEASE, "K");
 
-        putActionCode(MOUSE_MOVE, "#");
-        putActionCode(MOUSE_MOVE_TO, "@");
+        putActionCode(MOUSE_MOVE, "X");
+        putActionCode(MOUSE_MOVE_TO, "A");
 
-        putActionCode(MOUSE_PRESS_LEFT, "(");
-        putActionCode(MOUSE_PRESS_RIGHT, "{");
-        putActionCode(MOUSE_PRESS_MIDDLE, "[");
+        putActionCode(MOUSE_PRESS_LEFT, "l");
+        putActionCode(MOUSE_PRESS_RIGHT, "r");
+        putActionCode(MOUSE_PRESS_MIDDLE, "m");
 
-        putActionCode(MOUSE_RELEASE_LEFT, ")");
-        putActionCode(MOUSE_RELEASE_RIGHT, "}");
-        putActionCode(MOUSE_RELEASE_MIDDLE, "]");
+        putActionCode(MOUSE_RELEASE_LEFT, "L");
+        putActionCode(MOUSE_RELEASE_RIGHT, "R");
+        putActionCode(MOUSE_RELEASE_MIDDLE, "M");
 
-        putActionCode(MOUSE_WHEEL_DOWN, "$");
-        putActionCode(MOUSE_WHEEL_UP, "%");
+        putActionCode(MOUSE_WHEEL_UP, "W");
+        putActionCode(MOUSE_WHEEL_DOWN, "w");
 
-        putActionCode(DELAY_MILLISECONDS, "-");
-        putActionCode(DELAY_SECONDS, "*");
+        putActionCode(DELAY_MILLISECONDS, "D");
+        putActionCode(DELAY_SECONDS, "S");
     }
 
     protected String encodeParameter(int i) {

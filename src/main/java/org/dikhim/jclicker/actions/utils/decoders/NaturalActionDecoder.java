@@ -2,7 +2,7 @@ package org.dikhim.jclicker.actions.utils.decoders;
 
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
-import org.dikhim.jclicker.actions.utils.encoding.Base64Decoder;
+import org.dikhim.jclicker.actions.utils.encoding.NaturalDecoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,12 +10,10 @@ import java.util.List;
 
 import static org.dikhim.jclicker.actions.utils.encoders.AbstractActionEncoder.getActionCodes;
 
-public class Base64ActionDecoder extends AbstractActionDecoder {
-    private Base64Decoder decoder = new Base64Decoder();
-
-
+public class NaturalActionDecoder extends AbstractActionDecoder {
+    private NaturalDecoder decoder = new NaturalDecoder();
     @Override
-    public List<Action> decode(String code) {
+    public List<Action> decode(String code){
         List<Action> actions = new ArrayList<>();
         int paramLength = 3;
         String stringTmp;
@@ -139,11 +137,25 @@ public class Base64ActionDecoder extends AbstractActionDecoder {
 
     // decode
     private int decodeParameter(char[] chars) {
-        return decoder.decode(chars);
+        return decoder.decode(String.valueOf(chars));
+    }
+
+    private char[] getParam(char[] chars, int begin) {
+        char[] result = null;
+
+        for(int i=begin;i<chars.length;i++) {
+            if (!isParamChar(chars[i])) {
+                result = Arrays.copyOfRange(chars, begin, i);
+            }
+        }
+        return result;
+    }
+
+    private boolean isParamChar(char c) {
+        return "01234567890-".contains(Character.toString(c));
     }
 
     private int getParam(char[] chars, int begin, int length) {
         return decodeParameter(Arrays.copyOfRange(chars, begin, begin + length));
     }
-
 }
