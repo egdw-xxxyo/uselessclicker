@@ -9,22 +9,29 @@ import java.util.List;
 
 import static org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder.*;
 
-public abstract class AbstractActionDecoder {
+public abstract class AbstractActionDecoder implements ActionDecoder {
 
-    private List<Action> decode(String code) {
-        List<Action> actions = new ArrayList<>();
-
-        char[] codeArray = code.toCharArray();
-        int i = 0;
-        while (i < codeArray.length) {
-            char c = codeArray[i];
-            ActionType actionType = getActionCodes().getKey(Character.toString(c));
-
-            
-
-        }
-        return actions;
+    protected boolean validateKey(String key) {
+        return !key.isEmpty();
     }
 
-    protected abstract Action decodeAction(ActionType actionType, char[] params);
+    protected boolean validateDelaySeconds(int value) {
+        return value >= 0 && value <= MAX_DELAY_SECONDS;
+    }
+
+    protected boolean validateDelayMilliseconds(int value) {
+        return value >= 0 && value <= MAX_DELAY_MILLISECONDS;
+    }
+
+    protected boolean validateCoordinate(int value) {
+        return value >= 0 && value <= MAX_COORDINATE;
+    }
+
+    protected boolean validateDifferenceCoordinate(int value) {
+        return value >= MIN_D_COORDINATE && value <= MAX_D_COORDINATE;
+    }
+
+    protected boolean validateWheelAmount(int value) {
+        return value >= 0 && value < MAX_WHEEL_AMOUNT;
+    }
 }

@@ -1,5 +1,5 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 public interface CombinedObject {
-    void run(String code);
+    void run(String encoding, String code);
 }

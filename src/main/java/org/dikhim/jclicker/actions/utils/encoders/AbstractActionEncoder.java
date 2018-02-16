@@ -560,19 +560,15 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         int y = mouseMoveEvent.getY();
         if (x < 0) {
             x = 0;
-            Out.println(String.format("x=%s is less then 0, it has been set to 0", x));
         }
         if (y < 0) {
             y = 0;
-            Out.println(String.format("y=%s is less then 0, it has been set to 0", y));
         }
         if (x > MAX_COORDINATE) {
             x = MAX_COORDINATE;
-            Out.println(String.format("x=%s is bigger then %s, it has been set to %s", x, MAX_COORDINATE, MAX_COORDINATE));
         }
         if (y > MAX_COORDINATE) {
             y = MAX_COORDINATE;
-            Out.println(String.format("y=%s is bigger then %s, it has been set to %s", y, MAX_COORDINATE, MAX_COORDINATE));
         }
         return new MouseMoveToAction(x, y);
     }
@@ -582,20 +578,16 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
         int dy = mouseMoveEvent.getY() - previousEvent.getY();
         if (dx < MIN_D_COORDINATE) {
             dx = MIN_D_COORDINATE;
-            Out.println(String.format("dx=%s is less then %s, it has been set to %s", dx, MIN_D_COORDINATE, MIN_D_COORDINATE));
         }
         if (dy < MIN_D_COORDINATE) {
             dy = MIN_D_COORDINATE;
-            Out.println(String.format("dy=%s is less then %s, it has been set to %s", dy, MIN_D_COORDINATE, MIN_D_COORDINATE));
 
         }
         if (dx > MAX_D_COORDINATE) {
             dx = MAX_D_COORDINATE;
-            Out.println(String.format("dx=%s is bigger then %s, it has been set to %s", dx, MAX_D_COORDINATE, MAX_D_COORDINATE));
         }
         if (dy > MAX_D_COORDINATE) {
             dy = MAX_D_COORDINATE;
-            Out.println(String.format("dy=%s is bigger then %s, it has been set to %s", dy, MAX_D_COORDINATE, MAX_D_COORDINATE));
         }
         return new MouseMoveAction(dx, dy);
     }

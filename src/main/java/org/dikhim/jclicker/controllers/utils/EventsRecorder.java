@@ -282,7 +282,7 @@ public class EventsRecorder {
                     keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                     mouseEventsManager.removeListenersByPrefix(prefix);
 
-                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("unicode");
+                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("base64");
                     if (combinedConfig.isKeysIncluded()) unicodeActionEncoder.addKeys();
                     if (combinedConfig.isMouseButtonsIncluded()) unicodeActionEncoder.addMouseButtons();
                     if (combinedConfig.isMouseWheelIncluded()) unicodeActionEncoder.addMouseWheel();
@@ -297,7 +297,7 @@ public class EventsRecorder {
 
 
                     String rawCode = unicodeActionEncoder.encode(eventLog.getEventLog());
-                    combinedObjectCodeGenerator.run(rawCode);
+                    combinedObjectCodeGenerator.run("base64", rawCode);
                     putCode(onGenerateCode, combinedObjectCodeGenerator.getGeneratedCode());
                 } else {
                     eventLog.add(e);

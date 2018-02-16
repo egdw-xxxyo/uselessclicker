@@ -106,7 +106,7 @@ public class Base64Encoder {
         char[] result = new char[charsCount];
         int shift = 0;
 
-        for (int i = result.length; i >= 0; i--) {
+        for (int i = result.length-1; i >= 0; i--) {
             result[i] = alfabet.getChar((param + difference) >> shift & SIXTET_MASK);
         }
 

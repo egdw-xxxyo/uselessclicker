@@ -2,19 +2,22 @@ package org.dikhim.jclicker.actions.utils.decoders;
 
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
+import org.dikhim.jclicker.actions.utils.encoding.Base64Decoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder.SHIFT;
-import static org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder.getActionCodes;
+import static org.dikhim.jclicker.actions.utils.encoders.AbstractActionEncoder.getActionCodes;
 
-public class UnicodeActionDecoder extends AbstractActionDecoder {
+public class Base64ActionDecoder extends AbstractActionDecoder {
+    private Base64Decoder decoder = new Base64Decoder();
 
 
+    @Override
     public List<Action> decode(String code) {
         List<Action> actions = new ArrayList<>();
-
+        int paramLength = 3;
         String stringTmp;
         int intTmp1;
         int intTmp2;
@@ -26,104 +29,104 @@ public class UnicodeActionDecoder extends AbstractActionDecoder {
 
             if (actionType == null)
                 throw new IllegalArgumentException(String.format("incorrect action '%s'", codeArray[i]));
-            
+            i++;
             switch (actionType) {
                 case MOUSE_PRESS_LEFT:
                     actions.add(new MousePressLeftAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_LEFT:
                     actions.add(new MouseReleaseLeftAction());
-                    i++;
                     break;
                 case MOUSE_PRESS_RIGHT:
                     actions.add(new MousePressRightAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_RIGHT:
                     actions.add(new MouseReleaseRightAction());
-                    i++;
                     break;
                 case MOUSE_PRESS_MIDDLE:
                     actions.add(new MousePressMiddleAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_MIDDLE:
                     actions.add(new MouseReleaseMiddleAction());
-                    i++;
                     break;
                 case KEYBOARD_PRESS:
-                    stringTmp = KeyCodes.getNameByUselessCode(decodeParameter(codeArray[i + 1]));
+
+                    stringTmp = KeyCodes.getNameByUselessCode(getParam(codeArray, i, paramLength));
                     if (!validateKey(stringTmp))
                         throw new IllegalArgumentException(
-                                String.format("incorrect key '%s'", codeArray[i + 1]));
-
+                                String.format("incorrect key '%s'", codeArray[i]));
                     actions.add(new KeyboardPressAction(stringTmp));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case KEYBOARD_RELEASE:
-                    stringTmp = KeyCodes.getNameByUselessCode(decodeParameter(codeArray[i + 1]));
+                    stringTmp = KeyCodes.getNameByUselessCode(getParam(codeArray, i, paramLength));
                     if (!validateKey(stringTmp))
                         throw new IllegalArgumentException(
-                                String.format("incorrect key '%s'", codeArray[i + 1]));
+                                String.format("incorrect key '%s'", codeArray[i]));
                     actions.add(new KeyboardReleaseAction(stringTmp));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case MOUSE_WHEEL_UP:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, paramLength);
                     if (!validateWheelAmount(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect wheel amount '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect wheel amount '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new MouseWheelUpAction(intTmp1));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case MOUSE_WHEEL_DOWN:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, paramLength);
                     if (!validateWheelAmount(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect wheel amount '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect wheel amount '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new MouseWheelDownAction(intTmp1));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case DELAY_SECONDS:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, 3);
                     if (!validateDelaySeconds(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect second delay '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect second delay '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new DelaySecondsAction(intTmp1));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case DELAY_MILLISECONDS:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, paramLength);
                     if (!validateDelayMilliseconds(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect millisecond delay '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect millisecond delay '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new DelayMillisecondsAction(intTmp1));
-                    i += 2;
+                    i += paramLength;
                     break;
                 case MOUSE_MOVE_TO:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, paramLength);
+
                     if (!validateCoordinate(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect x coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
-                    intTmp2 = decodeParameter(codeArray[i + 2]);
+                                String.format("incorrect x coordinate '%s' -> '%s'", codeArray[i], intTmp1));
+                    i += paramLength;
+
+                    intTmp2 = getParam(codeArray, i, paramLength);
                     if (!validateCoordinate(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect y coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect y coordinate '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new MouseMoveToAction(intTmp1, intTmp2));
-                    i += 3;
+                    i += paramLength;
                     break;
                 case MOUSE_MOVE:
-                    intTmp1 = decodeParameter(codeArray[i + 1]);
+                    intTmp1 = getParam(codeArray, i, paramLength);
+
                     if (!validateCoordinate(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect dx coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
-                    intTmp2 = decodeParameter(codeArray[i + 2]);
+                                String.format("incorrect dx coordinate '%s' -> '%s'", codeArray[i], intTmp1));
+                    i += paramLength;
+
+                    intTmp2 = getParam(codeArray, i, paramLength);
                     if (!validateCoordinate(intTmp1))
                         throw new IllegalArgumentException(
-                                String.format("incorrect dy coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
+                                String.format("incorrect dy coordinate '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new MouseMoveAction(intTmp1, intTmp2));
-                    i += 3;
+                    i += paramLength;
                     break;
             }
         }
@@ -134,8 +137,21 @@ public class UnicodeActionDecoder extends AbstractActionDecoder {
         return getActionCodes().getKey(actionType);
     }
 
-    // decode
-    private int decodeParameter(char c) {
-        return c - SHIFT;
+    private ActionType decodeActionType(char actionTypeChar) {
+        return getActionCodes().getKey(Character.toString(actionTypeChar));
     }
+
+    // decode
+    private int decodeParameter(char[] chars) {
+        return decoder.decode(chars);
+    }
+
+    private int getParam(char[] chars, int begin, int length) {
+        return decodeParameter(Arrays.copyOfRange(chars, begin, begin + length));
+    }
+
+    private boolean isActionChar(char c) {
+        return decodeActionType(c) == null;
+    }
+
 }

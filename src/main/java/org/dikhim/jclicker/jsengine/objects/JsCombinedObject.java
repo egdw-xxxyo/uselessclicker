@@ -19,8 +19,8 @@ public class JsCombinedObject implements CombinedObject {
         this.systemObject = systemObject;
     }
 
-    public void run(String code) {
-        ActionDecoder actionDecoder = ActionDecoderFactory.get("unicode");
+    public void run(String encoding, String code) {
+        ActionDecoder actionDecoder = ActionDecoderFactory.get(encoding);
         List<Action> actions;
         try {
             actions = actionDecoder.decode(code);
