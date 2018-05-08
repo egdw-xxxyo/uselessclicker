@@ -166,8 +166,7 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
-    // TODO bug in click recording
-
+    
     public void click(Consumer<String> onGenerateCode) {
         final int[] a = new int[1];
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
@@ -282,7 +281,7 @@ public class EventsRecorder {
                     keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                     mouseEventsManager.removeListenersByPrefix(prefix);
 
-                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("base64");
+                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("unicode");
                     if (combinedConfig.isKeysIncluded()) unicodeActionEncoder.addKeys();
                     if (combinedConfig.isMouseButtonsIncluded()) unicodeActionEncoder.addMouseButtons();
                     if (combinedConfig.isMouseWheelIncluded()) unicodeActionEncoder.addMouseWheel();
@@ -297,7 +296,7 @@ public class EventsRecorder {
 
 
                     String rawCode = unicodeActionEncoder.encode(eventLog.getEventLog());
-                    combinedObjectCodeGenerator.run("base64", rawCode);
+                    combinedObjectCodeGenerator.run("unicode", rawCode);
                     putCode(onGenerateCode, combinedObjectCodeGenerator.getGeneratedCode());
                 } else {
                     eventLog.add(e);

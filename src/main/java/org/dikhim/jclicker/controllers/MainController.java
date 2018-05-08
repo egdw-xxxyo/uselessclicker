@@ -284,10 +284,10 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader();
 
-            root = loader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml").openStream());
+            root = loader.load(getClass().getResource("/ui/config/ConfigScene.fxml").openStream());
             Stage stage = new Stage();
-            stage.setTitle("Server");
-            stage.setScene(new Scene(root, 600, 200));
+            stage.setTitle("Configuration");
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());

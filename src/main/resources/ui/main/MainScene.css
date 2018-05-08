@@ -50,6 +50,9 @@
     -fx-background-image: url("../../images/http.png");
 }
 
+#config-button {
+    -fx-background-image: url("../../images/config.png");
+}
 
 /*Menu buttons*/
 #menu-keyboard-button {

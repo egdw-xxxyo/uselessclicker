@@ -6,7 +6,7 @@ public class ActionEncoderFactory {
             return new UnicodeActionEncoder();
         } else if ("base64".equalsIgnoreCase(encoding)) {
             return new Base64ActionEncoder();
-        }
+        } 
         return null;
     }
 }

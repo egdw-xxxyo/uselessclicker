@@ -1,9 +1,7 @@
 package org.dikhim.jclicker.actions.utils.encoding;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
 public class Base64Encoder {
-    Base64Alfabet alfabet = new Base64Alfabet();
+    private Base64Alfabet alfabet = new Base64Alfabet();
 
     private static final int SIXTET_MASK = 63;
 

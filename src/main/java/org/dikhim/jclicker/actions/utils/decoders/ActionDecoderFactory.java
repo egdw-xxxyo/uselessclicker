@@ -8,7 +8,7 @@ public class ActionDecoderFactory {
             return new UnicodeActionDecoder();
         } else if ("base64".equalsIgnoreCase(encoding)) {
             return new Base64ActionDecoder();
-        }
+        } 
         return null;
     }
 }
