@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../main/MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.ConfigController">
+   <center>
+      <SplitPane dividerPositions="0.4096989966555184" BorderPane.alignment="CENTER">
+        <items>
+            <ScrollPane fitToWidth="true" minWidth="300.0" prefWidth="300.0">
+               <content>
+                  <VBox>
+                     <children>
+                        <Button fx:id="btnHotkeys" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHotkeys" styleClass="templateButton" text="Hotkeys" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+            <ScrollPane fx:id="rightPane" fitToWidth="true" minWidth="300.0" prefWidth="300.0" />
+        </items>
+      </SplitPane>
+   </center>
+</BorderPane>
