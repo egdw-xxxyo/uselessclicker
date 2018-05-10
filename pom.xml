@@ -67,7 +67,7 @@
                     <finalName>uselessClicker_${project.version}</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>org.dikhim.jclicker.ClickerMain</mainClass>
+                            <mainClass>org.dikhim.jclicker.Clicker</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

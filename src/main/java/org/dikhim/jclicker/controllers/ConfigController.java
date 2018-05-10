@@ -4,14 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import org.dikhim.jclicker.ClickerMain;
+import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 
 import java.io.IOException;
@@ -30,7 +25,7 @@ public class ConfigController {
     @FXML
     private ScrollPane rightPane;
 
-    private MainConfiguration config = ClickerMain.getApplication().getMainApplication().getConfig();
+    private MainConfiguration config = Clicker.getApplication().getMainApplication().getConfig();
 
     @FXML
     void initialize() {

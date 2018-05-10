@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import org.dikhim.jclicker.ClickerMain;
+import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.hotkeys.Shortcut;
@@ -34,7 +34,7 @@ public class HotkeysController {
     @FXML
     private TextField combinedControlTxt;
 
-    private MainConfiguration config = ClickerMain.getApplication().getMainApplication().getConfig();
+    private MainConfiguration config = Clicker.getApplication().getMainApplication().getConfig();
 
 
     @FXML
@@ -59,9 +59,9 @@ public class HotkeysController {
 
 
     private void bindTextFields(Map<String, StringValue> shortcutMap) {
-        Bindings.bindBidirectional(runScriptTxt.textProperty(), shortcutMap.get("main/hotKeys/runScript").valueProperty());
-        Bindings.bindBidirectional(stopScriptTxt.textProperty(), shortcutMap.get("main/hotKeys/stopScript").valueProperty());
-        Bindings.bindBidirectional(mouseControlTxt.textProperty(), shortcutMap.get("main/hotKeys/mouseControl").valueProperty());
-        Bindings.bindBidirectional(combinedControlTxt.textProperty(), shortcutMap.get("main/hotKeys/combinedControl").valueProperty());
+        Bindings.bindBidirectional(runScriptTxt.textProperty(), shortcutMap.get("main/hotkeys/runScript").valueProperty());
+        Bindings.bindBidirectional(stopScriptTxt.textProperty(), shortcutMap.get("main/hotkeys/stopScript").valueProperty());
+        Bindings.bindBidirectional(mouseControlTxt.textProperty(), shortcutMap.get("main/hotkeys/mouseControl").valueProperty());
+        Bindings.bindBidirectional(combinedControlTxt.textProperty(), shortcutMap.get("main/hotkeys/combinedControl").valueProperty());
     }
 }

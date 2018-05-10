@@ -9,13 +9,13 @@ public interface KeyboardListener {
 	public void setName(String name);
 	public String getName();
 	
-	public void setStringShortcuts(Set<StringShortcut> stringShortcuts);
-	public Set<StringShortcut> getStringShortcuts();
+	public void setStringShortcuts(Set<Shortcut> stringShortcuts);
+	public Set<Shortcut> getStringShortcuts();
 	
 	public void setHandler(Consumer<KeyboardEvent>  handler);
 	public Consumer<KeyboardEvent> getHandler();
 	
-	public void addShortcut(String shortcut);
+	public void addShortcut(Shortcut shortcut);
 	public void fire(KeyboardEvent keyboardEvent);
 	
 }

@@ -1,26 +1,23 @@
 package org.dikhim.jclicker.jsengine;
 
-import java.awt.Robot;
+import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.jsengine.objects.*;
+import org.dikhim.jclicker.util.output.Out;
+
+import javax.script.Invocable;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.jsengine.objects.*;
-import org.dikhim.jclicker.util.output.Out;
 
 /**
  * Created by dikobraz on 26.03.17.
@@ -34,7 +31,7 @@ public class JSEngine {
     private Robot robot;
     private ScriptEngine engine;
     private Thread thread;
-    String code;
+    private String code;
 
     public JSEngine(Robot robot) {
         this.robot = robot;

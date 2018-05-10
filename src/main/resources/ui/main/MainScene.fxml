@@ -59,7 +59,7 @@
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="save-as-script-button" fx:id="btnSaveFileAs" focusTraversable="false" mnemonicParsing="false" onAction="#saveFileAs" text="Сохранить..">
+                    <Button id="save-as-script-button" fx:id="btnSaveFileAs" ellipsisString="." focusTraversable="false" mnemonicParsing="false" onAction="#saveFileAs" text="Сохр. как">
                         <styleClass>
                             <String fx:value="script-button" />
                             <String fx:value="gray-element" />
@@ -89,7 +89,7 @@
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-               <Button id="info-button" fx:id="btnShowConfigWindow1" focusTraversable="false" layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showAboutWindow" text="О программе">
+               <Button id="info-button" fx:id="btnShowConfigWindow1" ellipsisString="." focusTraversable="false" layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showAboutWindow" text="О программе">
                   <styleClass>
                      <String fx:value="script-button" />
                      <String fx:value="gray-element" />
@@ -179,33 +179,31 @@
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Комбинированный">
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Мышь + клавиатура">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
                                                     <ToggleButton fx:id="btnInsertCombinedLog" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertCombinedLog" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Активировать" />
-                                                    <Label styleClass="combined-label" text="Control key" />
-                                                    <TextField fx:id="txtCombinedControl" styleClass="templateButton" text="F12" />
-                                                    <Label styleClass="combined-label" text="Keyboard" />
-                                                    <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Keyboard keys" />
-                                                    <Label styleClass="combined-label" text="Mouse" />
-                                                    <ToggleButton fx:id="btnCombinedMouseButtons" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse buttons" />
-                                                    <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Mouse wheel" />
-                                                    <Label styleClass="combined-label" text="Movement" />
-                                                    <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Absolute path" />
-                                                    <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Relative path" />
-                                                    <Label styleClass="combined-label" text="Other" />
-                                                    <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Delays" />
-                                                    <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="fixed rate">
+                                                    <Label styleClass="combined-label" text="Клавиатура" />
+                                                    <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Клавиши клавиатуры" />
+                                                    <Label styleClass="combined-label" text="Мышь" />
+                                                    <ToggleButton fx:id="btnCombinedMouseButtons" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Кнопки мыши" />
+                                                    <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Колесико мыши" />
+                                                    <Label styleClass="combined-label" text="Передвижение мыши" />
+                                                    <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Абсолютные координаты" />
+                                                    <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="Относительные координаты" />
+                                                    <Label styleClass="combined-label" text="Опции" />
+                                                    <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="Задержки" />
+                                                    <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="фикс. частота">
                                                         <graphic>
                                                             <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
                                                         </graphic>
                                                     </ToggleButton>
-                                                    <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="min distance">
+                                                    <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="мин. расстояние">
                                                         <graphic>
                                                             <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" text="5" />
                                                         </graphic>
                                                     </ToggleButton>
-                                                    <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="detect stop points">
+                                                    <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="точки остановки">
                                                         <graphic>
                                                             <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" text="100" />
                                                         </graphic>
@@ -219,7 +217,7 @@
                             <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Шаблоны">
                                 <Accordion styleClass="childAccordion">
                                     <panes>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Мышь">
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="mouse">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="mouseTemplateButtonContainer">
                                                     <Button fx:id="btnTemplateMouseClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="click" />
@@ -263,7 +261,7 @@
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Клавиатура">
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="key">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="keyboardTemplateButtonContainer">
                                                     <Button fx:id="btnTemplateKeyGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
@@ -285,7 +283,7 @@
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="Система">
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="system">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="systemTemplateButtonContainer">
                                                     <Button fx:id="btnTemplateSystemGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />

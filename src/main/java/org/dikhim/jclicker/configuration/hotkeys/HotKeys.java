@@ -43,4 +43,12 @@ public class HotKeys {
     public List<Shortcut> getShortcutList() {
         return shortcutList;
     }
+    
+    public Shortcut getShortcut(String name){
+        String prefix = getName() + "/";
+        for (Shortcut s : getShortcutList()) {
+            if(s.getName().equals(prefix+name)) return s;
+        }
+        return null;
+    }
 }

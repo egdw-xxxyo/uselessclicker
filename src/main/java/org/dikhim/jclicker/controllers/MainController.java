@@ -20,15 +20,15 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
-import org.dikhim.jclicker.ClickerMain;
+import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
-import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
+import org.dikhim.jclicker.configuration.hotkeys.Shortcut;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
@@ -42,16 +42,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
 public class MainController {
 
-    private ClickerMain application = ClickerMain.getApplication();
+    private Clicker application = Clicker.getApplication();
 
-    private MainApplication mainApplication = ClickerMain.getApplication().getMainApplication();
+    private MainApplication mainApplication = Clicker.getApplication().getMainApplication();
     private Preferences preferences = Preferences.userRoot().node(getClass().getName());
     private EventLogger eventLog = new EventLogger(10000);
 
@@ -65,7 +67,8 @@ public class MainController {
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
-    private EventsRecorder eventsRecorder = new EventsRecorder(mainApplication.getConfig().getRecordingParams());
+    private EventsRecorder eventsRecorder = new EventsRecorder(mainApplication.getConfig());
+    private MainConfiguration config = mainApplication.getConfig();
 
     @FXML
     private void initialize() {
@@ -91,12 +94,6 @@ public class MainController {
 
         // Init script
         setToggleStatus(null);
-
-        KeyEventsManager keyListener = KeyEventsManager.getInstance();
-        keyListener.addKeyboardListener(
-                new ShortcutEqualsListener("stopScript", "CONTROL ALT S", "PRESS", (e) -> {
-                    Platform.runLater(this::stopScript);
-                }));
 
         bindConfig();
 
@@ -127,9 +124,8 @@ public class MainController {
             }
         };
 
-        MainConfiguration config = mainApplication.getConfig();
+
         Combined combined = config.getRecordingParams().getCombined();
-        Bindings.bindBidirectional(txtCombinedControl.textProperty(), combined.getControlKeyValue().valueProperty());
         Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combined.getFixedRateValue().valueProperty(), stringConverter);
         Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combined.getMinDistanceValue().valueProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combined.getStopDetectionTimeValue().valueProperty(), new NumberStringConverter());
@@ -144,6 +140,7 @@ public class MainController {
         Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combined.getFixedRateOnValue().valueProperty());
         Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combined.getMinDistanceOnValue().valueProperty());
         Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combined.getStopDetectionOnValue().valueProperty());
+        createHotkeys();
     }
 
     @FXML
@@ -191,7 +188,6 @@ public class MainController {
 
     @FXML
     public void runScript() {
-        Out.clear();
         select(null);
         mainApplication.runScript();
     }
@@ -228,7 +224,7 @@ public class MainController {
         } else {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Сохранить файл");
-            fileChooser.setInitialFileName("новыйФайл.js");
+            fileChooser.setInitialFileName("newFile.js");
 
             String pathFolder = preferences.get("last-saved-folder", "");
             if (!pathFolder.isEmpty())
@@ -249,7 +245,7 @@ public class MainController {
     public void saveFileAs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Сохранить файл");
-        fileChooser.setInitialFileName("новыйФайл.js");
+        fileChooser.setInitialFileName("newFile.js");
 
         String pathFolder = preferences.get("last-saved-folder", "");
         if (!pathFolder.isEmpty())
@@ -301,7 +297,7 @@ public class MainController {
     public void showAboutWindow() {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/ui/config/AboutScene.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/ui/main/AboutScene.fxml"));
             Stage stage = new Stage();
             stage.setTitle("О программе");
             stage.setScene(new Scene(root, 600, 400));
@@ -374,9 +370,6 @@ public class MainController {
     private ToggleButton btnInsertCombinedLog;
 
     @FXML
-    TextField txtCombinedControl;
-
-    @FXML
     TextField txtCombinedDetectStopPoints;
 
     @FXML
@@ -447,7 +440,7 @@ public class MainController {
         //mouse click
         listOfInsertCodeToggles.add(btnInsertMouseCodeClick);
 
-         // combined
+        // combined
         listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
         simpleToggles.add(btnCombinedAbsolutePath);
@@ -517,7 +510,7 @@ public class MainController {
     private void setToggleStatus(ToggleButton toggle) {
         if (toggle == null) {
             if (btnTogglesStatus.getUserData() == null) {
-                btnTogglesStatus.setText("Never used");
+                    btnTogglesStatus.setText("...");
                 btnTogglesStatus.setUserData(null);
                 return;
             }
@@ -526,9 +519,9 @@ public class MainController {
         btnTogglesStatus.setSelected(toggle.isSelected());
         String title = "";
         if (toggle.isSelected()) {
-            title += "Active:    ";
+            title += "Активно:    ";
         } else {
-            title += "Last used: ";
+            title += "Отключено:  ";
         }
         title += getToggleButtonPath(toggle);
         btnTogglesStatus.setText(title);
@@ -655,7 +648,7 @@ public class MainController {
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseMoveAndButtonAndWheel((code)->{
+            eventsRecorder.mouseMoveAndButtonAndWheel((code) -> {
                 codeTextArea.insertTextIntoCaretPosition(code);
             });
         });
@@ -673,7 +666,7 @@ public class MainController {
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.click((code)->{
+            eventsRecorder.click((code) -> {
                 codeTextArea.insertTextIntoCaretPosition(code);
             });
         });
@@ -689,15 +682,9 @@ public class MainController {
     @FXML
     void insertMouseName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", "CONTROL", "PRESS", (controlEvent) -> {
-                mouseEventsManager.addButtonListener(
-                        new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                            putTextIntoCaretPosition(codeTextArea, e.getButton() + " ");
-                        }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", "CONTROL", "RELEASE", (controlEvent) -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseName((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -710,29 +697,9 @@ public class MainController {
     @FXML
     void insertMouseClick(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
-                eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    eventLog.add(e);
-                }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    if (eventLog.isEmpty()) return;
-                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
-
-                    if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
-                            lastMouseButtonEvent.getX() == e.getX() &&
-                            lastMouseButtonEvent.getY() == e.getY()) {
-                        mouseObjectCodeGenerator.click(e.getButton());
-                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    }
-                    eventLog.clear();
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + "control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseClick((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -745,28 +712,9 @@ public class MainController {
     @FXML
     void insertMouseClickAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + "control.press", "CONTROL", "PRESS", controlEvent -> {
-                eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    eventLog.add(e);
-                }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    if (eventLog.isEmpty()) return;
-                    MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
-                    if (lastMouseButtonEvent.getButton().equals(e.getButton()) &&
-                            lastMouseButtonEvent.getX() == e.getX() &&
-                            lastMouseButtonEvent.getY() == e.getY()) {
-                        mouseObjectCodeGenerator.clickAt(e.getButton(), e.getX(), e.getY());
-                        putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    }
-                    eventLog.clear();
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + "control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseClickAt((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -778,25 +726,9 @@ public class MainController {
     @FXML
     void insertMouseMove(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                eventLog.clear();
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    eventLog.add(e);
-                }));
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    if (eventLog.isEmpty()) return;
-                    int dx = eventLog.getMouseEventDx();
-                    int dy = eventLog.getMouseEventDy();
-                    mouseObjectCodeGenerator.move(dx, dy);
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                    eventLog.clear();
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseMove((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -808,18 +740,9 @@ public class MainController {
     @FXML
     void insertMouseMoveTo(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-
-                    mouseObjectCodeGenerator.moveTo(e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseMoveTo((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -831,17 +754,9 @@ public class MainController {
     @FXML
     void insertMousePress(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    mouseObjectCodeGenerator.press(e.getButton());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMousePress((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -853,17 +768,9 @@ public class MainController {
     @FXML
     void insertMousePressAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                    mouseObjectCodeGenerator.pressAt(e.getButton(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMousePressAt((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -875,17 +782,9 @@ public class MainController {
     @FXML
     void insertMouseRelease(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    mouseObjectCodeGenerator.release(e.getButton());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseRelease((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -897,17 +796,9 @@ public class MainController {
     @FXML
     void insertMouseReleaseAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.press", "CONTROL", "PRESS", controlEvent -> {
-                mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
-                    mouseObjectCodeGenerator.releaseAt(e.getButton(), e.getX(), e.getY());
-                    putTextIntoCaretPosition(codeTextArea, mouseObjectCodeGenerator.getGeneratedCode());
-                }));
-            }));
-            keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                    prefix + ".control.release", "CONTROL", "RELEASE", controlEvent -> {
-                mouseEventsManager.removeListenersByPrefix(prefix);
-            }));
+            eventsRecorder.insertMouseReleaseAt((code) -> {
+                codeTextArea.insertTextIntoCaretPosition(code);
+            });
         });
     }
 
@@ -1080,5 +971,33 @@ public class MainController {
     @FXML
     private void onCombinedRelativePathAction(ActionEvent event) {
         if (btnCombinedAbsolutePath.isSelected()) btnCombinedAbsolutePath.setSelected(false);
+    }
+
+
+    private void createHotkeys() {
+      
+        HotKeys hotKeys = config.getHotKeys();
+
+        KeyEventsManager keyListener = KeyEventsManager.getInstance();
+
+        ShortcutEqualsListener stopScriptListener = new ShortcutEqualsListener();
+        StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
+        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("stopScript").getKeys().valueProperty());
+        stopScriptListener.setName("stopScript");
+        stopScriptListener.addShortcut(new StringPropertyShortcut(stopScriptShortcutStringProperty));
+        stopScriptListener.setAction("PRESS");
+        stopScriptListener.setHandler((e) -> Platform.runLater(this::stopScript));
+
+        ShortcutEqualsListener runScriptListener = new ShortcutEqualsListener();
+        StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
+        runScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("runScript").getKeys().valueProperty());
+        runScriptListener.setName("runScript");
+        runScriptListener.addShortcut(new StringPropertyShortcut(runScriptShortcutStringProperty));
+        runScriptListener.setAction("PRESS");
+        runScriptListener.setHandler((e) -> Platform.runLater(this::runScript));
+
+
+        keyListener.addKeyboardListener(stopScriptListener);
+        keyListener.addKeyboardListener(runScriptListener);
     }
 }

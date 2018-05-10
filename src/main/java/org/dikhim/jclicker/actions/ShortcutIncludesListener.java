@@ -8,26 +8,33 @@ import java.util.function.Consumer;
 
 public class ShortcutIncludesListener implements KeyboardListener {
     private String name;
-    private Set<StringShortcut> stringShortcuts = new HashSet<>();
-    private Consumer<KeyboardEvent>  handler;
+    private Set<Shortcut> stringShortcuts = new HashSet<>();
+    private Consumer<KeyboardEvent> handler;
     private String action;
 
-    public ShortcutIncludesListener(String name, String shortcut, String action, Consumer<KeyboardEvent>  handler) {
+    public ShortcutIncludesListener(String name, Shortcut shortcut, String action, Consumer<KeyboardEvent> handler) {
+        this.name = name;
+        stringShortcuts.add(shortcut);
+        this.handler = handler;
+        this.action = action;
+    }
+    
+    public ShortcutIncludesListener(String name, String shortcut, String action, Consumer<KeyboardEvent> handler) {
         this.name = name;
         stringShortcuts.add(new StringShortcut(shortcut));
         this.handler = handler;
         this.action = action;
     }
 
-    public void addShortcut(String shortcut) {
-        stringShortcuts.add(new StringShortcut(shortcut));
+    public void addShortcut(Shortcut shortcut) {
+        stringShortcuts.add(shortcut);
     }
 
     public void fire(KeyboardEvent keyboardEvent) {
-        if(!action.isEmpty() && !action.equals(keyboardEvent.getAction()))return;
+        if (!action.isEmpty() && !action.equals(keyboardEvent.getAction())) return;
         boolean contains = true;
-        for (StringShortcut sh : stringShortcuts) {
-            if (!sh.containsIn(keyboardEvent.getPressedKeys()) ) contains = false;
+        for (Shortcut sh : stringShortcuts) {
+            if (!sh.containsIn(keyboardEvent.getPressedKeys())) contains = false;
         }
         if (contains) handler.accept(keyboardEvent);
     }
@@ -35,14 +42,14 @@ public class ShortcutIncludesListener implements KeyboardListener {
     /**
      * @return the shortcuts
      */
-    public Set<StringShortcut> getStringShortcuts() {
+    public Set<Shortcut> getStringShortcuts() {
         return stringShortcuts;
     }
 
     /**
      * @param stringShortcuts the shortcuts to set
      */
-    public void setStringShortcuts(Set<StringShortcut> stringShortcuts) {
+    public void setStringShortcuts(Set<Shortcut> stringShortcuts) {
         this.stringShortcuts = stringShortcuts;
     }
 
@@ -56,7 +63,7 @@ public class ShortcutIncludesListener implements KeyboardListener {
     /**
      * @param handler the handler to set
      */
-    public void setHandler(Consumer<KeyboardEvent>  handler) {
+    public void setHandler(Consumer<KeyboardEvent> handler) {
         this.handler = handler;
     }
 

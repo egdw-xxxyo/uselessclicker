@@ -1,13 +1,17 @@
 package org.dikhim.jclicker.model;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
-import org.dikhim.jclicker.ClickerMain;
+import org.dikhim.jclicker.Clicker;
+import org.dikhim.jclicker.actions.ShortcutEqualsListener;
+import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.configuration.hotkeys.Shortcut;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 import org.jnativehook.GlobalScreen;
@@ -16,6 +20,8 @@ import org.jnativehook.NativeHookException;
 import javax.script.ScriptException;
 import java.awt.*;
 import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -41,6 +47,7 @@ public class MainApplication {
 
         File file = new File(getClass().getResource("/config.json").getFile());
         config = new MainConfiguration(file, "main");
+
     }
 
     public void newFile() {
@@ -67,6 +74,7 @@ public class MainApplication {
      * Evaluate code by JS Engine
      */
     public void runScript() {
+        Out.clear();
         jse.putCode(script.codeProperty().get());
         try {
             jse.start();
@@ -91,7 +99,7 @@ public class MainApplication {
 
     private void bindProperties() {
         title.bind(script.nameProperty());
-        status.bind(Bindings.concat(script.nameProperty()).concat(" is running:").concat(jse.runningProperty()));
+        status.bind(Bindings.concat(script.nameProperty()).concat(" выполняется:").concat(jse.runningProperty()));
     }
 
 
@@ -154,7 +162,7 @@ public class MainApplication {
                     "It can occurs if you have no permission for it\n" + "message:\n" + e.getMessage());
             alert.showAndWait();
             try {
-                ClickerMain.getApplication().stop();
+                Clicker.getApplication().stop();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }
@@ -177,4 +185,5 @@ public class MainApplication {
     public MainConfiguration getConfig() {
         return config;
     }
+    
 }

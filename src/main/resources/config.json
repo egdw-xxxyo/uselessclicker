@@ -1,5 +1,5 @@
 {
-  "hotKeys": {
+  "hotkeys": {
     "runScript": {
       "category":"script",
       "keys": "CONTROL ALT A"

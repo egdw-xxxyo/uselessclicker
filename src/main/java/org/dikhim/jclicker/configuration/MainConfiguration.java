@@ -38,7 +38,7 @@ public class MainConfiguration  {
     }
 
     private void loadDefault(JsonObject jsonObject) {
-        hotKeys = new HotKeys(jsonObject.getJsonObject("hotKeys"), name + "/hotKeys");
+        hotKeys = new HotKeys(jsonObject.getJsonObject("hotkeys"), name + "/hotkeys");
         localization = new Localization(jsonObject.getJsonObject("localization"), name + "/localization");
         recordingParams = new RecordingParams(jsonObject.getJsonObject("recordingParams"), name + "/recordingParams");
         servers = new Servers(jsonObject.getJsonObject("servers"), name + "/servers");

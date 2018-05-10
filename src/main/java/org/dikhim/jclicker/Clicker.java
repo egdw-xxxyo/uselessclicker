@@ -14,8 +14,8 @@ import org.dikhim.jclicker.util.output.SystemAndStringOutput;
 
 import java.io.IOException;
 
-public class ClickerMain extends Application {
-    private static ClickerMain application;
+public class Clicker extends Application {
+    private static Clicker application;
 
 
     // main app
@@ -59,7 +59,7 @@ public class ClickerMain extends Application {
         }
     }
 
-    public static ClickerMain getApplication() {
+    public static Clicker getApplication() {
         return application;
     }
 
