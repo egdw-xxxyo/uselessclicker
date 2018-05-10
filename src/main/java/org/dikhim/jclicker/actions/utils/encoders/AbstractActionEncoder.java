@@ -77,7 +77,7 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
             case KEYBOARD_RELEASE:
                 result += encodeActionType(KEYBOARD_RELEASE);
                 result += encodeParameter(
-                        KeyCodes.getUslessCodeByName(((KeyboardPressAction) action).getKey()));
+                        KeyCodes.getUslessCodeByName(((KeyboardReleaseAction) action).getKey()));
                 break;
             case MOUSE_MOVE:
                 result += encodeActionType(MOUSE_MOVE);

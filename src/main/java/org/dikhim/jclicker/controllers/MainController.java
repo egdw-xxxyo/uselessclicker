@@ -21,14 +21,13 @@ import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.jclicker.Clicker;
-import org.dikhim.jclicker.actions.*;
-import org.dikhim.jclicker.actions.events.MouseButtonEvent;
+import org.dikhim.jclicker.actions.ShortcutEqualsListener;
+import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
-import org.dikhim.jclicker.configuration.hotkeys.Shortcut;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
@@ -42,9 +41,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
@@ -949,7 +946,6 @@ public class MainController {
         ToggleButton toggle = (ToggleButton) event.getSource();
         if (toggle.getUserData() == null) {
             toggle.setSelected(false);
-            return;
         } else if (toggle.getUserData() instanceof ToggleButton) {
             ((ToggleButton) toggle.getUserData()).fire();
         }

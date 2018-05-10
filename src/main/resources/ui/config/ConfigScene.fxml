@@ -14,26 +14,23 @@
       <SplitPane dividerPositions="0.4096989966555184" BorderPane.alignment="CENTER">
          <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity">
             <VBox>
-               <Button fx:id="hotkeysBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                       onAction="#showHotkeys" text="Сочетания клавишь">
+               <Button fx:id="hotkeysBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHotkeys" text="Сочетания клавиш">
                   <styleClass>
-                     <String fx:value="white-element"/>
-                     <String fx:value="tree-menu-item"/>
+                     <String fx:value="white-element" />
+                     <String fx:value="tree-menu-item" />
                   </styleClass>
                </Button>
             </VBox>
          </ScrollPane>
-         <ScrollPane fx:id="rightPane" fitToWidth="true" minWidth="300.0" prefWidth="300.0"/>
+         <ScrollPane fx:id="rightPane" fitToWidth="true" minWidth="300.0" prefWidth="300.0" />
       </SplitPane>
    </center>
    <bottom>
       <BorderPane BorderPane.alignment="CENTER">
          <right>
             <HBox BorderPane.alignment="CENTER">
-               <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#resetConfig" styleClass="white-element"
-                       text="Сбросить"/>
-               <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#saveConfig" styleClass="white-element"
-                       text="Сохранить"/>
+               <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#resetConfig" styleClass="white-element" text="Сбросить" />
+               <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#saveConfig" styleClass="white-element" text="Сохранить" />
             </HBox>
          </right>
       </BorderPane>

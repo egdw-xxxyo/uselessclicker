@@ -1,27 +1,26 @@
 package org.dikhim.jclicker.model;
 
-import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
+import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.Clicker;
-import org.dikhim.jclicker.actions.ShortcutEqualsListener;
-import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.configuration.MainConfiguration;
-import org.dikhim.jclicker.configuration.hotkeys.Shortcut;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.util.output.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
+import javax.json.Json;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
 import javax.script.ScriptException;
 import java.awt.*;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,18 +34,21 @@ public class MainApplication {
     private JSEngine jse;
 
     private Script script = new Script();
+
     public Script getScript() {
         return script;
     }
 
-    public MainApplication() throws FileNotFoundException {
+    public MainApplication() throws FileNotFoundException, URISyntaxException {
         jNativeHookStart();
         createRobot();
         jse = new JSEngine(robot);
         bindProperties();
 
-        File file = new File(getClass().getResource("/config.json").getFile());
-        config = new MainConfiguration(file, "main");
+        InputStream is = getClass().getResourceAsStream("/config.json");
+        JsonReader jsonReader = Json.createReader(is);
+        JsonObject jsonObject = jsonReader.readObject();
+        config = new MainConfiguration(jsonObject, "main");
 
     }
 
@@ -185,5 +187,5 @@ public class MainApplication {
     public MainConfiguration getConfig() {
         return config;
     }
-    
+
 }

@@ -42,7 +42,7 @@
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Label id="version-label" text="1.0.0" />
+                  <Label id="version-label" text="0.1.0" />
                </children>
             </VBox>
          </children>

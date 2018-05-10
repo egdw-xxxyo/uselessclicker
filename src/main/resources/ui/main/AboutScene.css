@@ -1,15 +1,11 @@
 
 #name-label > .text {
     -fx-font-size: 30;
-    -fx-font-style: Bold;
 }
 
 #version-label > .text{
     -fx-font-size: 14;
-
-    -fx-font-style: Bold;
 }
 
 #site-link > .text{
-    -fx-font-style: Bold;
 }

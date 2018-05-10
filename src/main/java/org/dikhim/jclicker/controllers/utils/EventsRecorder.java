@@ -1,17 +1,14 @@
 package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
-import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
@@ -20,8 +17,6 @@ import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerat
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 
-import java.util.List;
-import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")

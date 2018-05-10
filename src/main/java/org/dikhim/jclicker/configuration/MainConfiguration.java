@@ -14,7 +14,7 @@ import java.io.FileNotFoundException;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-public class MainConfiguration  {
+public class MainConfiguration {
     private String name;
 
     private Preferences preferences;
@@ -24,6 +24,13 @@ public class MainConfiguration  {
     private RecordingParams recordingParams;
     private Servers servers;
 
+    public MainConfiguration(JsonObject jsonObject, String name) {
+        this.name = name;
+        preferences = Preferences.userRoot().node(name);
+
+        loadDefault(jsonObject);
+        loadOrSetDefault();
+    }
 
     public MainConfiguration(File file, String name) throws FileNotFoundException {
         this.name = name;
