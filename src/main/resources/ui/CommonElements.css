@@ -1,0 +1,41 @@
+@font-face {
+    src: url("../fonts/FreeMonoBold.ttf");
+}
+
+.root {
+    -fx-font-family: "FreeMono";
+    -fx-font-size: 14px;
+}
+
+* {
+    -fx-color-background:#eee;
+    -fx-color-border:#777;
+
+
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: rgba(255, 205, 0, 0.32);
+
+    -fx-color-selected-built-in: #c4ff6e;
+    -fx-color-pressed-built-in: #bfff7b;
+    -fx-color-hover-built-in: #dcf5c6;
+}
+
+
+
+.white-element{
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+}
+
+.white-element:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.white-element:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.white-element:selected {
+    -fx-background-color: -fx-color-selected;
+}

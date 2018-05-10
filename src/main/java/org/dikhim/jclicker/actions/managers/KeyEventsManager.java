@@ -6,7 +6,6 @@ import java.util.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.events.KeyboardEvent;
 import org.dikhim.jclicker.actions.KeyboardListener;
-import org.dikhim.jclicker.util.LimitedSizeQueue;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
@@ -75,7 +74,7 @@ public class KeyEventsManager implements NativeKeyListener {
                         existingListener = h;
                 }
                 if (existingListener != null) {
-                    existingListener.setShortcuts(keyboardListener.getShortcuts());
+                    existingListener.setStringShortcuts(keyboardListener.getStringShortcuts());
                     existingListener.setHandler(keyboardListener.getHandler());
                 } else {
                     keyboardListeners.add(keyboardListener);

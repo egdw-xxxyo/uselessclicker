@@ -18,35 +18,47 @@ import java.io.IOException;
 
 public class ConfigController {
     @FXML
-    private Button btnHotKeys;
+    public Button resetBtn;
+
+    @FXML
+    public Button saveBtn;
+    
+    @FXML
+    public Button hotkeysBtn;
+
 
     @FXML
     private ScrollPane rightPane;
-    
-    private MainConfiguration config;
-    
+
+    private MainConfiguration config = ClickerMain.getApplication().getMainApplication().getConfig();
+
     @FXML
     void initialize() {
-        config = ClickerMain.getApplication().getMainApplication().getConfig();
 
-        
-        
-        
     }
 
     @FXML
     void showHotkeys(ActionEvent event) {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader();
+            root = FXMLLoader.load(getClass().getResource("/ui/config/HotkeysScene.fxml"));
 
-            root = loader.load(getClass().getResource("/ui/config/HotkeysScene.fxml").openStream());
             rightPane.setContent(root);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
-    
-   
+
+
+    @FXML
+    void resetConfig(ActionEvent event) {
+        config.setDefault();
+    }
+
+    @FXML
+    void saveConfig(ActionEvent event) {
+        config.save();
+    }
+
 }

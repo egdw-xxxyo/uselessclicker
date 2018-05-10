@@ -54,6 +54,11 @@
     -fx-background-image: url("../../images/config.png");
 }
 
+#info-button {
+    -fx-background-image: url("../../images/info.png");
+}
+
+
 /*Menu buttons*/
 #menu-keyboard-button {
     -fx-background-image: url("/images/keyboard.png");
@@ -81,11 +86,9 @@
     -fx-background-size: 26px;
 
     -fx-min-height: 50;
-    -fx-pref-height: 50;
     -fx-max-height: 50;
-    -fx-min-width: 55;
-    -fx-pref-width: 55;
-    -fx-max-width: 55;
+    -fx-min-width: 65;
+    -fx-max-width: 65;
 
     -fx-padding: 0;
 }

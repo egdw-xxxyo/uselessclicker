@@ -9,8 +9,8 @@ public interface KeyboardListener {
 	public void setName(String name);
 	public String getName();
 	
-	public void setShortcuts(Set<Shortcut> shortcuts);
-	public Set<Shortcut> getShortcuts();
+	public void setStringShortcuts(Set<StringShortcut> stringShortcuts);
+	public Set<StringShortcut> getStringShortcuts();
 	
 	public void setHandler(Consumer<KeyboardEvent>  handler);
 	public Consumer<KeyboardEvent> getHandler();

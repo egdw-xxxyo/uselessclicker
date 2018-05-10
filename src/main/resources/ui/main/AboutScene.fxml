@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <VBox id="bottom-pane" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea id="about-text-area" editable="false" prefHeight="100.0" prefWidth="600.0" text="Проверить наличие новых версий можно на сайте https://3bytes.pp.ua/&#10;Разработчик Сергей В. Мусланов&#10;email: muslanov.s.v@gmail.com&#10;Telegram: @dikobrazov" />
+         </children>
+      </VBox>
+   </bottom>
+   <center>
+      <GridPane id="center-pane" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView id="app-image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../../images/application.png" />
+               </image>
+            </ImageView>
+            <VBox fx:id="centerPane">
+               <children>
+                  <Label id="name-label" text="Useless Clicker">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                  </Label>
+                  <Label id="version-label" text="1.0.0" />
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </center>
+   <stylesheets>
+      <URL value="@../CommonElements.css" />
+      <URL value="@AboutScene.css" />
+   </stylesheets>
+</BorderPane>

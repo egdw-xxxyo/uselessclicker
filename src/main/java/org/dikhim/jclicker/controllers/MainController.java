@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -203,10 +204,10 @@ public class MainController {
     @FXML
     public void openFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle("Отрыть файл");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("All types", "*.*"),
-                new FileChooser.ExtensionFilter("JavaScript", "*.js"));
+                new FileChooser.ExtensionFilter("Все типы", "*.*"),
+                new FileChooser.ExtensionFilter("*.js", "*.js"));
 
         String pathFolder = preferences.get("last-opened-folder", "");
         if (!pathFolder.isEmpty()) {
@@ -226,8 +227,8 @@ public class MainController {
             mainApplication.saveFile();
         } else {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save file");
-            fileChooser.setInitialFileName("newFile.js");
+            fileChooser.setTitle("Сохранить файл");
+            fileChooser.setInitialFileName("новыйФайл.js");
 
             String pathFolder = preferences.get("last-saved-folder", "");
             if (!pathFolder.isEmpty())
@@ -247,8 +248,8 @@ public class MainController {
     @FXML
     public void saveFileAs() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save file");
-        fileChooser.setInitialFileName("newFile.js");
+        fileChooser.setTitle("Сохранить файл");
+        fileChooser.setInitialFileName("новыйФайл.js");
 
         String pathFolder = preferences.get("last-saved-folder", "");
         if (!pathFolder.isEmpty())
@@ -265,12 +266,13 @@ public class MainController {
     public void showServerWindow() {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader();
+            root = FXMLLoader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml"));
 
-            root = loader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml").openStream());
             Stage stage = new Stage();
-            stage.setTitle("Server");
+            stage.setTitle("Сервер");
             stage.setScene(new Scene(root, 600, 200));
+            stage.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/images/http.png")));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -282,12 +284,29 @@ public class MainController {
     public void showConfigWindow() {
         Parent root;
         try {
-            FXMLLoader loader = new FXMLLoader();
-
-            root = loader.load(getClass().getResource("/ui/config/ConfigScene.fxml").openStream());
+            root = FXMLLoader.load(getClass().getResource("/ui/config/ConfigScene.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("Configuration");
-            stage.setScene(new Scene(root, 800, 600));
+            stage.setTitle("Настройки");
+            stage.setScene(new Scene(root, 800, 400));
+            stage.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/images/config.png")));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void showAboutWindow() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/ui/config/AboutScene.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("О программе");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/images/info.png")));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());

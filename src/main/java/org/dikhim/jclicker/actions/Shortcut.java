@@ -3,41 +3,20 @@ package org.dikhim.jclicker.actions;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Shortcut {
-	private Set<String> keys;
+public interface Shortcut {
+    boolean isEqual(Set<String> shortcut);
 
-	/**
-	 *
-	 * @param shortcut
-	 *            Key shortcut like 'CTRL ALT T'
-	 */
-	public Shortcut(Set<String> shortcut) {
-		keys = shortcut;
-	}
-	public Shortcut(String shortcut) {
-		String[] strKeys = shortcut.split(" ");
-		keys = new HashSet<>();
-		for (String s : strKeys) {
-			if (!s.equals(""))
-				keys.add(s);
-		}
+    boolean containsIn(Set<String> shortcut);
 
-	}
+    Set<String> getKeys();
 
-	public boolean isEqual(Set<String> shortcut) {
-		if (keys.equals(shortcut))
-			return true;
-		return false;
-	}
-
-	public boolean containsIn(Set<String> shortcut) {
-		if(keys.isEmpty())return true;
-		if (shortcut.containsAll(keys))
-			return true;
-		return false;
-	}
-	public Set<String> getKeys() {
-		return keys;
-	}
-
+    default Set<String> getKeySet(String keys) {
+        String[] strKeys = keys.split(" ");
+        Set<String> keySet = new HashSet<>();
+        for (String s : strKeys) {
+            if (!s.equals(""))
+                keySet.add(s);
+        }
+        return keySet;
+    }
 }
