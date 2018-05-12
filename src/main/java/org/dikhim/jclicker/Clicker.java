@@ -7,7 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.dikhim.jclicker.model.MainApplication;
-import org.dikhim.jclicker.server.sockets.SocketServer;
+import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.output.SystemAndStringOutput;

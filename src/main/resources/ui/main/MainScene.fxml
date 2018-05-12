@@ -77,12 +77,6 @@
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="server-button" fx:id="btnShowServerWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showServerWindow" text="Сервер">
-                        <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
-                        </styleClass>
-                    </Button>
                     <Button id="config-button" fx:id="btnShowConfigWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showConfigWindow" text="Настройки">
                         <styleClass>
                             <String fx:value="script-button" />

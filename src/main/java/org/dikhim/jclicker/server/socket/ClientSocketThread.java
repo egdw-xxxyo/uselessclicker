@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.server.sockets;
+package org.dikhim.jclicker.server.socket;
 
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
 import org.dikhim.jclicker.util.WebUtils;

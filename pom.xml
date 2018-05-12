@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.dikhim</groupId>
     <artifactId>useless_clicker</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -70,7 +70,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <finalName>uselessClicker_${project.version}</finalName>
+                    <finalName>Useless_Clicker_${project.version}</finalName>
                     <archive>
                         <manifest>
                             <mainClass>org.dikhim.jclicker.Clicker</mainClass>

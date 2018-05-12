@@ -1,10 +1,7 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 import java.awt.Robot;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
@@ -157,8 +154,8 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     public void type(String keys) {
-        Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
-        for (String key : keySet) {
+        List<String> keyList = Arrays.asList(keys.split(" "));
+        for (String key : keyList) {
             int keyCode = KeyCodes.getEventCodeByName(key);
             if (keyCode != -1) {
                 robot.keyPress(keyCode);
@@ -178,7 +175,7 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     public int getMultipliedReleaseDelay() {
-       return checkDelay((int) (releaseDelay * multiplier));
+        return checkDelay((int) (releaseDelay * multiplier));
     }
 
     private int checkDelay(int delay) {
