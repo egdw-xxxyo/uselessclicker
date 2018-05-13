@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
+import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.actions.StringPropertyShortcut;
@@ -35,7 +36,6 @@ import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.dikhim.jclicker.util.output.Out;
-import sample.CodeTextArea;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,11 +64,12 @@ public class MainController {
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
-    private EventsRecorder eventsRecorder = new EventsRecorder(mainApplication.getConfig());
-    private MainConfiguration config = mainApplication.getConfig();
+    private EventsRecorder eventsRecorder;
+    private MainConfiguration config;
 
     @FXML
     private void initialize() {
+        config = mainApplication.getConfig();
         // init text areas
         codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
         outTextArea.textProperty().bindBidirectional(Out.outProperty());
@@ -77,6 +78,7 @@ public class MainController {
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
+        eventsRecorder= new EventsRecorder(config,codeTextArea);
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile();
 
@@ -261,7 +263,9 @@ public class MainController {
         try {
             root = FXMLLoader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml"));
 
+            
             Stage stage = new Stage();
+            
             stage.setTitle("Сервер");
             stage.setScene(new Scene(root, 600, 200));
             stage.getIcons().add(new Image(
@@ -555,9 +559,7 @@ public class MainController {
     @FXML
     void insertKeyName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyName((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.keyName();
 
         });
     }
@@ -571,9 +573,7 @@ public class MainController {
     @FXML
     void insertKeyCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyPerform((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.keyPerform();
         });
     }
 
@@ -588,9 +588,7 @@ public class MainController {
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyPerformWithDelays((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.keyPerformWithDelays();
         });
     }
 
@@ -607,9 +605,7 @@ public class MainController {
     @FXML
     void insertMouseCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseButtonAndWheelAt((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.mouseButtonAndWheelAt();
         });
     }
 
@@ -626,9 +622,7 @@ public class MainController {
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseButtonAndWheelAtWithDelays((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.mouseButtonAndWheelAtWithDelays();
         });
     }
 
@@ -645,9 +639,7 @@ public class MainController {
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseMoveAndButtonAndWheel((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.mouseMoveAndButtonAndWheel();
         });
     }
 
@@ -663,9 +655,7 @@ public class MainController {
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.click((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.click();
         });
     }
 
@@ -679,9 +669,7 @@ public class MainController {
     @FXML
     void insertMouseName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseName((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseName();
         });
     }
 
@@ -694,9 +682,7 @@ public class MainController {
     @FXML
     void insertMouseClick(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseClick((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseClick();
         });
     }
 
@@ -709,9 +695,7 @@ public class MainController {
     @FXML
     void insertMouseClickAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseClickAt((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseClickAt();
         });
     }
 
@@ -723,9 +707,7 @@ public class MainController {
     @FXML
     void insertMouseMove(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseMove((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseMove();
         });
     }
 
@@ -737,9 +719,7 @@ public class MainController {
     @FXML
     void insertMouseMoveTo(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseMoveTo((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseMoveTo();
         });
     }
 
@@ -751,9 +731,7 @@ public class MainController {
     @FXML
     void insertMousePress(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMousePress((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMousePress();
         });
     }
 
@@ -765,9 +743,7 @@ public class MainController {
     @FXML
     void insertMousePressAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMousePressAt((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMousePressAt();
         });
     }
 
@@ -779,9 +755,7 @@ public class MainController {
     @FXML
     void insertMouseRelease(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseRelease((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseRelease();
         });
     }
 
@@ -793,9 +767,7 @@ public class MainController {
     @FXML
     void insertMouseReleaseAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseReleaseAt((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.insertMouseReleaseAt();
         });
     }
 
@@ -807,9 +779,7 @@ public class MainController {
     @FXML
     void insertMouseWheel(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.wheel((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.wheel();
         });
     }
 
@@ -821,9 +791,7 @@ public class MainController {
     @FXML
     void insertMouseWheelAt(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.wheelAt((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.wheelAt();
         });
     }
 
@@ -834,9 +802,7 @@ public class MainController {
     @FXML
     void insertCombinedLog(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.combined((code) -> {
-                codeTextArea.insertTextIntoCaretPosition(code);
-            });
+            eventsRecorder.combined();
         });
     }
 

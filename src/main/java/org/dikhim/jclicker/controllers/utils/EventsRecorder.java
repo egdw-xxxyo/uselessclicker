@@ -1,6 +1,9 @@
 package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
@@ -36,29 +39,37 @@ public class EventsRecorder {
     private RecordingParams recordingParams;
     private MainConfiguration mainConfiguration;
 
-    public EventsRecorder(MainConfiguration mainConfiguration) {
+    private CodeTextArea outputTextArea;
+
+    private BooleanProperty activated = new SimpleBooleanProperty(false);
+    private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
+
+    public EventsRecorder(MainConfiguration mainConfiguration, CodeTextArea outputTextArea) {
         this.mainConfiguration = mainConfiguration;
+        this.outputTextArea = outputTextArea;
         recordingParams = mainConfiguration.getRecordingParams();
     }
 
     // keyboard
 
-    public void keyName(Consumer<String> onGenerateCode) {
+    public void keyName() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".press", "", "PRESS", e -> {
-            putCode(onGenerateCode, e.getKey() + " ");
+            putCode(e.getKey() + " ");
         }));
     }
 
-    public void keyPerform(Consumer<String> onGenerateCode) {
+
+    public void keyPerform() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".perform", "", "", (e) -> {
             keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
-            putCode(onGenerateCode, keyboardObjectCodeGenerator.getGeneratedCode());
+            putCode(keyboardObjectCodeGenerator.getGeneratedCode());
         }));
     }
 
-    public void keyPerformWithDelays(Consumer<String> onGenerateCode) {
+
+    public void keyPerformWithDelays() {
         eventLog.clear();
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
             eventLog.add(e);
@@ -72,17 +83,18 @@ public class EventsRecorder {
 
             keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
             code += keyboardObjectCodeGenerator.getGeneratedCode();
-            putCode(onGenerateCode, code);
+            putCode(code);
         }));
     }
 
     // mouse basics
 
-    public void insertMouseName(Consumer<String> onGenerateCode) {
+
+    public void insertMouseName() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             mouseEventsManager.addButtonListener(
                     new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
-                        putCode(onGenerateCode, e.getButton() + " ");
+                        putCode(e.getButton() + " ");
                     }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", getMouseControl(), "RELEASE", (controlEvent) -> {
@@ -91,7 +103,7 @@ public class EventsRecorder {
 
     }
 
-    public void insertMouseClick(Consumer<String> onGenerateCode) {
+    public void insertMouseClick() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + "control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -106,7 +118,7 @@ public class EventsRecorder {
                         lastMouseButtonEvent.getX() == e.getX() &&
                         lastMouseButtonEvent.getY() == e.getY()) {
                     mouseObjectCodeGenerator.click(e.getButton());
-                    putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                    putCode(mouseObjectCodeGenerator.getGeneratedCode());
                 }
                 eventLog.clear();
             }));
@@ -116,8 +128,8 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
-    
-    public void insertMouseClickAt(Consumer<String> onGenerateCode) {
+
+    public void insertMouseClickAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + "control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -131,7 +143,7 @@ public class EventsRecorder {
                         lastMouseButtonEvent.getX() == e.getX() &&
                         lastMouseButtonEvent.getY() == e.getY()) {
                     mouseObjectCodeGenerator.clickAt(e.getButton(), e.getX(), e.getY());
-                    putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                    putCode(mouseObjectCodeGenerator.getGeneratedCode());
                 }
                 eventLog.clear();
             }));
@@ -141,8 +153,8 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
-    
-    public void insertMouseMove(Consumer<String> onGenerateCode) {
+
+        public void insertMouseMove() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -154,7 +166,7 @@ public class EventsRecorder {
                 int dx = eventLog.getMouseEventDx();
                 int dy = eventLog.getMouseEventDy();
                 mouseObjectCodeGenerator.move(dx, dy);
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
                 eventLog.clear();
             }));
         }));
@@ -163,14 +175,14 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
-    
-    public void insertMouseMoveTo(Consumer<String> onGenerateCode) {
+
+    public void insertMouseMoveTo() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
 
                 mouseObjectCodeGenerator.moveTo(e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -178,13 +190,14 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
+
     
-    public void insertMousePress(Consumer<String> onGenerateCode) {
+    public void insertMousePress() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                 mouseObjectCodeGenerator.press(e.getButton());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -193,26 +206,28 @@ public class EventsRecorder {
         }));
     }
 
-    public void insertMousePressAt(Consumer<String> onGenerateCode) {
+   
+    public void insertMousePressAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
                 mouseObjectCodeGenerator.pressAt(e.getButton(), e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.release", getMouseControl(), "RELEASE", controlEvent -> {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
-    } 
+    }
+
     
-    public void insertMouseRelease(Consumer<String> onGenerateCode) {
+    public void insertMouseRelease() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                 mouseObjectCodeGenerator.release(e.getButton());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -220,13 +235,14 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
+
     
-    public void insertMouseReleaseAt(Consumer<String> onGenerateCode) {
+    public void insertMouseReleaseAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
                 mouseObjectCodeGenerator.releaseAt(e.getButton(), e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -234,22 +250,20 @@ public class EventsRecorder {
             mouseEventsManager.removeListenersByPrefix(prefix);
         }));
     }
-    
-    
 
-    
-    
+
     // mouse
 
-    public void mouseButtonAndWheelAt(Consumer<String> onGenerateCode) {
+    
+    public void mouseButtonAndWheelAt() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                 mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
                 mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.release", getMouseControl(), "RELEASE", (e) -> {
@@ -257,7 +271,8 @@ public class EventsRecorder {
         }));
     }
 
-    public void mouseButtonAndWheelAtWithDelays(Consumer<String> onGenerateCode) {
+    
+    public void mouseButtonAndWheelAtWithDelays() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
             eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -273,7 +288,7 @@ public class EventsRecorder {
 
                 mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
                 code += mouseObjectCodeGenerator.getGeneratedCode();
-                putCode(onGenerateCode, code);
+                putCode(code);
             }));
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", (e) -> {
                 if (eventLog.isEmpty()) return;
@@ -286,7 +301,7 @@ public class EventsRecorder {
 
                 mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
                 code += mouseObjectCodeGenerator.getGeneratedCode();
-                putCode(onGenerateCode, code);
+                putCode(code);
             }));
         }));
 
@@ -295,7 +310,8 @@ public class EventsRecorder {
         }));
     }
 
-    public void mouseMoveAndButtonAndWheel(Consumer<String> onGenerateCode) {
+    
+    public void mouseMoveAndButtonAndWheel() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
             eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -308,7 +324,7 @@ public class EventsRecorder {
                 int dy = eventLog.getMouseEventDy();
 
                 mouseObjectCodeGenerator.moveAndButton(e.getButton(), e.getAction(), dx, dy);
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
 
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
@@ -319,7 +335,7 @@ public class EventsRecorder {
                 int dy = eventLog.getMouseEventDy();
 
                 mouseObjectCodeGenerator.moveAndWheel(e.getDirection(), e.getAmount(), dx, dy);
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
 
@@ -328,7 +344,8 @@ public class EventsRecorder {
         }));
     }
 
-    public void click(Consumer<String> onGenerateCode) {
+    
+    public void click() {
         final int[] a = new int[1];
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
@@ -339,7 +356,7 @@ public class EventsRecorder {
                     // if not empty put PRESS code for last event
                     MouseButtonEvent lastE = eventLog.getLastMouseButtonEvent();
                     mouseObjectCodeGenerator.buttonAt(lastE.getButton(), lastE.getAction(), lastE.getX(), lastE.getY());
-                    putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                    putCode(mouseObjectCodeGenerator.getGeneratedCode());
                 }
                 eventLog.clear();
                 eventLog.add(e);
@@ -368,7 +385,7 @@ public class EventsRecorder {
                     mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
                     code += mouseObjectCodeGenerator.getGeneratedCode();
                 }
-                putCode(onGenerateCode, code);
+                putCode(code);
                 eventLog.clear();
             }));
 
@@ -393,12 +410,13 @@ public class EventsRecorder {
         }));
     }
 
-    public void wheel(Consumer<String> onGenerateCode) {
+    
+    public void wheel() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
                 mouseObjectCodeGenerator.wheel(e.getDirection(), e.getAmount());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -407,12 +425,13 @@ public class EventsRecorder {
         }));
     }
 
-    public void wheelAt(Consumer<String> onGenerateCode) {
+    
+    public void wheelAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
                 mouseObjectCodeGenerator.wheelAt(e.getDirection(), e.getAmount(), e.getX(), e.getY());
-                putCode(onGenerateCode, mouseObjectCodeGenerator.getGeneratedCode());
+                putCode(mouseObjectCodeGenerator.getGeneratedCode());
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -421,7 +440,8 @@ public class EventsRecorder {
         }));
     }
 
-    public void combined(Consumer<String> onGenerateCode) {
+    
+    public void combined() {
         String control = getCombinedControl();
         Combined combinedConfig = recordingParams.getCombined();
         final boolean[] recording = new boolean[1];
@@ -459,7 +479,7 @@ public class EventsRecorder {
 
                     String rawCode = unicodeActionEncoder.encode(eventLog.getEventLog());
                     combinedObjectCodeGenerator.run("unicode", rawCode);
-                    putCode(onGenerateCode, combinedObjectCodeGenerator.getGeneratedCode());
+                    putCode(combinedObjectCodeGenerator.getGeneratedCode());
                 } else {
                     eventLog.add(e);
                 }
@@ -486,6 +506,10 @@ public class EventsRecorder {
 
     private void putCode(Consumer<String> consumer, String code) {
         Platform.runLater(() -> consumer.accept(code));
+    }
+
+    private void putCode(String code) {
+        Platform.runLater(() -> outputTextArea.insertTextIntoCaretPosition(code));
     }
 
     private String getMouseControl() {

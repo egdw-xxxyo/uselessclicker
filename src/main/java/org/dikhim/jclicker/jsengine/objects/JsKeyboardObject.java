@@ -154,7 +154,7 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     public void type(String keys) {
-        List<String> keyList = Arrays.asList(keys.split(" "));
+        String[] keyList = keys.split(" ");
         for (String key : keyList) {
             int keyCode = KeyCodes.getEventCodeByName(key);
             if (keyCode != -1) {

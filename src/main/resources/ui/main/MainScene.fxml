@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import sample.CodeTextArea?>
+<?import org.dikhim.componentlibrary.components.CodeTextArea?>
 
 <!--suppress ALL -->
 

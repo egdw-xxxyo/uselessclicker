@@ -64,6 +64,10 @@ public class ServerSceneController {
         clientList.addAll(server.getClientsInfo());
     }
 
+    public void print(String text) {
+        System.out.println(text);
+    }
+
     @FXML
     void refreshInfo(ActionEvent event) {
         refresh();
