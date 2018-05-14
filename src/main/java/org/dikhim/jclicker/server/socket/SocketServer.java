@@ -1,9 +1,10 @@
 package org.dikhim.jclicker.server.socket;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.ObservableList;
+import org.dikhim.jclicker.configuration.servers.ServerConfig;
 import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.util.WebUtils;
 
@@ -11,14 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SocketServer implements Server {
-    private int portNumber = 5000;
+    private IntegerProperty port = new SimpleIntegerProperty();
     private SocketServerThread serverThread;
 
-    private static SocketServer socketServer;
-    
-    public static SocketServer getInstance() {
-        if (socketServer == null) socketServer = new SocketServer();
-        return socketServer;
+    private ServerConfig serverConfig;
+
+    public SocketServer(ServerConfig serverConfig) {
+        this.serverConfig = serverConfig;
+        bindConfig();
     }
 
     @Override
@@ -28,12 +29,15 @@ public class SocketServer implements Server {
 
     @Override
     public int getPort() {
-        return portNumber;
+        return port.get();
     }
 
-    @Override
-    public void setPort(int portNumber) {
-        this.portNumber = portNumber;
+    public IntegerProperty portProperty() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port.set(port);
     }
 
     @Override
@@ -49,7 +53,7 @@ public class SocketServer implements Server {
     @Override
     public void start() {
         if (isActive()) stop();
-        serverThread = new SocketServerThread(portNumber);
+        serverThread = new SocketServerThread(getPort());
         serverThread.start();
     }
 
@@ -80,7 +84,7 @@ public class SocketServer implements Server {
 
     @Override
     public ObservableList<Client> getConnectedClientsProperty() {
-        return socketServer.getConnectedClientsProperty();
+        return getConnectedClientsProperty();
     }
 
     @Override
@@ -99,5 +103,9 @@ public class SocketServer implements Server {
     public StringProperty getAddressProperty() {
         //TODO
         return null;
+    }
+    
+    private void bindConfig(){
+        port.bindBidirectional(serverConfig.getPort().valueProperty());
     }
 }

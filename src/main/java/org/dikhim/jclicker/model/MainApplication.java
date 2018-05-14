@@ -39,7 +39,7 @@ public class MainApplication {
     private StringProperty status = new SimpleStringProperty("");
     
     private HttpServer httpServer;
-    private SocketServer socketServer = new SocketServer();
+    private SocketServer socketServer;
     
     private Robot robot;
     private JSEngine jse;
@@ -61,7 +61,7 @@ public class MainApplication {
         JsonObject jsonObject = jsonReader.readObject();
         config = new MainConfiguration(jsonObject, "main");
         httpServer = new HttpServer(config.getServers().getServer("httpServer"));
-
+        socketServer = new SocketServer(config.getServers().getServer("socketServer"));
     }
 
     public void newFile() {
@@ -109,6 +109,8 @@ public class MainApplication {
     public void stop() {
         stopScript();
         jNativeHookStop();
+        socketServer.stop();
+        httpServer.stop();
     }
 
     private void bindProperties() {

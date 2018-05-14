@@ -3,8 +3,7 @@ package org.dikhim.jclicker.server.http;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import org.dikhim.jclicker.configuration.MainConfiguration;
-import org.dikhim.jclicker.configuration.servers.Server;
+import org.dikhim.jclicker.configuration.servers.ServerConfig;
 import org.dikhim.jclicker.jsengine.objects.ComputerObject;
 import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
@@ -27,9 +26,9 @@ public class HttpServer {
     private List<HttpClient> clients = new ArrayList<>();
     private HttpClient defaultClient;
 
-    Server serverConfig;
+    ServerConfig serverConfig;
     
-    public HttpServer(Server serverConfig) {
+    public HttpServer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
         try {
             Robot robot = new Robot();

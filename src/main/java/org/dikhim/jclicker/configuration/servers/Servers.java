@@ -10,7 +10,7 @@ public class Servers {
     private String name;
 
     private Preferences preferences;
-    private final List<Server> serverList = new ArrayList<>();
+    private final List<ServerConfig> serverList = new ArrayList<>();
 
     public Servers(JsonObject jsonObject, String path, String name) {
         this.path = path;
@@ -21,19 +21,19 @@ public class Servers {
 
     private void loadDefault(JsonObject jsonObject) {
         jsonObject.keySet().forEach(key ->
-                serverList.add(new Server(jsonObject.getJsonObject(key), path + "/" + key, key)));
+                serverList.add(new ServerConfig(jsonObject.getJsonObject(key), path + "/" + key, key)));
     }
 
     public void setDefault() {
-        serverList.forEach(Server::setDefault);
+        serverList.forEach(ServerConfig::setDefault);
     }
 
     public void save() {
-        serverList.forEach(Server::save);
+        serverList.forEach(ServerConfig::save);
     }
 
     public void loadOrSetDefault() {
-        serverList.forEach(Server::loadOrSetDefault);
+        serverList.forEach(ServerConfig::loadOrSetDefault);
     }
 
     //
@@ -41,12 +41,12 @@ public class Servers {
         return path;
     }
 
-    public List<Server> getServerList() {
+    public List<ServerConfig> getServerList() {
         return serverList;
     }
 
-    public Server getServer(String name) {
-        for (Server s : serverList) {
+    public ServerConfig getServer(String name) {
+        for (ServerConfig s : serverList) {
             if (s.getName().equals(name)) return s;
         }
         throw new IllegalArgumentException("unknown parameter config '" + name + "' in '" + path);

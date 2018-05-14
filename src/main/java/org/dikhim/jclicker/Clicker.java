@@ -34,7 +34,6 @@ public class Clicker extends Application {
     @Override
     public void stop() throws Exception {
         mainApplication.stop();
-        SocketServer.getInstance().stop();
         super.stop();
     }
 

@@ -5,7 +5,7 @@ import org.dikhim.jclicker.configuration.values.IntegerValue;
 import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
-public class Server {
+public class ServerConfig {
     private String path;
     private String name;
 
@@ -14,7 +14,7 @@ public class Server {
     private IntegerValue port;
 
 
-    public Server(JsonObject jsonObject, String path, String name) {
+    public ServerConfig(JsonObject jsonObject, String path, String name) {
         this.path = path;
         this.name = name;
         preferences = Preferences.userRoot().node(path);
