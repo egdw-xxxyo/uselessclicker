@@ -10,6 +10,10 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.jsengine.objects.ComputerObject;
+import org.dikhim.jclicker.server.Server;
+import org.dikhim.jclicker.server.http.HttpServer;
+import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.output.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -21,6 +25,8 @@ import javax.script.ScriptException;
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,8 +34,13 @@ import java.util.logging.Logger;
 public class MainApplication {
     MainConfiguration config;
 
+
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
+    
+    private HttpServer httpServer = new HttpServer();
+    private SocketServer socketServer = new SocketServer();
+    
     private Robot robot;
     private JSEngine jse;
 
@@ -188,4 +199,12 @@ public class MainApplication {
         return config;
     }
 
+    public HttpServer getHttpServer() {
+        return httpServer;
+    }
+
+    public SocketServer getSocketServer() {
+        return socketServer;
+    }
+    
 }

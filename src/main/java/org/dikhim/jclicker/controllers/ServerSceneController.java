@@ -1,75 +1,56 @@
 package org.dikhim.jclicker.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.server.socket.SocketServer;
 
+import java.io.IOException;
+
 public class ServerSceneController {
-    private SocketServer server = SocketServer.getInstance();
     @FXML
-    private Button btnStartServer;
+    private AnchorPane httpPane;
 
     @FXML
-    private Button btnStopServer;
-
-    @FXML
-    private Button btnRegresh;
-
-    @FXML
-    private TextField txtPort;
-
-    @FXML
-    private TextField txtStatus;
-
-    @FXML
-    private ListView<String> listClients;
-    ObservableList<String> clientList = FXCollections.observableArrayList();
-
+    private AnchorPane socketPane;
 
     @FXML
     private void initialize(){
-        listClients.setItems(clientList);
-
-        refresh();
+        loadHttp();
+        loadSocket();
     }
 
-    @FXML
-    void startServer(ActionEvent event) {
-        server.setPort(Integer.parseInt(txtPort.getText()));
-        server.start();
-        refresh();
-    }
 
-    @FXML
-    void stopServer(ActionEvent event) {
-        server.stop();
-        refresh();
-    }
-
-    public void refresh(){
+    private void loadHttp(){
+        Parent root;
         try {
-            Thread.currentThread().sleep(5);
-        } catch (InterruptedException e) {
+            root = FXMLLoader.load(getClass().getResource("/ui/server/HttpServerScene.fxml"));
+
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+            httpPane.getChildren().add(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        String status = server.getStatus();
-        txtStatus.setText(status);
-        txtPort.setText(String.valueOf(server.getPort()));
-        clientList.clear();
-        clientList.addAll(server.getClientsInfo());
     }
 
-    public void print(String text) {
-        System.out.println(text);
-    }
-
-    @FXML
-    void refreshInfo(ActionEvent event) {
-        refresh();
+    private void loadSocket(){
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/ui/server/SocketServerScene.fxml"));
+            AnchorPane.setBottomAnchor(root, 0.0);
+            AnchorPane.setTopAnchor(root, 0.0);
+            AnchorPane.setRightAnchor(root, 0.0);
+            AnchorPane.setLeftAnchor(root, 0.0);
+            socketPane.getChildren().add(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

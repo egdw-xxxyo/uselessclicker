@@ -41,7 +41,7 @@ public class EventsRecorder {
 
     private CodeTextArea outputTextArea;
 
-    private BooleanProperty activated = new SimpleBooleanProperty(false);
+    private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
     public EventsRecorder(MainConfiguration mainConfiguration, CodeTextArea outputTextArea) {
@@ -59,7 +59,6 @@ public class EventsRecorder {
         }));
     }
 
-
     public void keyPerform() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".perform", "", "", (e) -> {
@@ -67,7 +66,6 @@ public class EventsRecorder {
             putCode(keyboardObjectCodeGenerator.getGeneratedCode());
         }));
     }
-
 
     public void keyPerformWithDelays() {
         eventLog.clear();
@@ -88,7 +86,6 @@ public class EventsRecorder {
     }
 
     // mouse basics
-
 
     public void insertMouseName() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
@@ -154,7 +151,7 @@ public class EventsRecorder {
         }));
     }
 
-        public void insertMouseMove() {
+    public void insertMouseMove() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -191,7 +188,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void insertMousePress() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -206,7 +202,6 @@ public class EventsRecorder {
         }));
     }
 
-   
     public void insertMousePressAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -221,7 +216,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void insertMouseRelease() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -236,7 +230,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void insertMouseReleaseAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -251,10 +244,8 @@ public class EventsRecorder {
         }));
     }
 
-
     // mouse
 
-    
     public void mouseButtonAndWheelAt() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
@@ -271,7 +262,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void mouseButtonAndWheelAtWithDelays() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
@@ -310,7 +300,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void mouseMoveAndButtonAndWheel() {
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
@@ -344,7 +333,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void click() {
         final int[] a = new int[1];
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
@@ -410,7 +398,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void wheel() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -425,7 +412,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void wheelAt() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
@@ -440,7 +426,6 @@ public class EventsRecorder {
         }));
     }
 
-    
     public void combined() {
         String control = getCombinedControl();
         Combined combinedConfig = recordingParams.getCombined();
@@ -498,7 +483,6 @@ public class EventsRecorder {
             }));
         }));
     }
-
 
     public String getPrefix() {
         return prefix;

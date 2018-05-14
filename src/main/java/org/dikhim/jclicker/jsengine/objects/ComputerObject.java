@@ -5,7 +5,7 @@ public class ComputerObject {
     private KeyboardObject keyboardObject;
     private SystemObject systemObject;
 
-    public ComputerObject(MouseObject mouseObject, KeyboardObject keyboardObject, SystemObject systemObject) {
+    public ComputerObject(KeyboardObject keyboardObject, MouseObject mouseObject, SystemObject systemObject) {
         this.mouseObject = mouseObject;
         this.keyboardObject = keyboardObject;
         this.systemObject = systemObject;

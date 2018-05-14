@@ -15,10 +15,7 @@ public class SocketServer implements Server {
     private SocketServerThread serverThread;
 
     private static SocketServer socketServer;
-
-    private SocketServer() {
-    }
-
+    
     public static SocketServer getInstance() {
         if (socketServer == null) socketServer = new SocketServer();
         return socketServer;

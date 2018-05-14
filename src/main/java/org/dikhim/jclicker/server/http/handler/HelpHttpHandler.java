@@ -1,15 +1,17 @@
 package org.dikhim.jclicker.server.http.handler;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import org.dikhim.jclicker.server.http.HttpServer;
 
 import java.io.IOException;
-import java.io.OutputStream;
 
-public class HelpHttpHandler implements HttpHandler {
+public class HelpHttpHandler extends DefaultHttpHandler {
+
+    public HelpHttpHandler(HttpServer httpServer) {
+        super(httpServer);
+    }
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    protected void handle() throws IOException {
         String response = "Server is running\n\n" +
                 "Available methods:\n" +
                 "/help\n" +
@@ -17,9 +19,7 @@ public class HelpHttpHandler implements HttpHandler {
                 "/mouse/press  params: button\n" +
                 "/mouse/release  params: button\n" +
                 "/mouse/wheel  params: direction, amount\n";
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        sendResponse(200,response);
     }
+
 }

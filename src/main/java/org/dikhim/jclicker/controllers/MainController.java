@@ -261,7 +261,7 @@ public class MainController {
     public void showServerWindow() {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/ui/serverScene/ServerScene.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/ui/server/ServerScene.fxml"));
 
             
             Stage stage = new Stage();
@@ -547,8 +547,6 @@ public class MainController {
             codeTextArea.setActive(true);
         }
     }
-
-
     // Keyboard
 
     /**

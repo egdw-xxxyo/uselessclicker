@@ -47,7 +47,7 @@
 }
 
 #server-button {
-    -fx-background-image: url("../../images/http.png");
+    -fx-background-image: url("../../images/server.png");
 }
 
 #config-button {
