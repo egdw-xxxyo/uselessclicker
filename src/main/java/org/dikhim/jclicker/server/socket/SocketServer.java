@@ -1,8 +1,6 @@
 package org.dikhim.jclicker.server.socket;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.ObservableList;
 import org.dikhim.jclicker.configuration.servers.ServerConfig;
 import org.dikhim.jclicker.server.Server;
@@ -13,21 +11,67 @@ import java.util.List;
 
 public class SocketServer implements Server {
     private IntegerProperty port = new SimpleIntegerProperty();
+    private IntegerProperty currentPort = new SimpleIntegerProperty();
+    private StringProperty address = new SimpleStringProperty();
+    private StringProperty currentAddress = new SimpleStringProperty();
+    private BooleanProperty running = new SimpleBooleanProperty();
+
     private SocketServerThread serverThread;
 
     private ServerConfig serverConfig;
 
     public SocketServer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
-        bindConfig();
+
+        initialization();
+        updateStatus();
     }
 
-    @Override
-    public String getAddress() {
-        return WebUtils.getLocalIpAddress();
+    private void initialization() {
+        port.bindBidirectional(serverConfig.getPort().valueProperty());
+        updateStatus();
     }
 
-    @Override
+    private void updateStatus() {
+        running.setValue(serverThread != null && serverThread.isAlive());
+        address.setValue(WebUtils.getLocalIpAddress());
+        currentAddress.setValue(address.getValue());
+
+        currentPort.setValue(port.getValue());
+    }
+
+
+    public void start() {
+        if (isRunning()) stop();
+        serverThread = new SocketServerThread(getPort());
+        serverThread.start();
+        updateStatus();
+    }
+
+    public void stop() {
+        if (serverThread == null) return;
+        serverThread.interrupt();
+        try {
+            serverThread.join(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        updateStatus();
+    }
+
+    public List<String> getClientsInfo() {
+        if (isRunning()) {
+            return serverThread.getClientsInfo();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public ObservableList<Client> getConnectedClientsProperty() {
+        return getConnectedClientsProperty();
+    }
+
+    /////////////////
     public int getPort() {
         return port.get();
     }
@@ -40,72 +84,53 @@ public class SocketServer implements Server {
         this.port.set(port);
     }
 
-    @Override
-    public String getStatus() {
-        return String.format("active: %b, address: %s:%d", isActive(), getAddress(), getPort());
+    public int getCurrentPort() {
+        return currentPort.get();
     }
 
-    @Override
-    public boolean isActive() {
-        return serverThread != null && serverThread.isAlive();
+    public IntegerProperty currentPortProperty() {
+        return currentPort;
     }
 
-    @Override
-    public void start() {
-        if (isActive()) stop();
-        serverThread = new SocketServerThread(getPort());
-        serverThread.start();
+    public void setCurrentPort(int currentPort) {
+        this.currentPort.set(currentPort);
     }
 
-    @Override
-    public void restart() {
-        stop();
-        start();
+    public String getAddress() {
+        return address.get();
     }
 
-    @Override
-    public void stop() {
-        if (serverThread == null) return;
-        serverThread.interrupt();
-        try {
-            serverThread.join(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+    public StringProperty addressProperty() {
+        return address;
     }
 
-    public List<String> getClientsInfo() {
-        if(isActive()){
-            return serverThread.getClientsInfo();
-        }else{
-            return new ArrayList<>();
-        }
+    public void setAddress(String address) {
+        this.address.set(address);
     }
 
-    @Override
-    public ObservableList<Client> getConnectedClientsProperty() {
-        return getConnectedClientsProperty();
+    public String getCurrentAddress() {
+        return currentAddress.get();
     }
 
-    @Override
-    public IntegerProperty getPortProperty() {
-        //TODO
-        return null;
+    public StringProperty currentAddressProperty() {
+        return currentAddress;
     }
 
-    @Override
-    public StringProperty getStatusProperty() {
-        //TODO
-        return null;
+    public void setCurrentAddress(String currentAddress) {
+        this.currentAddress.set(currentAddress);
     }
 
-    @Override
-    public StringProperty getAddressProperty() {
-        //TODO
-        return null;
+    public boolean isRunning() {
+        return running.get();
     }
-    
-    private void bindConfig(){
-        port.bindBidirectional(serverConfig.getPort().valueProperty());
+
+    public BooleanProperty runningProperty() {
+        return running;
     }
+
+    public void setRunning(boolean running) {
+        this.running.set(running);
+    }
+
+
 }

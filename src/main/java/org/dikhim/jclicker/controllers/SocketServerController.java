@@ -23,9 +23,6 @@ public class SocketServerController {
     private Button btnStopServer;
 
     @FXML
-    private Button btnRegresh;
-
-    @FXML
     private TextField txtPort;
 
     @FXML
@@ -40,7 +37,7 @@ public class SocketServerController {
     private void initialize() {
         server = mainApplication.getSocketServer();
         listClients.setItems(clientList);
-        
+
         bindConfig();
     }
 
@@ -48,38 +45,19 @@ public class SocketServerController {
     void startServer(ActionEvent event) {
         server.setPort(Integer.parseInt(txtPort.getText()));
         server.start();
-        refresh();
     }
 
     @FXML
     void stopServer(ActionEvent event) {
         server.stop();
-        refresh();
-    }
-
-    public void refresh() {
-        try {
-            Thread.currentThread().sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String status = server.getStatus();
-        txtStatus.setText(status);
-        txtPort.setText(String.valueOf(server.getPort()));
-        clientList.clear();
-        clientList.addAll(server.getClientsInfo());
-    }
-
-    public void print(String text) {
-        System.out.println(text);
-    }
-
-    @FXML
-    void refreshInfo(ActionEvent event) {
-        refresh();
     }
 
     private void bindConfig() {
         Bindings.bindBidirectional(txtPort.textProperty(), server.portProperty(), Converters.getStringToNumberConvertor());
+        txtStatus.textProperty().bind(Bindings.
+                concat(
+                        server.currentAddressProperty(),
+                        ":", server.currentPortProperty(),
+                        " is running:", server.runningProperty()));
     }
 }

@@ -250,7 +250,7 @@ public class MainController {
             stage.setTitle("Сервер");
             stage.setScene(new Scene(root, 600, 200));
             stage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/http.png")));
+                    getClass().getResourceAsStream("/images/server.png")));
             stage.show();
         } catch (IOException e) {
             System.out.println(e.getMessage());

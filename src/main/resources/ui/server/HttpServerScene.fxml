@@ -20,7 +20,6 @@
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
       <Label text="Port">
@@ -31,7 +30,7 @@
             <Insets left="5.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Status http" GridPane.rowIndex="1">
+      <Label text="Status" GridPane.rowIndex="1">
          <font>
             <Font name="Free Monospaced Bold" size="13.0" />
          </font>
@@ -60,11 +59,6 @@
          </font>
       </TextField>
       <ListView fx:id="listClients" prefHeight="61.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.rowSpan="2147483647" />
-      <Button fx:id="btnRefresh" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#refreshInfo" text="Refresh" GridPane.rowIndex="4">
-         <font>
-            <Font name="Free Monospaced Bold" size="13.0" />
-         </font>
-      </Button>
    </children>
    <padding>
       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

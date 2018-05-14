@@ -41,7 +41,7 @@ public class SocketServerThread extends Thread {
                     }
                 }
             }
-            Out.println("Server stopped");
+            Out.println("SocketServer has been stopped");
         } catch (IOException | IllegalArgumentException e) {
             Out.println(e.getMessage());
         }
