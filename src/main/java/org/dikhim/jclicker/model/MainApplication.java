@@ -38,7 +38,7 @@ public class MainApplication {
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
     
-    private HttpServer httpServer = new HttpServer();
+    private HttpServer httpServer;
     private SocketServer socketServer = new SocketServer();
     
     private Robot robot;
@@ -60,6 +60,7 @@ public class MainApplication {
         JsonReader jsonReader = Json.createReader(is);
         JsonObject jsonObject = jsonReader.readObject();
         config = new MainConfiguration(jsonObject, "main");
+        httpServer = new HttpServer(config.getServers().getServer("httpServer"));
 
     }
 

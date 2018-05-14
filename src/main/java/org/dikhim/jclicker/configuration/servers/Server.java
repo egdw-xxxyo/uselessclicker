@@ -6,15 +6,18 @@ import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
 public class Server {
+    private String path;
     private String name;
 
     private Preferences preferences;
 
     private IntegerValue port;
 
-    public Server(JsonObject jsonObject, String name) {
+
+    public Server(JsonObject jsonObject, String path, String name) {
+        this.path = path;
         this.name = name;
-        preferences = Preferences.userRoot().node(name);
+        preferences = Preferences.userRoot().node(path);
         loadDefault(jsonObject);
     }
 
@@ -37,11 +40,15 @@ public class Server {
 
     //
 
-    public String getName() {
-        return name;
+    public String getPath() {
+        return path;
     }
 
-    public IntegerValue getFixedRateValue() {
+    public IntegerValue getPort() {
         return port;
+    }
+    
+    public String getName() {
+        return name;
     }
 }

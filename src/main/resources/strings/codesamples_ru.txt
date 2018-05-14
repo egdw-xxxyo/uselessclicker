@@ -1076,8 +1076,8 @@ system.setSpeed(1);
 /////////////////////////////////////
 /////////////////////////////////////
 $btnTemplateLanguageClass:
-function Class (name) {
-  this.name = name;
+function Class (path) {
+  this.path = path;
   this.echo = function(text){
     return text;
   };
@@ -1088,14 +1088,14 @@ function Class (name) {
   var obj = new Class('MyClass');
   
 Обращение к полю объекта:
-  var out = obj.name;
+  var out = obj.path;
   
 Обращение к методу объекта:
   var out = obj.echo('someText');
 
 $btnTemplateLanguageClassCode:
-function Class (name) {
-  this.name = name;
+function Class (path) {
+  this.path = path;
   this.echo = function(text){
     return text;
   };

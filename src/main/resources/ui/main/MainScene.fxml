@@ -179,7 +179,7 @@
                                                     <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false"
                                                                   maxWidth="1.7976931348623157E308"
                                                                   mnemonicParsing="false" onAction="#insertKeyName"
-                                                                  styleClass="templateButton" text="key name"/>
+                                                                  styleClass="templateButton" text="key path"/>
                                                     <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false"
                                                                   maxWidth="1.7976931348623157E308"
                                                                   mnemonicParsing="false" onAction="#insertKeyCode"
@@ -202,7 +202,7 @@
                                                     <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false"
                                                                   maxWidth="1.7976931348623157E308"
                                                                   mnemonicParsing="false" onAction="#insertMouseName"
-                                                                  styleClass="templateButton" text="button name"/>
+                                                                  styleClass="templateButton" text="button path"/>
                                                     <ToggleButton fx:id="btnInsertMouseClick" focusTraversable="false"
                                                                   maxWidth="1.7976931348623157E308"
                                                                   mnemonicParsing="false" onAction="#insertMouseClick"

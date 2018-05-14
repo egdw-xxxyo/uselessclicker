@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.controllers;
 
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +13,8 @@ import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
+import org.dikhim.jclicker.util.Converters;
+
 
 public class HttpServerController {
     private HttpServer server;
@@ -36,11 +40,11 @@ public class HttpServerController {
 
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         server = mainApplication.getHttpServer();
         listClients.setItems(clientList);
-
-        refresh();
+        
+        bindConfig();
     }
 
     @FXML
@@ -56,7 +60,7 @@ public class HttpServerController {
         refresh();
     }
 
-    public void refresh(){
+    public void refresh() {
         try {
             Thread.currentThread().sleep(5);
         } catch (InterruptedException e) {
@@ -75,5 +79,9 @@ public class HttpServerController {
     @FXML
     void refreshInfo(ActionEvent event) {
         refresh();
+    }
+
+    private void bindConfig() {
+        Bindings.bindBidirectional(txtPort.textProperty(), server.portProperty(), Converters.getStringToNumberConvertor());
     }
 }

@@ -3,6 +3,8 @@ package org.dikhim.jclicker.server.http;
 
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.configuration.servers.Server;
 import org.dikhim.jclicker.jsengine.objects.ComputerObject;
 import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
@@ -25,7 +27,10 @@ public class HttpServer {
     private List<HttpClient> clients = new ArrayList<>();
     private HttpClient defaultClient;
 
-    public HttpServer() {
+    Server serverConfig;
+    
+    public HttpServer(Server serverConfig) {
+        this.serverConfig = serverConfig;
         try {
             Robot robot = new Robot();
             JsKeyboardObject keyboardObject = new JsKeyboardObject(robot);
@@ -33,11 +38,16 @@ public class HttpServer {
             JsSystemObject systemObject = new JsSystemObject(robot);
             defaultComputerObject = new ComputerObject(keyboardObject, mouseObject, systemObject);
             defaultClient = new HttpClient(0, defaultComputerObject);
+            bindConfig();
         } catch (AWTException e) {
             e.printStackTrace();
         }
     }
 
+    private void bindConfig() {
+        port.bindBidirectional(serverConfig.getPort().valueProperty());
+    }
+    
     public void start() {
         try {
             if (httpHttpServer != null) httpHttpServer.stop(0);

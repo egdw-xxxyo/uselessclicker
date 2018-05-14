@@ -34,6 +34,7 @@ import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.util.Converters;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.dikhim.jclicker.util.output.Out;
 
@@ -100,28 +101,8 @@ public class MainController {
 
 
     private void bindConfig() {
-        StringConverter<Number> stringConverter = new StringConverter<Number>() {
-            @Override
-            public String toString(Number object) {
-                try {
-                    return String.valueOf(object);
-                } catch (Exception e) {
-                    System.out.println(object);
-                    return "";
-                }
-            }
-
-
-            @Override
-            public Integer fromString(String string) {
-                try {
-                    return Integer.parseInt(string);
-                } catch (Exception e) {
-                    System.out.println(string);
-                    return 0;
-                }
-            }
-        };
+        StringConverter<Number> stringConverter = Converters.getStringToNumberConvertor();
+        
 
 
         Combined combined = config.getRecordingParams().getCombined();
