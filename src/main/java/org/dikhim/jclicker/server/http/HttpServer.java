@@ -67,13 +67,17 @@ public class HttpServer {
             createContext();
             httpHttpServer.setExecutor(null);
             httpHttpServer.start();
+            updateStatus();
             Out.println("HttpServer started on " + currentAddress.get() + ":" + currentPort.get());
         } catch (IOException e) {
             e.printStackTrace();
             httpHttpServer = null;
+            updateStatus();
+            Out.println("HttpServer failed to start on " + currentAddress.get() + ":" + currentPort.get());
+
         }
 
-        updateStatus();
+        
 
     }
 

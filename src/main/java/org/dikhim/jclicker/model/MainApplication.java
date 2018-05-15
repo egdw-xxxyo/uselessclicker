@@ -51,7 +51,6 @@ public class MainApplication {
     }
 
     public MainApplication() throws FileNotFoundException, URISyntaxException {
-        jNativeHookStart();
         createRobot();
         jse = new JSEngine(robot);
         bindProperties();
@@ -108,7 +107,6 @@ public class MainApplication {
 
     public void stop() {
         stopScript();
-        jNativeHookStop();
         socketServer.stop();
         httpServer.stop();
     }
@@ -119,52 +117,9 @@ public class MainApplication {
     }
 
 
-    /**
-     * Initialization of JNativeHook
-     */
-    private void jNativeHookStart() {
-        // suppress logger of jNativeHook
-        Logger logger = Logger
-                .getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.OFF);
-        logger.setUseParentHandlers(false);
+    
 
-        // suppress output of jNativeHook
-        PrintStream oldOut = System.out;
-        System.setOut(new PrintStream(new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {
-            }
-        }));
-        try {
-            GlobalScreen.registerNativeHook();
-
-            // restore system output
-            System.setOut(oldOut);
-        } catch (NativeHookException e) {
-            // restore system output
-            System.setOut(oldOut);
-
-            System.out.println(e.getMessage());
-            System.exit(-1);
-        }
-
-        MouseEventsManager mouseListener = MouseEventsManager.getInstance();
-        GlobalScreen.addNativeMouseListener(mouseListener);
-        GlobalScreen.addNativeMouseMotionListener(mouseListener);
-        GlobalScreen.addNativeMouseWheelListener(mouseListener);
-        KeyEventsManager keyListener = KeyEventsManager.getInstance();
-        GlobalScreen.addNativeKeyListener(keyListener);
-    }
-
-    private void jNativeHookStop() {
-        try {
-            GlobalScreen.unregisterNativeHook();
-        } catch (NativeHookException e) {
-            Out.println(e.getMessage());
-        }
-    }
-
+   
     private void createRobot() {
         try {
             robot = new Robot();

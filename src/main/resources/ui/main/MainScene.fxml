@@ -113,6 +113,15 @@
                             <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
+                    <Button id="help-button" fx:id="btnHelpWindow" ellipsisString="." focusTraversable="false"
+                            layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"
+                            onAction="#showHelpWindow" text="Помощь">
+                        <styleClass>
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
+                        </styleClass>
+                    </Button>
                 </FlowPane>
                 <HBox>
                     <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"

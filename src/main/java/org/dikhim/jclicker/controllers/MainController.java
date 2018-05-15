@@ -290,6 +290,21 @@ public class MainController {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+    }@FXML
+    public void showHelpWindow() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/ui/main/HelpScene.fxml"));
+            Stage stage = new Stage();
+                stage.setTitle("Помощь");
+            stage.setScene(new Scene(root, 600, 400));
+            stage.getIcons().add(new Image(
+                    getClass().getResourceAsStream("/images/info.png")));
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     ////// Toggles

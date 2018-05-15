@@ -6,13 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.model.MainApplication;
-import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.output.Out;
 import org.dikhim.jclicker.util.output.SystemAndStringOutput;
+import org.dikhim.jclicker.util.output.SystemOutput;
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Clicker extends Application {
     private static Clicker application;
@@ -22,26 +30,53 @@ public class Clicker extends Application {
     private MainApplication mainApplication;
 
     private Stage primaryStage;
+    private static Cli cli;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         mainApplication = new MainApplication();
         application = this;
         this.primaryStage = primaryStage;
-        startGuiApplication();
+        
+        if(cli.isGuiApplication()){
+            Out.setOutput(new SystemAndStringOutput());
+            loadMainScene();
+        }else{
+            Out.setOutput(new SystemOutput());
+        }
+
+        if(cli.isOpenFile()){
+            mainApplication.openFile(cli.getFile());
+        }
+        
+        if(cli.isRunFile()){
+            mainApplication.openFile(cli.getFile());
+            mainApplication.runScript();
+        }
+        
+        if(cli.isRunHttpServer()){
+            mainApplication.getHttpServer().setPort(cli.getHttpPort());
+            mainApplication.getHttpServer().start();
+        }
+
+        if(cli.isRunSocketServer()){
+            mainApplication.getSocketServer().setPort(cli.getSocketPort());
+            mainApplication.getSocketServer().start();
+        }
+
+        if (cli.isEventRecording()) {
+            jNativeHookStart();
+        }
+        
     }
 
     @Override
     public void stop() throws Exception {
         mainApplication.stop();
+        if(cli.isEventRecording()){
+            jNativeHookStop();
+        }
         super.stop();
-    }
-
-
-    // ui
-    private void startGuiApplication() throws Exception {
-        Out.setOutput(new SystemAndStringOutput());
-        loadMainScene();
     }
 
     private void loadMainScene() {
@@ -58,6 +93,55 @@ public class Clicker extends Application {
         }
     }
 
+    /**
+     * Initialization of JNativeHook
+     */
+    private void jNativeHookStart() {
+        // suppress logger of jNativeHook
+        Logger logger = Logger
+                .getLogger(GlobalScreen.class.getPackage().getName());
+        logger.setLevel(Level.OFF);
+        logger.setUseParentHandlers(false);
+
+        // suppress output of jNativeHook
+        PrintStream oldOut = System.out;
+        System.setOut(new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+            }
+        }));
+        try {
+            GlobalScreen.registerNativeHook();
+
+
+
+            MouseEventsManager mouseListener = MouseEventsManager.getInstance();
+            GlobalScreen.addNativeMouseListener(mouseListener);
+            GlobalScreen.addNativeMouseMotionListener(mouseListener);
+            GlobalScreen.addNativeMouseWheelListener(mouseListener);
+            KeyEventsManager keyListener = KeyEventsManager.getInstance();
+            GlobalScreen.addNativeKeyListener(keyListener);
+        } catch (NativeHookException e) {
+            // restore system output
+            System.setOut(oldOut);
+
+            System.out.println(e.getMessage());
+            System.exit(-1);
+        }
+
+        // restore system output
+        System.setOut(oldOut);
+    }
+
+    private void jNativeHookStop() {
+        try {
+            GlobalScreen.unregisterNativeHook();
+        } catch (NativeHookException e) {
+            Out.println(e.getMessage());
+        }
+    }
+
+
     public static Clicker getApplication() {
         return application;
     }
@@ -68,15 +152,8 @@ public class Clicker extends Application {
 
 
     public static void main(String[] args) {
-        Cli cli = new Cli(args);
-        String[] params = new String[2];
-        params[0] = "--filePath=" + cli.getFilePath();
-        if (cli.isConsole()) {
-            params[1] = "--type=CLI";
-        } else {
-            params[1] = "--type=GUI";
-        }
-        launch(params);
+        cli = new Cli(args);
+        launch(args);
     }
 
     public MainApplication getMainApplication() {
