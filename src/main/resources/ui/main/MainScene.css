@@ -58,6 +58,11 @@
     -fx-background-image: url("../../images/info.png");
 }
 
+#help-button {
+    -fx-background-image: url("../../images/info.png");
+    visibility: hidden;
+}
+
 
 /*Menu buttons*/
 #menu-keyboard-button {

@@ -5,7 +5,7 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 import java.util.ArrayList;
 import java.util.List;

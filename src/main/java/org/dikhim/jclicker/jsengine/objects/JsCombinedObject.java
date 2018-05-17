@@ -3,8 +3,7 @@ package org.dikhim.jclicker.jsengine.objects;
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.decoders.ActionDecoder;
 import org.dikhim.jclicker.actions.utils.decoders.ActionDecoderFactory;
-import org.dikhim.jclicker.actions.utils.decoders.UnicodeActionDecoder;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 import java.util.List;
 

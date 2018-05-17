@@ -7,10 +7,9 @@ import org.dikhim.jclicker.jsengine.objects.ComputerObject;
 import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
 import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
-import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 import java.awt.*;
 import java.io.IOException;
@@ -62,7 +61,7 @@ public class HttpServer {
 
     public void start() {
         try {
-            if (httpHttpServer != null) httpHttpServer.stop(0);
+            if (httpHttpServer != null) stop();
             httpHttpServer = com.sun.net.httpserver.HttpServer.create(new InetSocketAddress(getPort()), 0);
             createContext();
             httpHttpServer.setExecutor(null);

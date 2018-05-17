@@ -5,9 +5,7 @@ import java.awt.Robot;
 import org.dikhim.jclicker.actions.utils.MouseCodes;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.util.MouseMoveUtil;
-import org.dikhim.jclicker.util.output.Out;
-
-import javax.script.ScriptException;
+import org.dikhim.jclicker.util.Out;
 
 /**
  *

@@ -36,7 +36,7 @@ import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.Converters;
 import org.dikhim.jclicker.util.SourcePropertyFile;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,7 +73,8 @@ public class MainController {
         config = mainApplication.getConfig();
         // init text areas
         codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
-        outTextArea.textProperty().bindBidirectional(Out.outProperty());
+        Out.addPrintMethod(outTextArea::appendText);
+        Out.addClearMethod(outTextArea::clear);
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
@@ -253,7 +254,7 @@ public class MainController {
                     getClass().getResourceAsStream("/images/server.png")));
             stage.show();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -270,7 +271,7 @@ public class MainController {
                     getClass().getResourceAsStream("/images/config.png")));
             stage.show();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -287,7 +288,7 @@ public class MainController {
                     getClass().getResourceAsStream("/images/info.png")));
             stage.show();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Out.println(e.getMessage());
             e.printStackTrace();
         }
     }@FXML
@@ -302,7 +303,8 @@ public class MainController {
                     getClass().getResourceAsStream("/images/info.png")));
             stage.show();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Out.println(e.getMessage());
+
             e.printStackTrace();
         }
     }

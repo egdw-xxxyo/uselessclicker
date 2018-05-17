@@ -2,7 +2,7 @@ package org.dikhim.jclicker.server.socket;
 
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
 import org.dikhim.jclicker.util.WebUtils;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 import java.awt.*;
 import java.net.*;

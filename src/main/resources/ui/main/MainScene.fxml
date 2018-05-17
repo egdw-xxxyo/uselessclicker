@@ -151,7 +151,7 @@
                                           AnchorPane.topAnchor="0.0"/>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
-                            <TextArea fx:id="outTextArea" styleClass="code-text-area" text="....&#10;wwww&#10;"
+                            <TextArea fx:id="outTextArea" styleClass="code-text-area" text=""
                                       AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                       AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <font>

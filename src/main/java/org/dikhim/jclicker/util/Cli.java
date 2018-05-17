@@ -33,16 +33,19 @@ public class Cli {
         Option openFile = Option.builder("o")
                 .longOpt("open-file")
                 .hasArg()
+                .argName("file path")
                 .desc("open file ")
                 .build();
         Option runFile = Option.builder("r")
                 .longOpt("run-file")
                 .hasArg()
+                .argName("file path")
                 .desc("run file ")
                 .build();
         Option guiApplication = Option.builder("g")
                 .longOpt("gui")
                 .hasArg()
+                .argName("enable")
                 .desc("true - gui, false - cli application ")
                 .build();
         Option httpServer = Option.builder("H")
@@ -60,6 +63,7 @@ public class Cli {
         Option recording = Option.builder("R")
                 .longOpt("recording")
                 .hasArg()
+                .argName("enable")
                 .desc("true - activate, false - disable mouse and keyboard recording ")
                 .build();
 

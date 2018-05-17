@@ -7,7 +7,7 @@ import org.apache.commons.io.FileUtils;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 public class Script {
     private File file;

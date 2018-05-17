@@ -10,9 +10,7 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.util.Cli;
-import org.dikhim.jclicker.util.output.Out;
-import org.dikhim.jclicker.util.output.SystemAndStringOutput;
-import org.dikhim.jclicker.util.output.SystemOutput;
+import org.dikhim.jclicker.util.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
@@ -38,13 +36,11 @@ public class Clicker extends Application {
         application = this;
         this.primaryStage = primaryStage;
         
-        if(cli.isGuiApplication()){
-            Out.setOutput(new SystemAndStringOutput());
+        if(cli.isGuiApplication()){            
             loadMainScene();
-        }else{
-            Out.setOutput(new SystemOutput());
         }
-
+        Out.addPrintMethod(System.out::print);
+        
         if(cli.isOpenFile()){
             mainApplication.openFile(cli.getFile());
         }
@@ -112,25 +108,18 @@ public class Clicker extends Application {
         }));
         try {
             GlobalScreen.registerNativeHook();
-
-
-
             MouseEventsManager mouseListener = MouseEventsManager.getInstance();
             GlobalScreen.addNativeMouseListener(mouseListener);
             GlobalScreen.addNativeMouseMotionListener(mouseListener);
             GlobalScreen.addNativeMouseWheelListener(mouseListener);
             KeyEventsManager keyListener = KeyEventsManager.getInstance();
-            GlobalScreen.addNativeKeyListener(keyListener);
-        } catch (NativeHookException e) {
-            // restore system output
+            GlobalScreen.addNativeKeyListener(keyListener); 
             System.setOut(oldOut);
-
-            System.out.println(e.getMessage());
-            System.exit(-1);
-        }
-
-        // restore system output
-        System.setOut(oldOut);
+        } catch (NativeHookException e) {
+            System.setOut(oldOut);
+            Out.println("Cannot create keyboard/mouse recording object");
+            Out.println("Recording events won't be available");
+        }       
     }
 
     private void jNativeHookStop() {

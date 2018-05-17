@@ -6,7 +6,7 @@ import java.util.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.jsengine.JSEngine;
-import org.dikhim.jclicker.util.output.Out;
+import org.dikhim.jclicker.util.Out;
 
 /**
  * Created by dikobraz on 31.03.17.

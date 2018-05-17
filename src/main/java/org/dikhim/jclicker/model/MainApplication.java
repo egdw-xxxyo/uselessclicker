@@ -4,19 +4,12 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.control.Alert;
-import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.Clicker;
-import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.JSEngine;
-import org.dikhim.jclicker.jsengine.objects.ComputerObject;
-import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
-import org.dikhim.jclicker.util.output.Out;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
+import org.dikhim.jclicker.util.Out;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -25,14 +18,10 @@ import javax.script.ScriptException;
 import java.awt.*;
 import java.io.*;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @SuppressWarnings("Duplicates")
 public class MainApplication {
-    MainConfiguration config;
+    private MainConfiguration config;
 
 
     private StringProperty title = new SimpleStringProperty("");
@@ -93,7 +82,7 @@ public class MainApplication {
             jse.start();
         } catch (ScriptException e) {
             e.printStackTrace();
-            Out.print(e.getMessage());
+            Out.println(e.getMessage());
         }
     }
 
