@@ -3,10 +3,10 @@ package org.dikhim.jclicker.model;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.scene.control.Alert;
-import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Out;
@@ -15,9 +15,8 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.script.ScriptException;
-import java.awt.*;
-import java.io.*;
-import java.net.URISyntaxException;
+import java.io.File;
+import java.io.InputStream;
 
 @SuppressWarnings("Duplicates")
 public class MainApplication {
@@ -39,8 +38,8 @@ public class MainApplication {
         return script;
     }
 
-    public MainApplication() throws FileNotFoundException, URISyntaxException {
-        createRobot();
+    public MainApplication() {
+        robot = RobotStatic.get();
         jse = new JSEngine(robot);
         bindProperties();
 
@@ -78,12 +77,7 @@ public class MainApplication {
     public void runScript() {
         Out.clear();
         jse.putCode(script.codeProperty().get());
-        try {
-            jse.start();
-        } catch (ScriptException e) {
-            e.printStackTrace();
-            Out.println(e.getMessage());
-        }
+        jse.start();
     }
 
     /**
@@ -104,31 +98,6 @@ public class MainApplication {
         title.bind(script.nameProperty());
         status.bind(Bindings.concat(script.nameProperty()).concat(" выполняется:").concat(jse.runningProperty()));
     }
-
-
-    
-
-   
-    private void createRobot() {
-        try {
-            robot = new Robot();
-        } catch (AWTException e) {
-            System.out.println(e.getMessage());
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Program start failure");
-            alert.setHeaderText("Can not create 'Robot' object ");
-            alert.setContentText(
-                    "It can occurs if you have no permission for it\n" + "message:\n" + e.getMessage());
-            alert.showAndWait();
-            try {
-                Clicker.getApplication().stop();
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        }
-    }
-
 
     public JSEngine getJse() {
         return jse;

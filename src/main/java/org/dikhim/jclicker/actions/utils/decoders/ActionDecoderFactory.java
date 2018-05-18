@@ -1,7 +1,5 @@
 package org.dikhim.jclicker.actions.utils.decoders;
 
-import org.dikhim.jclicker.actions.utils.encoders.ActionEncoder;
-
 public class ActionDecoderFactory {
     public static ActionDecoder get(String encoding) {
         if ("unicode".equalsIgnoreCase(encoding)) {
@@ -9,6 +7,6 @@ public class ActionDecoderFactory {
         } else if ("base64".equalsIgnoreCase(encoding)) {
             return new Base64ActionDecoder();
         } 
-        return null;
+        return new UnicodeActionDecoder();
     }
 }

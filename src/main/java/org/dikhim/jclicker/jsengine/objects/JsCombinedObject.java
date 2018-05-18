@@ -3,6 +3,7 @@ package org.dikhim.jclicker.jsengine.objects;
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.decoders.ActionDecoder;
 import org.dikhim.jclicker.actions.utils.decoders.ActionDecoderFactory;
+import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public class JsCombinedObject implements CombinedObject {
     private KeyboardObject keyboardObject;
     private SystemObject systemObject;
 
-    public JsCombinedObject(MouseObject mouseObject, KeyboardObject keyboardObject, SystemObject systemObject) {
+    public JsCombinedObject( MouseObject mouseObject, KeyboardObject keyboardObject, SystemObject systemObject) {
         this.mouseObject = mouseObject;
         this.keyboardObject = keyboardObject;
         this.systemObject = systemObject;

@@ -5,13 +5,13 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.jsengine.objects.*;
+import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
 import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +28,7 @@ public class JSEngine {
     private ScheduledExecutorService service;
     private List<Runnable> tasks = new ArrayList<>();
 
-    private Robot robot;
+    private final Robot robot;
     private ScriptEngine engine;
     private Thread thread;
     private String code;
@@ -41,7 +41,7 @@ public class JSEngine {
         return robot;
     }
 
-    public void start() throws ScriptException {
+    public void start() {
         stop();
         service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleWithFixedDelay(() -> {
@@ -52,15 +52,17 @@ public class JSEngine {
         addTask(() -> {
             KeyEventsManager.getInstance().removeListenersByPrefix("script.");
             engine = new ScriptEngineManager().getEngineByName("nashorn");
-            MouseObject mouseObject = new JsMouseObject(robot);
             KeyboardObject keyboardObject = new JsKeyboardObject(robot);
+            MouseObject mouseObject = new JsMouseObject(robot);
             SystemObject systemObject = new JsSystemObject(this);
+            CombinedObject combinedObject = new JsCombinedObject(mouseObject, keyboardObject, systemObject);
+            ClipboardObject clipboardObject = new JsClipboardObject(robot);
 
             engine.put("mouse", mouseObject);
             engine.put("key", keyboardObject);
             engine.put("system", systemObject);
-            engine.put("combined", new JsCombinedObject(mouseObject, keyboardObject, systemObject));
-            engine.put("clipboard", new JsClipboardObject());
+            engine.put("combined", combinedObject);
+            engine.put("clipboard", clipboardObject);
             try {
                 engine.eval(code);
             } catch (ScriptException e) {
@@ -108,7 +110,7 @@ public class JSEngine {
             if (!service.isTerminated() && thread != null) {
                 try {
                     thread.stop();
-                } catch (ThreadDeath death) {
+                } catch (ThreadDeath ignored) {
 
                 }
                 service = null;
@@ -118,21 +120,12 @@ public class JSEngine {
         Platform.runLater(() -> running.setValue(false));
     }
 
-    /**
-     * Добавляет задание для выполнения потоком движка
-     *
-     * @param task
-     */
+    
     public void addTask(Runnable task) {
         tasks.add(task);
     }
 
-    /**
-     * Вызывает функцию
-     *
-     * @param name
-     * @param args
-     */
+   
     public void invokeFunction(String name, Object... args) {
         try {
             ((Invocable) engine).invokeFunction(name, args);

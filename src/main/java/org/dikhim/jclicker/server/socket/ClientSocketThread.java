@@ -1,17 +1,18 @@
 package org.dikhim.jclicker.server.socket;
 
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
+import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.Out;
 
-import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.util.Map;
 
 public class ClientSocketThread extends Thread {
     private SocketServerThread socketServerThread;
-    private Socket socket = null;
+    private Socket socket;
     private PrintWriter out;
     private BufferedReader in;
 
@@ -24,15 +25,15 @@ public class ClientSocketThread extends Thread {
     ClientSocketThread(Socket socket, SocketServerThread socketServerThread) {
         super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
         this.socketServerThread = socketServerThread;
+        Robot robot = RobotStatic.get();
+        mouse = new JsMouseObject(robot);
+        this.socket = socket;
         try {
-            Robot robot = new Robot();
-            mouse = new JsMouseObject(robot);
-            this.socket = socket;
             this.socket.setSoTimeout(soTimeout);
-            mouse.setDelays(0);
-        } catch (AWTException | SocketException e) {
+        } catch (SocketException e) {
             e.printStackTrace();
         }
+        mouse.setDelays(0);
     }
 
     public void run() {

@@ -11,28 +11,28 @@ public class Out {
     private static List<Consumer<String>> printMethods = new ArrayList<>();
     private static List<Runnable> clearMethods = new ArrayList<>();
 
-    public static void addPrintMethod(Consumer<String> printMethod) {
+    synchronized public static void addPrintMethod(Consumer<String> printMethod) {
         printMethods.add(printMethod);
     }
 
-    public static void print(String text) {
+    synchronized public static void print(String text) {
         Platform.runLater(
                 () -> printMethods.forEach(
                         (method) -> method.accept(text)));
 
     }
 
-    public static void println(String text) {
+    synchronized public static void println(String text) {
         Platform.runLater(
                 () -> printMethods.forEach(
                         (method) -> method.accept(text + "\n")));
     }
 
-    public static void addClearMethod(Runnable clear) {
+    synchronized public static void addClearMethod(Runnable clear) {
         clearMethods.add(clear);
     }
 
-    public static void clear() {
+    synchronized public static void clear() {
         Platform.runLater(
                 () -> clearMethods.forEach(
                         Runnable::run));

@@ -38,12 +38,12 @@ public class MouseEventsManager
         return instance;
     }
 
-    public int getX() {
+    synchronized public int getX() {
         return MouseInfo.getPointerInfo().getLocation().x;
     }
 
 
-    public int getY() {
+    synchronized public int getY() {
         return MouseInfo.getPointerInfo().getLocation().y;
     }
 

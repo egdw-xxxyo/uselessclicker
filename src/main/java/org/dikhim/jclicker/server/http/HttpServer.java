@@ -7,6 +7,8 @@ import org.dikhim.jclicker.jsengine.objects.ComputerObject;
 import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
 import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
 import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
+import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.Out;
@@ -33,17 +35,13 @@ public class HttpServer {
 
     public HttpServer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
-        try {
-            Robot robot = new Robot();
-            JsKeyboardObject keyboardObject = new JsKeyboardObject(robot);
-            JsMouseObject mouseObject = new JsMouseObject(robot);
-            JsSystemObject systemObject = new JsSystemObject(robot);
-            defaultComputerObject = new ComputerObject(keyboardObject, mouseObject, systemObject);
-            defaultClient = new HttpClient(0, defaultComputerObject);
-            initialization();
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
+        Robot robot = RobotStatic.get();
+        JsKeyboardObject keyboardObject = new JsKeyboardObject(robot);
+        JsMouseObject mouseObject = new JsMouseObject(robot);
+        JsSystemObject systemObject = new JsSystemObject(robot);
+        defaultComputerObject = new ComputerObject(keyboardObject, mouseObject, systemObject);
+        defaultClient = new HttpClient(0, defaultComputerObject);
+        initialization();
     }
 
     private void initialization() {
@@ -76,7 +74,6 @@ public class HttpServer {
 
         }
 
-        
 
     }
 

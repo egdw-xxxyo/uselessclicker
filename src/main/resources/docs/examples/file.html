@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File</title>
+</head>
+<body>
+<p><strong>Работа с файлами</strong></p>
+<p>Для работы с файлами необходимо использовать тип "'java.io.File". Так же, программа включает в себя поддержку библиотеки "apache.commons.io", которая упростит работу с файлами.&nbsp;</p>
+<pre><code>var File = Java.type('java.io.File');
+var FileUtils = Java.type('org.apache.commons.io.FileUtils');
+
+var myFile = new File('helloWorld.txt');
+
+system.println('Is file exist? - ' + myFile.exists());
+system.println('');
+
+if(!myFile.exists()){
+    FileUtils.write(myFile,'Hello world','UTF-8');
+}
+
+system.println('file content:');
+system.println(FileUtils.readFileToString(myFile,'UTF-8'));
+</code></pre>
+<p><a href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html">File</a>,<a href="https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/FileUtils.html">FileUtils</a></p>
+</body>
+</html>

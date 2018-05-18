@@ -1,16 +1,19 @@
 package org.dikhim.jclicker.jsengine.objects;
 
+import javafx.application.Platform;
+import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
-import java.awt.*;
 
 @SuppressWarnings("unused")
 public class JsSystemObject implements SystemObject {
     private JSEngine engine;
     private Robot robot;
+    private final Object monitor;
 
     private final float MULTIPLIER = 1;
 
@@ -19,35 +22,64 @@ public class JsSystemObject implements SystemObject {
     public JsSystemObject(JSEngine engine) {
         this.engine = engine;
         this.robot = engine.getRobot();
+        this.monitor = robot.getMonitor();
     }
 
     public JsSystemObject(Robot robot) {
         this.robot = robot;
+        this.monitor = robot.getMonitor();
     }
 
+    @Override
+    public void exit() {
+        Platform.exit();
+    }
+
+    @Override
     public int getMultipliedDelay(int ms) {
-        int result = ((int) (ms * multiplier));
-        if (result <= 0) {
-            return 0;
-        } else {
-            return result;
+        synchronized (monitor) {
+            int result = ((int) (ms * multiplier));
+            if (result <= 0) {
+                return 0;
+            } else {
+                return result;
+            }
         }
     }
 
+    @Override
     public float getMultiplier() {
-        return multiplier;
+        synchronized (monitor) {
+            return multiplier;
+        }
     }
 
+    @Override
     public float getSpeed() {
-        return 1f / multiplier;
+        synchronized (monitor) {
+            return 1f / multiplier;
+        }
     }
 
+    @Override
     public void print(String s) {
-        Out.print(s);
+        synchronized (monitor) {
+            Out.print(s);
+        }
     }
 
+    @Override
+    public void println() {
+        synchronized (monitor) {
+            Out.println("");
+        }
+    }
+
+    @Override
     public void println(String s) {
-        Out.println(s);
+        synchronized (monitor) {
+            Out.println(s);
+        }
     }
 
     /**
@@ -56,26 +88,37 @@ public class JsSystemObject implements SystemObject {
      * @param function name of function
      * @param shortcut list of names of keys
      */
-
+    @Override
     public void registerShortcut(String shortcut, String function) {
-        ShortcutEqualsListener handler = new ShortcutEqualsListener("script." + function,
-                shortcut, "PRESS", (e) -> engine.addTask(() -> engine.invokeFunction(function)));
-        KeyEventsManager.getInstance().addKeyboardListener(handler);
+        synchronized (monitor) {
+            ShortcutEqualsListener handler = new ShortcutEqualsListener("script." + function,
+                    shortcut, "PRESS", (e) -> engine.addTask(() -> engine.invokeFunction(function)));
+            KeyEventsManager.getInstance().addKeyboardListener(handler);
+        }
     }
 
+    @Override
     public void resetMultiplier() {
-        this.multiplier = MULTIPLIER;
+        synchronized (monitor) {
+            this.multiplier = MULTIPLIER;
+        }
     }
 
-
+    @Override
     public void resetSpeed() {
-        this.multiplier = MULTIPLIER;
+        synchronized (monitor) {
+            this.multiplier = MULTIPLIER;
+        }
     }
 
+    @Override
     public void setMultiplier(float multiplier) {
-        this.multiplier = multiplier;
+        synchronized (monitor) {
+            this.multiplier = multiplier;
+        }
     }
 
+    @Override
     public void sleep(int ms) {
         if (ms <= 0) return;
         try {
@@ -84,15 +127,10 @@ public class JsSystemObject implements SystemObject {
         }
     }
 
-    public void sleepNonMultiplied(int ms) {
-        if (ms <= 0) return;
-        try {
-            Thread.sleep(ms);
-        } catch (InterruptedException e) {
-        }
-    }
-
+    @Override
     public void setSpeed(float multiplier) {
-        this.multiplier = 1f / multiplier;
+        synchronized (monitor) {
+            this.multiplier = 1f / multiplier;
+        }
     }
 }
