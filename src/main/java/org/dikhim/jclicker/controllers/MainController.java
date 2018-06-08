@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,11 +18,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
+import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
@@ -41,13 +44,15 @@ import org.dikhim.jclicker.util.Out;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
-public class MainController {
+public class MainController implements Initializable {
 
     private Clicker application = Clicker.getApplication();
 
@@ -68,8 +73,11 @@ public class MainController {
     private EventsRecorder eventsRecorder;
     private MainConfiguration config;
 
+
+    private ResourceBundle resources;
     @FXML
-    private void initialize() {
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resources = resources;
         config = mainApplication.getConfig();
         // init text areas
         codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
@@ -80,11 +88,11 @@ public class MainController {
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
-        eventsRecorder= new EventsRecorder(config,codeTextArea);
+        eventsRecorder = new EventsRecorder(config, codeTextArea);
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile();
 
-        InputStream txtReader = getClass().getResourceAsStream("/strings/codesamples_ru.txt");
+        InputStream txtReader = getClass().getResourceAsStream("/i18n/"+resources.getString("codesamples"));
         try {
             propertyFile.setSource(IOUtils.toString(txtReader, "UTF-8"));
         } catch (IOException e) {
@@ -103,7 +111,6 @@ public class MainController {
 
     private void bindConfig() {
         StringConverter<Number> stringConverter = Converters.getStringToNumberConvertor();
-        
 
 
         Combined combined = config.getRecordingParams().getCombined();
@@ -241,72 +248,22 @@ public class MainController {
 
     @FXML
     public void showServerWindow() {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/ui/server/ServerScene.fxml"));
-
-            
-            Stage stage = new Stage();
-            
-            stage.setTitle("Сервер");
-            stage.setScene(new Scene(root, 600, 200));
-            stage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/server.png")));
-            stage.show();
-        } catch (IOException e) {
-            Out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        WindowManager.getInstance().showStage("server");
     }
 
     @FXML
     public void showConfigWindow() {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/ui/config/ConfigScene.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Настройки");
-            stage.setScene(new Scene(root, 800, 400));
-            stage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/config.png")));
-            stage.show();
-        } catch (IOException e) {
-            Out.println(e.getMessage());
-            e.printStackTrace();
-        }
+        WindowManager.getInstance().showStage("settings");
     }
 
     @FXML
     public void showAboutWindow() {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/ui/main/AboutScene.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("О программе");
-            stage.setScene(new Scene(root, 600, 400));
-            stage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/info.png")));
-            stage.show();
-        } catch (IOException e) {
-            Out.println(e.getMessage());
-            e.printStackTrace();
-        }
-    }@FXML
-    public void showHelpWindow() {
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/ui/main/HelpScene.fxml"));
-            Stage stage = new Stage();
-                stage.setTitle("Помощь");
-            stage.setScene(new Scene(root, 600, 400));
-            stage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/info.png")));
-            stage.show();
-        } catch (IOException e) {
-            Out.println(e.getMessage());
+        WindowManager.getInstance().showStage("about");
+    }
 
-            e.printStackTrace();
-        }
+    @FXML
+    public void showHelpWindow() {
+        WindowManager.getInstance().showStage("help");
     }
 
     ////// Toggles
@@ -509,7 +466,7 @@ public class MainController {
     private void setToggleStatus(ToggleButton toggle) {
         if (toggle == null) {
             if (btnTogglesStatus.getUserData() == null) {
-                    btnTogglesStatus.setText("...");
+                btnTogglesStatus.setText("...");
                 btnTogglesStatus.setUserData(null);
                 return;
             }
@@ -933,7 +890,7 @@ public class MainController {
 
 
     private void createHotkeys() {
-      
+
         HotKeys hotKeys = config.getHotKeys();
 
         KeyEventsManager keyListener = KeyEventsManager.getInstance();

@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -10,8 +11,12 @@ import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ConfigController {
+public class SettingsController implements Initializable {
+    private ResourceBundle resourceBundle;
+    
     @FXML
     public Button resetBtn;
 
@@ -36,7 +41,9 @@ public class ConfigController {
     void showHotkeys(ActionEvent event) {
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/ui/config/HotkeysScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/config/HotkeysScene.fxml"));
+            loader.setResources(resourceBundle);
+            root = loader.load();
 
             rightPane.setContent(root);
         } catch (IOException e) {
@@ -57,4 +64,8 @@ public class ConfigController {
     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        this.resourceBundle = resources;
+    }
 }

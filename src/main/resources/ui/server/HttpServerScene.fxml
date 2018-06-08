@@ -22,7 +22,7 @@
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <Label text="Port">
+      <Label text="%port">
          <font>
             <Font name="Free Monospaced Bold" size="13.0" />
          </font>
@@ -30,7 +30,7 @@
             <Insets left="5.0" />
          </GridPane.margin>
       </Label>
-      <Label text="Status" GridPane.rowIndex="1">
+      <Label text="%status" GridPane.rowIndex="1">
          <font>
             <Font name="Free Monospaced Bold" size="13.0" />
          </font>
@@ -38,12 +38,12 @@
             <Insets left="5.0" />
          </GridPane.margin>
       </Label>
-      <Button fx:id="btnStartServer" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startServer" text="Start server" GridPane.rowIndex="2">
+      <Button fx:id="btnStartServer" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#startServer" text="%startServer" GridPane.rowIndex="2">
          <font>
             <Font name="Free Monospaced Bold" size="13.0" />
          </font>
       </Button>
-      <Button fx:id="btnStopServer" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopServer" text="Stop server" GridPane.rowIndex="3">
+      <Button fx:id="btnStopServer" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#stopServer" text="%stopServer" GridPane.rowIndex="3">
          <font>
             <Font name="Free Monospaced Bold" size="13.0" />
          </font>

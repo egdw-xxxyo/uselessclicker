@@ -17,6 +17,8 @@ import org.jnativehook.NativeHookException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,27 +37,29 @@ public class Clicker extends Application {
         mainApplication = new MainApplication();
         application = this;
         this.primaryStage = primaryStage;
-        
-        if(cli.isGuiApplication()){            
+
+        if (cli.isGuiApplication()) {
+            String language = mainApplication.getConfig().getLocalization().getApplicationLanguage().get();
+            WindowManager.initialization(new HashMap<>(), new Locale(language));
             loadMainScene();
         }
         Out.addPrintMethod(System.out::print);
-        
-        if(cli.isOpenFile()){
+
+        if (cli.isOpenFile()) {
             mainApplication.openFile(cli.getFile());
         }
-        
-        if(cli.isRunFile()){
+
+        if (cli.isRunFile()) {
             mainApplication.openFile(cli.getFile());
             mainApplication.runScript();
         }
-        
-        if(cli.isRunHttpServer()){
+
+        if (cli.isRunHttpServer()) {
             mainApplication.getHttpServer().setPort(cli.getHttpPort());
             mainApplication.getHttpServer().start();
         }
 
-        if(cli.isRunSocketServer()){
+        if (cli.isRunSocketServer()) {
             mainApplication.getSocketServer().setPort(cli.getSocketPort());
             mainApplication.getSocketServer().start();
         }
@@ -63,30 +67,22 @@ public class Clicker extends Application {
         if (cli.isEventRecording()) {
             jNativeHookStart();
         }
-        
+
     }
 
     @Override
     public void stop() throws Exception {
         mainApplication.stop();
-        if(cli.isEventRecording()){
+        if (cli.isEventRecording()) {
             jNativeHookStop();
         }
         super.stop();
     }
 
     private void loadMainScene() {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/ui/main/MainScene.fxml"));
-            primaryStage.getIcons().add(new Image(
-                    getClass().getResourceAsStream("/images/cursor.png")));
-            primaryStage.setScene(new Scene(root, 800, 600));
-
-            primaryStage.titleProperty().bindBidirectional(mainApplication.titleProperty());
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Stage stage = WindowManager.getInstance().getStage("main");
+        stage.titleProperty().bindBidirectional(mainApplication.titleProperty());
+        stage.show();
     }
 
     /**
@@ -113,13 +109,13 @@ public class Clicker extends Application {
             GlobalScreen.addNativeMouseMotionListener(mouseListener);
             GlobalScreen.addNativeMouseWheelListener(mouseListener);
             KeyEventsManager keyListener = KeyEventsManager.getInstance();
-            GlobalScreen.addNativeKeyListener(keyListener); 
+            GlobalScreen.addNativeKeyListener(keyListener);
             System.setOut(oldOut);
         } catch (NativeHookException e) {
             System.setOut(oldOut);
             Out.println("Cannot create keyboard/mouse recording object");
             Out.println("Recording events won't be available");
-        }       
+        }
     }
 
     private void jNativeHookStop() {

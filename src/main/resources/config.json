@@ -18,12 +18,11 @@
     }
   },
   "localization": {
-    "defaultLanguage": "en",
-    "selectedLanguage": "ru_RU",
+    "applicationLanguage": "en",
     "languages": {
       "Russian": {
         "nativeName": "Русский",
-        "id": "ru_RU"
+        "id": "ru"
       },
       "English": {
         "nativeName": "English",

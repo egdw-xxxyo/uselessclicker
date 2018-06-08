@@ -13,7 +13,7 @@
 
 <VBox id="root-pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.HotkeysController">
    <children>
-      <Label styleClass="header-label" text="УПРАВЛЕНИЕ СКРИПТОМ" />
+      <Label styleClass="header-label" text="%hotkeys.scriptManagement" />
       <Separator />
       <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
         <columnConstraints>
@@ -27,8 +27,8 @@
           <RowConstraints vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label styleClass="common-label" text="Запустить скрипт" GridPane.rowIndex="1" />
-            <Label styleClass="common-label" text="Остановить скрипт" GridPane.rowIndex="2" />
+            <Label styleClass="common-label" text="%hotkeys.scriptManagement.runScript" GridPane.rowIndex="1" />
+            <Label styleClass="common-label" text="%hotkeys.scriptManagement.stopScript" GridPane.rowIndex="2" />
             <TextField fx:id="runScriptTxt" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
@@ -44,7 +44,7 @@
                </styleClass></TextField>
          </children>
       </GridPane>
-      <Label styleClass="header-label" text="ЗАХВАТ МЫШИ" />
+      <Label styleClass="header-label" text="%hotkeys.mouseRecording" />
       <Separator />
       <GridPane layoutX="10.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
          <columnConstraints>
@@ -57,7 +57,7 @@
             <RowConstraints vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label styleClass="common-label" text="Контрольная клавиша/сочетание клавишь" />
+            <Label styleClass="common-label" text="%hotkeys.mouseRecording.controlKey" />
             <TextField fx:id="mouseControlTxt" GridPane.columnIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
@@ -65,7 +65,7 @@
                </styleClass></TextField>
          </children>
       </GridPane>
-      <Label layoutX="10.0" layoutY="89.0" styleClass="header-label" text="ЗАХВАТ МЫШЬ+КЛАВИАТУРА" />
+      <Label layoutX="10.0" layoutY="89.0" styleClass="header-label" text="%hotkeys.combinedRecording" />
       <Separator layoutX="10.0" layoutY="105.0" />
       <GridPane layoutX="10.0" layoutY="108.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
          <columnConstraints>
@@ -78,7 +78,7 @@
             <RowConstraints vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Label styleClass="common-label" text="Контрольная клавиша/сочетание клавишь" />
+            <Label styleClass="common-label" text="%hotkeys.combinedRecording.controlKey" />
             <TextField fx:id="combinedControlTxt" GridPane.columnIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />

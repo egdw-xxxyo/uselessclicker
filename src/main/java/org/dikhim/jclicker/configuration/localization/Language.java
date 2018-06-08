@@ -6,6 +6,7 @@ import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
 public class Language {
+    private String path;
     private String name;
 
     private Preferences preferences;
@@ -13,7 +14,8 @@ public class Language {
     private StringValue nativeName;
     private StringValue id;
 
-    public Language(JsonObject jsonObject, String name) {
+    public Language(JsonObject jsonObject,String path, String name) {
+        this.path = path;
         this.name = name;
         preferences = Preferences.userRoot().node(name);
         loadDefault(jsonObject);
@@ -52,5 +54,9 @@ public class Language {
 
     public StringValue getNativeName() {
         return nativeName;
+    }
+
+    public String getPath() {
+        return path;
     }
 }

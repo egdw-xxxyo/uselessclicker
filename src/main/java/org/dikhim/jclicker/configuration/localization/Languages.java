@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Languages {
-
-
+    private String path;
     private String name;
-    private Preferences preferences;
-    private final List<Language> langugeList = new ArrayList<>();
 
-    public Languages(JsonObject jsonObject, String name) {
+    private Preferences preferences;
+    private final List<Language> languages = new ArrayList<>();
+
+    public Languages(JsonObject jsonObject, String path, String name) {
+        this.path = path;
         this.name = name;
         preferences = Preferences.userRoot().node(name);
         loadDefault(jsonObject);
@@ -20,19 +21,19 @@ public class Languages {
 
     private void loadDefault(JsonObject jsonObject) {
         jsonObject.keySet().forEach(key ->
-                langugeList.add(new Language(jsonObject.getJsonObject(key), name + "/" + key)));
+                languages.add(new Language(jsonObject.getJsonObject(key), path + "/" + key, key)));
     }
 
     public void setDefault() {
-        langugeList.forEach(Language::setDefault);
+        languages.forEach(Language::setDefault);
     }
 
     public void save() {
-        langugeList.forEach(Language::save);
+        languages.forEach(Language::save);
     }
 
     public void loadOrSetDefault() {
-        langugeList.forEach(Language::loadOrSetDefault);
+        languages.forEach(Language::loadOrSetDefault);
     }
 
     //
@@ -41,6 +42,10 @@ public class Languages {
     }
 
     public List<Language> getLanguageList() {
-        return langugeList;
+        return languages;
+    }
+
+    public String getPath() {
+        return path;
     }
 }
