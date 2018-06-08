@@ -14,24 +14,24 @@
 $btnInsertKeyName:
 Inserts key names
   
-Пример:
+Example:
   CONTROL ALT DELETE
 will be inserted after pressing corresponding keys
 
 $btnInsertKeyCode:
-Вставляет код для событий нажатия и отпускания клавиш
+Inserts a code for press and release key events
   
-Пример:
+Example:
   key.press('CONTROL');
   key.press('С');
   key.release('С');
   key.release('CONTROL');
-будет вставлено при нажатии и отпускании двух клавиш "CONTROL C"
+will be inserted after pressing corresponding keys "CONTROL C"
 
 $btnInsertKeyCodeWithDelay:
-Вставляет код для событий нажатия и отпускания клавиш с задержками между событиями
+Inserts a code for events of pressing and releasing keys with delays between events
   
-Пример:
+Example:
   system.sleep(200);
   key.press('CONTROL');
   system.sleep(100);
@@ -40,179 +40,122 @@ $btnInsertKeyCodeWithDelay:
   key.release('С');
   system.sleep(200);
   key.release('CONTROL');
-будет вставлено при нажатии и отпускании двух клавиш "CONTROL C"
+will be inserted after pressing corresponding keys "CONTROL C"
 
 /////////////////////////////////////
 //Mouse basics///////////////////////
 /////////////////////////////////////
 $btnInsertMouseName:
-Вставляет имена нажатых клавиш мыши
+Inserts pressed button names
   
-Пример:
+Example:
   LEFT MIDDLE RIGHT
-будет вставлено при нажатии соответсвующих клавиш
+will be inserted after pressing corresponding buttons
 
 $btnInsertMouseClick:
-Вставляет код для клика соответсвующией клавиши мыши
+Inserts a code of click
   
-Пример:
+Example:
   mouse.click('LEFT');
   mouse.click('RIGHT');
-будет вставлено при клике левой и правой клавишей миши
+will be inserted after clicking corresponding buttons
 
 $btnInsertMouseClickAt:
-Вставляет код для клика соответсвующей клавиши мыши в определенной точке
+Inserts a code of click at a particular point
   
-Пример:
+Example:
   mouse.clickAt('LEFT',500,500);
   mouse.clickAt('RIGHT',600,600);
-будет вставлено при клике левой и правой клавишей миши
+will be inserted after clicking buttons
 
 $btnInsertMouseMove:
-Вставляет код для относительного движения курсора
+Inserts a code of relative mouse movement
   
-Пример:
+Example:
   mouse.move(100,-50);
-будет вставлено при перемещении курсора
+wil be inserted after moving mouse
 
 $btnInsertMouseMoveTo:
-Вставляет код для перемещения курсора в указанную точку
+Inserts a code of mouse movement at particular point
   
-Пример:
+Example:
   mouse.moveTo(200,200);
-будет вставлено при клике в указанной точке
+will be inserted after moving cursor at the particular point
 
 $btnInsertMousePress:
-Вставляет код для нажатия соответствующей клавиши мыши
+Inserts a code of pressed mouse buttons
   
-Пример:
+Example:
   mouse.press('LEFT');
-будет вставлено при нажатии левой клавиши миши
+  mouse.press('RIGHT');
+will be inserted after pressing corresponding buttons
 
 $btnInsertMousePressAt:
-Вставляет код для нажатия соответствующей клавиши мыши в указанной точке
+Inserts a code of pressed mouse buttons at the particular point
   
-Пример:
+Example:
   mouse.pressAt('LEFT',400,400);
-будет всталено при нажатии левой клавиши мыши в указанной точке
+will be inserted after pressing corresponding button at the particular point
 
 $btnInsertMouseRelease:
-Вставляет код для отпускания соответствующей клавиши мыши
+Inserts a code of released mouse buttons
   
-Пример:
+Example:
   mouse.release('LEFT');
-будет вставлено при отпускании левой клавиши мыши
+will be inserted after releasing corresponding buttons
 
 $btnInsertMouseReleaseAt:
-Вставляет код для отпускания соответствующей клавиши мыши в указанной точке
+Inserts a code of released mouse buttons at the particular point
   
-Пример:
+Example:
   mouse.releaseAt('LEFT',400,400);
-будет всталено при отпускании левой клавиши мыши в указанной точке
+will be inserted after releasing corresponding button at the particular point
 
 /////////////////////////////////////
 //Mouse//////////////////////////////
 /////////////////////////////////////
 $btnInsertMouseCode:
-Вставляет код для нажатия и отпускания клавиш мыши
+Inserts a code of pressed and released mouse buttons
   
-Пример:
+Example:
   mouse.pressAt('LEFT',100,0);
   mouse.releaseAt('LEFT',200,0);
-будет всталено при нажатии левой клавиши мыши перемещении курсора и отпускании клавиши
+will be inserted after pressing and releasing corresponding button
 
 $btnInsertMouseCodeWithDelay:
-Вставляет код для нажатия и отпускания клавиш мыши с задержками между событиями
+Inserts a code of pressed and released mouse buttons with delays between events
   
-Пример:
+Example:
   system.sleep(200);
   mouse.pressAt('LEFT',100,0);
   system.sleep(200);
   mouse.releaseAt('LEFT',200,0);
   system.sleep(500);
-будет всталено при нажатии левой клавиши мыши перемещении курсора и отпускании клавиши
+will be inserted after pressing and releasing corresponding button
 
 $btnInsertMouseRelativeCode:
-Вставляет код для нажатия и отпускания клавиш мыши относительно прошлого события
+Inserts a code of pressed and releases buttons relative to the last one
   
-Пример:
+Example:
   mouse.moveAndPress('LEFT',50,0);
   mouse.moveAndRelease('LEFT',0,0);
-будет вставлено при перемещении курсора вправо на 50 пикселей, нажатия и отпускания левой клавиши мыши в той же точке
+will be inserted when the cursor is moved to the right by 50 pixels, pressing and releasing the left mouse button at the same point
 
 $btnInsertMouseWheel:
-Вставляет код для поворота колесика мыши
+Inserts a code of a mouse wheel
   
-Пример:
+Example:
   mouse.wheel('UP',3);
-будет вставлено при повороте колесика вверх
+will be inserted after rotating a mouse wheel
 
 /////////////////////////////////////
 //click//////////////////////////////
 $btnInsertMouseCodeClick:
-Вставляет код для нажатия и отпускания клавиш мыши с распознаванием кликов
+Inserts a code of pressed and released mouse buttons with click detection
   
-Пример:
+Example:
   mouse.clickAt('LEFT',200,200);
-будет вставлено при клике левой клавишей мыши
-
-/////////////////////////////////////
-//Movement///////////////////////////
-$btnInsertAbsolutePath:
-Вставляет код для движения курсора по абсолютным координатам
-  
-Пример:
-  mouse.moveAbsolute('0101001001000'+
-  '11010001010111010100101101011110'+
-  '000111100011010101');
-
-$btnInsertAbsolutePathWithDelays:
-Вставляет код для движения курсора по абсолютным координатам с задержками между событиями
-  
-Пример:
-  mouse.moveAbsolute_D('01010010100'+
-  '11010001010111010100101101011010'+
-  '000111100011010101');
-
-$btnInsertAbsolutePathFixRate:
-Вставляет код для движения курсора по абсолютным координатам с задержками между событиями
-  
-Запись событий производится указанное количество раз в секунду
-  
-Позволяет сократить объем кода, но уменьшается качество записанного пути
-  
-Пример:
-  mouse.moveAbsolute_D('01010010100'+
-  '11010001010111010100101101011010'+
-  '000111100011010101');
-
-$btnInsertRelativePath:
-Вставляет код для движения курсора по относительным координатам
-  
-Пример:
-  mouse.moveRelative('0101001001000'+
-  '11010001010111010100101101011101'+
-  '000111100011010101');
-
-$btnInsertRelativePathWithDelays:
-Вставляет код для движения курсора по относительным координатам с задержками между событиями
-  
-Пример:
-  mouse.moveRelative_D('01010010100'+
-  '11010001010111010100101100110010'+
-  '000111100011010101');
-
-$btnInsertRelativePathFixRate:
-Вставляет код для движения курсора по относительным координатам с задержками между событиями
-  
-Запись событий производится указанное количество раз в секунду
-  
-Позволяет сократить объем кода, но уменьшается качество записанного пути
-  
-Пример:
-  mouse.moveRelative_D('01010010100'+
-  '11010001010111010100101100110010'+
-  '000111100011010101');
+will be inserted after clicking corresponding mouse button
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
@@ -221,28 +164,30 @@ $btnInsertRelativePathFixRate:
 ///COMBINED//////////////////////////
 /////////////////////////////////////
 $btnInsertCombinedLog:
-  Активрует запись событий клавиатуры и мыши
+  Activates keyboard and mouse events recording
   
-  Записанные события кодируются в текстовое представление
+  Recorded events encode into string representation
   
-  Запись начинается по отпусканию контрольной клавиши и останавливается по ее нажатию
-  Таким образом событие клавиши не попадает в лог
-  Можно использовать и сочетание клавиш, но надо учитывать, что в таком случае в лог событий попадут нажатия и отпускания контрольных клавиш
+  Recording begins after releasing a control key and stops after pressing one
+  Thus, the events of the control key aren't recorded
+  You can also use a combination of keys, but you have to take into account that in this case events of the control key will be recorded
   
-  В результат гарантированно попадают все события клавиатуры, кнопок и колесика мыши
-  Так же, в результат всегда добавляются события передвижения мыши предшествующие и следующие после этих событий
-  Остальные события передвижения мыши могут быть отфильтрованы дополнительными опциями
+  The result is guaranteed to include all events of the keyboard, buttons and mouse wheel
+  Also, the result is always included mouse movement events preceding and following these events
+  The remaining mouse movement events can be filtered by additional options
 
-Пример:
-  combined.run('A##D#A##D#A##D#');
+Example:
+  combined.run('unicode','A##D#A##D#A##D#');
 
 $btnCombinedKeys:
-  Включить запись событий клавиатуры
+  Activate keyboard events recording
+  
   k# - key.press(#)
   K# - key.release(#)
 
 $btnCombinedMouseButtons:
-  Включить запись событий клавишь мыши
+  Activate mouse button events recording
+  
   l - mouse.press('LEFT')
   L - mouse.release('LEFT')
   r - mouse.press('RIGHT')
@@ -251,43 +196,47 @@ $btnCombinedMouseButtons:
   M - mouse.release('MIDDLE')
 
 $btnCombinedMouseWheel:
-  Включить запись событий колесика мыши
+  Activate mouse wheel events recording
+  
   w# - mouse.wheel('DOWN',#)
   W# - mouse.wheel('UP',#)
 
 $btnCombinedAbsolutePath:
-  Включить запись движений мыши по абсолютным координатам
+  Activate mouse movement events recording in absolute coordinates
+  
   A#$ - mouse.moveTo(#,$)
 
 $btnCombinedRelativePath:
-  Включить запись движений мыши по относительным координатам
+  Activate mouse movement events recording in relative coordinates
+  
   X#$ - mouse.move(#,$)
 
 $btnCombinedDelays:
-  Включить запись задержек между событиями
+  Activate delays between events recording
+  
   D# - system.sleep(#)
   S# - system.sleep(#*1000)
 
 $btnCombinedFixRate:
-  Включить опцию записи с фиксированной частотой
+  Enable the fixed rate recording option 
   
-  Если включена данная опция, то события движения мыши будут "просеяны" таким образом, чтобы их количество в секунду не привышало заданного значения fixedRate
-  
-  Эта опция поможет сократить объем кода за счет уменьшения "качества" пути
+  If this option is enabled, the mouse motion events will be "sifted" so that their number per second does not exceed the fixedRate value
+    
+  This option will help reduce the amount of code by reducing the "quality" of the path
 
 $btnCombinedMinDistance:
-  Включить опцию запси с ограничением на минимальное расстояние
+  Enable the option with a minimum distance restriction
   
-  Если данная опция включена, то событие передвижения мыши не будет включено в результат если расстояние до предыдущего события меньше чем заданное значение minDistance
+  If this option is enabled, the mouse movement event won't be included in the result if the distance to the previous event is less than the specified minDistance value
   
-  Эта опция поможет сократить объем кода в случае, когда потребуется точно и медленно обвести некий контур
+  This option helps to reduce the amount of code in case you need to accurately and slowly draw a certain contour
 
 $btnCombinedDetectStopPoints:
-  Включить опцию дектектирования точек остановки с заданной задержкой stopTime
-  
-  Если эта опция включена, то в результат гарантирвоанно попадут все события передвижения мыши где курсор оставался на одном месте больше чем заданное количество времени
-  
-  Эта опция поможет исправить проблемы записи с опциями fixedRate и minDistance и быть уверенными, что важное событие не будет опущено
+  Enable the option to вуеусе stop points with the specified stopTime delay
+  
+  If this option is enabled, the result is guaranteed to get all mouse movement events where the cursor remained at one place more than the specified amount of time
+  
+  This option helps to fix the recording problems with the fixedRate and minDistance options and guarantees that the important event will not be omitted
 
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
@@ -301,12 +250,12 @@ $btnCombinedDetectStopPoints:
 /////////////////////////////////////
 $btnTemplateMouseClick:
 mouse.click('');
-Клик клавишей мыши
+A mouse button click
   
 mouse.click('BTN');
-   BTN - имя клавиши
+   BTN - button's name
   
-Метод состоит из двух вызовов нажатия и отпускания клавиши мыши:
+The method consists of two calls of pressing and releasing the button:
   press('BTN');
     sleep(pressDelay);
   release('BTN');
@@ -317,13 +266,13 @@ mouse.click('LEFT');
 
 $btnTemplateMouseClickAt:
 mouse.clickAt('',,);
-Клик клавишей мыши в укзанной точке
+The click the button at the particular point 
   
 mouse.clickAt('BTN',x,y);
-  BTN - имя клавиши
-  x,y - координаты
+  BTN - button's name
+  x,y - coordinates
   
-Метод состоит из двух вызовов нажатия и отпускания клавиши мыши:
+The method consists of two calls of pressing and releasing the button:
   pressAt('BTN',x,y);
     sleep(pressDelay);
   releaseAt('BTN',x,y);
@@ -334,7 +283,7 @@ mouse.clickAt('LEFT',0,0);
 
 $btnTemplateMouseGetMoveDelay:
 mouse.getMoveDelay();
-Получить задержку передвижения курсора мыши в мс. (moveDelay)
+Get the mouse movement delay in ms. (moveDelay)
   
   mouse.getMoveDelay():int
 
@@ -343,11 +292,11 @@ mouse.getMoveDelay();
 
 $btnTemplateMouseGetMultiplier:
 mouse.getMultiplier();
-Получить множитель задержек.
+Get the delay multiplier
   
-На данное число умножаются все задержки для объекта
-  
-Обратная величина к множителю скорости
+At this number, all delays for the object are multiplied
+  
+The reciprocal of the speed multiplier
   
   mouse.getMultiplier():float
 
@@ -356,7 +305,7 @@ mouse.getMultiplier();
 
 $btnTemplateMouseGetPressDelay:
 mouse.getPressDelay();
-Получить задержку нажатия клавиши мыши в мс. (pressDelay)
+Get the mouse button press delay in ms. (pressDelay)
   
   mouse.getPressDelay():int
 
@@ -366,7 +315,7 @@ mouse.getPressDelay();
 
 $btnTemplateMouseGetReleaseDelay:
 mouse.getReleaseDelay();
-Получить задержку отпускания клавиши мыши в мс. (releaseDelay)
+Get the mouse button release delay in ms. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
@@ -375,9 +324,9 @@ mouse.getReleaseDelay();
 
 $btnTemplateMouseGetSpeed:
 mouse.getSpeed();
-Получить множитель скорости
-  
-Обратная величина к множителю задержек
+Get the speed multiplier
+  
+The reciprocal of the delay multiplier
   
   mouse.getSpeed():float
 
@@ -386,7 +335,7 @@ mouse.getSpeed();
 
 $btnTemplateMouseGetWheelDelay:
 mouse.getWheelDelay();
-Получить задержку колеса мыши в мс. (wheelDelay)
+Get the mouse wheel delay in ms. (wheelDelay)
   
   mouse.getWheelDelay():int
 
@@ -395,74 +344,45 @@ mouse.getWheelDelay();
 
 $btnTemplateMouseGetX:
 mouse.getX();
-Получить координату 'x' последнего события мыши
+Get the 'x' coordinate of the last mouse event
   
   mouse.getX():int
-  
-Если после запуска программы курсор не перемещался и клавиши не нажимались возвращает: 0
 
 $btnTemplateMouseGetXCode:
 mouse.getX();
 
 $btnTemplateMouseGetY:
 mouse.getY();
-Получить координату 'y' последнего события мыши
+Get the 'x' coordinate of the last mouse event
   
   mouse.getY():int
-  
-Если после запуска программы курсор не перемещался и клавиши не нажимались возвращает: 0
 
 $btnTemplateMouseGetYCode:
 mouse.getY();
 
 $btnTemplateMouseMove:
 mouse.move(0,0);
-Передвинуть курсор относительно координат последнего события
+Move the cursor relative to the coordinates of the last event
   
-  mouse.move(x,y);
-    x, y - смещения
+  mouse.move(dx,dy);
+    dx, dy - offsets
   
-Метод состоит из:
-  move(x,y);
+Method consists of:
+  move(dx,dy);
     sleep(moveDelay);
 
 $btnTemplateMouseMoveCode:
 mouse.move(0,0);
 
-$btnTemplateMouseMoveAbsolute:
-mouse.moveAbsolute('');
-Код для движения курсора по заданному пути абсолютных координат
-  
-Состоит из групп символов юникода
-Каждый 1й символ - координата 'x'
-Каждый 2й символ - координата 'y'
-
-$btnTemplateMouseMoveAbsoluteCode:
-mouse.moveAbsolute('');
-
-$btnTemplateMouseMoveAbsolute_D:
-mouse.moveAbsolute_D('');
-Код для движения курсора по заданному пути абсолютных координат с задержками
-  
-Состоит из групп символов юникода
-Каждый 1й символ - координата 'x'
-Каждый 2й символ - координата 'y'
-Каждый 3й символ - значение задержки
-  
-Значение задержки не может быть более 20000мс
-
-$btnTemplateMouseMoveAbsolute_DCode:
-mouse.moveAbsolute_D('');
-
 $btnTemplateMouseMoveAndClick:
 mouse.moveAndClick('LEFT',0,0);
-Передвинуть курсор относительно координат последнего события и кликнуть
+Move the cursor relative to the coordinates of the last event and click the button
   
 mouse.moveAndClick('BTN',dx,dy);
-  BTN - имя клавиши
-  dx, dy - смещения
+  BTN - button's name
+  dx, dy - offsets
   
-Метод состоит из:
+Method consists of:
   move(dx,dy);
     sleep(moveDelay);
   press('BTN');
@@ -475,13 +395,13 @@ mouse.moveAndClick('LEFT',0,0);
 
 $btnTemplateMouseMoveAndPress:
 mouse.moveAndPress('LEFT',0,0);
-Передвинуть курсор относительно координат последнего события и нажать клавишу мыши
+Move the cursor relative to the coordinates of the last event and press the button
   
 mouse.moveAndPress('BTN',dx,dy);
-  BTN - имя клавиши
-  dx, dy - смещения
+  BTN - button's name
+  dx, dy - offsets
   
-Метод состоит из:
+Method consists of:
   move(dx,dy);
     sleep(moveDelay);
   press('BTN');
@@ -492,13 +412,13 @@ mouse.moveAndPress('LEFT',0,0);
 
 $btnTemplateMouseMoveAndRelease:
 mouse.moveAndRelease('LEFT',0,0);
-Передвинуть курсор относительно координат последнего события и отпустить клавишу мыши
+Move the cursor relative to the coordinates of the last event and release the button
   
 mouse.moveAndPress('BTN',dx,dy);
-  BTN - имя клавиши
-  dx, dy - смещения
+  BTN - button's name
+  dx, dy - offsets
   
-Метод состоит из:
+Method consists of:
   move(dx,dy);
     sleep(moveDelay);
   release('BTN');
@@ -509,15 +429,15 @@ mouse.moveAndRelease('LEFT',0,0);
 
 $btnTemplateMouseMoveAndWheel:
 mouse.moveAndWheel('DOWN',0,0,0);
-Передвинуть курсор относительно координат последнего события и прокруть колесо мыши
+Move the cursor relative to the coordinates of the last event and rotate the wheel
   
 mouse.moveAndWheel
   (direction, amount, dx, dy);
-  direction - направление UP/DOWN
-  amount - количество строк
-  dx, dy - смещения
+  direction - UP/DOWN
+  amount - an amount of lines
+  dx, dy - offsets
   
-Метод состоит из:
+Method consists of:
   move(dx,dy);
     sleep(moveDelay);
   wheel(direction,amount);
@@ -526,39 +446,14 @@ mouse.moveAndWheel
 $btnTemplateMouseMoveAndWheelCode:
 mouse.moveAndWheel('DOWN',0,0,0);
 
-$btnTemplateMouseMoveRelative:
-mouse.moveRelative('');
-Код для движения курсора по заданному пути относительных координат
-  
-Состоит из групп символов юникода
-Каждый 1й символ - смещение по 'x'
-Каждый 2й символ - смещение по 'y'
-
-$btnTemplateMouseMoveRelativeCode:
-mouse.moveRelative('');
-
-$btnTemplateMouseMoveRelative_D:
-mouse.moveRelative_D('');
-Код для движения курсора по заданному пути относительных координат с задержками
-  
-Состоит из групп символов юникода
-Каждый 1й символ - смещение по 'x'
-Каждый 2й символ - смещение по 'y'
-Каждый 3й символ - значение задержки
-  
-Значение задержки не может быть более 20000мс
-
-$btnTemplateMouseMoveRelative_DCode:
-mouse.moveRelative_D('');
-
 $btnTemplateMouseMoveTo:
 mouse.moveTo(0,0);
-Передвинуть курсор в указанную точку
+Move the cursor to the particular point
   
 mouse.moveTo(x,y);
-  x, y - координаты
+  x, y - coordinates
   
-Метод состоит из:
+Method consists of:
   moveTo(x,y);
     sleep(moveDelay);
 
@@ -567,12 +462,12 @@ mouse.moveTo(0,0);
 
 $btnTemplateMousePress:
 mouse.press('LEFT');
-Нажать клавишу мыши
+Press the mouse button
   
 mouse.press('BTN');
-  BTN - имя клавиши
+  BTN - button's name
   
-Метод состоит из:
+Method consists of:
   press('BTN');
     sleep(pressDelay);
 
@@ -581,13 +476,13 @@ mouse.press('LEFT');
 
 $btnTemplateMousePressAt:
 mouse.pressAt('LEFT',0,0);
-Передвинуть курсор в указанную точку и нажать клавишу мыши
+Move the cursor to the particular point and press the button
   
 mouse.pressAt('BTN',x,y);
-  BTN - имя клавиши
-  x, y - координаты
+  BTN - button's name
+  x, y - coordinates
   
-Метод состоит из:
+Method consists of:
   moveTo(x,y);
     sleep(moveDelay);
   press('BTN');
@@ -598,12 +493,12 @@ mouse.pressAt('LEFT',0,0);
 
 $btnTemplateMouseRelease:
 mouse.release('LEFT');
-Отпустить клавишу мыши
+Release the mouse button
   
 mouse.release('BTN');
-  BTN - имя клавиши
+  BTN - button's name
   
-Метод состоит из:
+Method consists of:
   press('BTN');
     sleep(pressDelay);
 
@@ -612,13 +507,13 @@ mouse.release('LEFT');
 
 $btnTemplateMouseReleaseAt:
 mouse.releaseAt('LEFT',0,0);
-Передвинуть курсор в указанную точку и отпустить клавишу мыши
+Move the cursor to the particular point and release the button
   
 mouse.releaseAt('BTN',x,y);
-  BTN - имя клавиши
-  x, y - координаты
+  BTN - button's name
+  x, y - coordinates
   
-Метод состоит из:
+Method consists of:
   moveTo(x,y);
     sleep(moveDelay);
   release('BTN');
@@ -629,28 +524,28 @@ mouse.releaseAt('LEFT',0,0);
 
 $btnTemplateMouseResetDelays:
 mouse.resetDelays();
-Сбросить все задержки к стандартному значению
+Reset all delays to default values
 
 $btnTemplateMouseResetDelaysCode:
 mouse.resetDelays();
 
 $btnTemplateMouseResetMultiplier:
 mouse.resetMultiplier();
-Сбросить множитель задержек к стандартному значению
+Reset the delay multiplier to a default value
 
 $btnTemplateMouseResetMultiplierCode:
 mouse.resetMultiplier();
 
 $btnTemplateMouseResetSpeed:
 mouse.resetSpeed();
-Сбросить множитель скорости к стандартному значению
+Reset the speed multiplier to a default value
 
 $btnTemplateMouseResetSpeedCode:
 mouse.resetSpeed();
 
 $btnTemplateMouseSetDelays:
 mouse.setDelays(10);
-Приствоить всем задержкам указанное значение
+Set all delays to the specified value
   
 mouse.setDelays(int delay)
 
@@ -659,20 +554,19 @@ mouse.setDelays(10);
 
 $btnTemplateMouseSetMoveDelay:
 mouse.setMoveDelay(10);
-Установить задержку передвижения
-курсора мыши в мс.
+Set the mouse movement delay to the specified value
   
 mouse.setMoveDelay(int moveDelay)
-  moveDelay - задержка
+  moveDelay - delay
 
 $btnTemplateMouseSetMoveDelayCode:
 mouse.setMoveDelay();
 
 $btnTemplateMouseSetMultiplier:
 mouse.setMultiplier(1);
-Установить множитель задержек
+Set the delay multiplier to the specified value
   
-Обратная величина к множителю скорости
+The reciprocal of the speed multiplier
   
 mouse.setMultiplier(float multiplier)
 
@@ -681,54 +575,51 @@ mouse.setMultiplier(1);
 
 $btnTemplateMouseSetPressDelay:
 mouse.setPressDelay(10);
-Установить задержку нажатия клавиши мыши в мс
+Set the press delay to the specified value
   
 mouse.setPressDelay(pressDelay)
-  int pressDelay - задержка
+  int pressDelay - delay
 
 $btnTemplateMouseSetPressDelayCode:
 mouse.setPressDelay(10);
 
 $btnTemplateMouseSetReleaseDelay:
 mouse.setReleaseDelay(10);
-Установить задержку отпускания клавиши мыши в мс.
+Set the release delay to the specified value
   
 mouse.setReleaseDelay(releaseDelay)
-  int releaseDelay - задержка
+  int releaseDelay - delay
 
 $btnTemplateMouseSetReleaseDelayCode:
 mouse.setReleaseDelay(10);
 
 $btnTemplateMouseSetSpeed:
 mouse.setSpeed(1);
-Установить множитель скорости
+Set the speed multiplier
   
-Обратная величина к множителю задержек
-  
-mouse.setSpeed(speed)
-  float speed - скорость
+The reciprocal of the delay multiplier
 
 $btnTemplateMouseSetSpeedCode:
 mouse.setSpeed(1);
 
 $btnTemplateMouseSetWheelDelay:
 mouse.setWheelDelay(10);
-Установить задержку колеса мыши в мс.
+Set the wheel delay to the specified value
   
 mouse.setWheelDelay(wheelDelay)
-  int wheelDelay - задержка
+  int wheelDelay - delay
 
 $btnTemplateMouseSetWheelDelayCode:
 mouse.setWheelDelay(10);
 
 $btnTemplateMouseSetX:
 mouse.setX(0);
-Передвинуть курсор мыши по оси 'x' в указанную координату
+Move the cursor along the 'x' axis to the specified coordinate
   
 mouse.setX(x);
-  int x - координата
+  int x - coordinate
   
-Метод состоит из:
+Method consists of:
   moveTo(x,getY());
     sleep(moveDelay);
 
@@ -737,12 +628,12 @@ mouse.setX(0);
 
 $btnTemplateMouseSetY:
 mouse.setY(0);
-Передвинуть курсор мыши по оси 'y' в указанную координату
+Move the cursor along the 'y' axis to the specified coordinate
   
 mouse.setY(y);
-  int y - координата
+  int y - coordinate
   
-Метод состоит из:
+Method consists of:
   moveTo(x,getY());
     sleep(moveDelay);
 
@@ -751,14 +642,13 @@ mouse.setY(0);
 
 $btnTemplateMouseWheel:
 mouse.wheel('DOWN',0);
-Прокрутить колесо мыши на указанное
-количество строк
+Rotate the mouse wheel on the specifies number of lines
   
 mouse.wheel(direction, amount);
-  direction - направление UP/DOWN
-  int amount - количество строк
+  direction - UP/DOWN
+  int amount - the number of lines
   
-Метод состоит из:
+Method consists of:
   wheel(direction, amount);
     sleep(wheelDelay);
 
@@ -767,17 +657,16 @@ mouse.wheel('DOWN',0);
 
 $btnTemplateMouseWheelAt:
 mouse.wheelAt('DOWN',0,0,0);
-Прокрутить колесо мыши на указанное количество строк
+Rotate the mouse wheel on the specifies number of lines at the particular point
   
 mouse.wheelAt
   (direction, amount, x, y);
   
-  direction - направление UP/DOWN
-  int amount - количество строк
-  int x - координата 'x'
-  int y - координата 'y'
+  direction - UP/DOWN
+  int amount - a number of lines
+  int x, y - coordinates
   
-Метод состоит из:
+Method consists of:
   moveTo(x,y);
     sleep(moveDelay);
   wheel(direction,amount);
@@ -796,11 +685,11 @@ mouse.wheelAt('DOWN',0,0,0);
 /////////////////////////////////////
 $btnTemplateKeyGetMultiplier:
 key.getMultiplier();
-Получить множитель задержек (multiplier)
+Get the delay multiplier
   
-На данное число умножаются все задержки
-  
-Обратная величина к множителю скорости
+At this number, all delays for the object are multiplied
+  
+The reciprocal of the speed multiplier
   
 key.getMultiplier():float
 
@@ -809,7 +698,7 @@ key.getMultiplier();
 
 $btnTemplateKeyGetPressDelay:
 key.getPressDelay();
-Получить задержку нажатия клавиши клавиатуры в мс. (pressDelay)
+Get the key press delay in ms. (pressDelay)
   
 key.getPressDelay():int
 
@@ -818,7 +707,7 @@ key.getPressDelay();
 
 $btnTemplateKeyGetReleaseDelay:
 key.getReleaseDelay();
-Получить задержку отпускания клавиши клавиатуры в мс. (releaseDelay)
+Get the mouse button release delay in ms. (releaseDelay)
   
 key.getReleaseDelay():int
 
@@ -827,9 +716,9 @@ key.getReleaseDelay();
 
 $btnTemplateKeyGetSpeed:
 mouse.getSpeed();
-Получить множитель скорости.
-  
-Обратная величина к множителю задержек
+Get the speed multiplier
+  
+The reciprocal of the delay multiplier
   
 key.getSpeed():float
 
@@ -838,22 +727,22 @@ key.getSpeed();
 
 $btnTemplateKeyIsPressed:
 key.isPressed('CONTROL');
-Узнать зажаты ли указанные клавиши клавиатуры
+Find out is the specified keys are pressed
   
 key.isPressed('KEY1 KEY2'):boolean
-  KEY1, KEY2 - имена клавиш через пробел
+  KEY1, KEY2 - key's names
 
 $btnTemplateKeyIsPressedCode:
 key.isPressed('CONTROL');
 
 $btnTemplateKeyPress:
 key.press('CONTROL');
-Нажать клавишу клавиатуры
+Press the specified key
   
 key.press('KEY');
-  KEY - имя клавиши
+  KEY - key's name
   
-Метод состоит из:
+Method consists of:
   press('KEY');
     sleep(pressDelay);
 
@@ -862,10 +751,10 @@ key.press('CONTROL');
 
 $btnTemplateKeyRelease:
 key.release('CONTROL');
-Отпустить клавишу клавиатуры
+Release the specified key
   
 key.release('KEY');
-  KEY - имя клавиши
+  KEY - key's name
   
 Метод состоит из:
   release('KEY');
@@ -876,34 +765,33 @@ key.release('CONTROL');
 
 $btnTemplateKeyResetDelays:
 key.resetDelays();
-Сбросить все задержки к стандартному значению
+Reset all delays to default values
 
 $btnTemplateKeyResetDelaysCode:
 key.resetDelays();
 
 $btnTemplateKeyResetMultiplier:
 key.resetMultiplier();
-Сбросить множитель задержек к стандартному значению
+Reset the delay multiplier to a default value
 
 $btnTemplateKeyResetMultiplierCode:
 key.resetMultiplier();
 
 $btnTemplateKeyResetSpeed:
 key.resetSpeed();
-Сбросить множитель скорости к стандартному значению
+Reset the speed multiplier to a default value
 
 $btnTemplateKeyResetSpeedCode:
 key.resetSpeed();
 
 $btnTemplateKeyType:
 key.type('CONTROL');
-Последовательно нажать и отпустить каждую укзанную клавишу
+Sequentially press and release each specified key
   
 key.release('KEY1 KEY2');
-  KEY1, KEY2 - имена клавиш через
-    пробел
+  KEY1, KEY2 - key's names
   
-Метод выполняет для каждой клавиши:
+Method consists of(fo each key):
   press('KEY');
     sleep(pressDelay);
   release('KEY');
@@ -914,7 +802,7 @@ key.type('CONTROL');
 
 $btnTemplateKeySetDelays:
 key.setDelays(10);
-Приствоить всем задержкам указанное значение
+Set all delays to the specified value
   
 key.setDelays(int delay)
 
@@ -923,9 +811,9 @@ key.setDelays(10);
 
 $btnTemplateKeySetMultiplier:
 key.setMultiplier(1);
-Установить множитель задержек
+Set the delay multiplier to the specified value
   
-Обратная величина к множителю скорости
+The reciprocal of the speed multiplier
   
 key.setMultiplier(float multiplier)
 
@@ -934,31 +822,29 @@ key.setMultiplier(1);
 
 $btnTemplateKeySetPressDelay:
 key.setPressDelay(10);
-Установить задержку нажатия клавиши клавиатуры в мс.
+Set the press delay to the specified value
   
 key.setPressDelay(pressDelay)
-  int pressDelay - задержка
+  int pressDelay - delay
 
 $btnTemplateKeySetPressDelayCode:
 key.setPressDelay(10);
 
 $btnTemplateKeySetReleaseDelay:
 key.setReleaseDelay(10);
-Установить задержку отпускания клавиши клавиатуры в мс.
+Set the release delay to the specified value
   
 key.setReleaseDelay(releaseDelay)
-  releaseDelay - задержка
+  releaseDelay - delay
 
 $btnTemplateKeySetReleaseDelayCode:
 key.setReleaseDelay(10);
 
 $btnTemplateKeySetSpeed:
 key.setSpeed(1);
-Установить множитель скорости
+Set the speed multiplier
   
-Обратная величина к множителю задержек
-
-key.setSpeed(float speed)
+The reciprocal of the delay multiplier
 
 $btnTemplateKeySetSpeedCode:
 key.setSpeed(1);
@@ -973,96 +859,95 @@ key.setSpeed(1);
 /////////////////////////////////////
 $btnTemplateSystemSleep:
 system.sleep(0);
-Приостановить скрипт на заданное время в мс.
+Pause script running on the specified amount of time in ms.
 
 system.sleep(ms);
-  ms - время в мс.
+  ms - time in ms.
 
 $btnTemplateSystemSleepCode:
 system.sleep(0);
 
 $btnTemplateSystemPrint:
 system.print('');
-Вывести сообщение в поле вывода
+Print the message
 
 $btnTemplateSystemPrintCode:
 system.print('');
 
 $btnTemplateSystemPrintln:
 system.println('');
-Вывести сообщение в поле вывода и перейти на новую строку
+Print the message and terminate the line
 
 $btnTemplateSystemPrintlnCode:
 system.println('');
 
 $btnTemplateSystemRegisterShortcut:
 system.registerShortcut('F1','foo');
-Зарегистрировать сочетание клавиш для вызова метода
+Register the keyboard shortcut for calling the method
   
 system.registerShortcut
-    ('BTN2 BTN2','FUNCT');
-  BTN1, BTN2 - имена клавиш через
-    пробел
-  FUNCT - имя вызываемого метода
+    ('KEY2 KEY2','METHOD');
+  KEY1, KEY2 - key's names
+  METHOD - method's name
 
 $btnTemplateSystemRegisterShortcutCode:
 system.registerShortcut('F1','foo');
 
 $btnTemplateSystemGetMultiplier:
 system.getMultiplier();
-Получить множитель задержек (multiplier)
+Get the delay multiplier
   
-На данное число умножаются все задержки
-  
-Обратная величина к множителю скорости
+At this number, all delays for the object are multiplied
+  
+The reciprocal of the speed multiplier
 
 $btnTemplateSystemGetMultiplierCode:
 system.getMultiplier();
 
 $btnTemplateSystemGetMultipliedDelay:
 system.getMultipliedDelay(delay);
-Получить значение задержки пермноженое на множитель задержек
+Get the multiplied delay
 
 $btnTemplateSystemGetMultipliedDelayCode:
 system.getMultipliedDelay(delay);
 
 $btnTemplateSystemGetSpeed:
 system.getSpeed();
-Получить значение параметра скорости
-  
-Обратная величина к множителю задержек
+Get the speed multiplier
+  
+The reciprocal of the delay multiplier
 
 $btnTemplateSystemGetSpeedCode:
 system.getSpeed();
 
 $btnTemplateSystemResetMultiplier:
 system.resetMultiplier();
-  Сбросить множитель задержек к стандартному значению
+  Reset the delay multiplier to a default value
 
 $btnTemplateSystemResetMultiplierCode:
 system.resetMultiplier();
 
 $btnTemplateSystemResetSpeed:
 system.resetSpeed();
-Сбросить множитель скорости к стандартному значению
+Reset the speed multiplier to a default value
 
 $btnTemplateSystemResetSpeedCode:
 system.resetSpeed();
 
 $btnTemplateSystemSetMultiplier:
 system.setMultiplier(1);
-Установить множитель задержек
+Set the delay multiplier to the specified value
   
-Обратная величина к множителю скорости
+The reciprocal of the speed multiplier
 
 $btnTemplateSystemSetMultiplierCode:
 system.setMultiplier(1);
 
 $btnTemplateSystemSetSpeed:
 system.setSpeed(1);
-Установить множитель скорости
+Set the speed multiplier
   
-Обратная величина к множителю задержек
+The reciprocal of the delay multiplier
 
 $btnTemplateSystemSetMultiplierCode:
 system.setSpeed(1);
@@ -1077,82 +962,82 @@ system.setSpeed(1);
 /////////////////////////////////////
 $btnTemplateLanguageClass:
 function Class (path) {
-  this.path = path;
-  this.echo = function(text){
-    return text;
-  };
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
 }
-Шаблон класса с именем 'Class'
+The template for the class with the name 'Class'
   
-Для создания объекта используйте конструкцию типа:
+To create an object use the code:
   var obj = new Class('MyClass');
   
-Обращение к полю объекта:
+To get the field from object:
   var out = obj.path;
   
-Обращение к методу объекта:
+To call a method from object:
   var out = obj.echo('someText');
 
 $btnTemplateLanguageClassCode:
 function Class (path) {
-  this.path = path;
-  this.echo = function(text){
-    return text;
-  };
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
 }
 
 $btnTemplateLanguageFunctionEcho:
 function echo(text){
-  return text;
+    return text;
 }
-Шаблон функции сполучением и возвратом значения
+The template of a function with a returning value
 
 $btnTemplateLanguageFunctionEchoCode:
 function echo(text){
-  return text;
+    return text;
 }
 
 $btnTemplateLanguageFunctionVoid:
 function foo(){
-  
+    
 }
-Шаблон пустой функции
+The template for an empty function
 
 $btnTemplateLanguageFunctionVoidCode:
 function foo(){
-  
+    
 }
 
 $btnTemplateLanguageLoopForPlus:
 for(i=0;i<10;i++){
-  
+    
 }
-Шаблон возрастающего цикла 'for'
+The template for an increasing loop 'for'
 
 $btnTemplateLanguageLoopForPlusCode:
 for(i=0;i<10;i++){
-  
+    
 }
 
 $btnTemplateLanguageLoopForMinus:
 for(i=10;i>0;i--){
-  
+    
 }
-Шаблон убывающего цикла 'for'
+The template for a decreasing loop 'for'
 
 $btnTemplateLanguageLoopForMinusCode:
 for(i=10;i>0;i--){
-  
+    
 }
 
 $btnTemplateLanguageLoopWhile:
 while(true){
-  
+    
 }
-Шаблон цикла 'while'
+The template for a loop 'while'
 
 $btnTemplateLanguageLoopWhileCode:
 while(true){
-  
+    
 }
 

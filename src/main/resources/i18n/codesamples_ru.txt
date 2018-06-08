@@ -80,14 +80,15 @@ $btnInsertMouseMoveTo:
   
 Пример:
   mouse.moveTo(200,200);
-будет вставлено при клике в указанной точке
+будет вставлено при перемещении мыши в указанную точку
 
 $btnInsertMousePress:
-Вставляет код для нажатия соответствующей клавиши мыши
+Вставляет код для нажатия кнопок мыши
   
 Пример:
   mouse.press('LEFT');
-будет вставлено при нажатии левой клавиши миши
+  mouse.press('RIGHT');
+будет вставлено при нажатии соответсвующих кнопок мыши
 
 $btnInsertMousePressAt:
 Вставляет код для нажатия соответствующей клавиши мыши в указанной точке
@@ -157,64 +158,6 @@ $btnInsertMouseCodeClick:
 будет вставлено при клике левой клавишей мыши
 
 /////////////////////////////////////
-//Movement///////////////////////////
-$btnInsertAbsolutePath:
-Вставляет код для движения курсора по абсолютным координатам
-  
-Пример:
-  mouse.moveAbsolute('0101001001000'+
-  '11010001010111010100101101011110'+
-  '000111100011010101');
-
-$btnInsertAbsolutePathWithDelays:
-Вставляет код для движения курсора по абсолютным координатам с задержками между событиями
-  
-Пример:
-  mouse.moveAbsolute_D('01010010100'+
-  '11010001010111010100101101011010'+
-  '000111100011010101');
-
-$btnInsertAbsolutePathFixRate:
-Вставляет код для движения курсора по абсолютным координатам с задержками между событиями
-  
-Запись событий производится указанное количество раз в секунду
-  
-Позволяет сократить объем кода, но уменьшается качество записанного пути
-  
-Пример:
-  mouse.moveAbsolute_D('01010010100'+
-  '11010001010111010100101101011010'+
-  '000111100011010101');
-
-$btnInsertRelativePath:
-Вставляет код для движения курсора по относительным координатам
-  
-Пример:
-  mouse.moveRelative('0101001001000'+
-  '11010001010111010100101101011101'+
-  '000111100011010101');
-
-$btnInsertRelativePathWithDelays:
-Вставляет код для движения курсора по относительным координатам с задержками между событиями
-  
-Пример:
-  mouse.moveRelative_D('01010010100'+
-  '11010001010111010100101100110010'+
-  '000111100011010101');
-
-$btnInsertRelativePathFixRate:
-Вставляет код для движения курсора по относительным координатам с задержками между событиями
-  
-Запись событий производится указанное количество раз в секунду
-  
-Позволяет сократить объем кода, но уменьшается качество записанного пути
-  
-Пример:
-  mouse.moveRelative_D('01010010100'+
-  '11010001010111010100101100110010'+
-  '000111100011010101');
-
-/////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ///RECORDING/////////////////////////
@@ -234,7 +177,7 @@ $btnInsertCombinedLog:
   Остальные события передвижения мыши могут быть отфильтрованы дополнительными опциями
 
 Пример:
-  combined.run('A##D#A##D#A##D#');
+  combined.run('unicode','A##D#A##D#A##D#');
 
 $btnCombinedKeys:
   Включить запись событий клавиатуры
@@ -283,7 +226,7 @@ $btnCombinedMinDistance:
   Эта опция поможет сократить объем кода в случае, когда потребуется точно и медленно обвести некий контур
 
 $btnCombinedDetectStopPoints:
-  Включить опцию дектектирования точек остановки с заданной задержкой stopTime
+  Включить опцию декектирования точек остановки с заданной задержкой stopTime
   
   Если эта опция включена, то в результат гарантирвоанно попадут все события передвижения мыши где курсор оставался на одном месте больше чем заданное количество времени
   
@@ -1077,10 +1020,10 @@ system.setSpeed(1);
 /////////////////////////////////////
 $btnTemplateLanguageClass:
 function Class (path) {
-  this.path = path;
-  this.echo = function(text){
-    return text;
-  };
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
 }
 Шаблон класса с именем 'Class'
   
@@ -1095,64 +1038,64 @@ function Class (path) {
 
 $btnTemplateLanguageClassCode:
 function Class (path) {
-  this.path = path;
-  this.echo = function(text){
-    return text;
-  };
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
 }
 
 $btnTemplateLanguageFunctionEcho:
 function echo(text){
-  return text;
+    return text;
 }
 Шаблон функции сполучением и возвратом значения
 
 $btnTemplateLanguageFunctionEchoCode:
 function echo(text){
-  return text;
+    return text;
 }
 
 $btnTemplateLanguageFunctionVoid:
 function foo(){
-  
+    
 }
 Шаблон пустой функции
 
 $btnTemplateLanguageFunctionVoidCode:
 function foo(){
-  
+    
 }
 
 $btnTemplateLanguageLoopForPlus:
 for(i=0;i<10;i++){
-  
+    
 }
 Шаблон возрастающего цикла 'for'
 
 $btnTemplateLanguageLoopForPlusCode:
 for(i=0;i<10;i++){
-  
+    
 }
 
 $btnTemplateLanguageLoopForMinus:
 for(i=10;i>0;i--){
-  
+    
 }
 Шаблон убывающего цикла 'for'
 
 $btnTemplateLanguageLoopForMinusCode:
 for(i=10;i>0;i--){
-  
+    
 }
 
 $btnTemplateLanguageLoopWhile:
 while(true){
-  
+    
 }
 Шаблон цикла 'while'
 
 $btnTemplateLanguageLoopWhileCode:
 while(true){
-  
+    
 }
 

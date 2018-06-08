@@ -237,14 +237,10 @@
                                                     <Button fx:id="btnTemplateMouseGetX" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getX" />
                                                     <Button fx:id="btnTemplateMouseGetY" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getY" />
                                                     <Button fx:id="btnTemplateMouseMove" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="move" />
-                                                    <Button fx:id="btnTemplateMouseMoveAbsolute" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAbsolute" />
-                                                    <Button fx:id="btnTemplateMouseMoveAbsolute_D" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAbsolute_D" />
                                                     <Button fx:id="btnTemplateMouseMoveAndClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndClick" />
                                                     <Button fx:id="btnTemplateMouseMoveAndPress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndPress" />
                                                     <Button fx:id="btnTemplateMouseMoveAndRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndRelease" />
                                                     <Button fx:id="btnTemplateMouseMoveAndWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndWheel" />
-                                                    <Button fx:id="btnTemplateMouseMoveRelative" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveRelative" />
-                                                    <Button fx:id="btnTemplateMouseMoveRelative_D" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveRelative_D" />
                                                     <Button fx:id="btnTemplateMouseMoveTo" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveTo" />
                                                     <Button fx:id="btnTemplateMousePress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="press" />
                                                     <Button fx:id="btnTemplateMousePressAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="pressAt" />
