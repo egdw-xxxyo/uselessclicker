@@ -4,7 +4,11 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +34,7 @@ import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.EventLogger;
+import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
@@ -128,6 +133,11 @@ public class MainController implements Initializable {
         Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combined.getFixedRateOnValue().valueProperty());
         Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combined.getMinDistanceOnValue().valueProperty());
         Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combined.getStopDetectionOnValue().valueProperty());
+
+        combinedEncodingType.setItems(FXCollections.observableArrayList(ActionEncoderFactory.getListOfEncodings()));
+        combinedEncodingType.getSelectionModel().select(combined.getEncodingType());
+        combined.getEncodingTypeValue().valueProperty().bind(Bindings.selectString(combinedEncodingType.getSelectionModel().selectedItemProperty()));
+
         createHotkeys();
     }
 
@@ -333,6 +343,9 @@ public class MainController implements Initializable {
 
     @FXML
     TextField txtCombinedMinDistance;
+    
+    @FXML
+    ChoiceBox<String> combinedEncodingType;
 
     // Simple toggles
     @FXML
@@ -408,6 +421,8 @@ public class MainController implements Initializable {
         simpleToggles.add(btnCombinedMouseButtons);
         simpleToggles.add(btnCombinedMouseWheel);
         simpleToggles.add(btnCombinedRelativePath);
+
+        
         // set user data 'String' hint
         List<ToggleButton> listOfToggles = new ArrayList<>();
         listOfToggles.addAll(simpleToggles);

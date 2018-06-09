@@ -448,22 +448,23 @@ public class EventsRecorder {
                     keyEventsManager.removeListenersByPrefix(prefix + ".keys");
                     mouseEventsManager.removeListenersByPrefix(prefix);
 
-                    ActionEncoder unicodeActionEncoder = ActionEncoderFactory.get("unicode");
-                    if (combinedConfig.isKeysIncluded()) unicodeActionEncoder.addKeys();
-                    if (combinedConfig.isMouseButtonsIncluded()) unicodeActionEncoder.addMouseButtons();
-                    if (combinedConfig.isMouseWheelIncluded()) unicodeActionEncoder.addMouseWheel();
-                    if (combinedConfig.isAbsolute()) unicodeActionEncoder.absolute();
-                    if (combinedConfig.isRelative()) unicodeActionEncoder.relative();
-                    if (combinedConfig.isDelaysIncluded()) unicodeActionEncoder.addDelays();
-                    if (combinedConfig.isFixedRateOn()) unicodeActionEncoder.fixedRate(combinedConfig.getFixedRate());
+                    String encodingType = combinedConfig.getEncodingType();
+                    ActionEncoder actionEncoder = ActionEncoderFactory.get(encodingType);
+                    if (combinedConfig.isKeysIncluded()) actionEncoder.addKeys();
+                    if (combinedConfig.isMouseButtonsIncluded()) actionEncoder.addMouseButtons();
+                    if (combinedConfig.isMouseWheelIncluded()) actionEncoder.addMouseWheel();
+                    if (combinedConfig.isAbsolute()) actionEncoder.absolute();
+                    if (combinedConfig.isRelative()) actionEncoder.relative();
+                    if (combinedConfig.isDelaysIncluded()) actionEncoder.addDelays();
+                    if (combinedConfig.isFixedRateOn()) actionEncoder.fixedRate(combinedConfig.getFixedRate());
                     if (combinedConfig.isMinDistanceOn())
-                        unicodeActionEncoder.minDistance(combinedConfig.getMinDistance());
+                        actionEncoder.minDistance(combinedConfig.getMinDistance());
                     if (combinedConfig.isStopDetectionOn())
-                        unicodeActionEncoder.detectStopPoints(combinedConfig.getStopDetectionTime());
+                        actionEncoder.detectStopPoints(combinedConfig.getStopDetectionTime());
 
 
-                    String rawCode = unicodeActionEncoder.encode(eventLog.getEventLog());
-                    combinedObjectCodeGenerator.run("unicode", rawCode);
+                    String rawCode = actionEncoder.encode(eventLog.getEventLog());
+                    combinedObjectCodeGenerator.run(encodingType, rawCode);
                     putCode(combinedObjectCodeGenerator.getGeneratedCode());
                 } else {
                     eventLog.add(e);

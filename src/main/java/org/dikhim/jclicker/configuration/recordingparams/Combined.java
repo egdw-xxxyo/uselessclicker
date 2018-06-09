@@ -13,6 +13,7 @@ public class Combined {
     private Preferences preferences;
 
     private StringValue controlKey;
+    private StringValue encodingType;
     private IntegerValue fixedRate;
     private IntegerValue minDistance;
     private IntegerValue stopDetectionTime;
@@ -26,7 +27,7 @@ public class Combined {
     private BooleanValue minDistanceOn;
     private BooleanValue stopDetectionOn;
 
-    public Combined(JsonObject jsonObject, String name) {
+    Combined(JsonObject jsonObject, String name) {
         this.name = name;
         preferences = Preferences.userRoot().node(name);
         loadDefault(jsonObject);
@@ -34,6 +35,7 @@ public class Combined {
 
     private void loadDefault(JsonObject jsonObject) {
         controlKey = new StringValue("controlKey", jsonObject.getString("controlKey"));
+        encodingType = new StringValue("encodingType", jsonObject.getString("encodingType"));
         fixedRate = new IntegerValue("fixedRate", jsonObject.getInt("fixedRate"));
         minDistance = new IntegerValue("minDistance", jsonObject.getInt("minDistance"));
         stopDetectionTime = new IntegerValue("stopDetectionTime", jsonObject.getInt("stopDetectionTime"));
@@ -51,6 +53,7 @@ public class Combined {
 
     public void setDefault() {
         controlKey.setDefault();
+        encodingType.setDefault();
         fixedRate.setDefault();
         minDistance.setDefault();
         stopDetectionTime.setDefault();
@@ -67,6 +70,7 @@ public class Combined {
 
     public void save() {
         controlKey.save(preferences);
+        encodingType.save(preferences);
         fixedRate.save(preferences);
         minDistance.save(preferences);
         stopDetectionTime.save(preferences);
@@ -83,6 +87,7 @@ public class Combined {
 
     public void loadOrSetDefault() {
         controlKey.loadOrSetDefault(preferences);
+        encodingType.loadOrSetDefault(preferences);
         fixedRate.loadOrSetDefault(preferences);
         minDistance.loadOrSetDefault(preferences);
         stopDetectionTime.loadOrSetDefault(preferences);
@@ -109,6 +114,14 @@ public class Combined {
 
     public String getControlKey() {
         return controlKey.get();
+    }
+
+    public StringValue getEncodingTypeValue() {
+        return encodingType;
+    }
+
+    public String getEncodingType() {
+        return encodingType.get();
     }
 
     public IntegerValue getFixedRateValue() {
