@@ -9,6 +9,7 @@ public class ActionEncoderFactory {
     static {
         listOfEncodings.add("unicode");
         listOfEncodings.add("base64");
+        listOfEncodings.add("base64-zip");
     }
     
     public static ActionEncoder get(String encoding) {
@@ -16,6 +17,8 @@ public class ActionEncoderFactory {
             return new UnicodeActionEncoder();
         } else if ("base64".equalsIgnoreCase(encoding)) {
             return new Base64ActionEncoder();
+        } else if ("base64-zip".equalsIgnoreCase(encoding)) {
+            return new Base64ZipActionEncoder();
         } 
         return null;
     }

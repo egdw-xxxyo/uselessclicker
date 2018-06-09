@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.actions.utils.encoding;
 
-@SuppressWarnings("unused")
+
 public class Base64Encoder {
     private Base64Alfabet alphabet = new Base64Alfabet();
 
