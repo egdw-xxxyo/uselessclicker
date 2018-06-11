@@ -199,8 +199,8 @@
                                                     <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.absolute" />
                                                     <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="%r.eRec.combined.relative" />
                                                     <Label styleClass="combined-label" text="%r.eRec.combined.options" />
-                                       <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
                                                     <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.delays" />
+                                       <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
                                                     <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.fixedRate">
                                                         <graphic>
                                                             <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />

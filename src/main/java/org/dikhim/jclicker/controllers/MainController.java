@@ -80,6 +80,7 @@ public class MainController implements Initializable {
 
 
     private ResourceBundle resources;
+
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
@@ -97,7 +98,7 @@ public class MainController implements Initializable {
         // init toggles and template buttons
         SourcePropertyFile propertyFile = new SourcePropertyFile();
 
-        InputStream txtReader = getClass().getResourceAsStream("/i18n/"+resources.getString("codesamples"));
+        InputStream txtReader = getClass().getResourceAsStream("/i18n/" + resources.getString("codesamples"));
         try {
             propertyFile.setSource(IOUtils.toString(txtReader, "UTF-8"));
         } catch (IOException e) {
@@ -171,7 +172,6 @@ public class MainController implements Initializable {
 
     @FXML
     private TextArea outTextArea;
-    private StringProperty outTextProperty = new SimpleStringProperty(" ");
 
     @FXML
     private TextField txtAbsolutePathRate;
@@ -197,20 +197,10 @@ public class MainController implements Initializable {
 
     @FXML
     public void openFile() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Отрыть файл");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Все типы", "*.*"),
-                new FileChooser.ExtensionFilter("*.js", "*.js"));
+        File file = WindowManager.getInstance().openFile();
 
-        String pathFolder = preferences.get("last-opened-folder", "");
-        if (!pathFolder.isEmpty()) {
-            fileChooser.setInitialDirectory(new File(pathFolder));
-        }
-        File file = fileChooser.showOpenDialog(application.getPrimaryStage());
         if (file != null) {
             mainApplication.openFile(file);
-            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
         }
     }
 
@@ -220,18 +210,9 @@ public class MainController implements Initializable {
         if (script.isOpened()) {
             mainApplication.saveFile();
         } else {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Сохранить файл");
-            fileChooser.setInitialFileName("newFile.js");
-
-            String pathFolder = preferences.get("last-saved-folder", "");
-            if (!pathFolder.isEmpty())
-                fileChooser.setInitialDirectory(new File(pathFolder));
-
-            File file = fileChooser.showSaveDialog(application.getPrimaryStage());
+            File file = WindowManager.getInstance().saveFileAs();
             if (file != null) {
                 mainApplication.saveFileAs(file);
-                preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
             }
         }
     }
@@ -241,18 +222,9 @@ public class MainController implements Initializable {
      */
     @FXML
     public void saveFileAs() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Сохранить файл");
-        fileChooser.setInitialFileName("newFile.js");
-
-        String pathFolder = preferences.get("last-saved-folder", "");
-        if (!pathFolder.isEmpty())
-            fileChooser.setInitialDirectory(new File(pathFolder));
-
-        File file = fileChooser.showSaveDialog(application.getPrimaryStage());
+        File file = WindowManager.getInstance().saveFileAs();
         if (file != null) {
             mainApplication.saveFileAs(file);
-            preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
         }
     }
 
@@ -343,7 +315,7 @@ public class MainController implements Initializable {
 
     @FXML
     TextField txtCombinedMinDistance;
-    
+
     @FXML
     ChoiceBox<String> combinedEncodingType;
 
@@ -422,7 +394,7 @@ public class MainController implements Initializable {
         simpleToggles.add(btnCombinedMouseWheel);
         simpleToggles.add(btnCombinedRelativePath);
 
-        
+
         // set user data 'String' hint
         List<ToggleButton> listOfToggles = new ArrayList<>();
         listOfToggles.addAll(simpleToggles);
@@ -432,6 +404,10 @@ public class MainController implements Initializable {
             b.setOnMouseEntered(this::showCodeSample);
             b.setOnMouseExited(this::hideCodeSample);
         }
+
+        combinedEncodingType.setUserData(new String[]{properties.get(combinedEncodingType.getId()), ""});
+        combinedEncodingType.setOnMouseEntered(this::showCodeSample);
+        combinedEncodingType.setOnMouseExited(this::hideCodeSample);
     }
 
     private String getToggleButtonPath(Object button) {
@@ -490,9 +466,9 @@ public class MainController implements Initializable {
         btnTogglesStatus.setSelected(toggle.isSelected());
         String title = "";
         if (toggle.isSelected()) {
-            title += "Активно:    ";
+            title += "Activated: ";
         } else {
-            title += "Отключено:  ";
+            title += " Disabled: ";
         }
         title += getToggleButtonPath(toggle);
         btnTogglesStatus.setText(title);

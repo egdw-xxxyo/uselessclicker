@@ -38,7 +38,7 @@
     },
     "combined": {
       "controlKey": "ALT",
-      "encodingType":"unicode",
+      "encodingType":"base64",
       "fixedRate": 30,
       "minDistance": 10,
       "stopDetectionTime": 70,

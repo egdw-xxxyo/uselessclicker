@@ -14,15 +14,14 @@ import static org.dikhim.jclicker.actions.actions.ActionType.*;
 import static org.dikhim.jclicker.actions.actions.ActionType.DELAY_SECONDS;
 
 public abstract class AbstractActionEncoder implements ActionEncoder {
-    private static final BidiMap<ActionType, String> actionCodes = new DualHashBidiMap<>();
-    
+    private final BidiMap<ActionType, String> actionCodes = new DualHashBidiMap<>();
+
     public static final int MAX_DELAY_MILLISECONDS = 1000;
     public static final int MAX_DELAY_SECONDS = 3600;
     public static final int MAX_COORDINATE = 10000;
     public static final int MAX_D_COORDINATE = 10000;
     public static final int MIN_D_COORDINATE = -10000;
     public static final int MAX_WHEEL_AMOUNT = 100;
-
 
 
     private boolean isAbsolute = false;
@@ -46,9 +45,6 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     private int stopPointThreshold = 50;
 
 
-    
-
-
     /**
      * Encode events with selected option to string representation
      *
@@ -67,71 +63,176 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     }
 
     private String encodeAction(Action action) {
-        String result = "";
+        StringBuilder sb = new StringBuilder();
         switch (action.getType()) {
             case KEYBOARD_PRESS:
-                result += encodeActionType(KEYBOARD_PRESS);
-                result += encodeParameter(
-                        KeyCodes.getUslessCodeByName(((KeyboardPressAction) action).getKey()));
+                sb.append(delimiterActionBeginning());
+                sb.append(encodeActionType(KEYBOARD_PRESS));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeKey(((KeyboardPressAction) action).getKey()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case KEYBOARD_RELEASE:
-                result += encodeActionType(KEYBOARD_RELEASE);
-                result += encodeParameter(
-                        KeyCodes.getUslessCodeByName(((KeyboardReleaseAction) action).getKey()));
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(KEYBOARD_RELEASE));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeKey(((KeyboardReleaseAction) action).getKey()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_MOVE:
-                result += encodeActionType(MOUSE_MOVE);
-                result += encodeParameter(((MouseMoveAction) action).getDx());
-                result += encodeParameter(((MouseMoveAction) action).getDy());
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_MOVE));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((MouseMoveAction) action).getDx()));
+                sb.append(delimiterBetweenParams());
+                sb.append(encodeParameter(((MouseMoveAction) action).getDy()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_MOVE_TO:
-                result += encodeActionType(MOUSE_MOVE_TO);
-                result += encodeParameter(((MouseMoveToAction) action).getX());
-                result += encodeParameter(((MouseMoveToAction) action).getY());
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_MOVE_TO));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((MouseMoveToAction) action).getX()));
+                sb.append(delimiterBetweenParams());
+                sb.append(encodeParameter(((MouseMoveToAction) action).getY()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_PRESS_LEFT:
-                result += encodeActionType(MOUSE_PRESS_LEFT);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_PRESS_LEFT));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_PRESS_RIGHT:
-                result += encodeActionType(MOUSE_PRESS_RIGHT);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_PRESS_RIGHT));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_PRESS_MIDDLE:
-                result += encodeActionType(MOUSE_PRESS_MIDDLE);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_PRESS_MIDDLE));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_RELEASE_LEFT:
-                result += encodeActionType(MOUSE_RELEASE_LEFT);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_RELEASE_LEFT));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_RELEASE_RIGHT:
-                result += encodeActionType(MOUSE_RELEASE_RIGHT);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_RELEASE_RIGHT));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_RELEASE_MIDDLE:
-                result += encodeActionType(MOUSE_RELEASE_MIDDLE);
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_RELEASE_MIDDLE));
+                
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_WHEEL_UP:
-                result += encodeActionType(MOUSE_WHEEL_UP);
-                result += encodeParameter(((MouseWheelUpAction) action).getAmount());
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_WHEEL_UP));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((MouseWheelUpAction) action).getAmount()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case MOUSE_WHEEL_DOWN:
-                result += encodeActionType(MOUSE_WHEEL_DOWN);
-                result += encodeParameter(((MouseWheelDownAction) action).getAmount());
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(MOUSE_WHEEL_DOWN));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((MouseWheelDownAction) action).getAmount()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
             case DELAY_MILLISECONDS:
-                result += encodeActionType(DELAY_MILLISECONDS);
-                result += encodeParameter(((DelayMillisecondsAction) action).getDelay());
+                sb.append(delimiterActionBeginning());
+
+                sb.append(encodeActionType(DELAY_MILLISECONDS));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((DelayMillisecondsAction) action).getDelay()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
+
                 break;
             case DELAY_SECONDS:
-                result += encodeActionType(DELAY_SECONDS);
-                result += encodeParameter(((DelaySecondsAction) action).getDelay());
+                sb.append(delimiterActionBeginning());
+                
+                sb.append(encodeActionType(DELAY_SECONDS));
+                
+                sb.append(delimiterBeforeParams());
+                sb.append(encodeParameter(((DelaySecondsAction) action).getDelay()));
+                sb.append(delimiterAfterParams());
+
+                sb.append(delimiterActionEnd());
                 break;
         }
-        return result;
+        return sb.toString();
     }
+
+    public String delimiterActionBeginning() {
+        return "";
+    }
+
+    public String delimiterActionEnd() {
+        return "";
+    }
+
+    public String delimiterBeforeParams() {
+        return "";
+    }
+
+    public String delimiterAfterParams() {
+        return "";
+    }
+
+    public String delimiterBetweenParams() {
+        return "";
+    }
+
 
     private String encodeActionType(ActionType actionType) {
         return getActionCode(actionType);
     }
 
     protected abstract String encodeParameter(int i);
+
+    public String encodeKey(String key) {
+        return encodeParameter(KeyCodes.getUslessCodeByName(key));
+    }
 
     /**
      * Resets all options to default
@@ -599,12 +700,12 @@ public abstract class AbstractActionEncoder implements ActionEncoder {
     protected String getActionCode(ActionType actionType) {
         return actionCodes.get(actionType);
     }
-    
+
     // getters
-    public static BidiMap<ActionType, String> getActionCodes() {
+    public BidiMap<ActionType, String> getActionCodes() {
         return actionCodes;
     }
-    
+
     public boolean isDetectStopPoints() {
         return detectStopPoints;
     }

@@ -14,7 +14,7 @@ public class HelpSceneController {
     private void initialize() {
         WebEngine webEngine = web.getEngine();
         try {
-            webEngine.load(String.valueOf(getClass().getResource("/docs/index.html").toURI().toURL()));
+            webEngine.load(String.valueOf(getClass().getResource("/docs/en/index.html").toURI().toURL()));
         } catch (Exception e) {
             e.printStackTrace();
         }

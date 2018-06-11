@@ -4,19 +4,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.dikhim.jclicker.controllers.MainController;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.prefs.Preferences;
 
 @SuppressWarnings("AccessStaticViaInstance")
 public class WindowManager {
     private static WindowManager windowManager;
-
+    private Preferences preferences = Preferences.userRoot().node(getClass().getName());
+    
     private ResourceBundle resourceBundle;
     private Map<String, Stage> stageMap = new HashMap<>();
     private Map<String, Scene> sceneMap = new HashMap<>();
@@ -133,4 +137,40 @@ public class WindowManager {
     public Stage getStage(String stageName) {
         return stageMap.get(stageName);
     }
+    
+     
+    public File openFile(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("open"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"),
+                new FileChooser.ExtensionFilter("*.js", "*.js"));
+
+        String pathFolder = preferences.get("last-opened-folder", "");
+        if (!pathFolder.isEmpty()) {
+            fileChooser.setInitialDirectory(new File(pathFolder));
+        }
+        File file = fileChooser.showOpenDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+    public File saveFileAs(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("saveAs"));
+        fileChooser.setInitialFileName("newFile.js");
+
+        String pathFolder = preferences.get("last-saved-folder", "");
+        if (!pathFolder.isEmpty())
+            fileChooser.setInitialDirectory(new File(pathFolder));
+
+        File file = fileChooser.showSaveDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+    
+    
 }

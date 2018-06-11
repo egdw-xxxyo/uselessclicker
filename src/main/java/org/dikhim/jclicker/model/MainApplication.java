@@ -96,7 +96,7 @@ public class MainApplication {
 
     private void bindProperties() {
         title.bind(script.nameProperty());
-        status.bind(Bindings.concat(script.nameProperty()).concat(" выполняется:").concat(jse.runningProperty()));
+        status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(jse.runningProperty()));
     }
 
     public JSEngine getJse() {

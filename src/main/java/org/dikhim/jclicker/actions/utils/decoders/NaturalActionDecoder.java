@@ -2,18 +2,20 @@ package org.dikhim.jclicker.actions.utils.decoders;
 
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
-import org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder;
-import org.dikhim.jclicker.actions.utils.encoding.UnicodeEncoder;
+import org.dikhim.jclicker.actions.utils.encoders.NaturalActionEncoder;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.dikhim.jclicker.actions.utils.encoders.UnicodeActionEncoder.SHIFT;
 
-public class UnicodeActionDecoder extends AbstractActionDecoder {
+@SuppressWarnings("Duplicates")
+public class NaturalActionDecoder extends AbstractActionDecoder {
+    private NaturalActionEncoder naturalActionEncoder = new NaturalActionEncoder();
 
-    UnicodeActionEncoder unicodeActionEncoder = new UnicodeActionEncoder();
+    private int i;
+    char[] codeArray;
 
+    @Override
     public List<Action> decode(String code) {
         List<Action> actions = new ArrayList<>();
 
@@ -21,38 +23,32 @@ public class UnicodeActionDecoder extends AbstractActionDecoder {
         int intTmp1;
         int intTmp2;
 
-        char[] codeArray = code.toCharArray();
-        int i = 0;
-        while (i < codeArray.length) {
-            ActionType actionType = decodeActionType(Character.toString(codeArray[i]));
+        codeArray = code.toCharArray();
+        i = 0;
+        while (hasNext()) {
+            ActionType actionType = nextActionType();
 
             if (actionType == null)
                 throw new IllegalArgumentException(String.format("incorrect action '%s'", codeArray[i]));
-            
+
             switch (actionType) {
                 case MOUSE_PRESS_LEFT:
                     actions.add(new MousePressLeftAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_LEFT:
                     actions.add(new MouseReleaseLeftAction());
-                    i++;
                     break;
                 case MOUSE_PRESS_RIGHT:
                     actions.add(new MousePressRightAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_RIGHT:
                     actions.add(new MouseReleaseRightAction());
-                    i++;
                     break;
                 case MOUSE_PRESS_MIDDLE:
                     actions.add(new MousePressMiddleAction());
-                    i++;
                     break;
                 case MOUSE_RELEASE_MIDDLE:
                     actions.add(new MouseReleaseMiddleAction());
-                    i++;
                     break;
                 case KEYBOARD_PRESS:
                     stringTmp = KeyCodes.getNameByUselessCode(decodeParameter(codeArray[i + 1]));
@@ -132,12 +128,53 @@ public class UnicodeActionDecoder extends AbstractActionDecoder {
         return actions;
     }
 
-    private ActionType decodeActionType(String actionType) {
-        return unicodeActionEncoder.getActionCodes().getKey(actionType);
+    private ActionType nextActionType() {
+        StringBuilder sb = new StringBuilder();
+        while (codeArray[i] == ' ' || codeArray[i] == ';') {
+            i++;
+        }
+        if (!Character.isLetter(codeArray[i]) || codeArray[i] != '_') {
+            return null;
+        }
+        while (Character.isLetter(codeArray[i]) || codeArray[i] == '_') {
+            sb.append(codeArray[i]);
+            i++;
+        }
+        return naturalActionEncoder.getActionCodes().getKey(sb.toString());
     }
 
+    private int nextInt() {
+        StringBuilder sb = new StringBuilder();
+
+        while (!Character.isDigit(codeArray[i]) || codeArray[i] != '-' ) {
+            i++;
+        }
+        while (Character.isDigit(codeArray[i]) || codeArray[i] == '-' ) {
+            sb.append(codeArray[i]);
+            i++;
+        }
+        return Integer.parseInt(sb.toString());
+
+    }
+
+    private String nextString() {
+        StringBuilder sb = new StringBuilder();
+        while (!Character.isLetter(codeArray[i]) || codeArray[i] != '_') {
+            i++;
+        }
+        while (Character.isLetter(codeArray[i]) || codeArray[i] == '_') {
+            sb.append(codeArray[i]);
+            i++;
+        }
+        return sb.toString();
+    }
+    
+    private boolean hasNext() {
+        return i < codeArray.length;
+    }
+    
     // decode
     private int decodeParameter(char c) {
-        return c - SHIFT;
+        return c;
     }
 }

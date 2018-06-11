@@ -238,6 +238,16 @@ $btnCombinedDetectStopPoints:
   
   This option helps to fix the recording problems with the fixedRate and minDistance options and guarantees that the important event will not be omitted
 
+$combinedEncodingType:
+  Encoding for the result string
+  
+  unicode - encode result string using unicode characters
+  base64 - encode result string using base64 characters
+  base64-zip - encode result string using base64 characters and compress
+  
+  Using unicode characters a string takes less space but can be easily corrupted
+  Using base64-zip encoding a string takes less space, but cannot be edited afterwards  
+
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ////////////TEMPLATES////////////////

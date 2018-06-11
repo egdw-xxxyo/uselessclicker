@@ -19,6 +19,8 @@ public class ActionEncoderFactory {
             return new Base64ActionEncoder();
         } else if ("base64-zip".equalsIgnoreCase(encoding)) {
             return new Base64ZipActionEncoder();
+        } else if ("natural".equalsIgnoreCase(encoding)) {
+            return new NaturalActionEncoder();
         } 
         return null;
     }

@@ -2,19 +2,21 @@ package org.dikhim.jclicker.actions.utils.decoders;
 
 import org.dikhim.jclicker.actions.actions.*;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
+import org.dikhim.jclicker.actions.utils.encoders.Base64ActionEncoder;
 import org.dikhim.jclicker.actions.utils.encoding.Base64Decoder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.dikhim.jclicker.actions.utils.encoders.AbstractActionEncoder.getActionCodes;
 
 public class Base64ActionDecoder extends AbstractActionDecoder {
     private Base64Decoder decoder = new Base64Decoder();
+    private Base64ActionEncoder base64ActionEncoder = new Base64ActionEncoder();
 
 
     @Override
+
     public List<Action> decode(String code) {
         List<Action> actions = new ArrayList<>();
         int paramLength = 3;
@@ -134,7 +136,7 @@ public class Base64ActionDecoder extends AbstractActionDecoder {
     }
 
     private ActionType decodeActionType(char actionTypeChar) {
-        return getActionCodes().getKey(Character.toString(actionTypeChar));
+        return base64ActionEncoder.getActionCodes().getKey(Character.toString(actionTypeChar));
     }
 
     // decode
