@@ -59,4 +59,9 @@ public class Language {
     public String getPath() {
         return path;
     }
+
+    @Override
+    public String toString() {
+        return getNativeName().get();
+    }
 }

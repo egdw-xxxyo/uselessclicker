@@ -22,7 +22,7 @@ public class Localization {
     }
 
     private void loadDefault(JsonObject jsonObject) {
-        applicationLanguage = new StringValue(jsonObject.getString("applicationLanguage"), name + "/applicationLanguage");
+        applicationLanguage = new StringValue(name + "/applicationLanguage",jsonObject.getString("applicationLanguage"));
         languages = new Languages(jsonObject.getJsonObject("languages"), path + "/" + name, name);
     }
 
@@ -48,6 +48,10 @@ public class Localization {
 
     public StringValue getApplicationLanguage() {
         return applicationLanguage;
+    }
+
+    public Language getSelectedLanguage() {
+        return getLanguages().getById(applicationLanguage.get());
     }
 
     public Languages getLanguages() {

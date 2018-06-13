@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.ServerSceneController">
-    <Tab text="HTTP">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.ServerSceneController">
+    <Tab closable="false" text="HTTP">
         <AnchorPane fx:id="httpPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </Tab>
-    <Tab text="Socket">
+    <Tab closable="false" text="Socket">
         <AnchorPane fx:id="socketPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
     </Tab>
+   <stylesheets>
+      <URL value="@ServerScene.css" />
+      <URL value="@../CommonElements.css" />
+   </stylesheets>
 </TabPane>

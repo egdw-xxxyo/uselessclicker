@@ -4,6 +4,7 @@ import javax.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
+import java.util.stream.Collectors;
 
 public class Languages {
     private String path;
@@ -47,5 +48,14 @@ public class Languages {
 
     public String getPath() {
         return path;
+    }
+
+    public Language getById(String id) {
+        return getLanguageList()
+                .stream()
+                .filter(language -> language.getId().get().equals(id))
+                .limit(1)
+                .collect(Collectors.toList())
+                .get(0);
     }
 }

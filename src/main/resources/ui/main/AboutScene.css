@@ -9,3 +9,21 @@
 
 #site-link > .text{
 }
+
+#about-text-area{
+    -fx-text-fill: #444;
+
+    -fx-highlight-fill: #ffdd7F;
+    -fx-highlight-text-fill: #777;
+
+    -fx-focus-color: #777;
+}
+
+#about-text-area:focused{
+    -fx-text-fill: #444;
+
+    -fx-highlight-fill: #ffdd7F;
+    -fx-highlight-text-fill: #777;
+
+    -fx-focus-color: #777;
+}

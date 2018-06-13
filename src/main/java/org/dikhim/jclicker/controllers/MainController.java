@@ -137,7 +137,7 @@ public class MainController implements Initializable {
 
         combinedEncodingType.setItems(FXCollections.observableArrayList(ActionEncoderFactory.getListOfEncodings()));
         combinedEncodingType.getSelectionModel().select(combined.getEncodingType());
-        combined.getEncodingTypeValue().valueProperty().bind(Bindings.selectString(combinedEncodingType.getSelectionModel().selectedItemProperty()));
+        combinedEncodingType.valueProperty().bindBidirectional(combined.getEncodingTypeValue().valueProperty());
 
         createHotkeys();
     }

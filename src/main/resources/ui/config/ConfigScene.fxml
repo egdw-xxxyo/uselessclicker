@@ -9,12 +9,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.SettingsController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.SettingsController">
    <center>
       <SplitPane dividerPositions="0.4096989966555184" BorderPane.alignment="CENTER">
          <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity">
             <VBox>
                <Button fx:id="hotkeysBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHotkeys" text="%hotkeys">
+                  <styleClass>
+                     <String fx:value="white-element" />
+                     <String fx:value="tree-menu-item" />
+                  </styleClass>
+               </Button>
+               <Button fx:id="languageBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showLanguage" text="%language">
                   <styleClass>
                      <String fx:value="white-element" />
                      <String fx:value="tree-menu-item" />

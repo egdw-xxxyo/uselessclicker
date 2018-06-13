@@ -52,6 +52,21 @@ public class SettingsController implements Initializable {
         }
     }
 
+    @FXML
+    void showLanguage(ActionEvent event) {
+        Parent root;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/config/LanguageScene.fxml"));
+            loader.setResources(resourceBundle);
+            root = loader.load();
+
+            rightPane.setContent(root);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 
     @FXML
     void resetConfig(ActionEvent event) {

@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
    <bottom>
       <VBox id="bottom-pane" BorderPane.alignment="CENTER">
          <children>
-            <TextArea id="about-text-area" editable="false" prefHeight="100.0" prefWidth="600.0" text="%mainInfo" />
+            <TextArea id="about-text-area" editable="false" focusTraversable="false" prefHeight="100.0" prefWidth="600.0" styleClass="white-element" text="%mainInfo" />
          </children>
       </VBox>
    </bottom>
