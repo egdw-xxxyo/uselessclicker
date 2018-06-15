@@ -26,7 +26,6 @@ public abstract class AbstractActionDecoder implements ActionDecoder {
     protected boolean validateCoordinate(int value) {
         return value >= 0 && value <= MAX_COORDINATE;
     }
-
     protected boolean validateDifferenceCoordinate(int value) {
         return value >= MIN_D_COORDINATE && value <= MAX_D_COORDINATE;
     }

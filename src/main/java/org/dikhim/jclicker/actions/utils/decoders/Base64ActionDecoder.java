@@ -118,13 +118,13 @@ public class Base64ActionDecoder extends AbstractActionDecoder {
                 case MOUSE_MOVE:
                     intTmp1 = getParam(codeArray, i, paramLength);
 
-                    if (!validateCoordinate(intTmp1))
+                    if (!validateDifferenceCoordinate(intTmp1))
                         throw new IllegalArgumentException(
                                 String.format("incorrect dx coordinate '%s' -> '%s'", codeArray[i], intTmp1));
                     i += paramLength;
 
                     intTmp2 = getParam(codeArray, i, paramLength);
-                    if (!validateCoordinate(intTmp1))
+                    if (!validateDifferenceCoordinate(intTmp1))
                         throw new IllegalArgumentException(
                                 String.format("incorrect dy coordinate '%s' -> '%s'", codeArray[i], intTmp1));
                     actions.add(new MouseMoveAction(intTmp1, intTmp2));

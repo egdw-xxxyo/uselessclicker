@@ -117,11 +117,11 @@ public class UnicodeActionDecoder extends AbstractActionDecoder {
                     break;
                 case MOUSE_MOVE:
                     intTmp1 = decodeParameter(codeArray[i + 1]);
-                    if (!validateCoordinate(intTmp1))
+                    if (!validateDifferenceCoordinate(intTmp1))
                         throw new IllegalArgumentException(
                                 String.format("incorrect dx coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
                     intTmp2 = decodeParameter(codeArray[i + 2]);
-                    if (!validateCoordinate(intTmp1))
+                    if (!validateDifferenceCoordinate(intTmp1))
                         throw new IllegalArgumentException(
                                 String.format("incorrect dy coordinate '%s' -> '%s'", codeArray[i + 1], intTmp1));
                     actions.add(new MouseMoveAction(intTmp1, intTmp2));
