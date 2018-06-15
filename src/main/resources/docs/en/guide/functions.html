@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functions</title>
+</head>
+<body>
+<strong>Functions</strong><br/>
+<p>
+    To create a function, we'll add a template from the menu <strong>Templates&gt;Language&gt;function echo</strong>. This item inserts a code for the echo function, which takes a value and returns it.
+</p>
+<div class="codebox">
+    <pre><code>function echo(text){
+    return text;
+}
+</code></pre>
+</div>
+<p>
+    Let's change the function so that it takes the <strong>n</strong> parameter and displays the values from <strong>0</strong> to <strong>n</strong> to the console. To do this, we use the count up loop and the system method <strong>system.println()</strong>. To call a function, you must use the <strong>function (args);</strong> construct.</p>
+<p>
+    Copy the code below and run it. The console must contains the recordings from <strong>0</strong> to <strong>1</strong> and from <strong>0</strong> to <strong>2</strong>, for each function call
+</p>
+<div class="codebox">
+    <pre><code>function count(n){
+    for(i=0;i&lt;n;i++){
+        system.println('i='+i); 
+    }
+}
+system.sleep(2000);
+count(2);
+system.sleep(2000);
+count(3);
+</code></pre>
+</div>
+<p>When starting the script, note that the output to the console is not done immediately, but with a periodicity of two seconds. Here, for clarity, the <strong>system.sleep()</strong> method is used, which indicates that the system should wait for the specified number of milliseconds. 2000 milliseconds = 2 seconds.
+</p>
+</body>
+</html>

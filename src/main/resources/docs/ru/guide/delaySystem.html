@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Система задержек</title>
+</head>
+<body>
+<strong >Система задержек</strong><br/>
+<p>У каждого события, для каждого объекта, существует своя предустановленная задержка. К примеру вызов метода <strong>key.press('BTN')</strong> на самом деле не завершается моментально. Внутри есть встроенная задержка нажатия <strong>pressDelay</strong>, которая вызывается сразу после того, как событие будет вызвано. То есть, внутренняя структура <strong>key.press('BTN')</strong> выглядит примерно так:</p>
+<div class="codebox">
+    <pre><code>press('KEY');
+sleep(pressDelay);
+</code></pre>
+</div>
+<p>Задержка всегда происходит после вызова основного события. Таким образом, событие происходит практически моментально после вхова метода
+</p>
+<p><strong>Стандартное значение задержек равно 10мс</strong>. Внедрение задержки внутрь метода позволяет избавить себя от заботы прописывать задержки после каждого события. Данная задержка может быть задана соответсвующим методом с префиксом <strong>set</strong>, что позволяет гибко настраивать скрипт и не заботится о том, что скрипт может внезапно зависнуть из-за слишком большого количество событий в секунду. Так же, для каждой из задержек существуют методы для их получения с префиксом <strong>get</strong> и сброса задержек к стандартному значению с префиксом <strong>reset</strong>. Ниже приведен полный список методов для работы с задержками.</p>
+<div class="codebox">
+    <pre><code>// key
+// press
+key.setPressDelay(pressDelay);
+key.getPressDelay();
+// release
+key.setReleaseDelay(releaseDelay);
+key.getReleaseDelay();
+// reset  
+key.resetDelays();
+
+        
+// mouse
+// press
+mouse.setPressDelay(pressDelay);
+mouse.getPressDelay();
+// release
+mouse.setReleaseDelay(releaseDelay);
+mouse.getReleaseDelay();
+// wheel
+mouse.setWheelDelay(wheelDelay);
+mouse.getWheelDelay();
+// move
+mouse.setMoveDelay(moveDelay);
+mouse.getMoveDelay();
+// reset
+mouse.resetDelays();
+</code></pre>
+</div>
+</body>
+</html>

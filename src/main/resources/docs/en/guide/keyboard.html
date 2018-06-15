@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>
+    <br/>
+    <strong>Keyboard</strong><br/>
+    To work with the keyboard there is a built-in object "key" is used. <br/> Let's take a sample code for working with the keyboard object. Paste the code, run it and select any text field. After running the code you have only 5 seconds. Hurry up.
+</p>
+<div class="codebox">
+    <pre><code>system.sleep(5000);
+key.press('H');
+key.release('H');
+
+key.perform('E','PRESS');
+key.perform('E','RELEASE');
+
+key.type('L L O SPACE W O R L D');
+</code></pre>
+</div>
+<p>This script generates events for pressing and releasing keyboard keys. It uses the basic  available methods(press, release, preform, type). If more than one key is specified in the parameters, then the events for each key will be called sequentially one after another. So, the record
+</p>
+<div class="codebox">
+    <pre><code>key.press('CONTROL A')</code></pre>
+</div>
+<p><span>is equivalent to the</span></p>
+<div class="codebox">
+    <pre><code>key.press('CONTROL'); 
+key.press('A');</code></pre>
+</div>
+<p>The "type" method generates successive press and release events for each key. So the line
+</p>
+<div class="codebox">
+    <pre><code>key.type('H E L L O SPACE W O R L D');</code></pre>
+</div>
+<p>The line sequentially generates events for text output<strong>"hello
+    world"</strong>. Remember that the method only generates the specified events, and does not actually print the text. <strong>"key.type('Hello World);"</strong> doesn't work, because to display of capital letters <strong>SHIFT</strong>or<strong>CAPS_LOCK</strong><span> key press events are required, and the space is used to separate key names</span><br/><br/>
+</body>
+</html>

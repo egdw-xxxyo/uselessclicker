@@ -192,19 +192,22 @@ public class JsMouseObject implements MouseObject {
     /**
      * Clicks mouse button
      *
-     * @param button - name of the mouse button that should be clicked
+     * @param buttons - name of the mouse button that should be clicked
      */
-    public void click(String button) {
+    public void click(String buttons) {
         synchronized (monitor) {
-            int buttonEventCode = MouseCodes.getEventCodeByName(button);
-            if (buttonEventCode == -1) {
-                Out.println(String.format("Undefined mouse button '%s' in click method", button));
-                return;
+            String[] buttonList = buttons.split(" ");
+            for (String btn : buttonList) {
+                int buttonEventCode = MouseCodes.getEventCodeByName(btn);
+                if (buttonEventCode == -1) {
+                    Out.println(String.format("Undefined mouse button '%s' in click method", btn));
+                    return;
+                }
+                robot.mousePress(buttonEventCode);
+                delay(getMultipliedPressDelay());
+                robot.mouseRelease(buttonEventCode);
+                delay(getMultipliedReleaseDelay());
             }
-            robot.mousePress(buttonEventCode);
-            delay(getMultipliedPressDelay());
-            robot.mouseRelease(buttonEventCode);
-            delay(getMultipliedReleaseDelay());
         }
     }
 

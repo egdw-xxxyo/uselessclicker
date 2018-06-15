@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Кнопки и колесико мыши</title>
+</head>
+<body>
+Для работы с кнопками мыши и колеском есть встроенный объект "mouse". Методы для работы с кнопками аналогичны методам для работы с клавиатурой (press, release, perform, click). Посмотрите приведенный ниже код.
+<div class="codebox">
+    <pre><code>mouse.press('LEFT');
+mouse.release('LEFT');
+        
+mouse.button('RIGHT','PRESS');
+mouse.button('RIGHT','RELEASE');
+
+mouse.click('MIDDLE');
+</code></pre>
+</div>
+<p>Также, у объекта "mouse" есть методы для работы с колисиком мыши. Для управления колесиком мыши необходимо указывать два параметра: направление прокрутки<strong>"UP/DOWN"</strong>и числовой параметр количество строк.
+</p>
+<div class="codebox">
+    <pre><code>mouse.wheel('DOWN',3);
+mouse.wheel('UP',3);
+</code></pre>
+</div>
+</body>
+</html>
