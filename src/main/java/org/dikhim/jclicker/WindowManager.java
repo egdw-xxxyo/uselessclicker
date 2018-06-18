@@ -1,11 +1,13 @@
 package org.dikhim.jclicker;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.dikhim.jclicker.controllers.MainController;
 
 import java.io.File;
@@ -76,22 +78,26 @@ public class WindowManager {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/help.png")));
         stageMap.put("help", stage);
 
-        stage = new Stage();
-        stage.setScene(sceneMap.get("main"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
-        stageMap.put("main", stage);
+        
 
         stage = new Stage();
         stage.setScene(sceneMap.get("server"));
         stage.setTitle(resourceBundle.getString("server"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/server.png")));
         stageMap.put("server", stage);
+
+        stage = new Stage();
+        stage.setScene(sceneMap.get("main"));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
+        stage.setOnCloseRequest(event -> stageMap.forEach((k, v)-> v.hide()));
+        stageMap.put("main", stage);
     }
 
     public void showStage(String stageName) {
         Stage stage = stageMap.get(stageName);
         if (stage != null) {
             stage.show();
+            stage.toFront();
         }
     }
 

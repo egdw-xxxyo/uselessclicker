@@ -37,12 +37,12 @@
             </ImageView>
             <VBox fx:id="centerPane">
                <children>
-                  <Label id="path-label" text="Useless Clicker">
+                  <Label id="path-label" text="%programName">
                      <font>
                         <Font size="23.0" />
                      </font>
                   </Label>
-                  <Label id="version-label" text="0.2.0" />
+                  <Label id="version-label" text="%version" />
                </children>
             </VBox>
          </children>
