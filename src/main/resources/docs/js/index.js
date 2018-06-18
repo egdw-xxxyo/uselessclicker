@@ -1,7 +1,7 @@
 
 const sidemenu = {
-    "index.html": ["Main page", "icon", "glyphicon glyphicon-home"],
-    "guide/guide.html": ["User's guide", "icon", "glyphicon glyphicon-list"]
+    "index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
+    "guide/guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"]
 };
 
 

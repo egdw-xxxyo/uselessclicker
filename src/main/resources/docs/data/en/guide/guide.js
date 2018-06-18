@@ -1,54 +1,17 @@
-/*
 const sidemenu = {
-    "../index.html": "Главная страница",
-    "classes.html": "Классы и объекты",
-    "cursorMoving.html": "Перемещение курсора",
-    "delayMultiplier.html": "Скорость и множитель задержек",
-    "delays.html": "Задержки",
-    "delaysInCombined.html": "Задержки в combined.run",
-    "delaySystem.html": "Система задержек",
-    "eventsRecording.html": "Захват событий",
-    "functions.html": "Функции",
-    "loops.html": "Циклы",
-    "mouseWheelAndButtons.html": "Кнопки и колесико мыши"
-};
-
-
-$( document ).ready(function() {
-    $(".btn-expand-collapse").click(function(e) {
-      $('.navbar-primary').toggleClass('collapsed');
-      
-        e.preventDefault();
-    });
-
-    $.each(sidemenu, function (page, title) {
-        let $a = $("<a>")
-            .attr("href", page);
-
-        let $span1 = $("<span>");
-        let $span2 = $("<span>")
-            .addClass('nav-label')
-            .text(title);
-
-        $a.append($span1);
-      $a.append($span2);
-        $(".navbar-primary-menu li").append($a);
-    })
-});
-*/
-const sidemenu = {
-    "../index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
-    "guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
-    "classes.html": ["Классы и объекты", "text", ""],
-    "cursorMoving.html": ["Перемещение курсора", "text", ""],
-    "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
-    "delays.html": ["Задержки", "text", ""],
-    "delaysInCombined.html": ["Задержки в combined.run", "text", ""],
-    "delaySystem.html": ["Система задержек", "text", ""],
-    "eventsRecording.html": ["Захват событий", "text", ""],
-    "functions.html": ["Функции", "text", ""],
-    "loops.html": ["Циклы", "text", ""],
-    "mouseWheelAndButtons.html": ["Кнопки и колесико мыши", "text", ""]
+    "../index.html": ["Main page", "icon", "glyphicon glyphicon-home"],
+    "guide.html": ["User's guide", "icon", "glyphicon glyphicon-list"],
+    "loops.html": ["Loops", "text", ""],
+    "functions.html": ["Functions", "text", ""],
+    "classes.html": ["Classes and objects", "text", ""],
+    "keyboard.html": ["Keyboard", "text", ""],
+    "mouseWheelAndButtons.html": ["Mouse buttons and wheel", "text", ""],
+    "cursorMoving.html": ["Mouse movement", "text", ""],
+    "delays.html": ["Delays", "text", ""],
+    "eventsRecording.html": ["Events recording", "text", ""],
+    "delayMultiplier.html": ["Speed and delay multiplier", "text", ""],
+    "delaySystem.html": ["Delays system", "text", ""],
+    "delaysInCombined.html": ["Delays in combined.run method", "text", ""]
 };
 
 

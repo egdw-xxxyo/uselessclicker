@@ -1,16 +1,17 @@
 const sidemenu = {
     "../index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
     "guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
-    "classes.html": ["Классы и объекты", "text", ""],
-    "cursorMoving.html": ["Перемещение курсора", "text", ""],
-    "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
-    "delays.html": ["Задержки", "text", ""],
-    "delaysInCombined.html": ["Задержки в combined.run", "text", ""],
-    "delaySystem.html": ["Система задержек", "text", ""],
-    "eventsRecording.html": ["Захват событий", "text", ""],
-    "functions.html": ["Функции", "text", ""],
     "loops.html": ["Циклы", "text", ""],
-    "mouseWheelAndButtons.html": ["Кнопки и колесико мыши", "text", ""]
+    "functions.html": ["Функции", "text", ""],
+    "classes.html": ["Классы и объекты", "text", ""],
+    "keyboard.html": ["Клавиатура", "text", ""],
+    "mouseWheelAndButtons.html": ["Кнопки и колесико мыши", "text", ""],
+    "cursorMoving.html": ["Перемещение курсора", "text", ""],
+    "delays.html": ["Задержки", "text", ""],
+    "eventsRecording.html": ["Захват событий", "text", ""],
+    "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
+    "delaySystem.html": ["Система задержек", "text", ""],
+    "delaysInCombined.html": ["Задержки в combined.run", "text", ""]
 };
 
 

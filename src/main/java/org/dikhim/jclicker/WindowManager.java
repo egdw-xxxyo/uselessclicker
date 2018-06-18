@@ -73,7 +73,7 @@ public class WindowManager {
         stage = new Stage();
         stage.setScene(sceneMap.get("help"));
         stage.setTitle(resourceBundle.getString("help"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/info.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/help.png")));
         stageMap.put("help", stage);
 
         stage = new Stage();

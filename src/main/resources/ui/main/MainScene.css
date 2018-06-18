@@ -59,8 +59,7 @@
 }
 
 #help-button {
-    -fx-background-image: url("../../images/info.png");
-    visibility: hidden;
+    -fx-background-image: url("../../images/help.png");
 }
 
 
