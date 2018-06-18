@@ -43,35 +43,35 @@
             To control the combined event recording, there are several options:
     </p>
     <ul>
-            <li> Keyboard keys - enable keyboard recording;</li>
-            <li> Mouse buttons - enable mouse buttons recording;</li>
-            <li> Mouse wheel - enable the mouse wheel recording;</li>
-            <li> Absolute - select recording mouse movement by absolute coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.moveTo(x,y)</strong> method;</li>
-            <li> Relative - select recording mouse movement by relative coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.move(dx,dy)</strong> method;</li>
-            <li> Delays - include delays between events in the result;</li>
-            <li> Encoding selection menu (unicode, base64, base64-zip) - select the format in which the resulting string will be presented; </ i>
-            <li> fixed rate - enable the recording with fixed frequency of mouse movement events; </li>
-            <li> min. distance - enable the entry indicating the minimum distance between mouse movement events; </li>
-            <li> stop points - include a record with the definition of stop points. </li>
+        <li> Keyboard keys - enable keyboard recording;</li>
+        <li> Mouse buttons - enable mouse buttons recording;</li>
+        <li> Mouse wheel - enable the mouse wheel recording;</li>
+        <li> Absolute - select recording mouse movement by absolute coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.moveTo(x,y)</strong> method;</li>
+        <li> Relative - select recording mouse movement by relative coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.move(dx,dy)</strong> method;</li>
+        <li> Delays - include delays between events in the result.</li>
+        <li> Encoding selection menu (unicode, base64, base64-zip) - select the format in which the resulting string will be presented;</li>
+        <li> fixed rate - enable the recording with fixed frequency of mouse movement events;</li>
+        <li> min. distance - enable the entry indicating the minimum distance between mouse movement events;</li>
+        <li> stop points - include a record with the definition of stop points. </li>
     </ul>
 
-    <p>Меню выбора кодировки пердлагает на выбор три варианта</p>
+    <p>The encoding selection menu offers a choice of three options</p>
     <ul>
-        <li>unicode - записанные события будут представлены в виде символов юникода. Этот вариант самый компактный, так как на каждый числовой параметр приходится только по одному символу. При использовании символов юникода может быть ситуация, когда после копирования его в другое приложения, он может быть поврежден, из-за разлычных преобразований кодировок.</li>
-        <li>base64 -  записаные события будут представлены в виде символов использующих таблицу base64. Рекомендуется использовать данную опцию. Код в таком представлении можно без опасения копировать и передавать другим пользователям.</li>
-        <li>base64-zip - используется аналогичная запись как и в base64, но так же проводится сжатие строки с целью экономии места. После сжатия редактирование строки невозможно. Изменение одного символа повлечет к невозможности декодировая строки обратно</li>
+        <li>unicode - the recorded events will be represented as unicode characters. This option is the most compact, since each numeric parameter equals to an one character. If you use Unicode characters, there may be a situation where, after copying it to another application, it may be corrupted, due to the different encoding conversions.</li>
+        <li>base64 - recorded events will be represented as characters using the base64 table. It is recommended to use this option. The code in such a representation can be copied without fear being corrupted and passed on to other users.</li>
+        <li>base64-zip - a similar option is used as in base64, but also performed a string compression to save space. After compression, editing a string is impossible. Changing one character will corrupt whole string and as a result the impossibility of decoding the string back</li>
     </ul>
-    <p>Подробнее остановимся на том, как работают последние три опции. Эти опции созданы для уменьшения объема кода. Если они выключены, то результат будет максимально приближен к действиям пользователя.<br/>
-        Эти опции никоим образом не влияют на все события клавиатуры, колесика и клавиш мыши, а только отсеивают избыточные события перемещения мыши.</p>
-    <p>Опция <strong>фиксированная частота</strong> указывает максимальную частоту записи событий. Стандартно, курсор может изменять свое положения около 60-120 раз в секунду, в зависимости от системы, что означает, что в результат каждую секунду будут добавлены 60-120 событий перемещения мыши. Указав значение равное 30, к примеру, их количество можно сократить в 4 раза. Чем ниже значение, тем больше событий будут упущены. Возможна ситуация, когда необходимое событие будет не записано.<br>
-        Данная опция позволяет сократить количество кода и полностью сохраняет скорость передвижения курсора. Если вы в водном месте двигали курсор быстро, а в другом медленно, то эта разница так же будет заметна. Если двигать курсор очень медленно, то данная опция не поможет сократить объем кода, так как все события так же будут попадать в результат.</p>
-    <p>Опция <strong>минимальное расстояние</strong> указывает минимальное расстояние меду двумя событиями перемещения мыши. К примеру, минимальное расстояние установлено равным 100 пикселям, вы нажали кнопку мыши и теперь медленно ведете в сторону. Событие передвижения следующее за событием нажатия кнопки гарантировано попадет в результат, однако в результат не попадет ни одно событие передвижения курсора расстояние до которого будет меньше чем 100 пикселей.<br/>
-        Эта опция так же поможет вам сократит объем кода. Она позволит убрать избыточные события вне зависимости от того быстро вы передвигаете мышь или очень медленно.<br/>
-        Не рекомендуется устанавливать большие значения, так как результат может быть весьма непредсказуем.</p>
-    <p>Опция <strong>точки остановки</strong> позволить убрать недостатки от использования предыдущих двух опций. Если курсор простоял в данной точке не двигаясь дольше чем указанное количество мс., то событие перемещения курсора в эту точку гарантировано попадет в результат.<br/>
-        Таким образом, можно устанавливать любые значения для предыдущих двух опций и указывать особенно важные точки, которые обязательно должны попасть в результат, просто подержав курсов на месте некоторое время.<br/>
-        Частота обновления стандартного монитора 60 или 120 герц, что дает примерно 8.3 и 16.6 мс. на кадр. Если вы визуально можете заметить, что курсор замер на месте, значит время его остановки было более 17 и 34 мс. соответственно. Указывать значения меньше чем время за 2 кадра нет смысла. Рекомендуется указывать время минимум за 4 кадра: 34 и 67 мс.
+    <p>Let's take a closer look at how the last three options work. These options are designed to reduce the amount of code. If they are off, the result will be as close as possible to the actions of the user.<br/>
+        These options do not in any way affect all events of the keyboard, wheel and mouse buttons, but only filter out excessive mouse movement events.</p>
+    <p>The <strong>fixed frequency</strong> option specifies the maximum event recording frequency. Normally, the cursor can change its position about 60-120 times per second, depending on the system, which means that 60-120 mouse movement events will be added to the result every second. Specifying a value of 30, for example, their number can be reduced by 4 times. The lower the value, the more events will be missed. A situation is possible when the necessary event will not be recorded.<br>
+        This option allows you to reduce the amount of code and fully preserves the speed of cursor movement. If you move the cursor quickly in a one place, and slowly in another, this difference will also be noticeable. If you move the cursor very slowly, this option does not help to reduce the amount of code, because all events will also be included.
     </p>
+    <p>The <strong>minimum distance</strong> option specifies the minimum distance between two mouse movement events. For example, the minimum distance is set to 100 pixels, you pressed the mouse button and now slowly move to the side. The move event following the button click event is guaranteed added into the result, but the result will not get any cursor movement event the distance to which will be less than 100 pixels.<br/>
+        This option will also help you reduce the amount of code. It will allow you to remove redundant events, regardless of whether you quickly move the mouse or very slowly.<br/>
+        It is not recommended to set large values, since the result can be very unpredictable.</p>
+    <p>The option <strong>stop points</strong> allows you to remove disadvantages from using the previous two options. If the cursor has been stayed at a the same point without moving longer than the specified number of ms., then the event of moving a cursor to this point is guaranteed added into the result.<br/>
+        Thus, you can set any values for the previous two options and specify especially important points that must necessarily added into the result, simply holding the cursor still for a while.<br/>
+        The refresh rate of the standard monitor is 60 or 120 fps, which gives approximately 8.3 and 16.6 ms. on a one frame. If you can visually notice that the cursor is frozen in place, then its stop time was more than 17 and 34 ms. respectively. Specifying values less than the time for 2 frames does not make sense. It is recommended that you specify time minimum for 4 frames: 34 and 67 ms.</p>
 </div>
 <script src="guide.js">
 </script>

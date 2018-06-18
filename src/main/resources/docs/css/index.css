@@ -21,7 +21,7 @@ p {
     left: 0px;
     position: fixed;
     top: 0px;
-    width: 200px;
+    width: 250px;
     z-index: 8;
     overflow: hidden;
     -webkit-transition: all 0.1s ease-in-out;
@@ -42,6 +42,7 @@ p {
 }
 
 .btn-expand-collapse {
+    visibility: hidden;
     position: absolute;
     display: block;
     left: 0px;
@@ -97,11 +98,11 @@ p {
 }
 
 .navbar-primary-menu li a:hover .glyphicon {
-    color: orchid;
+    color: #d58512;
 }
 
 .main-content {
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 15px;
 }
 

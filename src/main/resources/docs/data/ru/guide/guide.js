@@ -1,6 +1,7 @@
 const sidemenu = {
     "../index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
     "guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
+    "eventsRecording.html": ["Захват событий", "text", ""],
     "loops.html": ["Циклы", "text", ""],
     "functions.html": ["Функции", "text", ""],
     "classes.html": ["Классы и объекты", "text", ""],
@@ -8,9 +9,8 @@ const sidemenu = {
     "mouseWheelAndButtons.html": ["Кнопки и колесико мыши", "text", ""],
     "cursorMoving.html": ["Перемещение курсора", "text", ""],
     "delays.html": ["Задержки", "text", ""],
-    "eventsRecording.html": ["Захват событий", "text", ""],
-    "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
     "delaySystem.html": ["Система задержек", "text", ""],
+    "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
     "delaysInCombined.html": ["Задержки в combined.run", "text", ""]
 };
 

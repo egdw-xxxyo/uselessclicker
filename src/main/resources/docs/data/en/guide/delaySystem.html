@@ -16,7 +16,44 @@
     </ul>
 </nav>
 <div class="main-content">
-    <h1> Doesn't complete yet </h1>
+    <h1>Delay system</h1><br/>
+    <p> Each event, for each object, has its own predefined delay. For example, calling the <strong>key.press('BTN')</strong> method does not actually end immediately. Inside there is a built-in delay <strong>pressDelay</strong>, which is called immediately after the event is called. That is, the internal structure of <strong>key.press('BTN')</strong> looks like this: </p>
+    <div class="codebox">
+    <pre><code>press('KEY');
+sleep(pressDelay);
+</code></pre>
+    </div>
+    <p>The delay always occurs after the main event is called. Thus, the event occurs almost immediately after the method is called.</p>
+    <p><strong>The default delay is set to 10ms.</strong>. The injecting a delay inside the method allows you to not worry about adding the delay after each event manually. This delay can be set by the method with the prefix <strong>set</strong>, which allows you to flexibly configure the script and do not worry that the script can suddenly freeze because of too many events per second. Also, for each of the delays, there are methods for obtaining them with the prefix <strong>get</strong> and resetting the delays to the standard value with the prefix <strong>reset</strong>. The following is a complete list of methods for working with delays.</p>
+    <div class="codebox">
+    <pre><code>// key
+// press
+key.setPressDelay(pressDelay);
+key.getPressDelay();
+// release
+key.setReleaseDelay(releaseDelay);
+key.getReleaseDelay();
+// reset  
+key.resetDelays();
+
+        
+// mouse
+// press
+mouse.setPressDelay(pressDelay);
+mouse.getPressDelay();
+// release
+mouse.setReleaseDelay(releaseDelay);
+mouse.getReleaseDelay();
+// wheel
+mouse.setWheelDelay(wheelDelay);
+mouse.getWheelDelay();
+// move
+mouse.setMoveDelay(moveDelay);
+mouse.getMoveDelay();
+// reset
+mouse.resetDelays();
+</code></pre>
+    </div>
 </div>
 <script src="guide.js">
 </script>

@@ -16,11 +16,9 @@
     </ul>
 </nav>
 <div class="main-content">
-   
-        <br/>
-    <h1>Keyboard</h1><br/>
-    <p>
-    To work with the keyboard there is a built-in object "key" is used. <br/> Let's take a sample code for working with the keyboard object. Paste the code, run it and select any text field. After running the code you have only 5 seconds. Hurry up.
+    <h1>Клавиатура</h1><br/>
+    <p>Для работы с клавиатруой существует встроенный объект <strong>key</strong>". <br/>
+        Рассмотрим пример кода для работы с объектом клавиатуры. Вставьте код, запустите его и выберите любое текстовое поле. После запуска кода на все про все у вас есть 5 секунд. Поторопитесь!
     </p>
     <div class="codebox">
     <pre><code>system.sleep(5000);
@@ -33,24 +31,24 @@ key.perform('E','RELEASE');
 key.type('L L O SPACE W O R L D');
 </code></pre>
     </div>
-    <p>This script generates events for pressing and releasing keyboard keys. It uses the basic  available methods(press, release, preform, type). If more than one key is specified in the parameters, then the events for each key will be called sequentially one after another. So, the record
+    <p>Данный скрипт генерирует события нажатия и отпускания клавиш клавиатуры. В нем используются основные доступные методы. В качестве параметров используются имена клавиш, с которыми вы хотите работать, записанные через пробел. Если в параметре указано больше одной клавиши, то события для каждой клавиши будут вызваны последовательно в порядке следования. Так, запись
     </p>
     <div class="codebox">
         <pre><code>key.press('CONTROL A')</code></pre>
     </div>
-    <p><span>is equivalent to the</span></p>
+    <p><span>эквивалентна записи</span></p>
     <div class="codebox">
     <pre><code>key.press('CONTROL'); 
 key.press('A');</code></pre>
     </div>
-    <p>The "type" method generates successive press and release events for each key. So the line
+    <p>Метод <strong>type</strong> генерирует последовательно для каждой клавиши события нажатия и отпускания клавиш. Строчка
     </p>
     <div class="codebox">
         <pre><code>key.type('H E L L O SPACE W O R L D');</code></pre>
     </div>
-    <p>The line sequentially generates events for text output<strong>"hello
-        world"</strong>. Remember that the method only generates the specified events, and does not actually print the text. <strong>"key.type('Hello World);"</strong> doesn't work, because to display of capital letters <strong>SHIFT</strong>or<strong>CAPS_LOCK</strong><span> key press events are required, and the space is used to separate key names</span><br/><br/>
+    <p>последовательно генерирует события для вывода текста <strong>"hello world"</strong>.  Помните, что метод только генерирует указанные события, а не в действительности печатает переданный ему в параметре текст и запись. <strong>key.type('Hello World)</strong> работать не будет, так как для отображения заглавных букв нужны события нажатия клавиш <strong>SHIFT</strong> или <strong>CAPS_LOCK</strong>, а пробел используется для разделения имен клавиш.
     </p>
+
 </div>
 <script src="guide.js">
 </script>
