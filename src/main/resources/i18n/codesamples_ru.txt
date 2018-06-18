@@ -1017,7 +1017,7 @@ system.setSpeed(1);
   
 Обратная величина к множителю задержек
 
-$btnTemplateSystemSetMultiplierCode:
+$btnTemplateSystemSetSpeedCode:
 system.setSpeed(1);
 
 /////////////////////////////////////

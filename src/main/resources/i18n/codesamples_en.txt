@@ -959,7 +959,7 @@ Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
-$btnTemplateSystemSetMultiplierCode:
+$btnTemplateSystemSetSpeedCode:
 system.setSpeed(1);
 
 /////////////////////////////////////
