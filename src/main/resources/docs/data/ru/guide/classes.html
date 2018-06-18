@@ -1,0 +1,59 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "classes.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Классы и объекты</h1><br/>
+    <p>Для создания класса добавим шаблон из меню <strong>Шаблоны&gt;Язык&gt;class</strong>. В поле редактирования будет вставлен шаблон функции с именем <strong>Class</strong>. Оператор <strong>class</strong> не поддерживается, потому придется использовать такую конструкцию.
+    </p>
+    <div class="codebox">
+<pre><code>function Class (name) {
+    this.name = name; // поле класса
+    this.echo = function(text){ // метод класса
+        return text;
+    };
+}
+</code></pre>
+    </div>
+    <p>Шаблон содержит класс с одним полем и эхо-функцией. Объект класса можно создать при помощи следующего кода
+    </p>
+    <div class="codebox">
+        <pre><code>var obj = new CLass();</code></pre>
+    </div>
+    <p>Более наглядный пример с использованием классов и объектов. Создадим объект <strong>myNumber</strong>, который сможет хранить в себе число и инкрементировать его.
+    </p>
+    <div class="codebox">
+<pre><code>function MyNumber(n) {
+  this.n = n; // поле класса
+  this.inc = function(){ // метод "увеличить число на 1"
+    n++;
+  };
+  this.get = function(){ // метод "получить значение"
+    return n;
+  };
+}
+
+var myNumber = new MyNumber(0); // создание объекта
+myNumber.inc(); // вызов метода 3 раза
+myNumber.inc();
+myNumber.inc();
+system.println('My number = '+myNumber.get()); // вывод
+</code></pre>
+    </div>
+</div>
+<script src="guide.js">
+</script>
+</body></html>

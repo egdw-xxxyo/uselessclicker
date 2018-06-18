@@ -1,0 +1,71 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "cursorMoving.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Перемещение курсора</h1><br/>
+    <p>Для симуляции передвижения мыши существую два основных метода <strong>mouse.move(dx,dy)</strong> и <strong>mouse.moveTo(x,y)</strong>.<br/>Метод <strong>move</strong> перемещает курсор относительно текущего положения курсора, то есть, по относительным координатам. Запустите следующий код и обратите внимание на начальное положение курсора и в каком направлении он движется. Параметры могут быть как положительные так и отрицательные. Если параметр отрицательный, то это указывает на обратное смещение по оси координат и курсор будет двигаться в обратную сторону.</p>
+    <div class="codebox">
+    <pre><code>for(i=0;i&lt;100;i++){
+    mouse.move(2,2);
+}
+</code></pre>
+    </div>
+    <p>Метод <strong>moveTo</strong> передвигает курсор в указанную точку экрана, то есть, передвигает его в указанные абсолютные координаты, где точка 0,0 это левый верхний угол экрана. Координаты не могут быть больше размера вашего монитора или меньше нуля. </p>
+    <div class="codebox">
+    <pre><code>for(i=0;i&lt;100;i++){
+    mouse.moveTo(i,i);
+}
+</code></pre>
+    </div>
+    <p>Существует также множество комбинированных методов, которые упрощают работу с мышью. Все они подчиняются определенным правилам наименования. Если в конце добавляется окончание <strong>At</strong>, это означает, что данное событие будет произведено в указанной точке, то есть, курсор сначала будет передвинут в указанную точку и потом будет произведено событие. Если метод начинается со слов <strong>moveAnd</strong>, то это означает, что курсор будет сначала передвинут относительно предыдущего положения и потом будет произведено событие.</p>
+    <br/>
+    <ul>
+        <li><strong>At</strong> - абсолютное перемещение, переместить курсор в указанную точку;</li>
+        <li><strong>moveAnd</strong> - относительное перемещение, переместить курсор на указанное значение.</li>
+    </ul>
+    <p>Стоит понимать, что данные методы не добавляют нового функционала, а лишь упрощают запись и чтение кода. К примеру, ниже приведеный пример кода, который выполняет абсолютно одинаковые фунции.
+    </p>
+    <div class="codebox">
+    <pre><code>
+mouse.moveTo(0,0);// переместить курсор в точку 0,0 
+mouse.press('LEFT');// нажать левую кнопку мыши
+mouse.release('LEFT');// отпустить левую кнопку мыши
+
+// аналогично
+mouse.moveTo(0,0);
+mouse.click('LEFT');
+
+// аналогично
+mouse.clickAt('LEFT',0,0);
+
+
+mouse.move(10,10);// передвинуть курсор на 10 пикселей вниз и вправо
+mouse.press('LEFT');// нажать левую кнопку мыши
+mouse.release('LEFT');// отпустить левую кнопку мыши
+
+// аналогично
+mouse.move(10,10);
+mouse.click('LEFT');
+        
+// аналогично
+mouse.moveAndClick('LEFT',10,10);
+</code></pre>
+    </div>
+</div>
+<script src="guide.js">
+</script>
+</body></html>

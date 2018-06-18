@@ -1,0 +1,78 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "eventsRecording.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Events recording</h1><br/>
+    <p>Lets's have a look at the mechanism for recording events in the application. All necessary controls for recording events are in the right menu in the <strong>Event recording</strong> entry. Elements are divided into separate groups. At the time of writing, all elements are divided into the following groups:
+    </p>
+    <ul>
+        <li>Keyboard</li>
+        <li>Mouse (basics)</li>
+        <li>Mouse (buttons, wheel)</li>
+        <li>Mouse (click)</li>
+        <li>Combined</li>
+    </ul>
+    <p>To record an event, choose a place in the editor where you want to insert the code, select the recording method you want, (use the control key if the recording method requires it), perform the necessary actions, disable the events recording.</P>
+    <p>Recording the keyboard<br/>
+            The feature of the keyboard recording is that when it is turned on, the ability to edit the script from the keyboard is disabled. If you enable it, then the keys will be duplicated to the output. So when typing <strong>hello world</strong> with the selected method to insert the key names <strong>Event capture&gt;Keyboard&gt;key name</strong> in the output will be <strong>H E L O SPACE W O R L D</strong> instead of <strong>hH eE lL lL o o SPACE wW oO rR lL dD</strong>.<br/>
+            It is necessary to talk apart about the method for inserting key names. If you forget how a key is called, it will allow you not to search for its in the documentation, but quickly insert the needed name.</P>
+    <p>Mouse recording<br/>
+            The feature of the mouse recording is in using the control key. By default, the control key is set to the <strong>CONTROL</strong>, you can change it in the settings.<br/>
+            To record the mouse, you need to choose a method, then hold the control key, move your mouse and release the control key.<br/>
+            The capture method of using the control key is chosen in order to make it easier to control those events that should be included in the output.<br/>
+            Please note that in many applications, the <strong>CONTROL</strong> control key will not work correctly, because often <strong>CONTROL</strong> in conjunction with the mouse button is already reserved for other actions. Therefore, for each application you have to select your control key, which will not conflict with the program.</P>
+    <p>Combined recording<br/>
+            This is the most extensive tool for recording user actions. It is able to record keyboard and mouse events, handle them appropriately and save it all in a compact text view. <br/>
+            To activate the combined recording, you need to perform the <strong>activate</strong> button, and press the control key. <br/>
+            Recording of events begins after releasing the control key, and stops when you press it. This avoids recording the events of the control key.<br/>
+        As a control key it is possible to set a key shortcut, but it should be taken into account that in this case the events of pressing and releasing from the list of control keys will also be recorded.<br>
+            To control the combined event recording, there are several options:
+    </p>
+    <ul>
+            <li> Keyboard keys - enable keyboard recording;</li>
+            <li> Mouse buttons - enable mouse buttons recording;</li>
+            <li> Mouse wheel - enable the mouse wheel recording;</li>
+            <li> Absolute - select recording mouse movement by absolute coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.moveTo(x,y)</strong> method;</li>
+            <li> Relative - select recording mouse movement by relative coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.move(dx,dy)</strong> method;</li>
+            <li> Delays - include delays between events in the result;</li>
+            <li> Encoding selection menu (unicode, base64, base64-zip) - select the format in which the resulting string will be presented; </ i>
+            <li> fixed rate - enable the recording with fixed frequency of mouse movement events; </li>
+            <li> min. distance - enable the entry indicating the minimum distance between mouse movement events; </li>
+            <li> stop points - include a record with the definition of stop points. </li>
+    </ul>
+
+    <p>Меню выбора кодировки пердлагает на выбор три варианта</p>
+    <ul>
+        <li>unicode - записанные события будут представлены в виде символов юникода. Этот вариант самый компактный, так как на каждый числовой параметр приходится только по одному символу. При использовании символов юникода может быть ситуация, когда после копирования его в другое приложения, он может быть поврежден, из-за разлычных преобразований кодировок.</li>
+        <li>base64 -  записаные события будут представлены в виде символов использующих таблицу base64. Рекомендуется использовать данную опцию. Код в таком представлении можно без опасения копировать и передавать другим пользователям.</li>
+        <li>base64-zip - используется аналогичная запись как и в base64, но так же проводится сжатие строки с целью экономии места. После сжатия редактирование строки невозможно. Изменение одного символа повлечет к невозможности декодировая строки обратно</li>
+    </ul>
+    <p>Подробнее остановимся на том, как работают последние три опции. Эти опции созданы для уменьшения объема кода. Если они выключены, то результат будет максимально приближен к действиям пользователя.<br/>
+        Эти опции никоим образом не влияют на все события клавиатуры, колесика и клавиш мыши, а только отсеивают избыточные события перемещения мыши.</p>
+    <p>Опция <strong>фиксированная частота</strong> указывает максимальную частоту записи событий. Стандартно, курсор может изменять свое положения около 60-120 раз в секунду, в зависимости от системы, что означает, что в результат каждую секунду будут добавлены 60-120 событий перемещения мыши. Указав значение равное 30, к примеру, их количество можно сократить в 4 раза. Чем ниже значение, тем больше событий будут упущены. Возможна ситуация, когда необходимое событие будет не записано.<br>
+        Данная опция позволяет сократить количество кода и полностью сохраняет скорость передвижения курсора. Если вы в водном месте двигали курсор быстро, а в другом медленно, то эта разница так же будет заметна. Если двигать курсор очень медленно, то данная опция не поможет сократить объем кода, так как все события так же будут попадать в результат.</p>
+    <p>Опция <strong>минимальное расстояние</strong> указывает минимальное расстояние меду двумя событиями перемещения мыши. К примеру, минимальное расстояние установлено равным 100 пикселям, вы нажали кнопку мыши и теперь медленно ведете в сторону. Событие передвижения следующее за событием нажатия кнопки гарантировано попадет в результат, однако в результат не попадет ни одно событие передвижения курсора расстояние до которого будет меньше чем 100 пикселей.<br/>
+        Эта опция так же поможет вам сократит объем кода. Она позволит убрать избыточные события вне зависимости от того быстро вы передвигаете мышь или очень медленно.<br/>
+        Не рекомендуется устанавливать большие значения, так как результат может быть весьма непредсказуем.</p>
+    <p>Опция <strong>точки остановки</strong> позволить убрать недостатки от использования предыдущих двух опций. Если курсор простоял в данной точке не двигаясь дольше чем указанное количество мс., то событие перемещения курсора в эту точку гарантировано попадет в результат.<br/>
+        Таким образом, можно устанавливать любые значения для предыдущих двух опций и указывать особенно важные точки, которые обязательно должны попасть в результат, просто подержав курсов на месте некоторое время.<br/>
+        Частота обновления стандартного монитора 60 или 120 герц, что дает примерно 8.3 и 16.6 мс. на кадр. Если вы визуально можете заметить, что курсор замер на месте, значит время его остановки было более 17 и 34 мс. соответственно. Указывать значения меньше чем время за 2 кадра нет смысла. Рекомендуется указывать время минимум за 4 кадра: 34 и 67 мс.
+    </p>
+</div>
+<script src="guide.js">
+</script>
+</body></html>

@@ -1,0 +1,53 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "delays.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Задержки</h1><br/>
+    <p>Между любыми событиями и вызовами методов необходимы задержки. Для реализации задержек существует метод <strong>system.sleep(delay)</strong>. Он приказывает системе подождать в этом месте скрипта указанное количество миллисекунд и только потом продолжить выполнение. Задержки используются для симуляции реального поведения пользователя. Реальный человек не может мгновенно напечатать более 100 символов и не каждая программа способна корректно обработать ввод такого рода, некоторые события будут просто упущены. Потому, скрипт необходимо замедлять принудительно.<br/>
+        Внизу приведен пример скрипта для ввода слова <strong>Hello</strong> который записан с действий реального человека.
+    </p>
+    <div class="codebox">
+    <pre><code>key.press('SHIFT');
+system.sleep(228);
+key.press('H');
+system.sleep(65);
+key.release('H');
+system.sleep(25);
+key.release('SHIFT');
+system.sleep(142);
+key.press('E');
+system.sleep(60);
+key.release('E');
+system.sleep(95);
+key.press('L');
+system.sleep(65);
+key.release('L');
+system.sleep(78);
+key.press('L');
+system.sleep(66);
+key.release('L');
+system.sleep(102);
+key.press('O');
+system.sleep(70);
+key.release('O');
+</code></pre>
+    </div>
+    <p>Обратите внимание на задержки между событиями. В сумме, это именно то время, которое требуется реальному человеку чтобы напечатать данное слово. Без задержек пользовательский ввод невозможен. Можете попробовать выполнить скрипт с нулевыми задержками, вероянее всего он зависнет.
+</div>
+<script src="guide.js">
+</script>
+</body></html>

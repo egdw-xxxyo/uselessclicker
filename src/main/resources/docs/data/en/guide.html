@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Guide</title>
+</head>
+<body>
+<p><a href="#interface">Интерфейс</a><br/>
+    <a href="#controlObjects">Объекты управления</a><br/>
+    <a href="#firstScript">Первый скрипт</a><br/>
+    <a name="interface"></a><br/>
+    <strong class="text-strong">Application interface</strong><br/>
+    The upper control panel contains the basic controls for working with the application. <br/> At the center there are two text fields: upper one is for editing the script, which is executed by the application, and the lower one is used for system messages.
+</p>
+<ul>
+    <li>New - to create new file</li>
+    <li>open - to open an existing file</li>
+    <li>Save - to save opened file. If a file was not been opened, then a window with a proposal to select a location for the new file will be shown</li>
+    <li>Save as - to save 
+        Сохр. как; сохранить скрипт в новом файле. Если до этого был открыт другой файл то открытый файл остается
+        неизменным.
+    </li>
+    <li>Запуск; запустить скрипт находящийся в поле редактирования на обработку. Если до этого был запущен ругой
+        скрипт то он будет экстренно приостановлен
+    </li>
+    <li>Стоп; приостановить запущенный скрипт</li>
+    <li>Сервер; открыть окно для настройки и запуска сервера</li>
+    <li>Настройки; открыть окно с основными настройками приложения</li>
+    <li>О программе - открыть окно с информацие о программе и разработчиках</li>
+</ul>
+<p><a name="controlObjects"></a><br/><strong class="text-strong">Объекты управления</strong><br/>Для создания сценариев в приложение используется<strong
+        class="text-strong">"JavaScript"</strong>под движком<strong class="text-strong">"Nashorn"</strong>. Это означает, что может использоваться полный синтаксис и библиотеки поддерживаемые данным движком. Полную информацию о поддерживаемых библиотеках и синтаксисе можете найти здесь ***.<br/>Для управления компьютером в окружение скрипта введены несколько основных объектов, которые отображаю основные элементы компьютера.<br/>Перечень доступных объектов:
+</p>
+<ul>
+    <li>mouse - мышь</li>
+    <li>key - клавиатура</li>
+    <li>combined - комбинированный объект для работы с мышью и клавиатурой</li>
+    <li>system - система</li>
+    <li>clipboard - буфер обмена</li>
+</ul>
+<p>Доступ к параметрам и методом объекта осуществляется через оператор точку.<br/><br/><a
+        name="firstScript"></a><br/><strong class="text-strong">Первый скрипт</strong><br/>Напишем первый скрипт. Вставьте следующий код в поле редактирования и выполните скрипт нажав кнопку "Запуск".
+</p>
+<div class="codebox">
+    <p>CODE:<a href="https://3bytes.pp.ua/viewtopic.php?f=5&amp;t=4#"
+                                  onclick="selectCode(this); return false;">SELECT ALL</a></p>
+    <pre><code>system.println('Hello world);</code></pre>
+</div>
+<p>Если все сделано правильно, то вы увидите в поле вывода сообщение "Hello world". Системный объект содержит методы для работы с системой, такие как вывод системных сообщений или приостановка выполнения. При выводе сообщений сообщения выводятся и в стандартный поток вывода. Для проверки этого можете запустить приложение через консоль.<br/>Так что, для работы с любым из объектов можно выделить основный принцип доступа
+</p>
+<div class="codebox">
+    <p>CODE:<a href="https://3bytes.pp.ua/viewtopic.php?f=5&amp;t=4#"
+                                  onclick="selectCode(this); return false;">SELECT ALL</a></p>
+    <pre><code>объект.метод('текстовый параметр',параметр);</code></pre>
+</div>
+<p>Полный список доступных объектов и их методов можно найти в документации либо пройти в правое меню в подпункт "Шаблоны", где можно вставить нужный шаблон и прочитать краткое описание для данного метода.<br/>
+<p><a name="combinedObject"></a><br/><strong class="text-strong">Объект combined</strong><br/>Данный объект служит для воспроизведения действий как мыши, так и клавиатуры одновременно. Основным его методом является метод<strong
+        class="text-strong">run</strong>. Данный метод получает строку в качестве параметра. Строка представляет из себя компактную запись событий. В каждом символе передаваемой строки закодирован определенный передаваемый параметр. Кодировка происходит в символы юникода (в будущем и другие форматы).<br/><br/>Рассмотрим подробнее каждое возможное событие и их параметры.
+</p>
+<ul>
+    <li>k# &ndash; key.press(#) зажать клавишу '#'</li>
+    <li>K# &ndash; key.release(#) отпустить клавишу '#'</li>
+    <li>l &ndash; mouse.press('LEFT') зажать левую кнопку мыши</li>
+    <li>L &ndash; mouse.release('LEFT') отпустить левую кнопку мыши</li>
+    <li>r &ndash; mouse.press('RIGHT') зажать правую кнопку мыши</li>
+    <li>R &ndash; mouse.release('RIGHT') отпустить правую кнопку мыши</li>
+    <li>m &ndash; mouse.press('MIDDLE') зажать среднюю кнопку мыши</li>
+    <li>M &ndash; mouse.release('MIDDLE') отпустить среднюю кнопку мыши</li>
+    <li>w# &ndash; mouse.wheel('DOWN',#) прокрутить колесико вниз '#'</li>
+    <li>W# &ndash; mouse.wheel('UP',#) прокрутить колесико вверх '#'</li>
+    <li>A#$ &ndash; mouse.moveTo(#,$) передвинуть курсор в точку (#,$)</li>
+    <li>X#$ &ndash; mouse.move(#,$) передвинуть курсор на (#,$)</li>
+    <li>d# &ndash; system.sleep(#) подождать '#' миллисекунд</li>
+    <li>D# &ndash; system.sleep(#*1000) подождать '#' секунд</li>
+</ul>
+<p>Каждое событие записывается с определенной буквы. Некоторые события не имеют параметров(к примеру, зажать левую кнопку мыши), некоторые имеют один параметр(зажать клавишу '#'), а некоторые имеют два параметра (передвинуть курсор в точку (#,$)). При декодировании списка событий каждый из параметров преобразуется в числовое либо буквенное представление и вызывается соответствующий метод.<br/>
+</body>
+</html>

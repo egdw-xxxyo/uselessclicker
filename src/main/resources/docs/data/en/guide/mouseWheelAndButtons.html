@@ -1,0 +1,41 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "mouseWheelAndButtons.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+
+    To work with the mouse buttons and the wheel there is a built-in "mouse" object. Methods for working with buttons are similar to methods for working with keyboard keys(press, release, button, click). Look at the code below.
+    <div class="codebox">
+    <pre><code>mouse.press('LEFT');
+mouse.release('LEFT');
+        
+mouse.button('RIGHT','PRESS');
+mouse.button('RIGHT','RELEASE');
+
+mouse.click('MIDDLE');
+</code></pre>
+    </div>
+    <p>Also, the "mouse" object has methods for working with the scroll wheel. To control the mouse wheel, you must specify two parameters: the direction of scrolling <strong> "UP / DOWN" </strong> and the numeric parameter the number of lines.
+    </p>
+    <div class="codebox">
+    <pre><code>mouse.wheel('DOWN',3);
+mouse.wheel('UP',3);
+</code></pre>
+    </div>
+</div>
+<script src="guide.js">
+</script>
+</body></html>

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "classes.html";</script>
+    <link rel='stylesheet prefetch' href='guide.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Classes and objects</h1><br/>
+    <p>To create a class, add a template from the <strong>Templates&gt;Language&gt;class</strong> menu. In the edit field, a function template with the name <strong>Class</strong> will be inserted. The <strong>class</strong> operator is not supported, therefore it is necessary to use such a construction.
+    </p>
+    <div class="codebox">
+<pre><code>function Class (name) {
+    this.name = name; // the class field
+    this.echo = function(text){ // the class method
+        return text;
+    };
+}
+</code></pre>
+    </div>
+    <p>The template contains the class with one field and one echo-function. You can create an object using the following code
+    </p>
+    <div class="codebox">
+        <pre><code>var obj = new CLass();</code></pre>
+    </div>
+    <p>A more illustrative example using classes and objects. Let's create a <strong>myNumber</strong> object that can store the number and increment it.
+    </p>
+    <div class="codebox">
+<pre><code>function MyNumber(n) {
+  this.n = n; // the class field
+  this.inc = function(){ // the method "increment the value"
+    n++;
+  };
+  this.get = function(){ // the method "get the value"
+    return n;
+  };
+}
+
+var myNumber = new MyNumber(0); // the object creating
+myNumber.inc(); // the calling the inc() method three times
+myNumber.inc();
+myNumber.inc();
+system.println('My number = '+myNumber.get()); // the writing to an output
+</code></pre>
+    </div>
+</div>
+<script src="guide.js">
+</script>
+</body></html>
