@@ -9,11 +9,12 @@ import org.dikhim.jclicker.actions.KeyboardListener;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
-public class KeyEventsManager implements NativeKeyListener {
+public class KeyEventsManager implements NativeKeyListener{
 
     private static KeyEventsManager instance;
     // pressed keys
-    static Set<String> pressedKeys = new HashSet<>();
+    private Set<String> pressedKeys = new HashSet<>();
+    private List<String> ignoredPrefixes = new ArrayList<>();
 
     // handlers
     private static List<KeyboardListener> keyboardListeners = Collections.synchronizedList(new ArrayList<>());
@@ -27,6 +28,20 @@ public class KeyEventsManager implements NativeKeyListener {
         return instance;
     }
 
+    private void fire(KeyboardEvent keyboardEvent) {
+        for (KeyboardListener listener : keyboardListeners) {
+            boolean ignored = false;
+            for (String prefix : ignoredPrefixes) {
+                if (listener.getName().startsWith(prefix)) {
+                    ignored = true;
+                    break;
+                }
+            }
+            if (!ignored) listener.fire(keyboardEvent);
+        }
+
+    }
+
     @Override
     public synchronized void nativeKeyPressed(NativeKeyEvent e) {
         // build new key events
@@ -38,8 +53,7 @@ public class KeyEventsManager implements NativeKeyListener {
         KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "PRESS", time);
 
         // fire
-        for (KeyboardListener h : keyboardListeners)
-            h.fire(keyboardEvent);
+        fire(keyboardEvent);
     }
 
     @Override
@@ -52,8 +66,7 @@ public class KeyEventsManager implements NativeKeyListener {
         KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "RELEASE", time);
 
         // fire
-        for (KeyboardListener h : keyboardListeners)
-            h.fire(keyboardEvent);
+        fire(keyboardEvent);
 
         // add to pressed buttons
         pressedKeys.remove(key);
@@ -66,7 +79,7 @@ public class KeyEventsManager implements NativeKeyListener {
 
 
     public synchronized void addKeyboardListener(KeyboardListener keyboardListener) {
-        Thread thread = new Thread(()->{
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 KeyboardListener existingListener = null;
                 for (KeyboardListener h : keyboardListeners) {
@@ -84,8 +97,8 @@ public class KeyEventsManager implements NativeKeyListener {
         thread.start();
     }
 
-    public synchronized  void removeListenersByPrefix(String prefix) {
-        Thread thread = new Thread(()-> {
+    public synchronized void removeListenersByPrefix(String prefix) {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 keyboardListeners.removeIf(keyboardListener -> keyboardListener.getName().startsWith(prefix));
             }
@@ -93,14 +106,15 @@ public class KeyEventsManager implements NativeKeyListener {
         thread.start();
     }
 
-    public synchronized boolean isListenerExist(String name){
+    public synchronized boolean isListenerExist(String name) {
         for (KeyboardListener h : keyboardListeners) {
             if (h.getName().equals(name))
                 return true;
         }
         return false;
     }
-    public synchronized boolean isListenerExistByPrefix(String prefix){
+
+    public synchronized boolean isListenerExistByPrefix(String prefix) {
         for (KeyboardListener h : keyboardListeners) {
             if (h.getName().startsWith(prefix))
                 return true;
@@ -116,4 +130,11 @@ public class KeyEventsManager implements NativeKeyListener {
         return pressedKeys.containsAll(keys);
     }
 
+    public synchronized void ignorePrefix(String prefix) {
+        ignoredPrefixes.add(prefix);
+    }
+
+    public synchronized void removeIgnorePrefix(String prefix) {
+        ignoredPrefixes.remove(prefix);
+    }
 }

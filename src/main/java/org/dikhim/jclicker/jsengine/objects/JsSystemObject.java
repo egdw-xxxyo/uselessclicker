@@ -62,6 +62,26 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
+    public void keyIgnore() {
+        KeyEventsManager.getInstance().ignorePrefix("script.");
+    }
+
+    @Override
+    public void keyResume() {
+        KeyEventsManager.getInstance().removeIgnorePrefix("script.");
+    }
+
+    @Override
+    public void mouseIgnore() {
+
+    }
+
+    @Override
+    public void mouseResume() {
+
+    }
+
+    @Override
     public void onKeyPress(String functionName, String keys, Object... args) {
         KeyboardListener listener = new KeyListener(
                 "script." + functionName + "." + keys + ".press",

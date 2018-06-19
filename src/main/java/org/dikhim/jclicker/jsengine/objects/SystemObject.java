@@ -10,6 +10,14 @@ public interface SystemObject {
 
     float getSpeed();
     
+    void keyIgnore();
+    
+    void keyResume();
+    
+    void mouseIgnore();
+
+    void mouseResume();
+    
     void onKeyPress(String functionName, String keys, Object... args);
 
     void onKeyRelease(String functionName, String keys, Object... args);

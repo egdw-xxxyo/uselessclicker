@@ -37,6 +37,26 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
+    public void keyIgnore() {
+        buildStringForCurrentMethod();
+    }
+
+    @Override
+    public void keyResume() {
+        buildStringForCurrentMethod();
+    }
+
+    @Override
+    public void mouseIgnore() {
+        buildStringForCurrentMethod();
+    }
+
+    @Override
+    public void mouseResume() {
+        buildStringForCurrentMethod();
+    }
+
+    @Override
     public void onKeyPress(String functionName, String keys, Object... args) {
         buildStringForCurrentMethod(functionName, keys, args);
     }

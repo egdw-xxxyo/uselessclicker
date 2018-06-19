@@ -1,6 +1,7 @@
 package org.dikhim.jclicker.actions.managers;
 
 import org.dikhim.jclicker.actions.*;
+import org.dikhim.jclicker.actions.events.KeyboardEvent;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.events.MouseWheelEvent;
@@ -20,6 +21,8 @@ public class MouseEventsManager
         NativeMouseInputListener,
         NativeMouseWheelListener {
     private static MouseEventsManager instance;
+
+    private List<String> ignoredPrefixes = new ArrayList<>();
 
     // pressed buttons
     private Set<String> pressedButtons = new HashSet<>();
@@ -47,6 +50,47 @@ public class MouseEventsManager
         return MouseInfo.getPointerInfo().getLocation().y;
     }
 
+    private void fire(MouseButtonEvent mouseButtonEvent) {
+        for (MouseButtonHandler listener:buttonHandlers) {
+            boolean ignored = false;
+            for (String prefix : ignoredPrefixes) {
+                if (listener.getName().startsWith(prefix)) {
+                    ignored = true;
+                    break;
+                }
+            }
+            if (!ignored) listener.fire(mouseButtonEvent);
+        }
+
+    }
+
+    private void fire(MouseWheelEvent mouseWheelEvent) {
+        for (MouseWheelHandler listener:wheelHandlers) {
+            boolean ignored = false;
+            for (String prefix : ignoredPrefixes) {
+                if (listener.getName().startsWith(prefix)) {
+                    ignored = true;
+                    break;
+                }
+            }
+            if (!ignored) listener.fire(mouseWheelEvent);
+        }
+
+    }
+
+    private void fire(MouseMoveEvent mouseMoveEvent) {
+        for (MouseMoveHandler listener:moveHandlers) {
+            boolean ignored = false;
+            for (String prefix : ignoredPrefixes) {
+                if (listener.getName().startsWith(prefix)) {
+                    ignored = true;
+                    break;
+                }
+            }
+            if (!ignored) listener.fire(mouseMoveEvent);
+        }
+
+    }
 
     @Override
     public synchronized void nativeMousePressed(NativeMouseEvent nativeMouseEvent) {
@@ -65,9 +109,7 @@ public class MouseEventsManager
         MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButton, "PRESS", x, y, time);
 
         // fire
-        for (MouseButtonHandler h : buttonHandlers) {
-            h.fire(buttonEvent);
-        }
+        fire(buttonEvent);
 
     }
 
@@ -79,7 +121,7 @@ public class MouseEventsManager
         if (button.isEmpty()) return;// return if button is unknown
         // remove from pressed buttons
         pressedButtons.remove(button);
-        
+
         Set<String> releasedButton = new HashSet<>();
         releasedButton.add(button);
 
@@ -89,8 +131,7 @@ public class MouseEventsManager
         MouseButtonEvent buttonEvent = new MouseButtonEvent(button, releasedButton, "RELEASE", x, y, time);
 
         // fire
-        for (MouseButtonHandler h : buttonHandlers)
-            h.fire(buttonEvent);
+        fire(buttonEvent);
     }
 
     @Override
@@ -102,8 +143,7 @@ public class MouseEventsManager
         MouseMoveEvent moveEvent = new MouseMoveEvent(x, y, time);
 
         // fire
-        for (MouseMoveHandler h : moveHandlers)
-            h.fire(moveEvent);
+        fire(moveEvent);
     }
 
     @Override
@@ -127,10 +167,11 @@ public class MouseEventsManager
         MouseWheelEvent wheelEvent = new MouseWheelEvent(direction, amount, time, x, y);
 
         //fire
-        for (MouseWheelHandler h : wheelHandlers)
-            h.fire(wheelEvent);
+        fire(wheelEvent);
     }
 
+    
+    
     @Override
     public synchronized void nativeMouseClicked(NativeMouseEvent nativeMouseEvent) {
     }
@@ -215,7 +256,7 @@ public class MouseEventsManager
      */
 
     private synchronized void removeButtonListenersByPrefix(String prefix) {
-                buttonHandlers.removeIf(mouseButtonHandler -> mouseButtonHandler.getName().startsWith(prefix));
+        buttonHandlers.removeIf(mouseButtonHandler -> mouseButtonHandler.getName().startsWith(prefix));
     }
 
     /**
@@ -224,7 +265,7 @@ public class MouseEventsManager
      * @param prefix prefix of listeners
      */
     private synchronized void removeWheelListenersByPrefix(String prefix) {
-                wheelHandlers.removeIf(mouseWheelHandler -> mouseWheelHandler.getName().startsWith(prefix));
+        wheelHandlers.removeIf(mouseWheelHandler -> mouseWheelHandler.getName().startsWith(prefix));
     }
 
     /**
@@ -233,15 +274,16 @@ public class MouseEventsManager
      * @param prefix prefix of listeners
      */
     private synchronized void removeMoveListenersByPrefix(String prefix) {
-                moveHandlers.removeIf(mouseMoveHandler -> mouseMoveHandler.getName().startsWith(prefix));
+        moveHandlers.removeIf(mouseMoveHandler -> mouseMoveHandler.getName().startsWith(prefix));
     }
+
     /**
      * Remove all listeners with same prefix
      *
      * @param prefix prefix of listeners
      */
     public synchronized void removeListenersByPrefix(String prefix) {
-        Thread thread = new Thread(()-> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 removeButtonListenersByPrefix(prefix);
                 removeWheelListenersByPrefix(prefix);
@@ -249,5 +291,13 @@ public class MouseEventsManager
             }
         });
         thread.start();
+    }
+
+    public synchronized void ignorePrefix(String prefix) {
+        ignoredPrefixes.add(prefix);
+    }
+
+    public synchronized void removeIgnorePrefix(String prefix) {
+        ignoredPrefixes.remove(prefix);
     }
 }
