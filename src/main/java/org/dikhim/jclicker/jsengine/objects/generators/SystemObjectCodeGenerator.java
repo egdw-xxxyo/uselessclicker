@@ -38,6 +38,41 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
+    public void onKeyPress(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onKeyRelease(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onMousePress(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onMouseRelease(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onMouseMove(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onWheelDown(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onWheelUp(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
     public void print(String s) {
         buildStringForCurrentMethod(s);
     }

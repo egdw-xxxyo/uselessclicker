@@ -62,6 +62,46 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
+    public void onKeyPress(String functionName, Object... args) {
+        //TODO
+    }
+
+    @Override
+    public void onKeyRelease(String functionName, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onMousePress(String functionName, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onMouseRelease(String functionName, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onMouseMove(String functionName, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onWheelDown(String functionName, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onWheelUp(String functionName, Object... args) {
+        //TODO
+    }
+
+    @Override
     public void print(String s) {
         synchronized (monitor) {
             Out.print(s);
@@ -123,7 +163,7 @@ public class JsSystemObject implements SystemObject {
         if (ms <= 0) return;
         try {
             Thread.sleep(getMultipliedDelay(ms));
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
         }
     }
 

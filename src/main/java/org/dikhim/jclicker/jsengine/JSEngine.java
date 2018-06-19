@@ -23,14 +23,13 @@ import java.util.concurrent.TimeUnit;
 public class JSEngine {
     private BooleanProperty running = new SimpleBooleanProperty(false);
 
-    private List<Thread> threads = new ArrayList<>();
-    private ScheduledExecutorService service;
-    private List<Runnable> tasks = new ArrayList<>();
-
     private final Robot robot;
     private ScriptEngine engine;
     private Thread thread;
     private String code;
+
+    private MethodInvoker methodInvoker;
+
 
     public JSEngine(Robot robot) {
         this.robot = robot;
@@ -72,22 +71,6 @@ public class JSEngine {
     }
 
     /**
-     * Выполняется каждые н секунд в отедльном потоке
-     * Проверяет список задач, выполняет и удаляет задачу.
-     */
-
-    private void scheduledTask() {
-        @SuppressWarnings("rawtypes")
-        Iterator it = tasks.iterator();
-        while (it.hasNext()) {
-            Runnable task = (Runnable) it.next();
-            task.run();
-            it.remove();
-        }
-    }
-
-
-    /**
      * Stops the engine
      */
     @SuppressWarnings("deprecation")
@@ -107,14 +90,6 @@ public class JSEngine {
         }
         Platform.runLater(() -> running.setValue(false));
     }
-
-
-    public void addTask(Runnable task) {
-        tasks.add(task);
-    }
-
-
-    MethodInvoker methodInvoker;
 
     public void invokeFunction(String name, Object... args) {
         methodInvoker.invokeMethod(name, args);

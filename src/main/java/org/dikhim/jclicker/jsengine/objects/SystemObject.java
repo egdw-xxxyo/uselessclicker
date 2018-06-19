@@ -9,7 +9,21 @@ public interface SystemObject {
     float getMultiplier();
 
     float getSpeed();
+    
+    void onKeyPress(String functionName, Object ... args);
 
+    void onKeyRelease(String functionName, Object ... args);
+
+    void onMousePress(String functionName, Object ... args);
+
+    void onMouseRelease(String functionName, Object ... args);
+    
+    void onMouseMove(String functionName, Object ... args);
+    
+    void onWheelDown(String functionName, Object ... args);
+    
+    void onWheelUp(String functionName, Object ... args);
+    
     void print(String s);
 
     void println();
