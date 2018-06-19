@@ -92,7 +92,7 @@ public class JsSystemObject implements SystemObject {
     public void registerShortcut(String shortcut, String function) {
         synchronized (monitor) {
             ShortcutEqualsListener handler = new ShortcutEqualsListener("script." + function,
-                    shortcut, "PRESS", (e) -> engine.addTask(() -> engine.invokeFunction(function)));
+                    shortcut, "PRESS", (e) -> engine.invokeFunction(function));
             KeyEventsManager.getInstance().addKeyboardListener(handler);
         }
     }

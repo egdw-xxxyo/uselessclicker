@@ -12,9 +12,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 public class JSEngine {
     private BooleanProperty running = new SimpleBooleanProperty(false);
 
+    private List<Thread> threads = new ArrayList<>();
     private ScheduledExecutorService service;
     private List<Runnable> tasks = new ArrayList<>();
 
@@ -43,15 +42,9 @@ public class JSEngine {
 
     public void start() {
         stop();
-        service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(() -> {
-            if (thread == null) thread = Thread.currentThread();
-            scheduledTask();
-        }, 0, 17, TimeUnit.MILLISECONDS);
-
-        addTask(() -> {
-            KeyEventsManager.getInstance().removeListenersByPrefix("script.");
+        thread = new Thread(() -> {
             engine = new ScriptEngineManager().getEngineByName("nashorn");
+            methodInvoker = new MethodInvoker(engine);
             KeyboardObject keyboardObject = new JsKeyboardObject(robot);
             MouseObject mouseObject = new JsMouseObject(robot);
             SystemObject systemObject = new JsSystemObject(this);
@@ -70,6 +63,7 @@ public class JSEngine {
                 stop();
             }
         });
+        thread.start();
         Platform.runLater(() -> running.setValue(true));
     }
 
@@ -98,40 +92,36 @@ public class JSEngine {
      */
     @SuppressWarnings("deprecation")
     public void stop() {
-        tasks.clear();
-        if (service != null) {
-            service.shutdown();
+        KeyEventsManager.getInstance().removeListenersByPrefix("script.");
+        if (thread != null) {
             try {
-                service.awaitTermination(20, TimeUnit.MILLISECONDS);
-                service.shutdownNow();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (!service.isTerminated() && thread != null) {
-                try {
-                    thread.stop();
-                } catch (ThreadDeath ignored) {
+                thread.stop();
+            } catch (ThreadDeath ignored) {
 
-                }
-                service = null;
             }
+            thread = null;
         }
-        thread = null;
+        if (methodInvoker != null) {
+            methodInvoker.stop();
+            methodInvoker = null;
+        }
         Platform.runLater(() -> running.setValue(false));
     }
 
-    
+
     public void addTask(Runnable task) {
         tasks.add(task);
     }
 
-   
+
+    MethodInvoker methodInvoker;
+
     public void invokeFunction(String name, Object... args) {
-        try {
-            ((Invocable) engine).invokeFunction(name, args);
-        } catch (ScriptException | NoSuchMethodException e) {
-            Out.println(e.getMessage());
-        }
+        methodInvoker.invokeMethod(name, args);
+    }
+
+    public void registerInvocableMethod(String name, int maxNumberOfThreads) {
+        methodInvoker.registerMethod(name, maxNumberOfThreads);
     }
 
     public boolean isRunning() {
