@@ -9,50 +9,40 @@ import java.util.function.Consumer;
 
 public class ShortcutEqualsListener implements KeyboardListener {
     private String name;
-    private Set<Shortcut> stringShortcuts = new HashSet<>();
+    private String keys;
+    private Shortcut shortcut;
     private Consumer<KeyboardEvent> handler;
     private String action;
 
     public ShortcutEqualsListener() {
     }
 
-    public ShortcutEqualsListener(String name, Shortcut shortcut, String action, Consumer<KeyboardEvent> handler) {
-        this.name = name;
-        stringShortcuts.add(shortcut);
-        this.handler = handler;
-        this.action = action;
-    }
-    
     public ShortcutEqualsListener(String name, String shortcut, String action, Consumer<KeyboardEvent> handler) {
         this.name = name;
-        stringShortcuts.add(new StringShortcut(shortcut));
+        this.keys = shortcut;
+        this.shortcut = new StringShortcut(shortcut);
         this.handler = handler;
         this.action = action;
     }
 
-    public void addShortcut(Shortcut shortcut) {
-        stringShortcuts.add(shortcut);
+    @Override
+    public void setKeys(String keys) {
+        this.keys = keys;
+        shortcut.setKeys(keys);
+    }
+
+    @Override
+    public String getKeys() {
+        return keys;
+    }
+
+    public void setShortcut(Shortcut shortcut) {
+        this.shortcut = shortcut;
     }
 
     public void fire(KeyboardEvent keyboardEvent) {
         if (!action.equals(keyboardEvent.getAction())) return;
-        for (Shortcut sh : stringShortcuts) {
-            if (sh.isEqual(keyboardEvent.getPressedKeys())) handler.accept(keyboardEvent);
-        }
-    }
-
-    /**
-     * @return the shortcuts
-     */
-    public Set<Shortcut> getStringShortcuts() {
-        return stringShortcuts;
-    }
-
-    /**
-     * @param stringShortcuts the shortcuts to set
-     */
-    public void setStringShortcuts(Set<Shortcut> stringShortcuts) {
-        this.stringShortcuts = stringShortcuts;
+        if (shortcut.isEqual(keyboardEvent.getPressedKeys())) handler.accept(keyboardEvent);
     }
 
     /**

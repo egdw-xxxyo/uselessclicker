@@ -87,8 +87,8 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public void registerShortcut(String shortcut, String function) {
-        buildStringForCurrentMethod(shortcut, function);
+    public void registerMethod(String name, int maxThreads) {
+        buildStringForCurrentMethod(name, maxThreads);
     }
 
     @Override

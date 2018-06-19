@@ -1,8 +1,9 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 import javafx.application.Platform;
+import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.actions.ShortcutEqualsListener;
+import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
@@ -62,42 +63,68 @@ public class JsSystemObject implements SystemObject {
 
     @Override
     public void onKeyPress(String functionName, String keys, Object... args) {
-        //TODO
+        KeyboardListener listener = new KeyListener(
+                "script." + functionName + "." + keys + ".press",
+                keys,
+                "PRESS",
+                e -> engine.invokeFunction(functionName, args));
+        KeyEventsManager.getInstance().addKeyboardListener(listener);
     }
 
     @Override
     public void onKeyRelease(String functionName, String keys, Object... args) {
-        //TODO
-
+        KeyboardListener listener = new KeyListener(
+                "script." + functionName + "." + keys + ".release",
+                keys,
+                "RELEASE",
+                (e) -> engine.invokeFunction(functionName, args));
+        KeyEventsManager.getInstance().addKeyboardListener(listener);
     }
 
     @Override
     public void onMousePress(String functionName, String buttons, Object... args) {
-        //TODO
-
+        MouseButtonHandler mouseButtonHandler = new MouseButtonHandler(
+                "script." + functionName + "." + buttons + ".press",
+                buttons,
+                "PRESS",
+                e -> engine.invokeFunction(functionName, args));
+        MouseEventsManager.getInstance().addButtonListener(mouseButtonHandler);
     }
 
     @Override
     public void onMouseRelease(String functionName, String buttons, Object... args) {
-        //TODO
-
+        MouseButtonHandler mouseButtonHandler = new MouseButtonHandler(
+                "script." + functionName + "." + buttons + ".release",
+                buttons,
+                "RELEASE",
+                e -> engine.invokeFunction(functionName, args));
+        MouseEventsManager.getInstance().addButtonListener(mouseButtonHandler);
     }
 
     @Override
     public void onMouseMove(String functionName, Object... args) {
-        //TODO
-
+        MouseMoveHandler mouseMoveHandler = new MouseMoveHandler(
+                "script." + functionName + ".move",
+                e -> engine.invokeFunction(functionName, args));
+        MouseEventsManager.getInstance().addMoveListener(mouseMoveHandler);
     }
 
     @Override
     public void onWheelDown(String functionName, Object... args) {
-        //TODO
-
+        MouseWheelHandler mouseWheelHandler = new MouseWheelHandler(
+                "script." + functionName + ".wheel.down",
+                "DOWN",
+                e -> engine.invokeFunction(functionName, args));
+        MouseEventsManager.getInstance().addWheelListener(mouseWheelHandler);
     }
 
     @Override
     public void onWheelUp(String functionName, Object... args) {
-        //TODO
+        MouseWheelHandler mouseWheelHandler = new MouseWheelHandler(
+                "script." + functionName + ".wheel.up",
+                "UP",
+                e -> engine.invokeFunction(functionName, args));
+        MouseEventsManager.getInstance().addWheelListener(mouseWheelHandler);
     }
 
     @Override
@@ -121,19 +148,9 @@ public class JsSystemObject implements SystemObject {
         }
     }
 
-    /**
-     * Register shortcut for call function
-     *
-     * @param function name of function
-     * @param shortcut list of names of keys
-     */
     @Override
-    public void registerShortcut(String shortcut, String function) {
-        synchronized (monitor) {
-            ShortcutEqualsListener handler = new ShortcutEqualsListener("script." + function,
-                    shortcut, "PRESS", (e) -> engine.invokeFunction(function));
-            KeyEventsManager.getInstance().addKeyboardListener(handler);
-        }
+    public void registerMethod(String name, int maxThreads) {
+        engine.registerInvocableMethod(name, maxThreads);
     }
 
     @Override

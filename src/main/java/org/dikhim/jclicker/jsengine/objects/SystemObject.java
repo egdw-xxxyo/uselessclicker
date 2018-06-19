@@ -30,8 +30,8 @@ public interface SystemObject {
     
     void println(String s);
 
-    void registerShortcut(String shortcut, String function);
-
+    void registerMethod(String name, int maxThreads);
+    
     void resetMultiplier();
 
     void resetSpeed();
