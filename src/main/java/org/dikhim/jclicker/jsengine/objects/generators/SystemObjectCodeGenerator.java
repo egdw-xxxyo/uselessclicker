@@ -1,6 +1,5 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
-import org.apache.commons.io.FileUtils;
 import org.dikhim.jclicker.jsengine.objects.SystemObject;
 
 public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
@@ -38,6 +37,41 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
+    public void onKeyPress(String functionName, String keys, Object... args) {
+        buildStringForCurrentMethod(functionName, keys, args);
+    }
+
+    @Override
+    public void onKeyRelease(String functionName, String keys, Object... args) {
+        buildStringForCurrentMethod(functionName, keys, args);
+    }
+
+    @Override
+    public void onMousePress(String functionName, String buttons, Object... args) {
+        buildStringForCurrentMethod(functionName, buttons, args);
+    }
+
+    @Override
+    public void onMouseRelease(String functionName, String buttons, Object... args) {
+        buildStringForCurrentMethod(functionName, buttons, args);
+    }
+
+    @Override
+    public void onMouseMove(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onWheelDown(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
+    public void onWheelUp(String functionName, Object... args) {
+        buildStringForCurrentMethod(functionName, args);
+    }
+
+    @Override
     public void print(String s) {
         buildStringForCurrentMethod(s);
     }
@@ -53,8 +87,8 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public void registerShortcut(String shortcut, String function) {
-        buildStringForCurrentMethod(shortcut, function);
+    public void registerMethod(String name, int maxThreads) {
+        buildStringForCurrentMethod(name, maxThreads);
     }
 
     @Override

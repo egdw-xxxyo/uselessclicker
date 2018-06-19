@@ -74,7 +74,7 @@ public class KeyEventsManager implements NativeKeyListener {
                         existingListener = h;
                 }
                 if (existingListener != null) {
-                    existingListener.setStringShortcuts(keyboardListener.getStringShortcuts());
+                    existingListener.setKeys(keyboardListener.getKeys());
                     existingListener.setHandler(keyboardListener.getHandler());
                 } else {
                     keyboardListeners.add(keyboardListener);

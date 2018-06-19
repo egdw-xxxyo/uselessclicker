@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.objects.*;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
@@ -12,9 +13,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,13 +24,13 @@ import java.util.concurrent.TimeUnit;
 public class JSEngine {
     private BooleanProperty running = new SimpleBooleanProperty(false);
 
-    private ScheduledExecutorService service;
-    private List<Runnable> tasks = new ArrayList<>();
-
     private final Robot robot;
     private ScriptEngine engine;
     private Thread thread;
     private String code;
+
+    private MethodInvoker methodInvoker;
+
 
     public JSEngine(Robot robot) {
         this.robot = robot;
@@ -43,15 +42,9 @@ public class JSEngine {
 
     public void start() {
         stop();
-        service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleWithFixedDelay(() -> {
-            if (thread == null) thread = Thread.currentThread();
-            scheduledTask();
-        }, 0, 17, TimeUnit.MILLISECONDS);
-
-        addTask(() -> {
-            KeyEventsManager.getInstance().removeListenersByPrefix("script.");
+        thread = new Thread(() -> {
             engine = new ScriptEngineManager().getEngineByName("nashorn");
+            methodInvoker = new MethodInvoker(engine);
             KeyboardObject keyboardObject = new JsKeyboardObject(robot);
             MouseObject mouseObject = new JsMouseObject(robot);
             SystemObject systemObject = new JsSystemObject(this);
@@ -70,6 +63,7 @@ public class JSEngine {
                 stop();
             }
         });
+        thread.start();
         Platform.runLater(() -> running.setValue(true));
     }
 
@@ -78,60 +72,33 @@ public class JSEngine {
     }
 
     /**
-     * Выполняется каждые н секунд в отедльном потоке
-     * Проверяет список задач, выполняет и удаляет задачу.
-     */
-
-    private void scheduledTask() {
-        @SuppressWarnings("rawtypes")
-        Iterator it = tasks.iterator();
-        while (it.hasNext()) {
-            Runnable task = (Runnable) it.next();
-            task.run();
-            it.remove();
-        }
-    }
-
-
-    /**
      * Stops the engine
      */
     @SuppressWarnings("deprecation")
     public void stop() {
-        tasks.clear();
-        if (service != null) {
-            service.shutdown();
+        KeyEventsManager.getInstance().removeListenersByPrefix("script.");
+        MouseEventsManager.getInstance().removeListenersByPrefix("script.");
+        if (thread != null) {
             try {
-                service.awaitTermination(20, TimeUnit.MILLISECONDS);
-                service.shutdownNow();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (!service.isTerminated() && thread != null) {
-                try {
-                    thread.stop();
-                } catch (ThreadDeath ignored) {
+                thread.stop();
+            } catch (ThreadDeath ignored) {
 
-                }
-                service = null;
             }
+            thread = null;
         }
-        thread = null;
+        if (methodInvoker != null) {
+            methodInvoker.stop();
+            methodInvoker = null;
+        }
         Platform.runLater(() -> running.setValue(false));
     }
 
-    
-    public void addTask(Runnable task) {
-        tasks.add(task);
+    public void invokeFunction(String name, Object... args) {
+        methodInvoker.invokeMethod(name, args);
     }
 
-   
-    public void invokeFunction(String name, Object... args) {
-        try {
-            ((Invocable) engine).invokeFunction(name, args);
-        } catch (ScriptException | NoSuchMethodException e) {
-            Out.println(e.getMessage());
-        }
+    public void registerInvocableMethod(String name, int maxNumberOfThreads) {
+        methodInvoker.registerMethod(name, maxNumberOfThreads);
     }
 
     public boolean isRunning() {

@@ -9,15 +9,29 @@ public interface SystemObject {
     float getMultiplier();
 
     float getSpeed();
+    
+    void onKeyPress(String functionName, String keys, Object... args);
 
+    void onKeyRelease(String functionName, String keys, Object... args);
+
+    void onMousePress(String functionName, String buttons, Object... args);
+
+    void onMouseRelease(String functionName, String buttons, Object... args);
+    
+    void onMouseMove(String functionName, Object ... args);
+    
+    void onWheelDown(String functionName, Object ... args);
+    
+    void onWheelUp(String functionName, Object ... args);
+    
     void print(String s);
 
     void println();
     
     void println(String s);
 
-    void registerShortcut(String shortcut, String function);
-
+    void registerMethod(String name, int maxThreads);
+    
     void resetMultiplier();
 
     void resetSpeed();

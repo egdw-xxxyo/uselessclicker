@@ -29,4 +29,8 @@ public class StringPropertyShortcut implements Shortcut {
         return null;
     }
 
+    @Override
+    public void setKeys(String keys) {
+        stringProperty.setValue(keys);
+    }
 }

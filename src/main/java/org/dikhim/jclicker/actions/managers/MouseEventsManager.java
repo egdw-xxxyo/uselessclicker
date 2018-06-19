@@ -56,11 +56,13 @@ public class MouseEventsManager
         if (button.isEmpty()) return;// return if button is unknown
         // add to pressed buttons
         pressedButtons.add(button);
+        Set<String> pressedButton = new HashSet<>();
+        pressedButton.add(button);
 
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
         long time = System.currentTimeMillis();
-        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "PRESS", x, y, time);
+        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButton, "PRESS", x, y, time);
 
         // fire
         for (MouseButtonHandler h : buttonHandlers) {
@@ -77,11 +79,14 @@ public class MouseEventsManager
         if (button.isEmpty()) return;// return if button is unknown
         // remove from pressed buttons
         pressedButtons.remove(button);
+        
+        Set<String> releasedButton = new HashSet<>();
+        releasedButton.add(button);
 
         int x = nativeMouseEvent.getX();
         int y = nativeMouseEvent.getY();
         long time = System.currentTimeMillis();
-        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, pressedButtons, "RELEASE", x, y, time);
+        MouseButtonEvent buttonEvent = new MouseButtonEvent(button, releasedButton, "RELEASE", x, y, time);
 
         // fire
         for (MouseButtonHandler h : buttonHandlers)

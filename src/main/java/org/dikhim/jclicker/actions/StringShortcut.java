@@ -21,4 +21,8 @@ public class StringShortcut implements Shortcut {
 		return keys;
 	}
 
+	@Override
+	public void setKeys(String keys) {
+		this.keys = getKeySet(keys);
+	}
 }

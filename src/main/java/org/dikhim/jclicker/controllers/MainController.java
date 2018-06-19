@@ -4,25 +4,15 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.apache.commons.io.IOUtils;
@@ -890,7 +880,7 @@ public class MainController implements Initializable {
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
         stopScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("stopScript").getKeys().valueProperty());
         stopScriptListener.setName("stopScript");
-        stopScriptListener.addShortcut(new StringPropertyShortcut(stopScriptShortcutStringProperty));
+        stopScriptListener.setShortcut(new StringPropertyShortcut(stopScriptShortcutStringProperty));
         stopScriptListener.setAction("PRESS");
         stopScriptListener.setHandler((e) -> Platform.runLater(this::stopScript));
 
@@ -898,7 +888,7 @@ public class MainController implements Initializable {
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
         runScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("runScript").getKeys().valueProperty());
         runScriptListener.setName("runScript");
-        runScriptListener.addShortcut(new StringPropertyShortcut(runScriptShortcutStringProperty));
+        runScriptListener.setShortcut(new StringPropertyShortcut(runScriptShortcutStringProperty));
         runScriptListener.setAction("PRESS");
         runScriptListener.setHandler((e) -> Platform.runLater(this::runScript));
 

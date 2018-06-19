@@ -10,6 +10,8 @@ public interface Shortcut {
 
     Set<String> getKeys();
 
+    void setKeys(String keys);
+    
     default Set<String> getKeySet(String keys) {
         String[] strKeys = keys.split(" ");
         Set<String> keySet = new HashSet<>();
