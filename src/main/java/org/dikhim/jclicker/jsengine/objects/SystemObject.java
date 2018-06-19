@@ -10,13 +10,13 @@ public interface SystemObject {
 
     float getSpeed();
     
-    void onKeyPress(String functionName, Object ... args);
+    void onKeyPress(String functionName, String keys, Object... args);
 
-    void onKeyRelease(String functionName, Object ... args);
+    void onKeyRelease(String functionName, String keys, Object... args);
 
-    void onMousePress(String functionName, Object ... args);
+    void onMousePress(String functionName, String buttons, Object... args);
 
-    void onMouseRelease(String functionName, Object ... args);
+    void onMouseRelease(String functionName, String buttons, Object... args);
     
     void onMouseMove(String functionName, Object ... args);
     

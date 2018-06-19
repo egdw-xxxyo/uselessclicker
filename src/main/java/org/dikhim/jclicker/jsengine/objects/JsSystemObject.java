@@ -1,7 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 import javafx.application.Platform;
-import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.jsengine.JSEngine;
@@ -62,24 +61,24 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
-    public void onKeyPress(String functionName, Object... args) {
+    public void onKeyPress(String functionName, String keys, Object... args) {
         //TODO
     }
 
     @Override
-    public void onKeyRelease(String functionName, Object... args) {
-        //TODO
-
-    }
-
-    @Override
-    public void onMousePress(String functionName, Object... args) {
+    public void onKeyRelease(String functionName, String keys, Object... args) {
         //TODO
 
     }
 
     @Override
-    public void onMouseRelease(String functionName, Object... args) {
+    public void onMousePress(String functionName, String buttons, Object... args) {
+        //TODO
+
+    }
+
+    @Override
+    public void onMouseRelease(String functionName, String buttons, Object... args) {
         //TODO
 
     }
