@@ -144,4 +144,8 @@ public class Clicker extends Application {
     public MainApplication getMainApplication() {
         return mainApplication;
     }
+
+    public void openInBrowser(String uri) {
+        getHostServices().showDocument(uri);
+    }
 }
