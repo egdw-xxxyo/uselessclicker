@@ -1,0 +1,56 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "threads.html";</script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Потоки</h1><br/>
+        <p>Многопоточность поддерживается за счет стандартных средств Java</p>
+    <div class="codebox"><pre><code>var Runnable = Java.type('java.lang.Runnable');
+var Thread = Java.type('java.lang.Thread');
+
+var moveX = Java.extend(Runnable, {
+    run: function() {
+        var x0 = mouse.getX();
+        for(var i=0;i&lt;100;i++){
+            mouse.move(1,0);
+        }
+        system.println('dx='+(mouse.getX()-x0));
+    }
+});
+
+var moveY = new Thread(function() {
+    var y0 = mouse.getY();
+    for(var i=0;i&lt;100;i++){
+        mouse.move(0,1);
+    }
+    system.println('dy='+(mouse.getY()-y0));
+});
+
+new Thread(new moveX()).start();
+moveY.start();
+    </code></pre></div>
+        <p>Стоит учитывать, что все вызовы методов к объектам управления(key, mouse, system, combined, clipboard) являются синхронизированными. Это касается как потоков запущенных из скрипта так и поток под управлением HTTP и Socket серверов. Если один из потоков займет какой-то метод, даже если использует отдельный объект управления, то все методы управления не будут доступны для других потоков. Данная ситуация может произойти в случае установления большой автозадержки для объектов key&nbsp; и mouse, а также зависания методов объекта clipboard.</p>
+        <p>Данное ограничение не касается метода system.sleep(), так как имеет отношение исключительно к потоку. Задержка указанная через данный метод может быть любой величины.</p>
+        <p>Список несинхронизированных методов:</p>
+        <ul>
+            <li>combined.run()</li>
+            <li>system.exit()</li>
+            <li>system.sleep()</li>
+        </ul>
+</div>
+<script src="examples.js">
+</script>
+</body></html>

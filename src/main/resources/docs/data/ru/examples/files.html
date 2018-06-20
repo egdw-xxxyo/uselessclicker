@@ -1,0 +1,40 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "file.html";</script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Работа с файлами</h1><br/>
+    <p>Для работы с файлами необходимо использовать тип "'java.io.File". Так же, программа включает в себя поддержку библиотеки "apache.commons.io", которая упростит работу с файлами.&nbsp;</p>
+    <div class="codebox"><pre><code>var File = Java.type('java.io.File');
+var FileUtils = Java.type('org.apache.commons.io.FileUtils');
+
+var myFile = new File('helloWorld.txt');
+
+system.println('Is file exist? - ' + myFile.exists());
+system.println('');
+
+if(!myFile.exists()){
+    FileUtils.write(myFile,'Hello world','UTF-8');
+}
+
+system.println('file content:');
+system.println(FileUtils.readFileToString(myFile,'UTF-8'));
+    </code></pre></div>
+    <p><a href="https://docs.oracle.com/javase/7/docs/api/java/io/File.html">File</a>,<a href="https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/FileUtils.html">FileUtils</a></p>
+</div>
+<script src="examples.js">
+</script>
+</body></html>

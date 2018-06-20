@@ -1,0 +1,56 @@
+
+<!DOCTYPE html><html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script src='../../../js/jquery.min.js'></script>
+    <script type="text/javascript">const current_page = "threads.html";</script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Threads</h1><br/>
+    <p> Multithreading is supported by standard Java classes</p>
+    <div class="codebox"><pre><code>var Runnable = Java.type('java.lang.Runnable');
+var Thread = Java.type('java.lang.Thread');
+
+var moveX = Java.extend(Runnable, {
+    run: function() {
+        var x0 = mouse.getX();
+        for(var i=0;i&lt;100;i++){
+            mouse.move(1,0);
+        }
+        system.println('dx='+(mouse.getX()-x0));
+    }
+});
+
+var moveY = new Thread(function() {
+    var y0 = mouse.getY();
+    for(var i=0;i&lt;100;i++){
+        mouse.move(0,1);
+    }
+    system.println('dy='+(mouse.getY()-y0));
+});
+
+new Thread(new moveX()).start();
+moveY.start();
+    </code></pre></div>
+    <p>Note that all method calls to the control objects (key, mouse, system, combined, clipboard) are synchronized. This concerns both the threads running from the script and threads running HTTP and Socket servers. If one thread takes a method, even if it uses a separate control object, then all control methods will not be available for other threads. This situation can occur if a large auto-delay is established for the <strong>key</strong> or <strong>mouse</strong> object, as well as freezing the methods of the <strong>clipboard</strong> object.</p>
+            <p>This restriction does not apply to the system.sleep () method, since it is solely related to the current thread. The delay set through this method can be any value.</P>
+            <p> List of non-synchronized methods</p>
+        <ul>
+            <li>combined.run()</li>
+            <li>system.exit()</li>
+            <li>system.sleep()</li>
+        </ul>
+</div>
+<script src="examples.js">
+</script>
+</body></html>

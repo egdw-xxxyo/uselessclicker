@@ -11,7 +11,8 @@ const sidemenu = {
     "delays.html": ["Задержки", "text", ""],
     "delaySystem.html": ["Система задержек", "text", ""],
     "delayMultiplier.html": ["Скорость и множитель задержек", "text", ""],
-    "delaysInCombined.html": ["Задержки в combined.run", "text", ""]
+    "delaysInCombined.html": ["Задержки в combined.run", "text", ""],
+    "../examples/examples.html": ["Примеры", "icon", "glyphicon glyphicon-file"]
 };
 
 
