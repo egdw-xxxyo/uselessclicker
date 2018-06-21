@@ -1,5 +1,7 @@
 p {
     text-indent: 20px; /* Отступ первой строки в пикселах */
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 5px;
 }
 
 .navbar-global {
