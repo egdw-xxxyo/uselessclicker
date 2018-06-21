@@ -30,8 +30,7 @@ $(document).ready(function () {
         }
 
         let $span2 = $("<span>")
-            .addClass('nav-label')
-            .text(title[0]);
+            .addClass('nav-label');
 
         $a.append($span1);
         $a.append($span2);
