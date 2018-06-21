@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--suppress JSUnusedLocalSymbols -->
 <html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
@@ -69,11 +70,11 @@ function hello(){
     <p>Обратите внимание, что вызов метода происходит в новом потоке, а значит он может конфликтовать в равной степени
         со всеми остальными потоками.</p>
     <p>Однако, если все же необходимо чтобы данный метод мог вызывать более одного раза одновременно, существует метод
-        <strong>registerMethod(String name, int maxThreads)</strong>, он указывает системе максимальное количество
+        <strong>setMaxThreads(String name, int maxThreads)</strong>, он указывает системе максимальное количество
         потоков, которые могут одновременно войти в данный метод.</p>
     <div class="codebox">
 <pre><code>system.onKeyPress('hello','1');
-system.registerMethod('hello',2);
+system.setMaxThreads('hello',2);
 
 function hello(){
     for(var i=0;i<10;i++){
@@ -92,7 +93,7 @@ function hello(){
         повторно.</p>
     <div class="codebox">
 <pre><code>system.onKeyPress('hello','1');
-system.registerMethod('hello',2);
+system.setMaxThreads('hello',2);
 
 function hello(){
     system.sleep(100);
@@ -121,7 +122,7 @@ function hello(){
         осторожным.</p>
     <p>Теперь изменив пример получим следующий скрипт</p>
     <div class="codebox"><pre><code>system.onKeyPress('hello','1');
-system.registerMethod('hello',2);
+system.setMaxThreads('hello',2);
 
 function hello(){
     system.sleep(100);

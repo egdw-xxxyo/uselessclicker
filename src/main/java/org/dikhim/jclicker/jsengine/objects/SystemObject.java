@@ -38,7 +38,7 @@ public interface SystemObject {
     
     void println(String s);
 
-    void registerMethod(String name, int maxThreads);
+    void setMaxThreads(String name, int maxThreads);
     
     void resetMultiplier();
 

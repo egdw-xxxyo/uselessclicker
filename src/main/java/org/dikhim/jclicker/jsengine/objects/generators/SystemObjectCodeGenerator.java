@@ -107,11 +107,6 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public void registerMethod(String name, int maxThreads) {
-        buildStringForCurrentMethod(name, maxThreads);
-    }
-
-    @Override
     public void resetMultiplier() {
         buildStringForCurrentMethod();
     }
@@ -119,6 +114,11 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     @Override
     public void resetSpeed() {
         buildStringForCurrentMethod();
+    }
+
+    @Override
+    public void setMaxThreads(String name, int maxThreads) {
+        buildStringForCurrentMethod(name, maxThreads);
     }
 
     @Override

@@ -169,7 +169,7 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
-    public void registerMethod(String name, int maxThreads) {
+    public void setMaxThreads(String name, int maxThreads) {
         engine.registerInvocableMethod(name, maxThreads);
     }
 
