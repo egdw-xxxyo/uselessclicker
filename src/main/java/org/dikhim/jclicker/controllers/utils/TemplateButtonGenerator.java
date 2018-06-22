@@ -72,10 +72,13 @@ public class TemplateButtonGenerator {
     }
 
     public List<Button> getButtonListForKeyboardObject() {
-        //TODO
+        return createButtons("key", keyboardObjectCodeGenerator.getMethodNames());
+    }
+    
+    private List<Button> createButtons(String objectName, List<String> methodNames) {
         List<Button> buttons = new ArrayList<>();
-        keyboardObjectCodeGenerator.getMethodNames().forEach(name -> {
-            String id = "key_" + name;
+        methodNames.forEach(name -> {
+            String id = objectName+"_" + name;
             Button button = new Button();
 
             String text = properties.get(id);
@@ -96,6 +99,5 @@ public class TemplateButtonGenerator {
         });
         return buttons;
     }
-
 
 }
