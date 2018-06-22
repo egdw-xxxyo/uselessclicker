@@ -18,9 +18,13 @@ public interface SystemObject {
 
     void mouseResume();
     
-    void onKeyPress(String functionName, String keys, Object... args);
-
-    void onKeyRelease(String functionName, String keys, Object... args);
+    void onKeyPress(String functionName, String key, Object... args);
+    
+    void onShortcutPress(String functionName, String keys, Object... args);
+    
+    void onShortcutRelease(String functionName, String keys, Object... args);
+    
+    void onKeyRelease(String functionName, String key, Object... args);
 
     void onMousePress(String functionName, String buttons, Object... args);
 

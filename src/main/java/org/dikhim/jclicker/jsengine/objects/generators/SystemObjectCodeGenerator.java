@@ -56,12 +56,22 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public void onKeyPress(String functionName, String keys, Object... args) {
+    public void onKeyPress(String functionName, String key, Object... args) {
+        buildStringForCurrentMethod(functionName, key, args);
+    }
+
+    @Override
+    public void onKeyRelease(String functionName, String key, Object... args) {
+        buildStringForCurrentMethod(functionName, key, args);
+    }
+
+    @Override
+    public void onShortcutPress(String functionName, String keys, Object... args) {
         buildStringForCurrentMethod(functionName, keys, args);
     }
 
     @Override
-    public void onKeyRelease(String functionName, String keys, Object... args) {
+    public void onShortcutRelease(String functionName, String keys, Object... args) {
         buildStringForCurrentMethod(functionName, keys, args);
     }
 

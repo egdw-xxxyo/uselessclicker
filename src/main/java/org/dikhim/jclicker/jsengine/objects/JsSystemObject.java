@@ -73,31 +73,53 @@ public class JsSystemObject implements SystemObject {
 
     @Override
     public void mouseIgnore() {
-
+        MouseEventsManager.getInstance().ignorePrefix("script.");
     }
 
     @Override
     public void mouseResume() {
-
+        MouseEventsManager.getInstance().removeIgnorePrefix("script.");
     }
 
     @Override
-    public void onKeyPress(String functionName, String keys, Object... args) {
+    public void onKeyPress(String functionName, String key, Object... args) {
         KeyboardListener listener = new KeyListener(
-                "script." + functionName + "." + keys + ".press",
-                keys,
+                "script." + functionName + "." + key + ".press",
+                key,
                 "PRESS",
                 e -> engine.invokeFunction(functionName, args));
         KeyEventsManager.getInstance().addKeyboardListener(listener);
     }
 
     @Override
-    public void onKeyRelease(String functionName, String keys, Object... args) {
+    public void onKeyRelease(String functionName, String key, Object... args) {
         KeyboardListener listener = new KeyListener(
+                "script." + functionName + "." + key + ".release",
+                key,
+                "RELEASE",
+                (e) -> engine.invokeFunction(functionName, args));
+        KeyEventsManager.getInstance().addKeyboardListener(listener);
+    }
+
+    @Override
+    public void onShortcutPress(String functionName, String keys, Object... args) {
+        KeyboardListener listener = new ShortcutEqualsListener(
+                "script." + functionName + "." + keys + ".press",
+                keys,
+                "PRESS",
+                (e) -> engine.invokeFunction(functionName, args)    
+        );
+        KeyEventsManager.getInstance().addKeyboardListener(listener);
+    }
+
+    @Override
+    public void onShortcutRelease(String functionName, String keys, Object... args) {
+        KeyboardListener listener = new ShortcutEqualsListener(
                 "script." + functionName + "." + keys + ".release",
                 keys,
                 "RELEASE",
-                (e) -> engine.invokeFunction(functionName, args));
+                (e) -> engine.invokeFunction(functionName, args)
+        );
         KeyEventsManager.getInstance().addKeyboardListener(listener);
     }
 
