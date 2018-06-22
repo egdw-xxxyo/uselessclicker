@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SimpleCodeGenerator implements CodeGenerator {
+public abstract class SimpleCodeGenerator implements CodeGenerator {
     private String objectName;
     private int lineSize;
     private StringBuilder sb;
@@ -17,13 +17,13 @@ public class SimpleCodeGenerator implements CodeGenerator {
 
     private final int MIN_LINE_SIZE = 50;
 
-    public SimpleCodeGenerator(String objectName, int lineSize, Class c) {
+    SimpleCodeGenerator(String objectName, int lineSize, Class c) {
         this.objectName = objectName;
         setLineSize(lineSize);
         allMethods = c.getDeclaredMethods();
     }
 
-    public SimpleCodeGenerator(String objectName,  Class c) {
+    SimpleCodeGenerator(String objectName, Class c) {
         this.objectName = objectName;
         allMethods = c.getDeclaredMethods();
         setLineSize(MIN_LINE_SIZE);
@@ -62,10 +62,12 @@ public class SimpleCodeGenerator implements CodeGenerator {
         return this;
     }
 
+    @Override
     public int getLineSize() {
         return lineSize;
     }
 
+    @Override
     public void setLineSize(int lineSize) {
         if (lineSize < MIN_LINE_SIZE) {
             this.lineSize = MIN_LINE_SIZE;
@@ -74,14 +76,15 @@ public class SimpleCodeGenerator implements CodeGenerator {
         }
     }
 
+    @Override
     public String getObjectName() {
         return objectName;
     }
 
+    @Override
     public String getGeneratedCode() {
         return separateOnLines(sb, lineSize);
     }
-
 
     public void buildStringForCurrentMethod(Object... params) {
         String objectName = getObjectName();
@@ -112,6 +115,7 @@ public class SimpleCodeGenerator implements CodeGenerator {
         sb.append(");\n");
     }
 
+    @Override
     public void invokeMethodWithDefaultParams(String methodName) {
         Method m = getMethodWithName(methodName);
         Type[] gpType;
@@ -132,12 +136,12 @@ public class SimpleCodeGenerator implements CodeGenerator {
         }
         try {
             m.invoke(this, params);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
     }
+
+    @Override
     public List<String> getMethodsNames() {
         List<String> methodsNames = new ArrayList<>();
         for (Method m : allMethods) {
@@ -149,6 +153,8 @@ public class SimpleCodeGenerator implements CodeGenerator {
     }
 
 
+    public abstract List<String> getMethodNames();
+    
     private Method getMethodWithName(String methodName) {
         for (Method m : allMethods) {
             if (!m.getName().equals(methodName)) {

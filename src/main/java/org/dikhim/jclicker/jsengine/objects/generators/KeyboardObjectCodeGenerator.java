@@ -1,8 +1,17 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements KeyboardObject {
+    private static Logger LOGGER = LoggerFactory.getLogger(KeyboardObjectCodeGenerator.class);
 
     public KeyboardObjectCodeGenerator(int lineSize) {
         super("key", lineSize, KeyboardObject.class);
@@ -141,5 +150,15 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     @Override
     public void type(String keys) {
         buildStringForCurrentMethod(keys);
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        Method[] methods = KeyboardObject.class.getDeclaredMethods();
+        List<String> methodList = new ArrayList<>();
+        for (Method m : methods) {
+            LOGGER.debug(m.getName());
+        }
+        return methodList;
     }
 }

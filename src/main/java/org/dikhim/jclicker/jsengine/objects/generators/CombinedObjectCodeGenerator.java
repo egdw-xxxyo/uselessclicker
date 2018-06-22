@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.CombinedObject;
 
+import java.util.List;
+
 public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements CombinedObject {
     public CombinedObjectCodeGenerator(int lineSize) {
         super("combined", lineSize, CombinedObject.class);
@@ -14,5 +16,10 @@ public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements 
     @Override
     public void run(String encoding, String code) {
         buildStringForCurrentMethod(encoding, code);
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        return null;
     }
 }

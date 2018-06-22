@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.ClipboardObject;
 
+import java.util.List;
+
 public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements ClipboardObject {
 
     public ClipboardObjectCodeGenerator(int lineSize) {
@@ -21,5 +23,10 @@ public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements
     @Override
     public void set(String str) {
         buildStringForCurrentMethod(str);
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        return null;
     }
 }

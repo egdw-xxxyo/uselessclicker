@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.MouseObject;
 
+import java.util.List;
+
 public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
 
     public MouseObjectCodeGenerator(int lineSize) {
@@ -258,5 +260,10 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     @Override
     public void wheelAt(String direction, int amount, int x, int y) {
         buildStringForCurrentMethod(direction, amount, x, y);
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        return null;
     }
 }

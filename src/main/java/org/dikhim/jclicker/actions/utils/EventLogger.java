@@ -2,7 +2,6 @@ package org.dikhim.jclicker.actions.utils;
 
 import org.dikhim.jclicker.actions.events.*;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
-import org.dikhim.jclicker.actions.utils.MouseMoveEventUtil;
 
 public class EventLogger {
     private LimitedSizeQueue<Event> eventLog;
@@ -14,8 +13,6 @@ public class EventLogger {
     private LimitedSizeQueue<MouseButtonEvent> mouseButtonLog;
     private LimitedSizeQueue<MouseWheelEvent> mouseWheelLog;
     private LimitedSizeQueue<MouseMoveEvent> mouseMoveLog;
-
-    private MouseMoveEventUtil mouseMoveEventUtil = new MouseMoveEventUtil();
 
     public LimitedSizeQueue<Event> getEventLog() {
         return eventLog;

@@ -2,6 +2,8 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.SystemObject;
 
+import java.util.List;
+
 public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
 
     public SystemObjectCodeGenerator(int lineSize) {
@@ -143,5 +145,10 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     @Override
     public void sleep(int ms) {
         buildStringForCurrentMethod(ms);
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        return null;
     }
 }
