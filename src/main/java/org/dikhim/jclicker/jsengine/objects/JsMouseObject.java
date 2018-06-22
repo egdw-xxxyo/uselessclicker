@@ -37,12 +37,14 @@ public class JsMouseObject implements MouseObject {
         this.monitor = robot.getMonitor();
     }
 
+    @Override
     public int getX() {
         synchronized (monitor) {
             return MouseEventsManager.getInstance().getX();
         }
     }
 
+    @Override
     public int getY() {
         synchronized (monitor) {
             return MouseEventsManager.getInstance().getY();
@@ -51,6 +53,7 @@ public class JsMouseObject implements MouseObject {
 
 
     // basics
+    @Override
     public void button(String button, String action) {
         synchronized (monitor) {
             switch (action) {
@@ -69,7 +72,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
-
+    @Override
     public void buttonAt(String button, String action, int x, int y) {
         synchronized (monitor) {
             moveTo(x, y);
@@ -78,7 +81,7 @@ public class JsMouseObject implements MouseObject {
     }
 
     // movement
-
+    @Override
     public void move(int dx, int dy) {
         synchronized (monitor) {
             robot.mouseMove(getX() + dx, getY() + dy);
@@ -86,6 +89,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAndButton(String button, String action, int dx, int dy) {
         synchronized (monitor) {
             move(dx, dy);
@@ -93,6 +97,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveTo(int x, int y) {
         synchronized (monitor) {
             if (x < 0 || y < 0) {
@@ -104,6 +109,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void setX(int x) {
         synchronized (monitor) {
             if (x < 0) {
@@ -115,6 +121,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void setY(int y) {
         synchronized (monitor) {
             if (y < 0) {
@@ -127,6 +134,7 @@ public class JsMouseObject implements MouseObject {
     }
 
     // movement by path
+    @Override
     public void moveAbsolute(String path) {
         synchronized (monitor) {
             MouseMoveUtil mu = new MouseMoveUtil(path);
@@ -141,6 +149,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAbsolute_D(String path) {
         synchronized (monitor) {
             MouseMoveUtil mu = new MouseMoveUtil(path);
@@ -157,6 +166,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveRelative(String path) {
         synchronized (monitor) {
             MouseMoveUtil mu = new MouseMoveUtil(path);
@@ -171,6 +181,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveRelative_D(String path) {
         synchronized (monitor) {
             MouseMoveUtil mu = new MouseMoveUtil(path);
@@ -194,6 +205,7 @@ public class JsMouseObject implements MouseObject {
      *
      * @param buttons - name of the mouse button that should be clicked
      */
+    @Override
     public void click(String buttons) {
         synchronized (monitor) {
             String[] buttonList = buttons.split(" ");
@@ -211,6 +223,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void clickAt(String button, int x, int y) {
         synchronized (monitor) {
             moveTo(x, y);
@@ -218,6 +231,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAndClick(String button, int dx, int dy) {
         synchronized (monitor) {
             move(dx, dy);
@@ -232,6 +246,7 @@ public class JsMouseObject implements MouseObject {
      *
      * @param button - name of the mouse button that should be pressed
      */
+    @Override
     public void press(String button) {
         synchronized (monitor) {
             int buttonEventCode = MouseCodes.getEventCodeByName(button);
@@ -244,6 +259,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void pressAt(String button, int x, int y) {
         synchronized (monitor) {
             moveTo(x, y);
@@ -251,6 +267,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAndPress(String button, int dx, int dy) {
         synchronized (monitor) {
             move(dx, dy);
@@ -265,6 +282,7 @@ public class JsMouseObject implements MouseObject {
      *
      * @param button - name of the button that should be released
      */
+    @Override
     public void release(String button) {
         synchronized (monitor) {
             int buttonEventCode = MouseCodes.getEventCodeByName(button);
@@ -277,6 +295,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void releaseAt(String button, int x, int y) {
         synchronized (monitor) {
             moveTo(x, y);
@@ -284,6 +303,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAndRelease(String button, int dx, int dy) {
         synchronized (monitor) {
             move(dx, dy);
@@ -291,6 +311,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void moveAndWheel(String direction, int amount, int dx, int dy) {
         synchronized (monitor) {
             move(dx, dy);
@@ -303,6 +324,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @return the pressDelay
      */
+    @Override
     public int getPressDelay() {
         synchronized (monitor) {
             return pressDelay;
@@ -312,6 +334,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @param pressDelay the pressDelay to set
      */
+    @Override
     public void setPressDelay(int pressDelay) {
         synchronized (monitor) {
             if (pressDelay < 0) {
@@ -325,6 +348,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @return the releaseDelay
      */
+    @Override
     public int getReleaseDelay() {
         synchronized (monitor) {
             return releaseDelay;
@@ -334,6 +358,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @param releaseDelay the releaseDelay to set
      */
+    @Override
     public void setReleaseDelay(int releaseDelay) {
         synchronized (monitor) {
             if (releaseDelay < 0) {
@@ -348,6 +373,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @return the moveDelay
      */
+    @Override
     public int getMoveDelay() {
         synchronized (monitor) {
             return moveDelay;
@@ -357,6 +383,7 @@ public class JsMouseObject implements MouseObject {
     /**
      * @param moveDelay the moveDelay to set
      */
+    @Override
     public void setMoveDelay(int moveDelay) {
         synchronized (monitor) {
             if (moveDelay < 0) {
@@ -367,12 +394,14 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public int getWheelDelay() {
         synchronized (monitor) {
             return wheelDelay;
         }
     }
 
+    @Override
     public void setWheelDelay(int wheelDelay) {
         synchronized (monitor) {
             if (wheelDelay < 0) {
@@ -383,12 +412,14 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public float getMultiplier() {
         synchronized (monitor) {
             return multiplier;
         }
     }
 
+    @Override
     public void setMultiplier(float multiplier) {
         synchronized (monitor) {
             if (multiplier < 0) {
@@ -399,30 +430,35 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void resetMultiplier() {
         synchronized (monitor) {
             multiplier = MULTIPLIER;
         }
     }
 
+    @Override
     public float getSpeed() {
         synchronized (monitor) {
             return 1f / getMultiplier();
         }
     }
 
+    @Override
     public void setSpeed(float multiplier) {
         synchronized (monitor) {
             setMultiplier(1f / multiplier);
         }
     }
 
+    @Override
     public void resetSpeed() {
         synchronized (monitor) {
             resetMultiplier();
         }
     }
 
+    @Override
     public void setDelays(int delay) {
         synchronized (monitor) {
             setPressDelay(delay);
@@ -432,6 +468,7 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public void resetDelays() {
         synchronized (monitor) {
             this.moveDelay = MOVE_DELAY;
@@ -442,25 +479,27 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public int getMinDelay() {
         synchronized (monitor) {
             return minDelay;
         }
     }
 
+    @Override
     public void setMinDelay(int minDelay) {
         synchronized (monitor) {
             this.minDelay = minDelay;
         }
     }
-
-
+    
     /**
      * Rotates mouse wheel
      *
      * @param direction - 'UP' or 'DOWN'
      * @param amount    - any non negative number
      */
+    @Override
     public void wheel(String direction, int amount) {
         synchronized (monitor) {
             if (amount < 0) {
@@ -483,23 +522,8 @@ public class JsMouseObject implements MouseObject {
             }
         }
     }
-
-
-    public void wheelIgnoringDelays(String direction, int amount) {
-        synchronized (monitor) {
-            int tmpWheelDelay = getWheelDelay();
-            int tmpMinDelay = getMinDelay();
-            try {
-                setWheelDelay(0);
-                setMinDelay(0);
-                wheel(direction, amount);
-            } finally {
-                setWheelDelay(tmpWheelDelay);
-                setMinDelay(tmpMinDelay);
-            }
-        }
-    }
-
+    
+    @Override
     public void wheelAt(String direction, int amount, int x, int y) {
         synchronized (monitor) {
             moveTo(x, y);
@@ -507,24 +531,28 @@ public class JsMouseObject implements MouseObject {
         }
     }
 
+    @Override
     public int getMultipliedPressDelay() {
         synchronized (monitor) {
             return checkDelay((int) (pressDelay * multiplier));
         }
     }
 
+    @Override
     public int getMultipliedReleaseDelay() {
         synchronized (monitor) {
             return checkDelay((int) (releaseDelay * multiplier));
         }
     }
 
+    @Override
     public int getMultipliedMoveDelay() {
         synchronized (monitor) {
             return checkDelay((int) (moveDelay * multiplier));
         }
     }
 
+    @Override
     public int getMultipliedWheelDelay() {
         synchronized (monitor) {
             return checkDelay((int) (wheelDelay * multiplier));

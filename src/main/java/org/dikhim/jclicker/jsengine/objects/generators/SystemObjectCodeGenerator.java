@@ -11,8 +11,7 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     public SystemObjectCodeGenerator() {
         super("system", SystemObject.class);
     }
-
-
+    
     @Override
     public void exit() {
         buildStringForCurrentMethod();
@@ -135,5 +134,4 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     public void sleep(int ms) {
         buildStringForCurrentMethod(ms);
     }
-
 }

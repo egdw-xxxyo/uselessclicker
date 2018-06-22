@@ -11,7 +11,6 @@ public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements 
         super("combined", CombinedObject.class);
     }
 
-
     @Override
     public void run(String encoding, String code) {
         buildStringForCurrentMethod(encoding, code);

@@ -19,6 +19,7 @@ public class JsCombinedObject implements CombinedObject {
         this.systemObject = systemObject;
     }
 
+    @Override
     public void run(String encoding, String code) {
         ActionDecoder actionDecoder = ActionDecoderFactory.get(encoding);
         List<Action> actions;

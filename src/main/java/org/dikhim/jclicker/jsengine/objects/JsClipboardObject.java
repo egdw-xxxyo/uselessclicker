@@ -19,6 +19,7 @@ public class JsClipboardObject implements ClipboardObject{
      * @return any text found on the Clipboard; if none found, return an
      * empty String.
      */
+    @Override
     public String get() {
         synchronized (monitor) {
             String result = "";
@@ -45,6 +46,7 @@ public class JsClipboardObject implements ClipboardObject{
     /**
      * Place a String on the clipboard.
      */
+    @Override
     public void set(String str){
         synchronized (monitor) {
             StringSelection stringSelection = new StringSelection(str);

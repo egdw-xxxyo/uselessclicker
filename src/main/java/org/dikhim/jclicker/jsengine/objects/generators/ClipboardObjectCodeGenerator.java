@@ -12,12 +12,13 @@ public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements
         super("clipboard", ClipboardObject.class);
     }
 
-
+    @Override
     public String get() {
         buildStringForCurrentMethod();
         return null;
     }
 
+    @Override
     public void set(String str) {
         buildStringForCurrentMethod(str);
     }
