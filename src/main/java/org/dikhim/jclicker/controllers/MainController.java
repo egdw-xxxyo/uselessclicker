@@ -773,7 +773,6 @@ public class MainController implements Initializable {
                 .build();
 
 
-        templateButtonNodes.addAll(keyboardTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(mouseTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(systemTemplateButtonContainer.getChildren());
@@ -786,9 +785,7 @@ public class MainController implements Initializable {
             n.setOnMouseEntered(this::showCodeSample);
             n.setOnMouseExited(this::hideCodeSample);
         }
-        //TODO
-        //keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
-
+        keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
     }
 
     /**

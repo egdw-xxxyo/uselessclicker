@@ -747,7 +747,7 @@ mouse.wheelAt('DOWN',0,0,0);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateKeyGetMultiplier:
+$key_getMultiplier_hint:
 key.getMultiplier();
 Получить множитель задержек (multiplier)
   
@@ -757,28 +757,19 @@ key.getMultiplier();
   
 key.getMultiplier():float
 
-$btnTemplateKeyGetMultiplierCode:
-key.getMultiplier();
-
-$btnTemplateKeyGetPressDelay:
+$key_getPressDelay_hint:
 key.getPressDelay();
 Получить задержку нажатия клавиши клавиатуры в мс. (pressDelay)
   
 key.getPressDelay():int
 
-$btnTemplateKeyGetPressDelayCode:
-key.getPressDelay();
-
-$btnTemplateKeyGetReleaseDelay:
+$key_getReleaseDelay_hint:
 key.getReleaseDelay();
 Получить задержку отпускания клавиши клавиатуры в мс. (releaseDelay)
   
 key.getReleaseDelay():int
 
-$btnTemplateKeyGetReleaseDelayCode:
-key.getReleaseDelay();
-
-$btnTemplateKeyGetSpeed:
+$key_getSpeed_hint:
 mouse.getSpeed();
 Получить множитель скорости.
   
@@ -786,20 +777,14 @@ mouse.getSpeed();
   
 key.getSpeed():float
 
-$btnTemplateKeyGetSpeedCode:
-key.getSpeed();
-
-$btnTemplateKeyIsPressed:
+$key_isPressed_hint:
 key.isPressed('CONTROL');
 Узнать зажаты ли указанные клавиши клавиатуры
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - имена клавиш через пробел
 
-$btnTemplateKeyIsPressedCode:
-key.isPressed('CONTROL');
-
-$btnTemplateKeyPress:
+$key_press_hint:
 key.press('CONTROL');
 Нажать клавишу клавиатуры
   
@@ -810,10 +795,7 @@ key.press('KEY');
   press('KEY');
     sleep(pressDelay);
 
-$btnTemplateKeyPressCode:
-key.press('CONTROL');
-
-$btnTemplateKeyRelease:
+$key_release_hint:
 key.release('CONTROL');
 Отпустить клавишу клавиатуры
   
@@ -824,31 +806,19 @@ key.release('KEY');
   release('KEY');
     sleep(releaseDelay);
 
-$btnTemplateKeyReleaseCode:
-key.release('CONTROL');
-
-$btnTemplateKeyResetDelays:
+$key_resetDelays_hint:
 key.resetDelays();
 Сбросить все задержки к стандартному значению
 
-$btnTemplateKeyResetDelaysCode:
-key.resetDelays();
-
-$btnTemplateKeyResetMultiplier:
+$key_resetMultiplier_hint:
 key.resetMultiplier();
 Сбросить множитель задержек к стандартному значению
 
-$btnTemplateKeyResetMultiplierCode:
-key.resetMultiplier();
-
-$btnTemplateKeyResetSpeed:
+$key_resetSpeed_hint:
 key.resetSpeed();
 Сбросить множитель скорости к стандартному значению
 
-$btnTemplateKeyResetSpeedCode:
-key.resetSpeed();
-
-$btnTemplateKeyType:
+$key_type_hint:
 key.type('CONTROL');
 Последовательно нажать и отпустить каждую укзанную клавишу
   
@@ -862,19 +832,13 @@ key.release('KEY1 KEY2');
   release('KEY');
     sleep(releaseDelay);
 
-$btnTemplateKeyTypeCode:
-key.type('CONTROL');
-
-$btnTemplateKeySetDelays:
+$key_setDelays_hint:
 key.setDelays(10);
 Приствоить всем задержкам указанное значение
   
 key.setDelays(int delay)
 
-$btnTemplateKeySetDelaysCode:
-key.setDelays(10);
-
-$btnTemplateKeySetMultiplier:
+$key_setMultiplier_hint:
 key.setMultiplier(1);
 Установить множитель задержек
   
@@ -882,39 +846,27 @@ key.setMultiplier(1);
   
 key.setMultiplier(float multiplier)
 
-$btnTemplateKeySetMultiplierCode:
-key.setMultiplier(1);
-
-$btnTemplateKeySetPressDelay:
+$key_setPressDelay_hint:
 key.setPressDelay(10);
 Установить задержку нажатия клавиши клавиатуры в мс.
   
 key.setPressDelay(pressDelay)
   int pressDelay - задержка
 
-$btnTemplateKeySetPressDelayCode:
-key.setPressDelay(10);
-
-$btnTemplateKeySetReleaseDelay:
+$key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
 Установить задержку отпускания клавиши клавиатуры в мс.
   
 key.setReleaseDelay(releaseDelay)
   releaseDelay - задержка
 
-$btnTemplateKeySetReleaseDelayCode:
-key.setReleaseDelay(10);
-
-$btnTemplateKeySetSpeed:
+$key_setSpeed_hint:
 key.setSpeed(1);
 Установить множитель скорости
   
 Обратная величина к множителю задержек
 
 key.setSpeed(float speed)
-
-$btnTemplateKeySetSpeedCode:
-key.setSpeed(1);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////

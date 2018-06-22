@@ -267,24 +267,7 @@
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.key">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="keyboardTemplateButtonContainer">
-                                                    <Button fx:id="btnTemplateKeyGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
-                                                    <Button fx:id="btnTemplateKeyGetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getPressDelay" />
-                                                    <Button fx:id="btnTemplateKeyGetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getReleaseDelay" />
-                                                    <Button fx:id="btnTemplateKeyGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
-                                                    <Button fx:id="btnTemplateKeyIsPressed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="isPressed" />
-                                                    <Button fx:id="btnTemplateKeyPress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="press" />
-                                                    <Button fx:id="btnTemplateKeyRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="release" />
-                                                    <Button fx:id="btnTemplateKeyResetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetDelays" />
-                                                    <Button fx:id="btnTemplateKeyResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
-                                                    <Button fx:id="btnTemplateKeyResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
-                                                    <Button fx:id="btnTemplateKeyType" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="type" />
-                                                    <Button fx:id="btnTemplateKeySetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setDelays" />
-                                                    <Button fx:id="btnTemplateKeySetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
-                                                    <Button fx:id="btnTemplateKeySetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setPressDelay" />
-                                                    <Button fx:id="btnTemplateKeySetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setReleaseDelay" />
-                                                    <Button fx:id="btnTemplateKeySetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
-                                                </VBox>
+                                                <VBox fx:id="keyboardTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.system">

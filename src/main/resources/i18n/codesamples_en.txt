@@ -693,7 +693,7 @@ mouse.wheelAt('DOWN',0,0,0);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateKeyGetMultiplier:
+$key_getMultiplier_hint:
 key.getMultiplier();
 Get the delay multiplier
   
@@ -703,28 +703,19 @@ The reciprocal of the speed multiplier
   
 key.getMultiplier():float
 
-$btnTemplateKeyGetMultiplierCode:
-key.getMultiplier();
-
-$btnTemplateKeyGetPressDelay:
+$key_getPressDelay_hint:
 key.getPressDelay();
 Get the key press delay in ms. (pressDelay)
   
 key.getPressDelay():int
 
-$btnTemplateKeyGetPressDelayCode:
-key.getPressDelay();
-
-$btnTemplateKeyGetReleaseDelay:
+$key_getReleaseDelay_hint:
 key.getReleaseDelay();
 Get the mouse button release delay in ms. (releaseDelay)
   
 key.getReleaseDelay():int
 
-$btnTemplateKeyGetReleaseDelayCode:
-key.getReleaseDelay();
-
-$btnTemplateKeyGetSpeed:
+$key_getSpeed_hint:
 mouse.getSpeed();
 Get the speed multiplier
   
@@ -732,20 +723,14 @@ The reciprocal of the delay multiplier
   
 key.getSpeed():float
 
-$btnTemplateKeyGetSpeedCode:
-key.getSpeed();
-
-$btnTemplateKeyIsPressed:
+$key_isPressed_hint:
 key.isPressed('CONTROL');
 Find out is the specified keys are pressed
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - key's names
 
-$btnTemplateKeyIsPressedCode:
-key.isPressed('CONTROL');
-
-$btnTemplateKeyPress:
+$key_press_hint:
 key.press('CONTROL');
 Press the specified key
   
@@ -756,10 +741,7 @@ Method consists of:
   press('KEY');
     sleep(pressDelay);
 
-$btnTemplateKeyPressCode:
-key.press('CONTROL');
-
-$btnTemplateKeyRelease:
+$key_release_hint:
 key.release('CONTROL');
 Release the specified key
   
@@ -770,35 +752,23 @@ key.release('KEY');
   release('KEY');
     sleep(releaseDelay);
 
-$btnTemplateKeyReleaseCode:
-key.release('CONTROL');
-
-$btnTemplateKeyResetDelays:
+$key_resetDelays_hint:
 key.resetDelays();
 Reset all delays to default values
 
-$btnTemplateKeyResetDelaysCode:
-key.resetDelays();
-
-$btnTemplateKeyResetMultiplier:
+$key_resetMultiplier_hint:
 key.resetMultiplier();
 Reset the delay multiplier to a default value
 
-$btnTemplateKeyResetMultiplierCode:
-key.resetMultiplier();
-
-$btnTemplateKeyResetSpeed:
+$key_resetSpeed_hint:
 key.resetSpeed();
 Reset the speed multiplier to a default value
 
-$btnTemplateKeyResetSpeedCode:
-key.resetSpeed();
-
-$btnTemplateKeyType:
+$key_type_hint:
 key.type('CONTROL');
 Sequentially press and release each specified key
   
-key.release('KEY1 KEY2');
+key.type('KEY1 KEY2');
   KEY1, KEY2 - key's names
   
 Method consists of(fo each key):
@@ -807,19 +777,13 @@ Method consists of(fo each key):
   release('KEY');
     sleep(releaseDelay);
 
-$btnTemplateKeyTypeCode:
-key.type('CONTROL');
-
-$btnTemplateKeySetDelays:
+$key_setDelays_hint:
 key.setDelays(10);
 Set all delays to the specified value
   
 key.setDelays(int delay)
 
-$btnTemplateKeySetDelaysCode:
-key.setDelays(10);
-
-$btnTemplateKeySetMultiplier:
+$key_setMultiplier_hint:
 key.setMultiplier(1);
 Set the delay multiplier to the specified value
   
@@ -827,37 +791,25 @@ The reciprocal of the speed multiplier
   
 key.setMultiplier(float multiplier)
 
-$btnTemplateKeySetMultiplierCode:
-key.setMultiplier(1);
-
-$btnTemplateKeySetPressDelay:
+$key_setPressDelay_hint:
 key.setPressDelay(10);
 Set the press delay to the specified value
   
 key.setPressDelay(pressDelay)
   int pressDelay - delay
 
-$btnTemplateKeySetPressDelayCode:
-key.setPressDelay(10);
-
-$btnTemplateKeySetReleaseDelay:
+$key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
 Set the release delay to the specified value
   
 key.setReleaseDelay(releaseDelay)
   releaseDelay - delay
 
-$btnTemplateKeySetReleaseDelayCode:
-key.setReleaseDelay(10);
-
-$btnTemplateKeySetSpeed:
+$key_setSpeed_hint:
 key.setSpeed(1);
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
-
-$btnTemplateKeySetSpeedCode:
-key.setSpeed(1);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
