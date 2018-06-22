@@ -762,16 +762,16 @@ public class MainController implements Initializable {
      * @param prop - property file
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
-        /*
+        
         TemplateButtonGenerator buttonGenerator = new TemplateButtonGenerator()
                 .setLineSize(80)
                 .setProperties(prop)
                 .addStyleClass("templateButton")
                 .setOnMouseEntered(this::showCodeSample)
                 .setOnMouseExited(this::hideCodeSample)
+                .setOnAction(this::insertTemplate)
                 .build();
-keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
-*/
+
 
         templateButtonNodes.addAll(keyboardTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(mouseTemplateButtonContainer.getChildren());
@@ -786,6 +786,9 @@ keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonLi
             n.setOnMouseEntered(this::showCodeSample);
             n.setOnMouseExited(this::hideCodeSample);
         }
+        //TODO
+        //keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
+
     }
 
     /**

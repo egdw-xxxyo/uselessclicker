@@ -24,6 +24,7 @@ public class TemplateButtonGenerator {
 
     private Consumer<MouseEvent> onMouseEntered;
     private Consumer<MouseEvent> onMouseExited;
+    private Consumer<ActionEvent> onAction;
 
     public TemplateButtonGenerator() {
     }
@@ -42,6 +43,12 @@ public class TemplateButtonGenerator {
 
     public TemplateButtonGenerator setOnMouseExited(Consumer<MouseEvent> consumer) {
         this.onMouseExited = consumer;
+        isBuilt = false;
+        return this;
+    }
+
+    public TemplateButtonGenerator setOnAction(Consumer<ActionEvent> onAction) {
+        this.onAction = onAction;
         isBuilt = false;
         return this;
     }
@@ -72,19 +79,23 @@ public class TemplateButtonGenerator {
             Button button = new Button();
 
             String text = properties.get(id);
+            if (text.isEmpty()) text = name;
             String hint = properties.get(id + "_hint");
-            String[] s = hint.split("[\\r\\n]+");
-            String template = hint.split("\\\\r?\\\\n", 2)[0];
+            if (hint.isEmpty()) hint = "insert " + id;
+            String template = properties.get(id + "_template");
+            if (template.isEmpty()) template = hint.split("[\\r\\n]+")[0]+"\n";
 
             button.setText(text);
-            button.setUserData(new String[]{hint,template});
+            button.setUserData(new String[]{hint, template});
             button.setOnMouseEntered(onMouseEntered::accept);
             button.setOnMouseExited(onMouseExited::accept);
+            button.setOnAction(onAction::accept);
 
             styleClasses.forEach(style -> button.getStyleClass().add(style));
             buttons.add(button);
         });
-            return buttons;
-        }
-
+        return buttons;
     }
+
+
+}

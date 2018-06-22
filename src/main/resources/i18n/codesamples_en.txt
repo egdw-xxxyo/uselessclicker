@@ -1050,12 +1050,3 @@ $btnTemplateLanguageLoopWhileCode:
 while(true){
     
 }
-
-
-$key_press:
-key press
-
-$key_press_hint:
-key.press('');
-  
-some text
