@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects;
 
+import java.security.Key;
 import java.util.*;
 
 import org.dikhim.jclicker.actions.utils.KeyCodes;
@@ -75,6 +76,21 @@ public class JsKeyboardObject implements KeyboardObject {
             Set<String> keySet = new HashSet<>(Arrays.asList(keys.split(" ")));
             return KeyEventsManager.getInstance().isPressed(keySet);
         }
+    }
+
+    @Override
+    public boolean isCapsLocked() {
+        return KeyEventsManager.getInstance().isCapsLockLocked();
+    }
+
+    @Override
+    public boolean isNumLocked() {
+        return KeyEventsManager.getInstance().isNumLockLocked();
+    }
+
+    @Override
+    public boolean isScrollLocked() {
+        return KeyEventsManager.getInstance().isScrollLockLocked();
     }
 
     @Override

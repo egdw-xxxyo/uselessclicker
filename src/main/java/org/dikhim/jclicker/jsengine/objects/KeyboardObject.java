@@ -19,6 +19,12 @@ public interface KeyboardObject {
 
     // I
     boolean isPressed(String keys);
+    
+    boolean isCapsLocked();
+    
+    boolean isNumLocked();
+    
+    boolean isScrollLocked();
 
     // P
     void perform(String keys, String action);

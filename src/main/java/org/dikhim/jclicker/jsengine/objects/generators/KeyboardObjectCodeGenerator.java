@@ -53,6 +53,24 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
         return false;
     }
 
+    @Override
+    public boolean isCapsLocked() {
+        buildStringForCurrentMethod();
+        return false;
+    }
+
+    @Override
+    public boolean isNumLocked() {
+        buildStringForCurrentMethod();
+        return false;
+    }
+
+    @Override
+    public boolean isScrollLocked() {
+        buildStringForCurrentMethod();
+        return false;
+    }
+
     public void perform(String keys, String action) {
         buildStringForCurrentMethod(keys, action);
     }

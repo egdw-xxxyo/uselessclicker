@@ -1,7 +1,10 @@
 package org.dikhim.jclicker.actions.managers;
 
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.*;
+import java.util.List;
 
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.events.KeyboardEvent;
@@ -136,5 +139,15 @@ public class KeyEventsManager implements NativeKeyListener{
 
     public synchronized void removeIgnorePrefix(String prefix) {
         ignoredPrefixes.remove(prefix);
+    }
+    
+    public synchronized boolean isCapsLockLocked(){
+        return Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_CAPS_LOCK);
+    }
+    public synchronized boolean isNumLockLocked(){
+        return Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_NUM_LOCK);
+    }
+    public synchronized boolean isScrollLockLocked(){
+        return Toolkit.getDefaultToolkit().getLockingKeyState(KeyEvent.VK_SCROLL_LOCK);
     }
 }
