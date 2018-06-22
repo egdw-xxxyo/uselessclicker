@@ -142,7 +142,7 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
     }
 
     @Override
-    public List<String> getMethodsNames() {
+    public List<String> getMethodNames() {
         List<String> methodsNames = new ArrayList<>();
         for (Method m : allMethods) {
             if (Modifier.isPublic(m.getModifiers()))
@@ -153,8 +153,6 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
     }
 
 
-    public abstract List<String> getMethodNames();
-    
     private Method getMethodWithName(String methodName) {
         for (Method m : allMethods) {
             if (!m.getName().equals(methodName)) {

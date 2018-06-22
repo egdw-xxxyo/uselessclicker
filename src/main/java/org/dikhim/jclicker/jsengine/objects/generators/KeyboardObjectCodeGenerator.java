@@ -151,14 +151,4 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     public void type(String keys) {
         buildStringForCurrentMethod(keys);
     }
-
-    @Override
-    public List<String> getMethodNames() {
-        Method[] methods = KeyboardObject.class.getDeclaredMethods();
-        List<String> methodList = new ArrayList<>();
-        for (Method m : methods) {
-            LOGGER.debug(m.getName());
-        }
-        return methodList;
-    }
 }

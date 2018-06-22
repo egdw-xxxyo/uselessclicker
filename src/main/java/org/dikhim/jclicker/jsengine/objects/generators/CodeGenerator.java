@@ -12,7 +12,7 @@ public interface CodeGenerator {
 
     int getLineSize();
 
-    List<String> getMethodsNames();
+    List<String> getMethodNames();
 
 
     String getObjectName();

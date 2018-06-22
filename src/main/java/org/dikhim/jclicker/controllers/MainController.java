@@ -29,6 +29,7 @@ import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.EventsRecorder;
+import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -86,14 +87,9 @@ public class MainController implements Initializable {
 
         eventsRecorder = new EventsRecorder(config, codeTextArea);
         // init toggles and template buttons
-        SourcePropertyFile propertyFile = new SourcePropertyFile();
 
-        InputStream txtReader = getClass().getResourceAsStream("/i18n/" + resources.getString("codesamples"));
-        try {
-            propertyFile.setSource(IOUtils.toString(txtReader, "UTF-8"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        File file = new File(getClass().getResource(resources.getString("codesamples")).getFile());
+        SourcePropertyFile propertyFile = new SourcePropertyFile(file);
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
@@ -766,6 +762,17 @@ public class MainController implements Initializable {
      * @param prop - property file
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
+        /*
+        TemplateButtonGenerator buttonGenerator = new TemplateButtonGenerator()
+                .setLineSize(80)
+                .setProperties(prop)
+                .addStyleClass("templateButton")
+                .setOnMouseEntered(this::showCodeSample)
+                .setOnMouseExited(this::hideCodeSample)
+                .build();
+keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
+*/
+
         templateButtonNodes.addAll(keyboardTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(mouseTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
