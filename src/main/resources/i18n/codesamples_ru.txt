@@ -820,6 +820,9 @@ system.setSpeed(1);
 /////////////////////////////////////
 /////////////////////////////////////
 $language_class_hint:
+class
+
+$language_class_hint:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
@@ -837,11 +840,30 @@ function Class (path) {
 Обращение к методу объекта:
   var out = obj.echo('someText');
 
+$language_class_hint:
+function Class (path) {
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
+}
+
+$language_functionEcho:
+function 'echo'
+
 $language_functionEcho_hint:
 function echo(text){
     return text;
 }
 Шаблон функции сполучением и возвратом значения
+
+$language_functionEcho_template:
+function echo(text){
+    return text;
+}
+
+$language_functionVoid:
+function 'void'
 
 $language_functionVoid_hint:
 function foo(){
@@ -849,11 +871,27 @@ function foo(){
 }
 Шаблон пустой функции
 
+$language_functionVoid_template:
+function foo(){
+    
+}
+
+$language_loopForPlus:
+loop 'for' i++
+
 $language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
 Шаблон возрастающего цикла 'for'
+
+$language_loopForPlus_template:
+for(i=0;i<10;i++){
+    
+}
+
+$language_loopForMinus:
+loop 'for' i--
 
 $language_loopForMinus_hint:
 for(i=10;i>0;i--){
@@ -861,10 +899,22 @@ for(i=10;i>0;i--){
 }
 Шаблон убывающего цикла 'for'
 
+$language_loopForMinus_template:
+for(i=10;i>0;i--){
+    
+}
+
+$language_loopWhile:
+loop 'while'
+
 $language_loopWhile_hint:
 while(true){
     
 }
 Шаблон цикла 'while'
 
+$language_loopWhile_template:
+while(true){
+    
+}
 

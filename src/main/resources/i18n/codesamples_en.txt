@@ -811,6 +811,9 @@ The reciprocal of the delay multiplier
 /////////////////////////////////////
 /////////////////////////////////////
 $language_class_hint:
+class
+
+$language_class_hint:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
@@ -827,6 +830,17 @@ To get the field from object:
   
 To call a method from object:
   var out = obj.echo('someText');
+
+$language_class_template:
+function Class (path) {
+    this.path = path;
+    this.echo = function(text){
+        return text;
+    };
+}
+
+$language_functionEcho:
+function 'echo'
 
 $language_functionEcho_hint:
 function echo(text){
