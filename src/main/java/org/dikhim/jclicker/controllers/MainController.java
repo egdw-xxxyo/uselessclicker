@@ -773,7 +773,6 @@ public class MainController implements Initializable {
                 .build();
 
         templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
-        templateButtonNodes.addAll(systemTemplateButtonContainer.getChildren());
         // Set user data 'String[]' to buttons
         // [0] - hint text
         // [1] - code
@@ -785,6 +784,7 @@ public class MainController implements Initializable {
         }
         keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
+        systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());
     }
 
     /**

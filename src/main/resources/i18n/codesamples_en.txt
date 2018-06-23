@@ -740,31 +740,22 @@ Method consists of(fo each key):
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateSystemSleep:
+$system_sleep_hint:
 system.sleep(0);
 Pause script running on the specified amount of time in ms.
 
 system.sleep(ms);
   ms - time in ms.
 
-$btnTemplateSystemSleepCode:
-system.sleep(0);
-
-$btnTemplateSystemPrint:
+$system_print_hint:
 system.print('');
 Print the message
 
-$btnTemplateSystemPrintCode:
-system.print('');
-
-$btnTemplateSystemPrintln:
+$system_println_hint:
 system.println('');
 Print the message and terminate the line
 
-$btnTemplateSystemPrintlnCode:
-system.println('');
-
-$btnTemplateSystemRegisterShortcut:
+$system_registerShortcut_hint:
 system.registerShortcut('F1','foo');
 Register the keyboard shortcut for calling the method
   
@@ -773,10 +764,7 @@ system.registerShortcut
   KEY1, KEY2 - key's names
   METHOD - method's name
 
-$btnTemplateSystemRegisterShortcutCode:
-system.registerShortcut('F1','foo');
-
-$btnTemplateSystemGetMultiplier:
+$system_getMultiplier_hint:
 system.getMultiplier();
 Get the delay multiplier
   
@@ -784,56 +772,35 @@ At this number, all delays for the object are multiplied
   
 The reciprocal of the speed multiplier
 
-$btnTemplateSystemGetMultiplierCode:
-system.getMultiplier();
-
-$btnTemplateSystemGetMultipliedDelay:
+$system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
 Get the multiplied delay
 
-$btnTemplateSystemGetMultipliedDelayCode:
-system.getMultipliedDelay(delay);
-
-$btnTemplateSystemGetSpeed:
+$system_getSpeed_hint:
 system.getSpeed();
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
 
-$btnTemplateSystemGetSpeedCode:
-system.getSpeed();
-
-$btnTemplateSystemResetMultiplier:
+$system_resetMultiplier_hint:
 system.resetMultiplier();
   Reset the delay multiplier to a default value
 
-$btnTemplateSystemResetMultiplierCode:
-system.resetMultiplier();
-
-$btnTemplateSystemResetSpeed:
+$system_resetSpeed_hint:
 system.resetSpeed();
 Reset the speed multiplier to a default value
 
-$btnTemplateSystemResetSpeedCode:
-system.resetSpeed();
-
-$btnTemplateSystemSetMultiplier:
+$system_setMultiplier_hint:
 system.setMultiplier(1);
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
 
-$btnTemplateSystemSetMultiplierCode:
-system.setMultiplier(1);
-
-$btnTemplateSystemSetSpeed:
+$system_setSpeed_hint:
 system.setSpeed(1);
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
-
-$btnTemplateSystemSetSpeedCode:
-system.setSpeed(1);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
@@ -843,7 +810,7 @@ system.setSpeed(1);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateLanguageClass:
+$language_class_hint:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
@@ -861,65 +828,32 @@ To get the field from object:
 To call a method from object:
   var out = obj.echo('someText');
 
-$btnTemplateLanguageClassCode:
-function Class (path) {
-    this.path = path;
-    this.echo = function(text){
-        return text;
-    };
-}
-
-$btnTemplateLanguageFunctionEcho:
+$language_functionEcho_hint:
 function echo(text){
     return text;
 }
 The template of a function with a returning value
 
-$btnTemplateLanguageFunctionEchoCode:
-function echo(text){
-    return text;
-}
-
-$btnTemplateLanguageFunctionVoid:
+$language_functionVoid_hint:
 function foo(){
     
 }
 The template for an empty function
 
-$btnTemplateLanguageFunctionVoidCode:
-function foo(){
-    
-}
-
-$btnTemplateLanguageLoopForPlus:
+$language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
 The template for an increasing loop 'for'
 
-$btnTemplateLanguageLoopForPlusCode:
-for(i=0;i<10;i++){
-    
-}
-
-$btnTemplateLanguageLoopForMinus:
+$language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
 The template for a decreasing loop 'for'
 
-$btnTemplateLanguageLoopForMinusCode:
-for(i=10;i>0;i--){
-    
-}
-
-$btnTemplateLanguageLoopWhile:
+$language_loopWhile_hint:
 while(true){
     
 }
 The template for a loop 'while'
-
-$btnTemplateLanguageLoopWhileCode:
-while(true){
-    
-}

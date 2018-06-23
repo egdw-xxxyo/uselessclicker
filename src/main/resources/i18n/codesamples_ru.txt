@@ -748,31 +748,22 @@ key.release('KEY1 KEY2');
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateSystemSleep:
+$system_sleep_hint:
 system.sleep(0);
 Приостановить скрипт на заданное время в мс.
 
 system.sleep(ms);
   ms - время в мс.
 
-$btnTemplateSystemSleepCode:
-system.sleep(0);
-
-$btnTemplateSystemPrint:
+$system_print_hint:
 system.print('');
 Вывести сообщение в поле вывода
 
-$btnTemplateSystemPrintCode:
-system.print('');
-
-$btnTemplateSystemPrintln:
+$system_println_hint:
 system.println('');
 Вывести сообщение в поле вывода и перейти на новую строку
 
-$btnTemplateSystemPrintlnCode:
-system.println('');
-
-$btnTemplateSystemRegisterShortcut:
+$system_registerShortcut_hint:
 system.registerShortcut('F1','foo');
 Зарегистрировать сочетание клавиш для вызова метода
   
@@ -782,10 +773,7 @@ system.registerShortcut
     пробел
   FUNCT - имя вызываемого метода
 
-$btnTemplateSystemRegisterShortcutCode:
-system.registerShortcut('F1','foo');
-
-$btnTemplateSystemGetMultiplier:
+$system_getMultiplier_hint:
 system.getMultiplier();
 Получить множитель задержек (multiplier)
   
@@ -793,56 +781,35 @@ system.getMultiplier();
   
 Обратная величина к множителю скорости
 
-$btnTemplateSystemGetMultiplierCode:
-system.getMultiplier();
-
-$btnTemplateSystemGetMultipliedDelay:
+$system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
 Получить значение задержки пермноженое на множитель задержек
 
-$btnTemplateSystemGetMultipliedDelayCode:
-system.getMultipliedDelay(delay);
-
-$btnTemplateSystemGetSpeed:
+$system_getSpeed_hint:
 system.getSpeed();
 Получить значение параметра скорости
   
 Обратная величина к множителю задержек
 
-$btnTemplateSystemGetSpeedCode:
-system.getSpeed();
-
-$btnTemplateSystemResetMultiplier:
+$system_resetMultiplier_hint:
 system.resetMultiplier();
   Сбросить множитель задержек к стандартному значению
 
-$btnTemplateSystemResetMultiplierCode:
-system.resetMultiplier();
-
-$btnTemplateSystemResetSpeed:
+$system_resetSpeed_hint:
 system.resetSpeed();
 Сбросить множитель скорости к стандартному значению
 
-$btnTemplateSystemResetSpeedCode:
-system.resetSpeed();
-
-$btnTemplateSystemSetMultiplier:
+$system_setMultiplier_hint:
 system.setMultiplier(1);
 Установить множитель задержек
   
 Обратная величина к множителю скорости
 
-$btnTemplateSystemSetMultiplierCode:
-system.setMultiplier(1);
-
-$btnTemplateSystemSetSpeed:
+$system_setSpeed_hint:
 system.setSpeed(1);
 Установить множитель скорости
   
 Обратная величина к множителю задержек
-
-$btnTemplateSystemSetSpeedCode:
-system.setSpeed(1);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
@@ -852,7 +819,7 @@ system.setSpeed(1);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateLanguageClass:
+$language_class_hint:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
@@ -870,66 +837,34 @@ function Class (path) {
 Обращение к методу объекта:
   var out = obj.echo('someText');
 
-$btnTemplateLanguageClassCode:
-function Class (path) {
-    this.path = path;
-    this.echo = function(text){
-        return text;
-    };
-}
-
-$btnTemplateLanguageFunctionEcho:
+$language_functionEcho_hint:
 function echo(text){
     return text;
 }
 Шаблон функции сполучением и возвратом значения
 
-$btnTemplateLanguageFunctionEchoCode:
-function echo(text){
-    return text;
-}
-
-$btnTemplateLanguageFunctionVoid:
+$language_functionVoid_hint:
 function foo(){
     
 }
 Шаблон пустой функции
 
-$btnTemplateLanguageFunctionVoidCode:
-function foo(){
-    
-}
-
-$btnTemplateLanguageLoopForPlus:
+$language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
 Шаблон возрастающего цикла 'for'
 
-$btnTemplateLanguageLoopForPlusCode:
-for(i=0;i<10;i++){
-    
-}
-
-$btnTemplateLanguageLoopForMinus:
+$language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
 Шаблон убывающего цикла 'for'
 
-$btnTemplateLanguageLoopForMinusCode:
-for(i=10;i>0;i--){
-    
-}
-
-$btnTemplateLanguageLoopWhile:
+$language_loopWhile_hint:
 while(true){
     
 }
 Шаблон цикла 'while'
 
-$btnTemplateLanguageLoopWhileCode:
-while(true){
-    
-}
 
