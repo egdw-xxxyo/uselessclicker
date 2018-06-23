@@ -252,7 +252,7 @@ $combinedEncodingType:
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$btnTemplateMouseClick:
+$mouse_click_hint:
 mouse.click('');
 Клик клавишей мыши
   
@@ -265,10 +265,7 @@ mouse.click('BTN');
   release('BTN');
     sleep(releaseDelay);
 
-$btnTemplateMouseClickCode:
-mouse.click('LEFT');
-
-$btnTemplateMouseClickAt:
+$mouse_clickAt_hint:
 mouse.clickAt('',,);
 Клик клавишей мыши в укзанной точке
   
@@ -282,19 +279,13 @@ mouse.clickAt('BTN',x,y);
   releaseAt('BTN',x,y);
     sleep(releaseDelay);
 
-$btnTemplateMouseClickAtCode:
-mouse.clickAt('LEFT',0,0);
-
-$btnTemplateMouseGetMoveDelay:
+$mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
 Получить задержку передвижения курсора мыши в мс. (moveDelay)
   
   mouse.getMoveDelay():int
 
-$btnTemplateMouseGetMoveDelayCode:
-mouse.getMoveDelay();
-
-$btnTemplateMouseGetMultiplier:
+$mouse_getMultiplier_hint:
 mouse.getMultiplier();
 Получить множитель задержек.
   
@@ -304,29 +295,19 @@ mouse.getMultiplier();
   
   mouse.getMultiplier():float
 
-$btnTemplateMouseGetMultiplierCode:
-mouse.getMultiplier();
-
-$btnTemplateMouseGetPressDelay:
+$mouse_getPressDelay_hint:
 mouse.getPressDelay();
 Получить задержку нажатия клавиши мыши в мс. (pressDelay)
   
   mouse.getPressDelay():int
 
-
-$btnTemplateMouseGetPressDelayCode:
-mouse.getPressDelay();
-
-$btnTemplateMouseGetReleaseDelay:
+$mouse_getReleaseDelay_hint:
 mouse.getReleaseDelay();
 Получить задержку отпускания клавиши мыши в мс. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
-$btnTemplateMouseGetReleaseDelayCode:
-mouse.getReleaseDelay();
-
-$btnTemplateMouseGetSpeed:
+$mouse_getSpeed_hint:
 mouse.getSpeed();
 Получить множитель скорости
   
@@ -334,19 +315,13 @@ mouse.getSpeed();
   
   mouse.getSpeed():float
 
-$btnTemplateMouseGetSpeedCode:
-mouse.getSpeed();
-
-$btnTemplateMouseGetWheelDelay:
+$mouse_getWheelDelay_hint:
 mouse.getWheelDelay();
 Получить задержку колеса мыши в мс. (wheelDelay)
   
   mouse.getWheelDelay():int
 
-$btnTemplateMouseGetWheelDelayCode:
-mouse.getWheelDelay();
-
-$btnTemplateMouseGetX:
+$mouse_getX_hint:
 mouse.getX();
 Получить координату 'x' последнего события мыши
   
@@ -354,10 +329,7 @@ mouse.getX();
   
 Если после запуска программы курсор не перемещался и клавиши не нажимались возвращает: 0
 
-$btnTemplateMouseGetXCode:
-mouse.getX();
-
-$btnTemplateMouseGetY:
+$mouse_getY_hint:
 mouse.getY();
 Получить координату 'y' последнего события мыши
   
@@ -365,10 +337,7 @@ mouse.getY();
   
 Если после запуска программы курсор не перемещался и клавиши не нажимались возвращает: 0
 
-$btnTemplateMouseGetYCode:
-mouse.getY();
-
-$btnTemplateMouseMove:
+$mouse_move_hint:
 mouse.move(0,0);
 Передвинуть курсор относительно координат последнего события
   
@@ -379,35 +348,7 @@ mouse.move(0,0);
   move(x,y);
     sleep(moveDelay);
 
-$btnTemplateMouseMoveCode:
-mouse.move(0,0);
-
-$btnTemplateMouseMoveAbsolute:
-mouse.moveAbsolute('');
-Код для движения курсора по заданному пути абсолютных координат
-  
-Состоит из групп символов юникода
-Каждый 1й символ - координата 'x'
-Каждый 2й символ - координата 'y'
-
-$btnTemplateMouseMoveAbsoluteCode:
-mouse.moveAbsolute('');
-
-$btnTemplateMouseMoveAbsolute_D:
-mouse.moveAbsolute_D('');
-Код для движения курсора по заданному пути абсолютных координат с задержками
-  
-Состоит из групп символов юникода
-Каждый 1й символ - координата 'x'
-Каждый 2й символ - координата 'y'
-Каждый 3й символ - значение задержки
-  
-Значение задержки не может быть более 20000мс
-
-$btnTemplateMouseMoveAbsolute_DCode:
-mouse.moveAbsolute_D('');
-
-$btnTemplateMouseMoveAndClick:
+$mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
 Передвинуть курсор относительно координат последнего события и кликнуть
   
@@ -423,10 +364,7 @@ mouse.moveAndClick('BTN',dx,dy);
   release('BTN');
     sleep(releaseDelay);
 
-$btnTemplateMouseMoveAndClickCode:
-mouse.moveAndClick('LEFT',0,0);
-
-$btnTemplateMouseMoveAndPress:
+$mouse_moveAndPress_hint:
 mouse.moveAndPress('LEFT',0,0);
 Передвинуть курсор относительно координат последнего события и нажать клавишу мыши
   
@@ -440,10 +378,7 @@ mouse.moveAndPress('BTN',dx,dy);
   press('BTN');
     sleep(pressDelay);
 
-$btnTemplateMouseMoveAndPressCode:
-mouse.moveAndPress('LEFT',0,0);
-
-$btnTemplateMouseMoveAndRelease:
+$mouse_moveAndRelease_hint:
 mouse.moveAndRelease('LEFT',0,0);
 Передвинуть курсор относительно координат последнего события и отпустить клавишу мыши
   
@@ -457,10 +392,7 @@ mouse.moveAndPress('BTN',dx,dy);
   release('BTN');
     sleep(releaseDelay);
 
-$btnTemplateMouseMoveAndReleaseCode:
-mouse.moveAndRelease('LEFT',0,0);
-
-$btnTemplateMouseMoveAndWheel:
+$mouse_moveAndWheel_hint:
 mouse.moveAndWheel('DOWN',0,0,0);
 Передвинуть курсор относительно координат последнего события и прокруть колесо мыши
   
@@ -476,35 +408,7 @@ mouse.moveAndWheel
   wheel(direction,amount);
     sleep(wheelDelay);
 
-$btnTemplateMouseMoveAndWheelCode:
-mouse.moveAndWheel('DOWN',0,0,0);
-
-$btnTemplateMouseMoveRelative:
-mouse.moveRelative('');
-Код для движения курсора по заданному пути относительных координат
-  
-Состоит из групп символов юникода
-Каждый 1й символ - смещение по 'x'
-Каждый 2й символ - смещение по 'y'
-
-$btnTemplateMouseMoveRelativeCode:
-mouse.moveRelative('');
-
-$btnTemplateMouseMoveRelative_D:
-mouse.moveRelative_D('');
-Код для движения курсора по заданному пути относительных координат с задержками
-  
-Состоит из групп символов юникода
-Каждый 1й символ - смещение по 'x'
-Каждый 2й символ - смещение по 'y'
-Каждый 3й символ - значение задержки
-  
-Значение задержки не может быть более 20000мс
-
-$btnTemplateMouseMoveRelative_DCode:
-mouse.moveRelative_D('');
-
-$btnTemplateMouseMoveTo:
+$mouse_moveTo_hint:
 mouse.moveTo(0,0);
 Передвинуть курсор в указанную точку
   
@@ -515,10 +419,7 @@ mouse.moveTo(x,y);
   moveTo(x,y);
     sleep(moveDelay);
 
-$btnTemplateMouseMoveToCode:
-mouse.moveTo(0,0);
-
-$btnTemplateMousePress:
+$mouse_press_hint:
 mouse.press('LEFT');
 Нажать клавишу мыши
   
@@ -529,10 +430,7 @@ mouse.press('BTN');
   press('BTN');
     sleep(pressDelay);
 
-$btnTemplateMousePressCode:
-mouse.press('LEFT');
-
-$btnTemplateMousePressAt:
+$mouse_pressAt_hint:
 mouse.pressAt('LEFT',0,0);
 Передвинуть курсор в указанную точку и нажать клавишу мыши
   
@@ -546,10 +444,7 @@ mouse.pressAt('BTN',x,y);
   press('BTN');
     sleep(pressDelay);
 
-$btnTemplateMousePressAtCode:
-mouse.pressAt('LEFT',0,0);
-
-$btnTemplateMouseRelease:
+$mouse_release_hint:
 mouse.release('LEFT');
 Отпустить клавишу мыши
   
@@ -560,10 +455,7 @@ mouse.release('BTN');
   press('BTN');
     sleep(pressDelay);
 
-$btnTemplateMouseReleaseCode:
-mouse.release('LEFT');
-
-$btnTemplateMouseReleaseAt:
+$mouse_releaseAt_hint:
 mouse.releaseAt('LEFT',0,0);
 Передвинуть курсор в указанную точку и отпустить клавишу мыши
   
@@ -577,40 +469,25 @@ mouse.releaseAt('BTN',x,y);
   release('BTN');
     sleep(releaseDelay);
 
-$btnTemplateMouseReleaseAtCode:
-mouse.releaseAt('LEFT',0,0);
-
-$btnTemplateMouseResetDelays:
+$mouse_resetDelays_hint:
 mouse.resetDelays();
 Сбросить все задержки к стандартному значению
 
-$btnTemplateMouseResetDelaysCode:
-mouse.resetDelays();
-
-$btnTemplateMouseResetMultiplier:
+$mouse_resetMultiplier_hint:
 mouse.resetMultiplier();
 Сбросить множитель задержек к стандартному значению
 
-$btnTemplateMouseResetMultiplierCode:
-mouse.resetMultiplier();
-
-$btnTemplateMouseResetSpeed:
+$mouse_resetSpeed_hint:
 mouse.resetSpeed();
 Сбросить множитель скорости к стандартному значению
 
-$btnTemplateMouseResetSpeedCode:
-mouse.resetSpeed();
-
-$btnTemplateMouseSetDelays:
+$mouse_setDelays_hint:
 mouse.setDelays(10);
 Приствоить всем задержкам указанное значение
   
 mouse.setDelays(int delay)
 
-$btnTemplateMouseSetDelaysCode:
-mouse.setDelays(10);
-
-$btnTemplateMouseSetMoveDelay:
+$mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
 Установить задержку передвижения
 курсора мыши в мс.
@@ -618,10 +495,7 @@ mouse.setMoveDelay(10);
 mouse.setMoveDelay(int moveDelay)
   moveDelay - задержка
 
-$btnTemplateMouseSetMoveDelayCode:
-mouse.setMoveDelay();
-
-$btnTemplateMouseSetMultiplier:
+$mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
 Установить множитель задержек
   
@@ -629,30 +503,21 @@ mouse.setMultiplier(1);
   
 mouse.setMultiplier(float multiplier)
 
-$btnTemplateMouseSetMultiplierCode:
-mouse.setMultiplier(1);
-
-$btnTemplateMouseSetPressDelay:
+$mouse_setPressDelay_hint:
 mouse.setPressDelay(10);
 Установить задержку нажатия клавиши мыши в мс
   
 mouse.setPressDelay(pressDelay)
   int pressDelay - задержка
 
-$btnTemplateMouseSetPressDelayCode:
-mouse.setPressDelay(10);
-
-$btnTemplateMouseSetReleaseDelay:
+$mouse_setReleaseDelay_hint:
 mouse.setReleaseDelay(10);
 Установить задержку отпускания клавиши мыши в мс.
   
 mouse.setReleaseDelay(releaseDelay)
   int releaseDelay - задержка
 
-$btnTemplateMouseSetReleaseDelayCode:
-mouse.setReleaseDelay(10);
-
-$btnTemplateMouseSetSpeed:
+$mouse_setSpeed_hint:
 mouse.setSpeed(1);
 Установить множитель скорости
   
@@ -661,20 +526,14 @@ mouse.setSpeed(1);
 mouse.setSpeed(speed)
   float speed - скорость
 
-$btnTemplateMouseSetSpeedCode:
-mouse.setSpeed(1);
-
-$btnTemplateMouseSetWheelDelay:
+$mouse_setWheelDelay_hint:
 mouse.setWheelDelay(10);
 Установить задержку колеса мыши в мс.
   
 mouse.setWheelDelay(wheelDelay)
   int wheelDelay - задержка
 
-$btnTemplateMouseSetWheelDelayCode:
-mouse.setWheelDelay(10);
-
-$btnTemplateMouseSetX:
+$mouse_setX_hint:
 mouse.setX(0);
 Передвинуть курсор мыши по оси 'x' в указанную координату
   
@@ -685,10 +544,7 @@ mouse.setX(x);
   moveTo(x,getY());
     sleep(moveDelay);
 
-$btnTemplateMouseSetXCode:
-mouse.setX(0);
-
-$btnTemplateMouseSetY:
+$mouse_setY_hint:
 mouse.setY(0);
 Передвинуть курсор мыши по оси 'y' в указанную координату
   
@@ -699,10 +555,7 @@ mouse.setY(y);
   moveTo(x,getY());
     sleep(moveDelay);
 
-$btnTemplateMouseSetYCode:
-mouse.setY(0);
-
-$btnTemplateMouseWheel:
+$mouse_wheel_hint:
 mouse.wheel('DOWN',0);
 Прокрутить колесо мыши на указанное
 количество строк
@@ -715,10 +568,7 @@ mouse.wheel(direction, amount);
   wheel(direction, amount);
     sleep(wheelDelay);
 
-$btnTemplateMouseWheelCode:
-mouse.wheel('DOWN',0);
-
-$btnTemplateMouseWheelAt:
+$mouse_wheelAt_hint:
 mouse.wheelAt('DOWN',0,0,0);
 Прокрутить колесо мыши на указанное количество строк
   
@@ -735,9 +585,6 @@ mouse.wheelAt
     sleep(moveDelay);
   wheel(direction,amount);
     sleep(wheelDelay);
-
-$btnTemplateMouseWheelAtCode:
-mouse.wheelAt('DOWN',0,0,0);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////

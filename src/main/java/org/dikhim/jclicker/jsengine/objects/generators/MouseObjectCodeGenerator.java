@@ -261,9 +261,4 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     public void wheelAt(String direction, int amount, int x, int y) {
         buildStringForCurrentMethod(direction, amount, x, y);
     }
-
-    @Override
-    public List<String> getMethodNames() {
-        return null;
-    }
 }

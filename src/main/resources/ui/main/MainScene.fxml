@@ -232,42 +232,7 @@
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.mouse">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="mouseTemplateButtonContainer">
-                                                    <Button fx:id="btnTemplateMouseClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="click" />
-                                                    <Button fx:id="btnTemplateMouseClickAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="clickAt" />
-                                                    <Button fx:id="btnTemplateMouseGetMoveDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMoveDelay" />
-                                                    <Button fx:id="btnTemplateMouseGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
-                                                    <Button fx:id="btnTemplateMouseGetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getPressDelay" />
-                                                    <Button fx:id="btnTemplateMouseGetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getReleaseDelay" />
-                                                    <Button fx:id="btnTemplateMouseGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
-                                                    <Button fx:id="btnTemplateMouseGetWheelDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getWheelDelay" />
-                                                    <Button fx:id="btnTemplateMouseGetX" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getX" />
-                                                    <Button fx:id="btnTemplateMouseGetY" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getY" />
-                                                    <Button fx:id="btnTemplateMouseMove" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="move" />
-                                                    <Button fx:id="btnTemplateMouseMoveAndClick" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndClick" />
-                                                    <Button fx:id="btnTemplateMouseMoveAndPress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndPress" />
-                                                    <Button fx:id="btnTemplateMouseMoveAndRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndRelease" />
-                                                    <Button fx:id="btnTemplateMouseMoveAndWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveAndWheel" />
-                                                    <Button fx:id="btnTemplateMouseMoveTo" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="moveTo" />
-                                                    <Button fx:id="btnTemplateMousePress" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="press" />
-                                                    <Button fx:id="btnTemplateMousePressAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="pressAt" />
-                                                    <Button fx:id="btnTemplateMouseRelease" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="release" />
-                                                    <Button fx:id="btnTemplateMouseReleaseAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="releaseAt" />
-                                                    <Button fx:id="btnTemplateMouseResetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetDelays" />
-                                                    <Button fx:id="btnTemplateMouseResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
-                                                    <Button fx:id="btnTemplateMouseResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
-                                                    <Button fx:id="btnTemplateMouseSetDelays" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setDelays" />
-                                                    <Button fx:id="btnTemplateMouseSetMoveDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMoveDelay" />
-                                                    <Button fx:id="btnTemplateMouseSetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
-                                                    <Button fx:id="btnTemplateMouseSetPressDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setPressDelay" />
-                                                    <Button fx:id="btnTemplateMouseSetReleaseDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setReleaseDelay" />
-                                                    <Button fx:id="btnTemplateMouseSetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
-                                                    <Button fx:id="btnTemplateMouseSetWheelDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setWheelDelay" />
-                                                    <Button fx:id="btnTemplateMouseSetX" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setX" />
-                                                    <Button fx:id="btnTemplateMouseSetY" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setY" />
-                                                    <Button fx:id="btnTemplateMouseWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheel" />
-                                                    <Button fx:id="btnTemplateMouseWheelAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheelAt" />
-                                                </VBox>
+                                                <VBox fx:id="mouseTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.system">

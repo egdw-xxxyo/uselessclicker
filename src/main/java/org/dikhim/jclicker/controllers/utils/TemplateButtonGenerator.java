@@ -71,6 +71,10 @@ public class TemplateButtonGenerator {
 
     public TemplateButtonGenerator build() {
         keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
+        mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
+        systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
+        clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
+        combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
         isBuilt = true;
         return this;
     }

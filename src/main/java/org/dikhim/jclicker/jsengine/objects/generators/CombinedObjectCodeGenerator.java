@@ -17,9 +17,4 @@ public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements 
     public void run(String encoding, String code) {
         buildStringForCurrentMethod(encoding, code);
     }
-
-    @Override
-    public List<String> getMethodNames() {
-        return null;
-    }
 }

@@ -24,9 +24,4 @@ public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements
     public void set(String str) {
         buildStringForCurrentMethod(str);
     }
-
-    @Override
-    public List<String> getMethodNames() {
-        return null;
-    }
 }

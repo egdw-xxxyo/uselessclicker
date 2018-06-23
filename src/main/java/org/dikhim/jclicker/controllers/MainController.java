@@ -772,8 +772,6 @@ public class MainController implements Initializable {
                 .setOnAction(this::insertTemplate)
                 .build();
 
-
-        templateButtonNodes.addAll(mouseTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
         templateButtonNodes.addAll(systemTemplateButtonContainer.getChildren());
         // Set user data 'String[]' to buttons
@@ -786,6 +784,7 @@ public class MainController implements Initializable {
             n.setOnMouseExited(this::hideCodeSample);
         }
         keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
+        mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
     }
 
     /**
