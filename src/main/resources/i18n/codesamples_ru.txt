@@ -747,6 +747,15 @@ mouse.wheelAt('DOWN',0,0,0);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
+$key_getMinDelay_hint:
+key.getMinDelay();
+
+$key_getMultipliedPressDelay_hint:
+key.getMultipliedPressDelay();
+
+$key_getMultipliedReleaseDelay_hint:
+key.getMultipliedReleaseDelay();
+
 $key_getMultiplier_hint:
 key.getMultiplier();
 Получить множитель задержек (multiplier)
@@ -770,12 +779,18 @@ key.getReleaseDelay();
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
-mouse.getSpeed();
+key.getSpeed();
 Получить множитель скорости.
   
 Обратная величина к множителю задержек
   
 key.getSpeed():float
+
+$key_isCapsLocked_hint:
+key.isCapsLocked();
+
+$key_isNumLocked_hint:
+key.isNumLocked();
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
@@ -783,6 +798,12 @@ key.isPressed('CONTROL');
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - имена клавиш через пробел
+
+$key_isScrollLocked_hint:
+key.isScrollLocked();
+
+$key_perform_hint:
+key.perform();
 
 $key_press_hint:
 key.press('CONTROL');
@@ -818,25 +839,15 @@ $key_resetSpeed_hint:
 key.resetSpeed();
 Сбросить множитель скорости к стандартному значению
 
-$key_type_hint:
-key.type('CONTROL');
-Последовательно нажать и отпустить каждую укзанную клавишу
-  
-key.release('KEY1 KEY2');
-  KEY1, KEY2 - имена клавиш через
-    пробел
-  
-Метод выполняет для каждой клавиши:
-  press('KEY');
-    sleep(pressDelay);
-  release('KEY');
-    sleep(releaseDelay);
-
 $key_setDelays_hint:
 key.setDelays(10);
 Приствоить всем задержкам указанное значение
   
 key.setDelays(int delay)
+
+$key_setMinDelay_hint:
+key.setMinDelay(10);
+
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
@@ -867,6 +878,20 @@ key.setSpeed(1);
 Обратная величина к множителю задержек
 
 key.setSpeed(float speed)
+
+$key_type_hint:
+key.type('CONTROL');
+Последовательно нажать и отпустить каждую укзанную клавишу
+  
+key.release('KEY1 KEY2');
+  KEY1, KEY2 - имена клавиш через
+    пробел
+  
+Метод выполняет для каждой клавиши:
+  press('KEY');
+    sleep(pressDelay);
+  release('KEY');
+    sleep(releaseDelay);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
