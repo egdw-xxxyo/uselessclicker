@@ -225,6 +225,11 @@
                             <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates">
                                 <Accordion styleClass="childAccordion">
                                     <panes>
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.key">
+                                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                <VBox fx:id="keyboardTemplateButtonContainer" />
+                                            </ScrollPane>
+                                        </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.mouse">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="mouseTemplateButtonContainer">
@@ -263,11 +268,6 @@
                                                     <Button fx:id="btnTemplateMouseWheel" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheel" />
                                                     <Button fx:id="btnTemplateMouseWheelAt" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="wheelAt" />
                                                 </VBox>
-                                            </ScrollPane>
-                                        </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.key">
-                                            <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="keyboardTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.system">
