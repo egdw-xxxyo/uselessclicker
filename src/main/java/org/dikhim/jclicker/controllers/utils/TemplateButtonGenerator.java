@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +20,10 @@ public class TemplateButtonGenerator {
     private int lineSize;
     private SourcePropertyFile properties;
     private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator;
+    private MouseObjectCodeGenerator mouseObjectCodeGenerator;
+    private SystemObjectCodeGenerator systemObjectCodeGenerator;
+    private CombinedObjectCodeGenerator combinedObjectCodeGenerator;
+    private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator;
     private List<String> styleClasses = new ArrayList<>();
 
     private Consumer<MouseEvent> onMouseEntered;
@@ -73,6 +77,22 @@ public class TemplateButtonGenerator {
 
     public List<Button> getButtonListForKeyboardObject() {
         return createButtons("key", keyboardObjectCodeGenerator.getMethodNames());
+    }
+
+    public List<Button> getButtonListForMouseObject() {
+        return createButtons("mouse", mouseObjectCodeGenerator.getMethodNames());
+    }
+
+    public List<Button> getButtonListForSystemObject() {
+        return createButtons("system", systemObjectCodeGenerator.getMethodNames());
+    }
+
+    public List<Button> getButtonListForClipboardObject() {
+        return createButtons("clipboard", clipboardObjectCodeGenerator.getMethodNames());
+    }
+
+    public List<Button> getButtonListForCombinedObject() {
+        return createButtons("combined", combinedObjectCodeGenerator.getMethodNames());
     }
     
     private List<Button> createButtons(String objectName, List<String> methodNames) {
