@@ -237,31 +237,12 @@
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.system">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="systemTemplateButtonContainer">
-                                                    <Button fx:id="btnTemplateSystemGetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultiplier" />
-                                                    <Button fx:id="btnTemplateSystemGetMultipliedDelay" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getMultipliedDelay" />
-                                                    <Button fx:id="btnTemplateSystemGetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="getSpeed" />
-                                                    <Button fx:id="btnTemplateSystemPrint" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="print" />
-                                                    <Button fx:id="btnTemplateSystemPrintln" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="println" />
-                                                    <Button fx:id="btnTemplateSystemRegisterShortcut" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="registerShortcut" />
-                                                    <Button fx:id="btnTemplateSystemResetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetMultiplier" />
-                                                    <Button fx:id="btnTemplateSystemResetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="resetSpeed" />
-                                                    <Button fx:id="btnTemplateSystemSetMultiplier" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setMultiplier" />
-                                                    <Button fx:id="btnTemplateSystemSetSpeed" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="setSpeed" />
-                                                    <Button fx:id="btnTemplateSystemSleep" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="sleep" />
-                                                </VBox>
+                                                <VBox fx:id="systemTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.language">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="languageTemplateButtonContainer">
-                                                    <Button fx:id="btnTemplateLanguageClass" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="class" />
-                                                    <Button fx:id="btnTemplateLanguageFunctionEcho" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="function 'echo'" />
-                                                    <Button fx:id="btnTemplateLanguageFunctionVoid" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="function 'void'" />
-                                                    <Button fx:id="btnTemplateLanguageLoopForPlus" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'for' i++" />
-                                                    <Button fx:id="btnTemplateLanguageLoopForMinus" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'for' i--" />
-                                                    <Button fx:id="btnTemplateLanguageLoopWhile" mnemonicParsing="false" onAction="#insertTemplate" styleClass="templateButton" text="loop 'while'" />
-                                                </VBox>
+                                                <VBox fx:id="languageTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
                                     </panes>
