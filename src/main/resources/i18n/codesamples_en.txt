@@ -693,6 +693,15 @@ mouse.wheelAt('DOWN',0,0,0);
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
+$key_getMinDelay_hint:
+key.getMinDelay();
+
+$key_getMultipliedPressDelay_hint:
+key.getMultipliedPressDelay();
+
+$key_getMultipliedReleaseDelay_hint:
+key.getMultipliedReleaseDelay();
+
 $key_getMultiplier_hint:
 key.getMultiplier();
 Get the delay multiplier
@@ -716,12 +725,18 @@ Get the mouse button release delay in ms. (releaseDelay)
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
-mouse.getSpeed();
+key.getSpeed();
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
   
 key.getSpeed():float
+
+$key_isCapsLocked_hint:
+key.isCapsLicked();
+
+$key_isNumLocked_hint:
+key.isNumLocked();
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
@@ -729,6 +744,12 @@ Find out is the specified keys are pressed
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - key's names
+
+$key_isScrollLocked_hint:
+key.isScrollLocked();
+
+$key_perform_hint:
+key.perform();
 
 $key_press_hint:
 key.press('CONTROL');
@@ -748,7 +769,7 @@ Release the specified key
 key.release('KEY');
   KEY - key's name
   
-Метод состоит из:
+The method consists of:
   release('KEY');
     sleep(releaseDelay);
 
@@ -764,24 +785,14 @@ $key_resetSpeed_hint:
 key.resetSpeed();
 Reset the speed multiplier to a default value
 
-$key_type_hint:
-key.type('CONTROL');
-Sequentially press and release each specified key
-  
-key.type('KEY1 KEY2');
-  KEY1, KEY2 - key's names
-  
-Method consists of(fo each key):
-  press('KEY');
-    sleep(pressDelay);
-  release('KEY');
-    sleep(releaseDelay);
-
 $key_setDelays_hint:
 key.setDelays(10);
 Set all delays to the specified value
   
 key.setDelays(int delay)
+
+$key_setMinDelay_hint:
+key.setMinDelay(10);
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
@@ -810,6 +821,19 @@ key.setSpeed(1);
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
+
+$key_type_hint:
+key.type('CONTROL');
+Sequentially press and release each specified key
+  
+key.type('KEY1 KEY2');
+  KEY1, KEY2 - key's names
+  
+Method consists of(fo each key):
+  press('KEY');
+    sleep(pressDelay);
+  release('KEY');
+    sleep(releaseDelay);
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
