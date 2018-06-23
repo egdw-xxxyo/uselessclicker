@@ -733,7 +733,7 @@ The reciprocal of the delay multiplier
 key.getSpeed():float
 
 $key_isCapsLocked_hint:
-key.isCapsLicked();
+key.isCapsLocked();
 
 $key_isNumLocked_hint:
 key.isNumLocked();
