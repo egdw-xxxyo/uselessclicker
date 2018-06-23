@@ -772,19 +772,10 @@ public class MainController implements Initializable {
                 .setOnAction(this::insertTemplate)
                 .build();
 
-        templateButtonNodes.addAll(languageTemplateButtonContainer.getChildren());
-        // Set user data 'String[]' to buttons
-        // [0] - hint text
-        // [1] - code
-        for (Node n : templateButtonNodes) {
-            n.setUserData(new String[]{prop.get(n.getId()),
-                    prop.get(n.getId() + "Code")});
-            n.setOnMouseEntered(this::showCodeSample);
-            n.setOnMouseExited(this::hideCodeSample);
-        }
         keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());
+        languageTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForLanguage());
     }
 
     /**

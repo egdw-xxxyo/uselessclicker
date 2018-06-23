@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TemplateButtonGenerator {
     private static Logger LOGGER = LoggerFactory.getLogger(TemplateButtonGenerator.class);
@@ -98,6 +101,12 @@ public class TemplateButtonGenerator {
     public List<Button> getButtonListForCombinedObject() {
         return createButtons("combined", combinedObjectCodeGenerator.getMethodNames());
     }
+
+    public List<Button> getButtonListForLanguage() {
+        return createButtons("language", getButtonNamesFromPropertyFile("language"));
+    }
+    
+    
     
     private List<Button> createButtons(String objectName, List<String> methodNames) {
         List<Button> buttons = new ArrayList<>();
@@ -123,5 +132,20 @@ public class TemplateButtonGenerator {
         });
         return buttons;
     }
+
+    private List<String> getButtonNamesFromPropertyFile(String objectName) {
+        List<String> buttonNames = new ArrayList<>();
+        Pattern pattern = Pattern.compile(objectName + "_([a-zA-Z]*)_hint");
+        Set<String> propertyNames = properties.getKetSet();
+        propertyNames.forEach(propName->{
+            Matcher matcher = pattern.matcher(propName);
+            while (matcher.find()) {
+                String buttonName = matcher.group(1);
+                buttonNames.add(buttonName);
+            }
+
+        });
+        return buttonNames;
+}
 
 }

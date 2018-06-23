@@ -834,11 +834,27 @@ function echo(text){
 }
 The template of a function with a returning value
 
+$language_functionEcho_template:
+function echo(text){
+    return text;
+}
+
+$language_functionVoid_hint:
+function 'void'
+
 $language_functionVoid_hint:
 function foo(){
     
 }
 The template for an empty function
+
+$language_functionVoid_template:
+function foo(){
+    
+}
+
+$language_loopForPlus:
+loop 'for' i++
 
 $language_loopForPlus_hint:
 for(i=0;i<10;i++){
@@ -846,14 +862,35 @@ for(i=0;i<10;i++){
 }
 The template for an increasing loop 'for'
 
+$language_loopForPlus_template:
+for(i=0;i<10;i++){
+    
+}
+
+$language_loopForMinus:
+loop 'for' i--
+
 $language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
 The template for a decreasing loop 'for'
 
+$language_loopForMinus_template:
+for(i=10;i>0;i--){
+    
+}
+
+$language_loopWhile:
+loop 'while'
+
 $language_loopWhile_hint:
 while(true){
     
 }
 The template for a loop 'while'
+
+$language_loopWhile_template:
+while(true){
+    
+}
