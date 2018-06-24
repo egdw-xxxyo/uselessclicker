@@ -19,10 +19,10 @@ p {
 
 .navbar-primary {
     background-color: #333;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     position: fixed;
-    top: 0px;
+    top: 0;
     width: 250px;
     z-index: 8;
     overflow: hidden;
@@ -47,7 +47,7 @@ p {
     visibility: hidden;
     position: absolute;
     display: block;
-    left: 0px;
+    left: 0;
     bottom:0;
     width: 100%;
     padding: 8px 0;
@@ -90,7 +90,7 @@ p {
 }
 
 .navbar-primary-menu li a:hover {
-    background-color: #000;
+    background-color: #181818;
     text-decoration: none;
     color: white;
 }
@@ -100,7 +100,16 @@ p {
 }
 
 .navbar-primary-menu li a:hover .glyphicon {
-    color: #d58512;
+    color: rgb(255, 195, 83);
+}
+
+.current-page-item-menu{
+    background-color: #181818;
+    color: white;
+}
+
+.current-page-item-menu .glyphicon{
+    color: rgb(255, 195, 83);
 }
 
 .main-content {

@@ -1,13 +1,14 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "eventsRecording.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -17,7 +18,9 @@
 </nav>
 <div class="main-content">
     <h1>Events recording</h1><br/>
-    <p>Lets's have a look at the mechanism for recording events in the application. All necessary controls for recording events are in the right menu in the <strong>Event recording</strong> entry. Elements are divided into separate groups. At the time of writing, all elements are divided into the following groups:
+    <p>Lets's have a look at the mechanism for recording events in the application. All necessary controls for recording
+        events are in the right menu in the <strong>Event recording</strong> entry. Elements are divided into separate
+        groups. At the time of writing, all elements are divided into the following groups:
     </p>
     <ul>
         <li>Keyboard</li>
@@ -26,53 +29,106 @@
         <li>Mouse (click)</li>
         <li>Combined</li>
     </ul>
-    <p>To record an event, choose a place in the editor where you want to insert the code, select the recording method you want, (use the control key if the recording method requires it), perform the necessary actions, disable the events recording.</P>
+    <p>To record an event, choose a place in the editor where you want to insert the code, select the recording method
+        you want, (use the control key if the recording method requires it), perform the necessary actions, disable the
+        events recording.</P>
     <p>Recording the keyboard<br/>
-            The feature of the keyboard recording is that when it is turned on, the ability to edit the script from the keyboard is disabled. If you enable it, then the keys will be duplicated to the output. So when typing <strong>hello world</strong> with the selected method to insert the key names <strong>Event capture&gt;Keyboard&gt;key name</strong> in the output will be <strong>H E L O SPACE W O R L D</strong> instead of <strong>hH eE lL lL o o SPACE wW oO rR lL dD</strong>.<br/>
-            It is necessary to talk apart about the method for inserting key names. If you forget how a key is called, it will allow you not to search for its in the documentation, but quickly insert the needed name.</P>
+            The feature of the keyboard recording is that when it is turned on, the ability to edit the script from the
+        keyboard is disabled. If you enable it, then the keys will be duplicated to the output. So when typing <strong>hello
+            world</strong> with the selected method to insert the key names <strong>Event capture&gt;Keyboard&gt;key
+            name</strong> in the output will be <strong>H E L O SPACE W O R L D</strong> instead of <strong>hH eE lL lL
+            o o SPACE wW oO rR lL dD</strong>.<br/>
+            It is necessary to talk apart about the method for inserting key names. If you forget how a key is called,
+        it will allow you not to search for its in the documentation, but quickly insert the needed name.</P>
     <p>Mouse recording<br/>
-            The feature of the mouse recording is in using the control key. By default, the control key is set to the <strong>CONTROL</strong>, you can change it in the settings.<br/>
-            To record the mouse, you need to choose a method, then hold the control key, move your mouse and release the control key.<br/>
-            The capture method of using the control key is chosen in order to make it easier to control those events that should be included in the output.<br/>
-            Please note that in many applications, the <strong>CONTROL</strong> control key will not work correctly, because often <strong>CONTROL</strong> in conjunction with the mouse button is already reserved for other actions. Therefore, for each application you have to select your control key, which will not conflict with the program.</P>
+            The feature of the mouse recording is in using the control key. By default, the control key is set to the
+        <strong>CONTROL</strong>, you can change it in the settings.<br/>
+            To record the mouse, you need to choose a method, then hold the control key, move your mouse and release the
+        control key.<br/>
+            The capture method of using the control key is chosen in order to make it easier to control those events
+        that should be included in the output.<br/>
+            Please note that in many applications, the <strong>CONTROL</strong> control key will not work correctly,
+        because often <strong>CONTROL</strong> in conjunction with the mouse button is already reserved for other
+        actions. Therefore, for each application you have to select your control key, which will not conflict with the
+        program.</P>
     <p>Combined recording<br/>
-            This is the most extensive tool for recording user actions. It is able to record keyboard and mouse events, handle them appropriately and save it all in a compact text view. <br/>
-            To activate the combined recording, you need to perform the <strong>activate</strong> button, and press the control key. <br/>
-            Recording of events begins after releasing the control key, and stops when you press it. This avoids recording the events of the control key.<br/>
-        As a control key it is possible to set a key shortcut, but it should be taken into account that in this case the events of pressing and releasing from the list of control keys will also be recorded.<br>
+            This is the most extensive tool for recording user actions. It is able to record keyboard and mouse events,
+        handle them appropriately and save it all in a compact text view. <br/>
+            To activate the combined recording, you need to perform the <strong>activate</strong> button, and press the
+        control key. <br/>
+            Recording of events begins after releasing the control key, and stops when you press it. This avoids
+        recording the events of the control key.<br/>
+        As a control key it is possible to set a key shortcut, but it should be taken into account that in this case the
+        events of pressing and releasing from the list of control keys will also be recorded.<br>
             To control the combined event recording, there are several options:
     </p>
     <ul>
         <li> Keyboard keys - enable keyboard recording;</li>
         <li> Mouse buttons - enable mouse buttons recording;</li>
         <li> Mouse wheel - enable the mouse wheel recording;</li>
-        <li> Absolute - select recording mouse movement by absolute coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.moveTo(x,y)</strong> method;</li>
-        <li> Relative - select recording mouse movement by relative coordinates. Recorded events will move the cursor to the specified coordinate, similar to the <strong>mouse.move(dx,dy)</strong> method;</li>
+        <li> Absolute - select recording mouse movement by absolute coordinates. Recorded events will move the cursor to
+            the specified coordinate, similar to the <strong>mouse.moveTo(x,y)</strong> method;
+        </li>
+        <li> Relative - select recording mouse movement by relative coordinates. Recorded events will move the cursor to
+            the specified coordinate, similar to the <strong>mouse.move(dx,dy)</strong> method;
+        </li>
         <li> Delays - include delays between events in the result.</li>
-        <li> Encoding selection menu (unicode, base64, base64-zip) - select the format in which the resulting string will be presented;</li>
+        <li> Encoding selection menu (unicode, base64, base64-zip) - select the format in which the resulting string
+            will be presented;
+        </li>
         <li> fixed rate - enable the recording with fixed frequency of mouse movement events;</li>
         <li> min. distance - enable the entry indicating the minimum distance between mouse movement events;</li>
-        <li> stop points - include a record with the definition of stop points. </li>
+        <li> stop points - include a record with the definition of stop points.</li>
     </ul>
 
     <p>The encoding selection menu offers a choice of three options</p>
     <ul>
-        <li>unicode - the recorded events will be represented as unicode characters. This option is the most compact, since each numeric parameter equals to an one character. If you use Unicode characters, there may be a situation where, after copying it to another application, it may be corrupted, due to the different encoding conversions.</li>
-        <li>base64 - recorded events will be represented as characters using the base64 table. It is recommended to use this option. The code in such a representation can be copied without fear being corrupted and passed on to other users.</li>
-        <li>base64-zip - a similar option is used as in base64, but also performed a string compression to save space. After compression, editing a string is impossible. Changing one character will corrupt whole string and as a result the impossibility of decoding the string back</li>
+        <li>unicode - the recorded events will be represented as unicode characters. This option is the most compact,
+            since each numeric parameter equals to an one character. If you use Unicode characters, there may be a
+            situation where, after copying it to another application, it may be corrupted, due to the different encoding
+            conversions.
+        </li>
+        <li>base64 - recorded events will be represented as characters using the base64 table. It is recommended to use
+            this option. The code in such a representation can be copied without fear being corrupted and passed on to
+            other users.
+        </li>
+        <li>base64-zip - a similar option is used as in base64, but also performed a string compression to save space.
+            After compression, editing a string is impossible. Changing one character will corrupt whole string and as a
+            result the impossibility of decoding the string back
+        </li>
     </ul>
-    <p>Let's take a closer look at how the last three options work. These options are designed to reduce the amount of code. If they are off, the result will be as close as possible to the actions of the user.<br/>
-        These options do not in any way affect all events of the keyboard, wheel and mouse buttons, but only filter out excessive mouse movement events.</p>
-    <p>The <strong>fixed frequency</strong> option specifies the maximum event recording frequency. Normally, the cursor can change its position about 60-120 times per second, depending on the system, which means that 60-120 mouse movement events will be added to the result every second. Specifying a value of 30, for example, their number can be reduced by 4 times. The lower the value, the more events will be missed. A situation is possible when the necessary event will not be recorded.<br>
-        This option allows you to reduce the amount of code and fully preserves the speed of cursor movement. If you move the cursor quickly in a one place, and slowly in another, this difference will also be noticeable. If you move the cursor very slowly, this option does not help to reduce the amount of code, because all events will also be included.
+    <p>Let's take a closer look at how the last three options work. These options are designed to reduce the amount of
+        code. If they are off, the result will be as close as possible to the actions of the user.<br/>
+        These options do not in any way affect all events of the keyboard, wheel and mouse buttons, but only filter out
+        excessive mouse movement events.</p>
+    <p>The <strong>fixed frequency</strong> option specifies the maximum event recording frequency. Normally, the cursor
+        can change its position about 60-120 times per second, depending on the system, which means that 60-120 mouse
+        movement events will be added to the result every second. Specifying a value of 30, for example, their number
+        can be reduced by 4 times. The lower the value, the more events will be missed. A situation is possible when the
+        necessary event will not be recorded.<br>
+        This option allows you to reduce the amount of code and fully preserves the speed of cursor movement. If you
+        move the cursor quickly in a one place, and slowly in another, this difference will also be noticeable. If you
+        move the cursor very slowly, this option does not help to reduce the amount of code, because all events will
+        also be included.
     </p>
-    <p>The <strong>minimum distance</strong> option specifies the minimum distance between two mouse movement events. For example, the minimum distance is set to 100 pixels, you pressed the mouse button and now slowly move to the side. The move event following the button click event is guaranteed added into the result, but the result will not get any cursor movement event the distance to which will be less than 100 pixels.<br/>
-        This option will also help you reduce the amount of code. It will allow you to remove redundant events, regardless of whether you quickly move the mouse or very slowly.<br/>
+    <p>The <strong>minimum distance</strong> option specifies the minimum distance between two mouse movement events.
+        For example, the minimum distance is set to 100 pixels, you pressed the mouse button and now slowly move to the
+        side. The move event following the button click event is guaranteed added into the result, but the result will
+        not get any cursor movement event the distance to which will be less than 100 pixels.<br/>
+        This option will also help you reduce the amount of code. It will allow you to remove redundant events,
+        regardless of whether you quickly move the mouse or very slowly.<br/>
         It is not recommended to set large values, since the result can be very unpredictable.</p>
-    <p>The option <strong>stop points</strong> allows you to remove disadvantages from using the previous two options. If the cursor has been stayed at a the same point without moving longer than the specified number of ms., then the event of moving a cursor to this point is guaranteed added into the result.<br/>
-        Thus, you can set any values for the previous two options and specify especially important points that must necessarily added into the result, simply holding the cursor still for a while.<br/>
-        The refresh rate of the standard monitor is 60 or 120 fps, which gives approximately 8.3 and 16.6 ms. on a one frame. If you can visually notice that the cursor is frozen in place, then its stop time was more than 17 and 34 ms. respectively. Specifying values less than the time for 2 frames does not make sense. It is recommended that you specify time minimum for 4 frames: 34 and 67 ms.</p>
+    <p>The option <strong>stop points</strong> allows you to remove disadvantages from using the previous two options.
+        If the cursor has been stayed at a the same point without moving longer than the specified number of ms., then
+        the event of moving a cursor to this point is guaranteed added into the result.<br/>
+        Thus, you can set any values for the previous two options and specify especially important points that must
+        necessarily added into the result, simply holding the cursor still for a while.<br/>
+        The refresh rate of the standard monitor is 60 or 120 fps, which gives approximately 8.3 and 16.6 ms. on a one
+        frame. If you can visually notice that the cursor is frozen in place, then its stop time was more than 17 and 34
+        ms. respectively. Specifying values less than the time for 2 frames does not make sense. It is recommended that
+        you specify time minimum for 4 frames: 34 and 67 ms.</p>
 </div>
 <script src="guide.js">
 </script>
-</body></html>
+</body>
+</html>

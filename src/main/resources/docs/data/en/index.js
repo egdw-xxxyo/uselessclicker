@@ -13,26 +13,29 @@ $(document).ready(function () {
         e.preventDefault();
     });
 
-    $.each(sidemenu, function (page, title) {
+    $.each(sidemenu, function (page, data) {
         let $a = $("<a>")
             .attr("href", page);
 
-        let $span1 = $("<span>");
-        if (title[1] === "icon") {
-            $span1.addClass(title[2]);
-            $a.addClass('list-level-1');
+        let $icon = $("<span>");
+        let $text = $("<span>")
+            .addClass('nav-label')
+            .text(data[0]);
 
+        if (data[1] === "icon") {
+            $icon.addClass(data[2]);
+            $a.addClass('list-level-1');
         } else {
-            $span1.text(title[2]);
             $a.addClass('list-level-2');
         }
 
-        let $span2 = $("<span>")
-            .addClass('nav-label')
-            .text(title[0]);
 
-        $a.append($span1);
-        $a.append($span2);
+        if(current_page === page){
+            $a.addClass('current-page-item-menu');
+        }
+
+        $a.append($icon);
+        $a.append($text);
         $(".navbar-primary-menu li").append($a);
     })
 });

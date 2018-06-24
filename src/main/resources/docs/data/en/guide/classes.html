@@ -1,13 +1,14 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "classes.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -17,7 +18,9 @@
 </nav>
 <div class="main-content">
     <h1>Classes and objects</h1><br/>
-    <p>To create a class, add a template from the <strong>Templates&gt;Language&gt;class</strong> menu. In the edit field, a function template with the name <strong>Class</strong> will be inserted. The <strong>class</strong> operator is not supported, therefore it is necessary to use such a construction.
+    <p>To create a class, add a template from the <strong>Templates&gt;Language&gt;class</strong> menu. In the edit
+        field, a function template with the name <strong>Class</strong> will be inserted. The <strong>class</strong>
+        operator is not supported, therefore it is necessary to use such a construction.
     </p>
     <div class="codebox">
 <pre><code>function Class (name) {
@@ -28,12 +31,14 @@
 }
 </code></pre>
     </div>
-    <p>The template contains the class with one field and one echo-function. You can create an object using the following code
+    <p>The template contains the class with one field and one echo-function. You can create an object using the
+        following code
     </p>
     <div class="codebox">
         <pre><code>var obj = new CLass();</code></pre>
     </div>
-    <p>A more illustrative example using classes and objects. Let's create a <strong>myNumber</strong> object that can store the number and increment it.
+    <p>A more illustrative example using classes and objects. Let's create a <strong>myNumber</strong> object that can
+        store the number and increment it.
     </p>
     <div class="codebox">
 <pre><code>function MyNumber(n) {
@@ -56,4 +61,5 @@ system.println('My number = '+myNumber.get()); // the writing to an output
 </div>
 <script src="guide.js">
 </script>
-</body></html>
+</body>
+</html>
