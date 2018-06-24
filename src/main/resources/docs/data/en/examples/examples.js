@@ -4,6 +4,7 @@ const sidemenu = {
     "examples.html": ["Examples", "icon", "glyphicon glyphicon-file"],
     "files.html": ["Files", "text", ""],
     "math.html": ["Math", "text", ""],
+    "doubleClick.html": ["Double clicks", "text", ""],
     "threads.html": ["Threads", "text", ""]
 };
 
