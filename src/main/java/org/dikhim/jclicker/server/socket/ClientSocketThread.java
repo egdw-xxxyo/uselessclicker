@@ -54,8 +54,8 @@ public class ClientSocketThread extends Thread {
             while (true) {
                 try {
                     if (isInterrupted()) break;
-                    inactiveTime = 0;
                     inputLine = in.readLine();
+                    inactiveTime = 0;
                     execute(inputLine);
                 } catch (SocketTimeoutException e) {
                     inactiveTime += soTimeout;
