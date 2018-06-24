@@ -252,8 +252,14 @@ $combinedEncodingType:
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
+$mouse_button_hint:
+mouse.button('LEFT','PRESS');
+
+$mouse_buttonAt_hint:
+mouse.button('LEFT','PRESS',0,0);
+
 $mouse_click_hint:
-mouse.click('');
+mouse.click('LEFT');
 Клик клавишей мыши
   
 mouse.click('BTN');
@@ -266,7 +272,7 @@ mouse.click('BTN');
     sleep(releaseDelay);
 
 $mouse_clickAt_hint:
-mouse.clickAt('',,);
+mouse.clickAt('LEFT',0,0);
 Клик клавишей мыши в укзанной точке
   
 mouse.clickAt('BTN',x,y);
@@ -279,11 +285,26 @@ mouse.clickAt('BTN',x,y);
   releaseAt('BTN',x,y);
     sleep(releaseDelay);
 
+$mouse_getMinDelay_hint:
+mouse.getMinDelay();
+
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
 Получить задержку передвижения курсора мыши в мс. (moveDelay)
   
   mouse.getMoveDelay():int
+
+$mouse_getMultipliedMoveDelay_hint:
+mouse.getMultipliedMoveDelay();
+
+$mouse_getMultipliedPressDelay_hint:
+mouse.getMultipliedPressDelay();
+
+$mouse_getMultipliedReleaseDelay_hint:
+mouse.getMultipliedReleaseDelay();
+
+$mouse_getMultipliedWheelDelay_hint:
+mouse.getMultipliedWheelDelay();
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
@@ -347,6 +368,9 @@ mouse.move(0,0);
 Метод состоит из:
   move(x,y);
     sleep(moveDelay);
+
+$mouse_moveAndButton_hint:
+mouse.moveAndButton('LEFT','PRESS',0,0);
 
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
@@ -495,6 +519,9 @@ mouse.setMoveDelay(10);
 mouse.setMoveDelay(int moveDelay)
   moveDelay - задержка
 
+$mouse_setMinDelay_hint:
+mouse.setMinDelay(5);
+
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
 Установить множитель задержек
@@ -569,7 +596,7 @@ mouse.wheel(direction, amount);
     sleep(wheelDelay);
 
 $mouse_wheelAt_hint:
-mouse.wheelAt('DOWN',0,0,0);
+mouse.wheelAt('DOWN',3,0,0);
 Прокрутить колесо мыши на указанное количество строк
   
 mouse.wheelAt
@@ -748,6 +775,9 @@ key.release('KEY1 KEY2');
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
+$system_exit_hint:
+system.exit();
+
 $system_sleep_hint:
 system.sleep(0);
 Приостановить скрипт на заданное время в мс.
@@ -763,15 +793,9 @@ $system_println_hint:
 system.println('');
 Вывести сообщение в поле вывода и перейти на новую строку
 
-$system_registerShortcut_hint:
-system.registerShortcut('F1','foo');
-Зарегистрировать сочетание клавиш для вызова метода
-  
-system.registerShortcut
-    ('BTN2 BTN2','FUNCT');
-  BTN1, BTN2 - имена клавиш через
-    пробел
-  FUNCT - имя вызываемого метода
+$system_getMultipliedDelay_hint:
+system.getMultipliedDelay(delay);
+Получить значение задержки пермноженое на множитель задержек
 
 $system_getMultiplier_hint:
 system.getMultiplier();
@@ -781,15 +805,50 @@ system.getMultiplier();
   
 Обратная величина к множителю скорости
 
-$system_getMultipliedDelay_hint:
-system.getMultipliedDelay(delay);
-Получить значение задержки пермноженое на множитель задержек
-
 $system_getSpeed_hint:
 system.getSpeed();
 Получить значение параметра скорости
   
 Обратная величина к множителю задержек
+
+$system_keyIgnore_hint:
+system.keyIgnore();
+
+$system_keyResume_hint:
+system.keyResume();
+
+$system_mouseIgnore_hint:
+system.mouseIgnore();
+
+$system_mouseResume_hint:
+system.mouseResume();
+
+$system_onKeyPress_hint:
+system.onKeyPress('foo','CONTROL');
+
+$system_onKeyRelease_hint:
+system.onKeyRelease('foo');
+
+$system_onMouseMove_hint:
+system.onMouseMove('foo');
+
+$system_onMousePress_hint:
+system.onMousePress('foo','LEFT');
+
+$system_onMouseRelease_hint:
+system.onMouseRelease('foo','LEFT');
+
+$system_onShortcutPress_hint:
+system.onShortcutPress('foo','CONTROL 1');
+
+$system_onShortcutRelease_hint:
+system.onShortcutRelease('foo','CONTROL 1');
+
+$system_onWheelDown_hint:
+system.onWheelDown('foo');
+
+$system_onWheelUp_hint:
+system.onWheelUp('foo');
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
@@ -798,6 +857,9 @@ system.resetMultiplier();
 $system_resetSpeed_hint:
 system.resetSpeed();
 Сбросить множитель скорости к стандартному значению
+
+$system_setMaxThreads_hint:
+system.setMaxThreads('foo',1);
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);

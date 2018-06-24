@@ -258,8 +258,14 @@ $combinedEncodingType:
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
-$mouse_Click_hint:
-mouse.click('');
+$mouse_button_hint:
+mouse.button('LEFT','PRESS');
+
+$mouse_buttonAt_hint:
+mouse.button('LEFT','PRESS',0,0);
+
+$mouse_click_hint:
+mouse.click('LEFT');
 A mouse button click
   
 mouse.click('BTN');
@@ -272,7 +278,7 @@ The method consists of two calls of pressing and releasing the button:
     sleep(releaseDelay);
 
 $mouse_clickAt_hint:
-mouse.clickAt('',,);
+mouse.clickAt('LEFT',0,0);
 The click the button at the particular point 
   
 mouse.clickAt('BTN',x,y);
@@ -285,11 +291,26 @@ The method consists of two calls of pressing and releasing the button:
   releaseAt('BTN',x,y);
     sleep(releaseDelay);
 
+$mouse_getMinDelay_hint:
+mouse.getMinDelay();
+
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
 Get the mouse movement delay in ms. (moveDelay)
   
   mouse.getMoveDelay():int
+
+$mouse_getMultipliedMoveDelay_hint:
+mouse.getMultipliedMoveDelay();
+
+$mouse_getMultipliedPressDelay_hint:
+mouse.getMultipliedPressDelay();
+
+$mouse_getMultipliedReleaseDelay_hint:
+mouse.getMultipliedReleaseDelay();
+
+$mouse_getMultipliedWheelDelay_hint:
+mouse.getMultipliedWheelDelay();
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
@@ -350,6 +371,9 @@ Method consists of:
   move(dx,dy);
     sleep(moveDelay);
 
+$mouse_moveAndButton_hint:
+mouse.moveAndButton('LEFT','PRESS',0,0);
+
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
 Move the cursor relative to the coordinates of the last event and click the button
@@ -395,7 +419,7 @@ Method consists of:
     sleep(releaseDelay);
 
 $mouse_moveAndWheel_hint:
-mouse.moveAndWheel('DOWN',0,0,0);
+mouse.moveAndWheel('DOWN',3,0,0);
 Move the cursor relative to the coordinates of the last event and rotate the wheel
   
 mouse.moveAndWheel
@@ -496,6 +520,9 @@ Set the mouse movement delay to the specified value
 mouse.setMoveDelay(int moveDelay)
   moveDelay - delay
 
+$mouse_setMinDelay_hint:
+mouse.setMinDelay(5);
+
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
 Set the delay multiplier to the specified value
@@ -554,7 +581,7 @@ Method consists of:
     sleep(moveDelay);
 
 $mouse_wheel_hint:
-mouse.wheel('DOWN',0);
+mouse.wheel('DOWN',3);
 Rotate the mouse wheel on the specifies number of lines
   
 mouse.wheel(direction, amount);
@@ -566,7 +593,7 @@ Method consists of:
     sleep(wheelDelay);
 
 $mouse_wheelAt_hint:
-mouse.wheelAt('DOWN',0,0,0);
+mouse.wheelAt('DOWN',3,0,0);
 Rotate the mouse wheel on the specifies number of lines at the particular point
   
 mouse.wheelAt
@@ -740,6 +767,9 @@ Method consists of(fo each key):
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////
+$system_exit_hint:
+system.exit();
+
 $system_sleep_hint:
 system.sleep(0);
 Pause script running on the specified amount of time in ms.
@@ -755,14 +785,9 @@ $system_println_hint:
 system.println('');
 Print the message and terminate the line
 
-$system_registerShortcut_hint:
-system.registerShortcut('F1','foo');
-Register the keyboard shortcut for calling the method
-  
-system.registerShortcut
-    ('KEY2 KEY2','METHOD');
-  KEY1, KEY2 - key's names
-  METHOD - method's name
+$system_getMultipliedDelay_hint:
+system.getMultipliedDelay(delay);
+Get the multiplied delay
 
 $system_getMultiplier_hint:
 system.getMultiplier();
@@ -772,15 +797,50 @@ At this number, all delays for the object are multiplied
   
 The reciprocal of the speed multiplier
 
-$system_getMultipliedDelay_hint:
-system.getMultipliedDelay(delay);
-Get the multiplied delay
-
 $system_getSpeed_hint:
 system.getSpeed();
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
+
+$system_keyIgnore_hint:
+system.keyIgnore();
+
+$system_keyResume_hint:
+system.keyResume();
+
+$system_mouseIgnore_hint:
+system.mouseIgnore();
+
+$system_mouseResume_hint:
+system.mouseResume();
+
+$system_onKeyPress_hint:
+system.onKeyPress('foo','CONTROL');
+
+$system_onKeyRelease_hint:
+system.onKeyRelease('foo');
+
+$system_onMouseMove_hint:
+system.onMouseMove('foo');
+
+$system_onMousePress_hint:
+system.onMousePress('foo','LEFT');
+
+$system_onMouseRelease_hint:
+system.onMouseRelease('foo','LEFT');
+
+$system_onShortcutPress_hint:
+system.onShortcutPress('foo','CONTROL 1');
+
+$system_onShortcutRelease_hint:
+system.onShortcutRelease('foo','CONTROL 1');
+
+$system_onWheelDown_hint:
+system.onWheelDown('foo');
+
+$system_onWheelUp_hint:
+system.onWheelUp('foo');
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
@@ -789,6 +849,9 @@ system.resetMultiplier();
 $system_resetSpeed_hint:
 system.resetSpeed();
 Reset the speed multiplier to a default value
+
+$system_setMaxThreads_hint:
+system.setMaxThreads('foo',1);
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);
