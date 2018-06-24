@@ -4,7 +4,6 @@ package org.dikhim.jclicker.jsengine.objects;
 import org.dikhim.jclicker.actions.utils.MouseCodes;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.util.MouseMoveUtil;
 import org.dikhim.jclicker.util.Out;
 
 /**
@@ -130,71 +129,6 @@ public class JsMouseObject implements MouseObject {
             }
             robot.mouseMove(getX(), y);
             delay(getMultipliedMoveDelay());
-        }
-    }
-
-    // movement by path
-    @Override
-    public void moveAbsolute(String path) {
-        synchronized (monitor) {
-            MouseMoveUtil mu = new MouseMoveUtil(path);
-            int x;
-            int y;
-            while (mu.hasNext()) {
-                x = mu.getNext();
-                y = mu.getNext();
-                robot.mouseMove(x, y);
-                delay(getMultipliedMoveDelay());
-            }
-        }
-    }
-
-    @Override
-    public void moveAbsolute_D(String path) {
-        synchronized (monitor) {
-            MouseMoveUtil mu = new MouseMoveUtil(path);
-            int x;
-            int y;
-            int delay;
-            while (mu.hasNext()) {
-                x = mu.getNext();
-                y = mu.getNext();
-                delay = mu.getNext();
-                robot.mouseMove(x, y);
-                delay(multiply(delay));
-            }
-        }
-    }
-
-    @Override
-    public void moveRelative(String path) {
-        synchronized (monitor) {
-            MouseMoveUtil mu = new MouseMoveUtil(path);
-            int dx;
-            int dy;
-            while (mu.hasNext()) {
-                dx = mu.getNext();
-                dy = mu.getNext();
-                robot.mouseMove(getX() + dx, getY() + dy);
-                delay(getMultipliedMoveDelay());
-            }
-        }
-    }
-
-    @Override
-    public void moveRelative_D(String path) {
-        synchronized (monitor) {
-            MouseMoveUtil mu = new MouseMoveUtil(path);
-            int dx;
-            int dy;
-            int delay;
-            while (mu.hasNext()) {
-                dx = mu.getNext();
-                dy = mu.getNext();
-                delay = mu.getNext();
-                robot.mouseMove(getX() + dx, getY() + dy);
-                delay(multiply(delay));
-            }
         }
     }
 

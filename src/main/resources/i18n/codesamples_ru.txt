@@ -256,7 +256,7 @@ $mouse_button_hint:
 mouse.button('LEFT','PRESS');
 
 $mouse_buttonAt_hint:
-mouse.button('LEFT','PRESS',0,0);
+mouse.buttonAt('LEFT','PRESS',0,0);
 
 $mouse_click_hint:
 mouse.click('LEFT');

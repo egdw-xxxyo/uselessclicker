@@ -2,8 +2,6 @@ package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.MouseObject;
 
-import java.util.List;
-
 public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
 
     public MouseObjectCodeGenerator(int lineSize) {
@@ -118,16 +116,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     @Override
-    public void moveAbsolute(String path) {
-        buildStringForCurrentMethod(path);
-    }
-
-    @Override
-    public void moveAbsolute_D(String path) {
-        buildStringForCurrentMethod(path);
-    }
-
-    @Override
     public void moveAndButton(String button, String action, int dx, int dy) {
         buildStringForCurrentMethod(button, action, dx, dy);
     }
@@ -150,16 +138,6 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     @Override
     public void moveAndWheel(String direction, int amount, int dx, int dy) {
         buildStringForCurrentMethod(direction, amount, dx, dy);
-    }
-
-    @Override
-    public void moveRelative(String path) {
-        buildStringForCurrentMethod(path);
-    }
-
-    @Override
-    public void moveRelative_D(String path) {
-        buildStringForCurrentMethod(path);
     }
 
     @Override

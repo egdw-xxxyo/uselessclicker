@@ -43,10 +43,6 @@ public interface MouseObject {
     // M
     void move(int dx, int dy);
 
-    void moveAbsolute(String path);
-
-    void moveAbsolute_D(String path);
-
     void moveAndButton(String button, String action, int dx, int dy);
 
     void moveAndClick(String button, int dx, int dy);
@@ -56,10 +52,6 @@ public interface MouseObject {
     void moveAndRelease(String button, int dx, int dy);
 
     void moveAndWheel(String direction, int amount, int dx, int dy);
-
-    void moveRelative(String path);
-
-    void moveRelative_D(String path);
 
     void moveTo(int x, int y);
 
