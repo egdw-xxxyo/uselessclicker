@@ -51,7 +51,7 @@ $(document).ready(function () {
         .addClass("copy-button")
         .click(function (e) {
             let text = $(e.target).parent().find("pre code").text();
-            sys.hello(text);
+            sys.copy(text);
         });
     $(".codebox").append($copyButton);
     
