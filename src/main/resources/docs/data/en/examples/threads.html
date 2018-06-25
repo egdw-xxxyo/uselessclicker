@@ -42,8 +42,7 @@ var moveY = new Thread(function() {
 });
 
 new Thread(new moveX()).start();
-moveY.start();
-    </code></pre>
+moveY.start();</code></pre>
     </div>
     <p>Note that all method calls to the control objects (key, mouse, system, combined, clipboard) are synchronized.
         This concerns both the threads running from the script and threads running HTTP and Socket servers. If one

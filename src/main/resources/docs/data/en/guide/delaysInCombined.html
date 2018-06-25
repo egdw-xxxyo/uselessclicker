@@ -77,8 +77,7 @@ Run-time difference is 120 - 100 = 20 ms.
     <pre><code>mouse.press('LEFT');   // 10 ms.
 system.sleep(40);      // 50 - 10 = 40 ms.
 mouse.release('LEFT'); // 10 ms.
-system.sleep(40);      // 50 - 10 = 40 ms.
-        </code></pre>
+system.sleep(40);      // 50 - 10 = 40 ms.</code></pre>
     </div>
     <p>Thus, the execution time of the script will correspond to the real time. But there are limitations.<br/>
         What happens if the time of the event itself is less than the available time for compensation? Let's look at an
@@ -94,19 +93,18 @@ system.sleep(8);       // 8 ms.
     
 The specified execution time is 8 + 8 = 16 ms.
 The actual execution time is 10 + 8 + 10 + 8 = 36 ms. + (overhead)
-Run-time difference is 36 - 16 = 20 ms.
-</code></pre>
+Run-time difference is 36 - 16 = 20 ms.</code></pre>
     </div>
     <p>In this situation, it turns out that the time difference is greater than the time that can be compensated by
         subtracting from the <strong>system.sleep()</strong> method. In this situation, the maximum possible time is
         subtracted from the <strong>system.sleep()</strong> method, and the remainder is subtracted from the next event
     </p>
-    <pre>
-mouse.press('LEFT');   // 10 ms.
+    <div class="codebox">
+    <pre><code>mouse.press('LEFT');   // 10 ms.
 system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 2) 
 mouse.release('LEFT'); // 10 ms.
-system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 4)
-</pre>
+system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 4)</code></pre>
+    </div>
     <p>If you do not succeed in subtracting the time from the next event, the remainder will accumulate, but it will
         always be limited to the <strong>combined.maxDelayDiff</strong> parameter. By default value of <strong>combined.maxDelayDiff</strong>
         = 100 ms.</p>

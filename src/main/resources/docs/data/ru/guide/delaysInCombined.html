@@ -104,12 +104,12 @@ system.sleep(8);       // 8 мс.
         <strong>system.sleep()</strong> вычитается максимально возможное время, а остаток будет вычтен из следующего
         события.
     </p>
-    <pre>
-mouse.press('LEFT');   // 10 мс.
+    <div class="codebox">
+    <pre><code>mouse.press('LEFT');   // 10 мс.
 system.sleep(0);       // 8 - 10 = 0 мс. (остаток = 2) 
 mouse.release('LEFT'); // 10 мс.
-system.sleep(0);       // 8 - 10 = 0 мс. (остаток = 4)
-</pre>
+system.sleep(0);       // 8 - 10 = 0 мс. (остаток = 4)</code></pre>
+    </div>
     <p>Если и из следующего события не получится вычесть нужное время, то остаток будет накапливаться, но он всегда
         будет ограничен параметром <strong>combined.maxDelayDiff</strong> (стандартное значение для <strong>combined.maxDelayDiff</strong>
         = 100 мс.).</p>
