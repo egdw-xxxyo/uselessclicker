@@ -6,6 +6,7 @@
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
     <script type="text/javascript">const current_page = "threads.html";</script>
     <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
 </head>
 <body>
@@ -41,8 +42,7 @@ var moveY = new Thread(function() {
 });
 
 new Thread(new moveX()).start();
-moveY.start();
-    </code></pre>
+moveY.start();</code></pre>
     </div>
     <p>Note that all method calls to the control objects (key, mouse, system, combined, clipboard) are synchronized.
         This concerns both the threads running from the script and threads running HTTP and Socket servers. If one
