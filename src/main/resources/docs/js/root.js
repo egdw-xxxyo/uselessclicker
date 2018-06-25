@@ -32,10 +32,19 @@ $(document).ready(function () {
         $(".navbar-primary-menu li").append($a);
     });
 */
+    // for test in browser
+    /*
+    function Sys(){
+      this.hello = function (text) {
+          alert('Hello' + text);
+      }  
+    }
+
+    var sys = new Sys();
+    */
+    
     $(".copy-button").click(function (e) {
-        /*$(e.target).parent().css( "background-color", "red" );*/
        let text = $(e.target).parent().find("pre code").text();
-        alert(text);
         sys.hello(text);
     });
 });
