@@ -43,8 +43,16 @@ $(document).ready(function () {
     var sys = new Sys();
     */
     
-    $(".copy-button").click(function (e) {
-       let text = $(e.target).parent().find("pre code").text();
-        sys.hello(text);
-    });
+    
+    // add copy buttons to "codebox" elements
+    let $copyButton = $("<a>")
+        .text("Copy text")
+        .attr("href","#")
+        .addClass("copy-button")
+        .click(function (e) {
+            let text = $(e.target).parent().find("pre code").text();
+            sys.hello(text);
+        });
+    $(".codebox").append($copyButton);
+    
 });
