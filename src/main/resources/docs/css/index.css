@@ -143,4 +143,19 @@ p {
     bottom: 2px;
     right: 2px;
     position: absolute;
+    width: 75px;
+}
+
+.set-button {
+    border: 1px dashed;
+    padding-right: 2px;
+    padding-left: 2px;
+    bottom: 26px;
+    right: 2px;
+    position: absolute;
+    width: 75px;
+}
+
+.codebox pre{
+    padding-right: 75px;
 }

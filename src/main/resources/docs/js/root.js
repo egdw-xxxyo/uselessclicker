@@ -53,6 +53,15 @@ $(document).ready(function () {
             let text = $(e.target).parent().find("pre code").text();
             sys.copy(text);
         });
-    $(".codebox").append($copyButton);
+
+    let $setButton = $("<a>")
+        .text("Set text")
+        .attr("href","#")
+        .addClass("set-button")
+        .click(function (e) {
+            let text = $(e.target).parent().find("pre code").text();
+            sys.set(text);
+        });
+    $(".codebox").append($copyButton).append($setButton);
     
 });
