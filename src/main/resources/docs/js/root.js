@@ -33,8 +33,9 @@ $(document).ready(function () {
     });
 */
     $(".copy-button").click(function (e) {
-        $(e.target).parent().css( "background-color", "red" );
-        let text =$(e.target).parent().select("code").text();
+        /*$(e.target).parent().css( "background-color", "red" );*/
+       let text = $(e.target).parent().find("pre code").text();
         alert(text);
+        sys.hello(text);
     });
 });

@@ -130,3 +130,17 @@ p {
     max-width: 250px;
     height: 100vh;
 }
+
+.codebox{
+    position: relative;
+    
+}
+
+.copy-button {
+    border: 1px dashed;
+    padding-right: 2px;
+    padding-left: 2px;
+    bottom: 2px;
+    right: 2px;
+    position: absolute;
+}

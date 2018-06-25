@@ -14,5 +14,9 @@ public class WebViewObject {
     public void openInBrowser(String uri){
         openInBrowser.accept(uri);
     }
+
+    public void hello(String text) {
+        System.out.println("Hello "+text);
+    }
         
 }
