@@ -133,29 +133,36 @@ p {
 
 .codebox{
     position: relative;
-    
 }
 
-.copy-button {
-    border: 1px dashed;
-    padding-right: 2px;
-    padding-left: 2px;
-    bottom: 2px;
-    right: 2px;
-    position: absolute;
-    width: 75px;
+.code-button{
+    float: right;
 }
 
-.set-button {
-    border: 1px dashed;
-    padding-right: 2px;
-    padding-left: 2px;
-    bottom: 26px;
-    right: 2px;
-    position: absolute;
-    width: 75px;
+.code-button a {
+    display: block;
+    color: #ccc;
+    text-align: center;
+    padding: 2px 2px;
+    text-decoration: none;
+    border: 1px solid #666666;
+}
+
+.code-button a:hover {
+    background-color: #111;
 }
 
 .codebox pre{
-    padding-right: 75px;
+    padding-bottom: 24px;
+}
+
+.code-bar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }

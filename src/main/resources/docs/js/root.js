@@ -42,26 +42,37 @@ $(document).ready(function () {
 
     var sys = new Sys();
     */
-    
-    
+
+
     // add copy buttons to "codebox" elements
-    let $copyButton = $("<a>")
-        .text("Copy text")
-        .attr("href","#")
-        .addClass("copy-button")
+    let $codeButtonBar = $("<ul>")
+        .addClass("code-bar");
+    let $li = $("<li>")
+        .addClass("code-button");
+    let $a = $("<a>")
+        .attr("href", "#")
         .click(function (e) {
-            let text = $(e.target).parent().find("pre code").text();
-            sys.copy(text);
+            alert('hello');
+            onClick(e);
         });
 
-    let $setButton = $("<a>")
-        .text("Set text")
-        .attr("href","#")
-        .addClass("set-button")
-        .click(function (e) {
-            let text = $(e.target).parent().find("pre code").text();
-            sys.set(text);
-        });
-    $(".codebox").append($copyButton).append($setButton);
-    
+    let $copyButton = $li.clone().append(
+        $a.clone()
+            .text("Copy")
+            .click(function (e) {
+                let text = $(e.target).parent().find("pre code").text();
+                sys.copy(text);
+            }));
+
+    let $setButton = $li.clone().append(
+        $a.clone()
+            .text("Set")
+            .click(function (e) {
+                let text = $(e.target).parent().find("pre code").text();
+                sys.set(text);
+            }));
+    $codeButtonBar
+        .append($copyButton)
+        .append($setButton);
+    $(".codebox").append($codeButtonBar);
 });
