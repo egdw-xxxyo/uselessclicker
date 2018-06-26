@@ -139,13 +139,20 @@ p {
     float: right;
 }
 
+.code-button .glyphicon {
+    font-size: 18px;
+}
+
+.code-button:hover .glyphicon {
+    color: rgb(255, 195, 83);
+}
+
 .code-button a {
     display: block;
     color: #ccc;
     text-align: center;
     padding: 2px 2px;
     text-decoration: none;
-    border: 1px solid #666666;
 }
 
 .code-button a:hover {
@@ -153,7 +160,7 @@ p {
 }
 
 .codebox pre{
-    padding-bottom: 24px;
+    padding-bottom: 2px;
 }
 
 .code-bar{
@@ -163,6 +170,7 @@ p {
     overflow: hidden;
     background-color: #333;
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 2px;
+    right: 2px;
+    opacity: 0.6;
 }

@@ -6,6 +6,7 @@ import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class WebViewObject {
     private Consumer<String> openInBrowser;
     private Consumer<String> onSetText;
@@ -23,13 +24,10 @@ public class WebViewObject {
     }
 
     public void copy(String text) {
-        System.out.println("copy");
         clipboardObject.set(text);
     }
 
     public void set(String text) {
-        System.out.println("set");
-
         onSetText.accept(text);
     }
 

@@ -52,15 +52,15 @@ $(document).ready(function () {
 
     let $copyButton = $li.clone().append(
         $a.clone()
-            .text("Copy")
+            .addClass("glyphicon glyphicon-duplicate")
             .click(function (e) {
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
-                sys.hello(text);
+                sys.copy(text);
             }));
     
     let $setButton = $li.clone().append(
         $a.clone()
-            .text("Set")
+            .addClass("glyphicon glyphicon-save-file")
             .click(function (e) {
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
                 sys.set(text);
