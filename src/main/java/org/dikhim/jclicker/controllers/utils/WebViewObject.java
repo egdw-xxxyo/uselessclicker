@@ -23,10 +23,13 @@ public class WebViewObject {
     }
 
     public void copy(String text) {
+        System.out.println("copy");
         clipboardObject.set(text);
     }
 
     public void set(String text) {
+        System.out.println("set");
+
         onSetText.accept(text);
     }
 

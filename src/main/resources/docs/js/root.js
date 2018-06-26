@@ -48,27 +48,24 @@ $(document).ready(function () {
     let $li = $("<li>")
         .addClass("code-button");
     let $a = $("<a>")
-        .attr("href", "#")
-        .click(function (e) {
-            alert('hello');
-            onClick(e);
-        });
+        .attr("href", "#");
 
     let $copyButton = $li.clone().append(
         $a.clone()
             .text("Copy")
             .click(function (e) {
-                let text = $(e.target).parent().find("pre code").text();
-                sys.copy(text);
+                let text = $(e.target).parent().parent().parent().find("pre code").text();
+                sys.hello(text);
             }));
-
+    
     let $setButton = $li.clone().append(
         $a.clone()
             .text("Set")
             .click(function (e) {
-                let text = $(e.target).parent().find("pre code").text();
+                let text = $(e.target).parent().parent().parent().find("pre code").text();
                 sys.set(text);
             }));
+
     $codeButtonBar
         .append($copyButton)
         .append($setButton);
