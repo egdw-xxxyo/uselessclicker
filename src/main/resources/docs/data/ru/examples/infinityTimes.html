@@ -1,0 +1,54 @@
+
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "doubleClick.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Беконечное повторение</h1><br/>
+    <p>Выполнять дейсвие бесконечно, пока нажата клавиша <strong>1</strong>. Включать и выключать бесконечное выполнение дейсвий по нажатию клавиши <strong>2</strong>.</p>
+    <div class="codebox"><pre><code>var whilePressedKey = '1';
+var toggleKey = '2';
+
+function doIt(){
+    // put your code here
+    mouse.move(1,1);
+}
+
+///////////////////////////////////////////////////////////
+system.onKeyPress('toggle',toggleKey);
+var isToggled = false;
+function toggle(){
+    isToggled = !isToggled;
+}
+
+system.onKeyRelease('bar',toggleKey);
+function bar(param){
+    while(isToggled){
+        doIt();
+    }
+}
+
+system.onKeyPress('foo',whilePressedKey,whilePressedKey);
+function foo(param){
+    while(key.isPressed(param) && !isToggled){
+        doIt();
+    }
+}</code></pre></div>
+</div>
+<script src="examples.js">
+</script>
+</body></html>
