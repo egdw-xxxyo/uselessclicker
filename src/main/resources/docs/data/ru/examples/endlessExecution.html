@@ -31,12 +31,17 @@ function doIt(){
 ///////////////////////////////////////////////////////////
 system.onKeyPress('toggle',toggleKey);
 var isToggled = false;
+var isPressed = false;
 function toggle(){
-    isToggled = !isToggled;
+    if(!isPressed){
+        isToggled = !isToggled;
+    }
+    isPressed = true;
 }
 
 system.onKeyRelease('bar',toggleKey);
 function bar(param){
+    isPressed = false;
     while(isToggled){
         doIt();
     }
