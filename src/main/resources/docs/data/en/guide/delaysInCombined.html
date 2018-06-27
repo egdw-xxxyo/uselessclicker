@@ -1,13 +1,15 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "delaysInCombined.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -17,8 +19,11 @@
 </nav>
 <div class="main-content">
     <h1>Synchronization of elapsed time in the combined.run method</h1><br/>
-    <p> One of the special features of the <strong>run</strong> method is that it synchronizes the execution time of the script and the actual time spent.<br>
-        Here is an example: there is a list of events where the various actions <strong>"ld#Ld#k#d#K#d#"</strong> are recorded, using the list of events you can understand that there is a click  of mouse button and keystroke of the keyboard key. We transformed this line to a more descriptive form and filled in the unknown parameters:
+    <p> One of the special features of the <strong>run</strong> method is that it synchronizes the execution time of the
+        script and the actual time spent.<br>
+        Here is an example: there is a list of events where the various actions <strong>"ld#Ld#k#d#K#d#"</strong> are
+        recorded, using the list of events you can understand that there is a click of mouse button and keystroke of the
+        keyboard key. We transformed this line to a more descriptive form and filled in the unknown parameters:
     </p>
     <div class="codebox">
     <pre><code>"ld#Ld#k#d#K#d#" &gt;&gt;&gt;
@@ -33,7 +38,12 @@ key.release('A');
 system.sleep(35);
 </code></pre>
     </div>
-    <p>There is a delay between each event in the form of <strong>system.sleep(ms)</strong>. Theoretical time of the script execution will be equal to the sum of all specified delays by the method<strong>system.sleep() - 30 + 45 + 100 + 35 = 210ms</strong>. The time for which this script is actually executed will be slightly longer (plus the time the script itself executes and the internal delays of objects), which will make an undesirable deviation from real time. To compensate the difference in time, this difference is subtracted from the time of the <strong>system.sleep()</strong> method after each event.</p>
+    <p>There is a delay between each event in the form of <strong>system.sleep(ms)</strong>. Theoretical time of the
+        script execution will be equal to the sum of all specified delays by the method<strong>system.sleep() - 30 + 45
+            + 100 + 35 = 210ms</strong>. The time for which this script is actually executed will be slightly longer
+        (plus the time the script itself executes and the internal delays of objects), which will make an undesirable
+        deviation from real time. To compensate the difference in time, this difference is subtracted from the time of
+        the <strong>system.sleep()</strong> method after each event.</p>
     <div class="codebox">
     <pre><code>mouse.press('LEFT');
 system.sleep(50);
@@ -41,7 +51,8 @@ mouse.release('LEFT');
 system.sleep(50);
 </code></pre>
     </div>
-    <p> One event of pressing the left mouse button and the delay following it. Similarly for the releasing event. Let's calculate the execution time of this code.</p>
+    <p> One event of pressing the left mouse button and the delay following it. Similarly for the releasing event. Let's
+        calculate the execution time of this code.</p>
     <div class="codebox">
     <pre><code>mouse.press('LEFT');
 mouse.pressDelay = 10 ms.
@@ -57,17 +68,20 @@ The actual execution time is 10 + 50 + 10 + 50 = 120 ms. + (overhead)
 Run-time difference is 120 - 100 = 20 ms.
 </code></pre>
     </div>
-    <p>In such a situation, the actual execution time will be at least 120 ms., and taking into account overheads even more. Under the overhead is meant the time of execution of the code by the program.<br>
-        In order to remove this difference, the program, when executing the <strong>run</strong> method, compensates the execution time by subtracting the difference from the <strong>system.sleep()</strong> method. So, the following code will be executed instead.</p>
+    <p>In such a situation, the actual execution time will be at least 120 ms., and taking into account overheads even
+        more. Under the overhead is meant the time of execution of the code by the program.<br>
+        In order to remove this difference, the program, when executing the <strong>run</strong> method, compensates the
+        execution time by subtracting the difference from the <strong>system.sleep()</strong> method. So, the following
+        code will be executed instead.</p>
     <div class="codebox">
     <pre><code>mouse.press('LEFT');   // 10 ms.
 system.sleep(40);      // 50 - 10 = 40 ms.
 mouse.release('LEFT'); // 10 ms.
-system.sleep(40);      // 50 - 10 = 40 ms.
-        </code></pre>
-</div>
+system.sleep(40);      // 50 - 10 = 40 ms.</code></pre>
+    </div>
     <p>Thus, the execution time of the script will correspond to the real time. But there are limitations.<br/>
-        What happens if the time of the event itself is less than the available time for compensation? Let's look at an example.</p>
+        What happens if the time of the event itself is less than the available time for compensation? Let's look at an
+        example.</p>
     <div class="codebox">
     <pre><code>mouse.pressDelay = 10 ms.
 mouse.releaseDelay = 10 ms.
@@ -79,18 +93,23 @@ system.sleep(8);       // 8 ms.
     
 The specified execution time is 8 + 8 = 16 ms.
 The actual execution time is 10 + 8 + 10 + 8 = 36 ms. + (overhead)
-Run-time difference is 36 - 16 = 20 ms.
-</code></pre>
+Run-time difference is 36 - 16 = 20 ms.</code></pre>
     </div>
-    <p>In this situation, it turns out that the time difference is greater than the time that can be compensated by subtracting from the <strong>system.sleep()</strong> method. In this situation, the maximum possible time is subtracted from the <strong>system.sleep()</strong> method, and the remainder is subtracted from the next event</p>
-    <pre>
-mouse.press('LEFT');   // 10 ms.
+    <p>In this situation, it turns out that the time difference is greater than the time that can be compensated by
+        subtracting from the <strong>system.sleep()</strong> method. In this situation, the maximum possible time is
+        subtracted from the <strong>system.sleep()</strong> method, and the remainder is subtracted from the next event
+    </p>
+    <div class="codebox">
+    <pre><code>mouse.press('LEFT');   // 10 ms.
 system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 2) 
 mouse.release('LEFT'); // 10 ms.
-system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 4)
-</pre>
-    <p>If you do not succeed in subtracting the time from the next event, the remainder will accumulate, but it will always be limited to the <strong>combined.maxDelayDiff</strong> parameter. By default value of <strong>combined.maxDelayDiff</strong> = 100 ms.</p>
+system.sleep(0);       // 8 - 10 = 0 ms. (remainder = 4)</code></pre>
+    </div>
+    <p>If you do not succeed in subtracting the time from the next event, the remainder will accumulate, but it will
+        always be limited to the <strong>combined.maxDelayDiff</strong> parameter. By default value of <strong>combined.maxDelayDiff</strong>
+        = 100 ms.</p>
 </div>
 <script src="guide.js">
 </script>
-</body></html>
+</body>
+</html>

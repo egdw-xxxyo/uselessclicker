@@ -19,10 +19,10 @@ p {
 
 .navbar-primary {
     background-color: #333;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     position: fixed;
-    top: 0px;
+    top: 0;
     width: 250px;
     z-index: 8;
     overflow: hidden;
@@ -47,7 +47,7 @@ p {
     visibility: hidden;
     position: absolute;
     display: block;
-    left: 0px;
+    left: 0;
     bottom:0;
     width: 100%;
     padding: 8px 0;
@@ -90,7 +90,7 @@ p {
 }
 
 .navbar-primary-menu li a:hover {
-    background-color: #000;
+    background-color: #181818;
     text-decoration: none;
     color: white;
 }
@@ -100,7 +100,16 @@ p {
 }
 
 .navbar-primary-menu li a:hover .glyphicon {
-    color: #d58512;
+    color: rgb(255, 195, 83);
+}
+
+.current-page-item-menu{
+    background-color: #181818;
+    color: white;
+}
+
+.current-page-item-menu .glyphicon{
+    color: rgb(255, 195, 83);
 }
 
 .main-content {
@@ -120,4 +129,48 @@ p {
     min-width: 250px;
     max-width: 250px;
     height: 100vh;
+}
+
+.codebox{
+    position: relative;
+}
+
+.code-button{
+    float: right;
+}
+
+.code-button .glyphicon {
+    font-size: 18px;
+}
+
+.code-button:hover .glyphicon {
+    color: rgb(255, 195, 83);
+}
+
+.code-button a {
+    display: block;
+    color: #ccc;
+    text-align: center;
+    padding: 2px 2px;
+    text-decoration: none;
+}
+
+.code-button a:hover {
+    background-color: #111;
+}
+
+.codebox pre{
+    padding-bottom: 2px;
+}
+
+.code-bar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    opacity: 0.8;
 }

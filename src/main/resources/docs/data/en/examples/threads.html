@@ -1,13 +1,15 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "threads.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -40,17 +42,23 @@ var moveY = new Thread(function() {
 });
 
 new Thread(new moveX()).start();
-moveY.start();
-    </code></pre></div>
-    <p>Note that all method calls to the control objects (key, mouse, system, combined, clipboard) are synchronized. This concerns both the threads running from the script and threads running HTTP and Socket servers. If one thread takes a method, even if it uses a separate control object, then all control methods will not be available for other threads. This situation can occur if a large auto-delay is established for the <strong>key</strong> or <strong>mouse</strong> object, as well as freezing the methods of the <strong>clipboard</strong> object.</p>
-            <p>This restriction does not apply to the system.sleep () method, since it is solely related to the current thread. The delay set through this method can be any value.</P>
+moveY.start();</code></pre>
+    </div>
+    <p>Note that all method calls to the control objects (key, mouse, system, combined, clipboard) are synchronized.
+        This concerns both the threads running from the script and threads running HTTP and Socket servers. If one
+        thread takes a method, even if it uses a separate control object, then all control methods will not be available
+        for other threads. This situation can occur if a large auto-delay is established for the <strong>key</strong> or
+        <strong>mouse</strong> object, as well as freezing the methods of the <strong>clipboard</strong> object.</p>
+            <p>This restriction does not apply to the system.sleep () method, since it is solely related to the current
+    thread. The delay set through this method can be any value.</P>
             <p> List of non-synchronized methods</p>
-        <ul>
-            <li>combined.run()</li>
-            <li>system.exit()</li>
-            <li>system.sleep()</li>
-        </ul>
+    <ul>
+        <li>combined.run()</li>
+        <li>system.exit()</li>
+        <li>system.sleep()</li>
+    </ul>
 </div>
 <script src="examples.js">
 </script>
-</body></html>
+</body>
+</html>

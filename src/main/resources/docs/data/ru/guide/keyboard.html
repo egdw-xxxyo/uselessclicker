@@ -1,13 +1,15 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "keyboard.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -18,7 +20,8 @@
 <div class="main-content">
     <h1>Клавиатура</h1><br/>
     <p>Для работы с клавиатруой существует встроенный объект <strong>key</strong>". <br/>
-        Рассмотрим пример кода для работы с объектом клавиатуры. Вставьте код, запустите его и выберите любое текстовое поле. После запуска кода на все про все у вас есть 5 секунд. Поторопитесь!
+        Рассмотрим пример кода для работы с объектом клавиатуры. Вставьте код, запустите его и выберите любое текстовое
+        поле. После запуска кода на все про все у вас есть 5 секунд. Поторопитесь!
     </p>
     <div class="codebox">
     <pre><code>system.sleep(5000);
@@ -31,7 +34,10 @@ key.perform('E','RELEASE');
 key.type('L L O SPACE W O R L D');
 </code></pre>
     </div>
-    <p>Данный скрипт генерирует события нажатия и отпускания клавиш клавиатуры. В нем используются основные доступные методы. В качестве параметров используются имена клавиш, с которыми вы хотите работать, записанные через пробел. Если в параметре указано больше одной клавиши, то события для каждой клавиши будут вызваны последовательно в порядке следования. Так, запись
+    <p>Данный скрипт генерирует события нажатия и отпускания клавиш клавиатуры. В нем используются основные доступные
+        методы. В качестве параметров используются имена клавиш, с которыми вы хотите работать, записанные через пробел.
+        Если в параметре указано больше одной клавиши, то события для каждой клавиши будут вызваны последовательно в
+        порядке следования. Так, запись
     </p>
     <div class="codebox">
         <pre><code>key.press('CONTROL A')</code></pre>
@@ -41,15 +47,21 @@ key.type('L L O SPACE W O R L D');
     <pre><code>key.press('CONTROL'); 
 key.press('A');</code></pre>
     </div>
-    <p>Метод <strong>type</strong> генерирует последовательно для каждой клавиши события нажатия и отпускания клавиш. Строчка
+    <p>Метод <strong>type</strong> генерирует последовательно для каждой клавиши события нажатия и отпускания клавиш.
+        Строчка
     </p>
     <div class="codebox">
         <pre><code>key.type('H E L L O SPACE W O R L D');</code></pre>
     </div>
-    <p>последовательно генерирует события для вывода текста <strong>"hello world"</strong>.  Помните, что метод только генерирует указанные события, а не в действительности печатает переданный ему в параметре текст и запись. <strong>key.type('Hello World)</strong> работать не будет, так как для отображения заглавных букв нужны события нажатия клавиш <strong>SHIFT</strong> или <strong>CAPS_LOCK</strong>, а пробел используется для разделения имен клавиш.
+    <p>последовательно генерирует события для вывода текста <strong>"hello world"</strong>. Помните, что метод только
+        генерирует указанные события, а не в действительности печатает переданный ему в параметре текст и запись.
+        <strong>key.type('Hello World)</strong> работать не будет, так как для отображения заглавных букв нужны события
+        нажатия клавиш <strong>SHIFT</strong> или <strong>CAPS_LOCK</strong>, а пробел используется для разделения имен
+        клавиш.
     </p>
 
 </div>
 <script src="guide.js">
 </script>
-</body></html>
+</body>
+</html>

@@ -1,13 +1,15 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
-    <script src='../../../js/jquery.min.js'></script>
     <script type="text/javascript">const current_page = "keyboard.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -18,8 +20,9 @@
 <div class="main-content">
     <h1>Keyboard</h1><br/>
     <p>
-    To work with the keyboard there is a built-in object "key" is used. <br/>
-    Let's take a sample code for working with the keyboard object. Paste the code, run it and select any text field. After running the code you have only 5 seconds. Hurry up.
+        To work with the keyboard there is a built-in object "key" is used. <br/>
+        Let's take a sample code for working with the keyboard object. Paste the code, run it and select any text field.
+        After running the code you have only 5 seconds. Hurry up.
     </p>
     <div class="codebox">
     <pre><code>system.sleep(5000);
@@ -32,7 +35,9 @@ key.perform('E','RELEASE');
 key.type('L L O SPACE W O R L D');
 </code></pre>
     </div>
-    <p>This script generates events for pressing and releasing keyboard keys. It uses the basic  available methods(press, release, preform, type). If more than one key is specified in the parameters, then the events for each key will be called sequentially one after another. So, the record
+    <p>This script generates events for pressing and releasing keyboard keys. It uses the basic available methods(press,
+        release, preform, type). If more than one key is specified in the parameters, then the events for each key will
+        be called sequentially one after another. So, the record
     </p>
     <div class="codebox">
         <pre><code>key.press('CONTROL A')</code></pre>
@@ -47,9 +52,13 @@ key.press('A');</code></pre>
     <div class="codebox">
         <pre><code>key.type('H E L L O SPACE W O R L D');</code></pre>
     </div>
-    <p>The line sequentially generates events for text output <strong>hello world"</strong>. Remember that the method only generates the specified events, and does not actually print the text. <strong>key.type('hello world)</strong> doesn't work, because to display of capital letters <strong>SHIFT</strong> or <strong>CAPS_LOCK</strong> key press events are required, and the space is used to separate key names<br/>
+    <p>The line sequentially generates events for text output <strong>hello world"</strong>. Remember that the method
+        only generates the specified events, and does not actually print the text. <strong>key.type('hello
+            world)</strong> doesn't work, because to display of capital letters <strong>SHIFT</strong> or <strong>CAPS_LOCK</strong>
+        key press events are required, and the space is used to separate key names<br/>
     </p>
 </div>
 <script src="guide.js">
 </script>
-</body></html>
+</body>
+</html>

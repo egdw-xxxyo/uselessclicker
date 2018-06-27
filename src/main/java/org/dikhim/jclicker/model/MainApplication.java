@@ -122,5 +122,8 @@ public class MainApplication {
     public SocketServer getSocketServer() {
         return socketServer;
     }
-    
+
+    public void setScript(String script) {
+        this.script.codeProperty().setValue(script);
+    }
 }

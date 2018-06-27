@@ -1,13 +1,15 @@
-
-<!DOCTYPE html><html lang='ru' class=''>
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
 <head>
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "files.html";</script>
     <script src='../../../js/jquery.min.js'></script>
-    <script type="text/javascript">const current_page = "file.html";</script>
+    <script src='../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../css/index.css'>
-</head><body>
+</head>
+<body>
 <nav class="navbar-primary">
     <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
     <ul class="navbar-primary-menu">
@@ -17,7 +19,8 @@
 </nav>
 <div class="main-content">
     <h1>Работа с файлами</h1><br/>
-    <p>Для работы с файлами необходимо использовать тип "'java.io.File". Так же, программа включает в себя поддержку библиотеки "apache.commons.io", которая упростит работу с файлами.&nbsp;</p>
+    <p>Для работы с файлами необходимо использовать тип "'java.io.File". Так же, программа включает в себя поддержку
+        библиотеки "apache.commons.io", которая упростит работу с файлами.&nbsp;</p>
     <div class="codebox"><pre><code>var File = Java.type('java.io.File');
 var FileUtils = Java.type('org.apache.commons.io.FileUtils');
 
@@ -32,10 +35,14 @@ if(!myFile.exists()){
 
 system.println('file content:');
 system.println(FileUtils.readFileToString(myFile,'UTF-8'));
-    </code></pre></div>
+    </code></pre>
+    </div>
     <p><a href="" onclick="sys.openInBrowser('https://docs.oracle.com/javase/7/docs/api/java/io/File.html')">File</a>,
-        <a href="" onclick="sys.openInBrowser('https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/FileUtils.html')">FileUtils</a></p>
+        <a href=""
+           onclick="sys.openInBrowser('https://commons.apache.org/proper/commons-io/javadocs/api-2.5/org/apache/commons/io/FileUtils.html')">FileUtils</a>
+    </p>
 </div>
 <script src="examples.js">
 </script>
-</body></html>
+</body>
+</html>

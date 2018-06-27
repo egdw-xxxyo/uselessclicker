@@ -10,6 +10,7 @@ import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.controllers.utils.WebViewObject;
+import org.dikhim.jclicker.util.Cli;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,7 +24,9 @@ public class HelpSceneController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        webViewObject = new WebViewObject(Clicker.getApplication()::openInBrowser);
+        webViewObject = new WebViewObject();
+        webViewObject.setOpenInBrowser(Clicker.getApplication()::openInBrowser);
+        webViewObject.setOnSetText(Clicker.getApplication().getMainApplication()::setScript);
 
         this.resourceBundle = resources;
         WebEngine webEngine = web.getEngine();
