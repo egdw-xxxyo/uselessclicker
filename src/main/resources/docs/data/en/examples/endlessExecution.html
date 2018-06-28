@@ -1,0 +1,59 @@
+
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "endlessExecution.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head><body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h1>Endless repetition</h1>
+    <p>Do it endlessly while the <strong>1</strong> key is pressed. Enable and disable endless execution by pressing the <strong>2</strong> key.</p>
+    <div class="codebox"><pre><code>var whilePressedKey = '1';
+var toggleKey = '2';
+
+function doIt(){
+    // put your code here
+    mouse.move(1,1);
+}
+
+///////////////////////////////////////////////////////////
+system.onKeyPress('toggle',toggleKey);
+var isToggled = false;
+var isPressed = false;
+function toggle(){
+    if(!isPressed){
+        isToggled = !isToggled;
+    }
+    isPressed = true;
+}
+
+system.onKeyRelease('bar',toggleKey);
+function bar(param){
+    isPressed = false;
+    while(isToggled){
+        doIt();
+    }
+}
+
+system.onKeyPress('foo',whilePressedKey,whilePressedKey);
+function foo(param){
+    while(key.isPressed(param) && !isToggled){
+        doIt();
+    }
+}</code></pre></div>
+</div>
+<script src="examples.js">
+</script>
+</body></html>

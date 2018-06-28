@@ -1,6 +1,7 @@
 const sidemenu = {
     "../index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
     "guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
+    "basics.html": ["Основы", "text", ""],
     "eventsRecording.html": ["Захват событий", "text", ""],
     "loops.html": ["Циклы", "text", ""],
     "functions.html": ["Функции", "text", ""],

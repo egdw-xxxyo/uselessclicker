@@ -15,7 +15,6 @@ $(document).ready(function () {
             $a.addClass('list-level-2');
         }
 
-
         if (current_page === page) {
             $a.addClass('current-page-item-menu');
         }
@@ -26,13 +25,12 @@ $(document).ready(function () {
     });
 
     // add copy buttons to "codebox" elements
-    let $codeButtonBar = $("<ul>")
-        .addClass("code-bar");
     let $li = $("<li>")
         .addClass("code-button");
     let $a = $("<a>")
         .attr("href", "#");
 
+    // copy button
     let $copyButton = $li.clone().append(
         $a.clone()
             .addClass("glyphicon glyphicon-duplicate")
@@ -42,16 +40,18 @@ $(document).ready(function () {
                 sys.copy(text);
             }));
 
+    //set button
     let $setButton = $li.clone().append(
         $a.clone()
             .addClass("glyphicon glyphicon-save-file")
-            .attr("title", "Set text to the script editor field")
+            .attr("title", "Set to the script editor field")
             .click(function (e) {
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
                 sys.set(text);
             }));
 
-    $codeButtonBar
+    let $codeButtonBar = $("<ul>")
+        .addClass("code-bar")
         .append($copyButton)
         .append($setButton);
     $(".codebox").append($codeButtonBar);
