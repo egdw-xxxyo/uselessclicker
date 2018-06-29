@@ -860,9 +860,12 @@ key.release('KEY1 KEY2');
 /////////////////////////////////////
 $system_exit_hint:
 system.exit();
+  
+Закрыть приложение
 
 $system_sleep_hint:
 system.sleep(0);
+  
 Приостановить скрипт на заданное время в мс.
 
 system.sleep(ms);
@@ -870,18 +873,22 @@ system.sleep(ms);
 
 $system_print_hint:
 system.print('');
+  
 Вывести сообщение в поле вывода
 
 $system_println_hint:
 system.println('');
+  
 Вывести сообщение в поле вывода и перейти на новую строку
 
 $system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
+  
 Получить значение задержки пермноженое на множитель задержек
 
 $system_getMultiplier_hint:
 system.getMultiplier();
+  
 Получить множитель задержек (multiplier)
   
 На данное число умножаются все задержки
@@ -890,68 +897,111 @@ system.getMultiplier();
 
 $system_getSpeed_hint:
 system.getSpeed();
+  
 Получить значение параметра скорости
   
 Обратная величина к множителю задержек
 
 $system_keyIgnore_hint:
 system.keyIgnore();
+  
+Игнорировать события клавиатуры для вызовов методов
+  
+Пока данная опция включена, вызов методов по событиям клавиш клавиатуры будет невозможен
 
 $system_keyResume_hint:
 system.keyResume();
+  
+Восстановить захват событий клавиатуры. Отменяет вызов keyIgnore()
 
 $system_mouseIgnore_hint:
 system.mouseIgnore();
+  
+Игнорировать события мыши для вызовов методов
+  
+Пока данная опция включена, вызов методов по событиям мыши будет невозможен
 
 $system_mouseResume_hint:
 system.mouseResume();
+  
+Восстановить захват событий клавиатуры. Отменяет вызов mouseIgnore()
 
 $system_onKeyPress_hint:
 system.onKeyPress('foo','CONTROL');
+  
+Зарегестрировать вызов метода по нажатию указанной клавиши
 
 $system_onKeyRelease_hint:
 system.onKeyRelease('foo');
+  
+Зарегестрировать вызов метода по отпусканию указанной клавиши
 
 $system_onMouseMove_hint:
 system.onMouseMove('foo');
+  
+Зарегестрировать вызов метода при перемещении курсора
 
 $system_onMousePress_hint:
 system.onMousePress('foo','LEFT');
+  
+Зарегестрировать вызов метода по нажатию указанной кропки мыши
 
 $system_onMouseRelease_hint:
 system.onMouseRelease('foo','LEFT');
+  
+Зарегестрировать вызов метода по отпусканию указанной кропки мыши
 
 $system_onShortcutPress_hint:
 system.onShortcutPress('foo','CONTROL 1');
+  
+Зарегестрировать вызов метода по нажатию указанного сочетания клавиш
 
 $system_onShortcutRelease_hint:
 system.onShortcutRelease('foo','CONTROL 1');
+  
+Зарегестрировать вызов метода по отпусканию указанного сочетания клавиш
 
 $system_onWheelDown_hint:
 system.onWheelDown('foo');
+  
+Зарегестрировать вызов метода по прокрутке колесика мыши вниз
 
 $system_onWheelUp_hint:
 system.onWheelUp('foo');
+  
+Зарегестрировать вызов метода по прокрутке колесика мыши вверх
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
+  
   Сбросить множитель задержек к стандартному значению
 
 $system_resetSpeed_hint:
 system.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $system_setMaxThreads_hint:
 system.setMaxThreads('foo',1);
+  
+Установить максимальное количество потоков для вызова метода
+  
+Данное параметр ограничивает максимальное количество вызов метода по события клавитару и мыши.
+  
+Если в данный момет метод выполняется указанное количество раз, то следующие вызовы убдут проигнорированы
+  
+Этот параметр никак не влияет на вызов метода другими средствами программы, а только на вызовы зарегестрированные по событиям клавиатуры и мыши
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
 
 $system_setSpeed_hint:
 system.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек

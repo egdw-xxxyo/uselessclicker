@@ -853,9 +853,12 @@ Method consists of(fo each key):
 /////////////////////////////////////
 $system_exit_hint:
 system.exit();
+  
+Close the application
 
 $system_sleep_hint:
 system.sleep(0);
+  
 Pause script running on the specified amount of time in ms.
 
 system.sleep(ms);
@@ -863,18 +866,22 @@ system.sleep(ms);
 
 $system_print_hint:
 system.print('');
+  
 Print the message
 
 $system_println_hint:
 system.println('');
+  
 Print the message and terminate the line
 
 $system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
+  
 Get the multiplied delay
 
 $system_getMultiplier_hint:
 system.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -883,68 +890,112 @@ The reciprocal of the speed multiplier
 
 $system_getSpeed_hint:
 system.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $system_keyIgnore_hint:
 system.keyIgnore();
+  
+Ignore keyboard events for method calls
+  
+While this option is on, it wil be impossible to call methods by keyboard events
 
 $system_keyResume_hint:
 system.keyResume();
+  
+Resume keyboard events capturing. Cancels the keyIgnore() call
 
 $system_mouseIgnore_hint:
 system.mouseIgnore();
+  
+Ignore mouse events for method calls
+  
+While this option is on, it wil be impossible to call methods by mouse events
+
 
 $system_mouseResume_hint:
 system.mouseResume();
+  
+Resume mouse events capturing. Cancels the mouseIgnore() call
 
 $system_onKeyPress_hint:
 system.onKeyPress('foo','CONTROL');
+  
+Register a method call by pressing the specified key
 
 $system_onKeyRelease_hint:
 system.onKeyRelease('foo');
+  
+Register a method call by releasing the specified key
 
 $system_onMouseMove_hint:
 system.onMouseMove('foo');
+  
+Register a method call by mouse moving
 
 $system_onMousePress_hint:
 system.onMousePress('foo','LEFT');
+  
+Register a method call by pressing the specified button
 
 $system_onMouseRelease_hint:
 system.onMouseRelease('foo','LEFT');
+  
+Register a method call by releasing the specified button
 
 $system_onShortcutPress_hint:
 system.onShortcutPress('foo','CONTROL 1');
+  
+Register a method call by pressing the specified keyboard shortcut
 
 $system_onShortcutRelease_hint:
 system.onShortcutRelease('foo','CONTROL 1');
+  
+Register a method call by releasing the specified keyboard shortcut
 
 $system_onWheelDown_hint:
 system.onWheelDown('foo');
+  
+Register a method call by scrolling down the wheel
 
 $system_onWheelUp_hint:
 system.onWheelUp('foo');
+  
+Register a method call by scrolling up the wheel
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
+  
   Reset the delay multiplier to a default value
 
 $system_resetSpeed_hint:
 system.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $system_setMaxThreads_hint:
 system.setMaxThreads('foo',1);
+  
+Set the maximum number of threads to call the method
+  
+This parameter limits the maximum number of method calls for the keyboard and mouse events
+  
+If the given method is executed the specified number of times, then the following calls will be ignored
+  
+This parameter does not affect the call of the method by other ways, but only calls registered on the events of the keyboard and mouse
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
 
 $system_setSpeed_hint:
 system.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
