@@ -278,6 +278,7 @@ mouse.click('BTN');
 
 $mouse_clickAt_hint:
 mouse.clickAt('LEFT',0,0);
+  
 Клик клавишей мыши в укзанной точке
   
 mouse.clickAt('BTN',x,y);
@@ -292,27 +293,39 @@ mouse.clickAt('BTN',x,y);
 
 $mouse_getMinDelay_hint:
 mouse.getMinDelay();
+  
+Получить минимальную задержку. Минимальная задержка представляет нижний предел всех задержек в объекте
 
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
+  
 Получить задержку передвижения курсора мыши в мс. (moveDelay)
   
   mouse.getMoveDelay():int
 
 $mouse_getMultipliedMoveDelay_hint:
 mouse.getMultipliedMoveDelay();
+  
+Получить реальное значение задержки передвижения с учетом множителя
 
 $mouse_getMultipliedPressDelay_hint:
 mouse.getMultipliedPressDelay();
+  
+Получить реальное значение задержки нажатия кнопки с учетом множителя
 
 $mouse_getMultipliedReleaseDelay_hint:
 mouse.getMultipliedReleaseDelay();
+  
+Получить реальное значение задержки отпускания кнопки с учетом множителя
 
 $mouse_getMultipliedWheelDelay_hint:
 mouse.getMultipliedWheelDelay();
+  
+Получить реальное значение задержки колесика мыши с учетом множителя
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
+  
 Получить множитель задержек.
   
 На данное число умножаются все задержки для объекта
@@ -323,18 +336,21 @@ mouse.getMultiplier();
 
 $mouse_getPressDelay_hint:
 mouse.getPressDelay();
+  
 Получить задержку нажатия клавиши мыши в мс. (pressDelay)
   
   mouse.getPressDelay():int
 
 $mouse_getReleaseDelay_hint:
 mouse.getReleaseDelay();
+  
 Получить задержку отпускания клавиши мыши в мс. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
 $mouse_getSpeed_hint:
 mouse.getSpeed();
+  
 Получить множитель скорости
   
 Обратная величина к множителю задержек
@@ -343,12 +359,14 @@ mouse.getSpeed();
 
 $mouse_getWheelDelay_hint:
 mouse.getWheelDelay();
+  
 Получить задержку колеса мыши в мс. (wheelDelay)
   
   mouse.getWheelDelay():int
 
 $mouse_getX_hint:
 mouse.getX();
+  
 Получить координату 'x' последнего события мыши
   
   mouse.getX():int
@@ -357,6 +375,7 @@ mouse.getX();
 
 $mouse_getY_hint:
 mouse.getY();
+  
 Получить координату 'y' последнего события мыши
   
   mouse.getY():int
@@ -365,6 +384,7 @@ mouse.getY();
 
 $mouse_move_hint:
 mouse.move(0,0);
+  
 Передвинуть курсор относительно координат последнего события
   
   mouse.move(x,y);
@@ -376,9 +396,12 @@ mouse.move(0,0);
 
 $mouse_moveAndButton_hint:
 mouse.moveAndButton('LEFT','PRESS',0,0);
+  
+Передвинуть курсор относительно координат последнего события и выполнить дейсвие для кнопки мыши
 
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и кликнуть
   
 mouse.moveAndClick('BTN',dx,dy);
@@ -395,6 +418,7 @@ mouse.moveAndClick('BTN',dx,dy);
 
 $mouse_moveAndPress_hint:
 mouse.moveAndPress('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и нажать клавишу мыши
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -409,6 +433,7 @@ mouse.moveAndPress('BTN',dx,dy);
 
 $mouse_moveAndRelease_hint:
 mouse.moveAndRelease('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и отпустить клавишу мыши
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -423,6 +448,7 @@ mouse.moveAndPress('BTN',dx,dy);
 
 $mouse_moveAndWheel_hint:
 mouse.moveAndWheel('DOWN',0,0,0);
+  
 Передвинуть курсор относительно координат последнего события и прокруть колесо мыши
   
 mouse.moveAndWheel
@@ -439,6 +465,7 @@ mouse.moveAndWheel
 
 $mouse_moveTo_hint:
 mouse.moveTo(0,0);
+  
 Передвинуть курсор в указанную точку
   
 mouse.moveTo(x,y);
@@ -450,6 +477,7 @@ mouse.moveTo(x,y);
 
 $mouse_press_hint:
 mouse.press('LEFT');
+  
 Нажать клавишу мыши
   
 mouse.press('BTN');
@@ -461,6 +489,7 @@ mouse.press('BTN');
 
 $mouse_pressAt_hint:
 mouse.pressAt('LEFT',0,0);
+  
 Передвинуть курсор в указанную точку и нажать клавишу мыши
   
 mouse.pressAt('BTN',x,y);
@@ -475,6 +504,7 @@ mouse.pressAt('BTN',x,y);
 
 $mouse_release_hint:
 mouse.release('LEFT');
+  
 Отпустить клавишу мыши
   
 mouse.release('BTN');
@@ -486,6 +516,7 @@ mouse.release('BTN');
 
 $mouse_releaseAt_hint:
 mouse.releaseAt('LEFT',0,0);
+  
 Передвинуть курсор в указанную точку и отпустить клавишу мыши
   
 mouse.releaseAt('BTN',x,y);
@@ -500,24 +531,29 @@ mouse.releaseAt('BTN',x,y);
 
 $mouse_resetDelays_hint:
 mouse.resetDelays();
+  
 Сбросить все задержки к стандартному значению
 
 $mouse_resetMultiplier_hint:
 mouse.resetMultiplier();
+  
 Сбросить множитель задержек к стандартному значению
 
 $mouse_resetSpeed_hint:
 mouse.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $mouse_setDelays_hint:
 mouse.setDelays(10);
+  
 Приствоить всем задержкам указанное значение
   
 mouse.setDelays(int delay)
 
 $mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
+  
 Установить задержку передвижения
 курсора мыши в мс.
   
@@ -526,9 +562,12 @@ mouse.setMoveDelay(int moveDelay)
 
 $mouse_setMinDelay_hint:
 mouse.setMinDelay(5);
+  
+Установить значение минимальной задержки
 
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
@@ -537,6 +576,7 @@ mouse.setMultiplier(float multiplier)
 
 $mouse_setPressDelay_hint:
 mouse.setPressDelay(10);
+  
 Установить задержку нажатия клавиши мыши в мс
   
 mouse.setPressDelay(pressDelay)
@@ -544,6 +584,7 @@ mouse.setPressDelay(pressDelay)
 
 $mouse_setReleaseDelay_hint:
 mouse.setReleaseDelay(10);
+  
 Установить задержку отпускания клавиши мыши в мс.
   
 mouse.setReleaseDelay(releaseDelay)
@@ -551,6 +592,7 @@ mouse.setReleaseDelay(releaseDelay)
 
 $mouse_setSpeed_hint:
 mouse.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек
@@ -560,6 +602,7 @@ mouse.setSpeed(speed)
 
 $mouse_setWheelDelay_hint:
 mouse.setWheelDelay(10);
+  
 Установить задержку колеса мыши в мс.
   
 mouse.setWheelDelay(wheelDelay)
@@ -567,6 +610,7 @@ mouse.setWheelDelay(wheelDelay)
 
 $mouse_setX_hint:
 mouse.setX(0);
+  
 Передвинуть курсор мыши по оси 'x' в указанную координату
   
 mouse.setX(x);
@@ -578,6 +622,7 @@ mouse.setX(x);
 
 $mouse_setY_hint:
 mouse.setY(0);
+  
 Передвинуть курсор мыши по оси 'y' в указанную координату
   
 mouse.setY(y);
@@ -589,6 +634,7 @@ mouse.setY(y);
 
 $mouse_wheel_hint:
 mouse.wheel('DOWN',0);
+  
 Прокрутить колесо мыши на указанное
 количество строк
   
@@ -602,7 +648,8 @@ mouse.wheel(direction, amount);
 
 $mouse_wheelAt_hint:
 mouse.wheelAt('DOWN',3,0,0);
-Прокрутить колесо мыши на указанное количество строк
+  
+Прокрутить колесо мыши на указанное количество строк ы указанной точке
   
 mouse.wheelAt
   (direction, amount, x, y);

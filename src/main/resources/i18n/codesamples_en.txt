@@ -284,13 +284,14 @@ The method consists of two calls of pressing and releasing a button:
 
 $mouse_clickAt_hint:
 mouse.clickAt('LEFT',0,0);
+  
 The click the button at the particular point 
   
 mouse.clickAt('BTN',x,y);
   BTN - button's name
   x,y - coordinates
   
-The method consists of two calls of pressing and releasing the button:
+The method consists of two calls of pressing and releasing a button:
   pressAt('BTN',x,y);
     sleep(pressDelay);
   releaseAt('BTN',x,y);
@@ -298,27 +299,39 @@ The method consists of two calls of pressing and releasing the button:
 
 $mouse_getMinDelay_hint:
 mouse.getMinDelay();
+  
+Get еру minimum delay. The minimum delay is represent a threshold for an each delay in еру object
 
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
+  
 Get the mouse movement delay in ms. (moveDelay)
   
   mouse.getMoveDelay():int
 
 $mouse_getMultipliedMoveDelay_hint:
 mouse.getMultipliedMoveDelay();
+  
+Get a real value for the movement delay multiplied by multiplier
 
 $mouse_getMultipliedPressDelay_hint:
 mouse.getMultipliedPressDelay();
+  
+Get a real value for the button pressing delay multiplied by multiplier
 
 $mouse_getMultipliedReleaseDelay_hint:
 mouse.getMultipliedReleaseDelay();
+  
+Get a real value for the button releasing delay multiplied by multiplier
 
 $mouse_getMultipliedWheelDelay_hint:
 mouse.getMultipliedWheelDelay();
+  
+Get a real value for the scroll wheel delay multiplied by multiplier
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -329,18 +342,21 @@ The reciprocal of the speed multiplier
 
 $mouse_getPressDelay_hint:
 mouse.getPressDelay();
+  
 Get the mouse button press delay in ms. (pressDelay)
   
   mouse.getPressDelay():int
 
 $mouse_getReleaseDelay_hint:
 mouse.getReleaseDelay();
+  
 Get the mouse button release delay in ms. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
 $mouse_getSpeed_hint:
 mouse.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
@@ -349,24 +365,28 @@ The reciprocal of the delay multiplier
 
 $mouse_getWheelDelay_hint:
 mouse.getWheelDelay();
+  
 Get the mouse wheel delay in ms. (wheelDelay)
   
   mouse.getWheelDelay():int
 
 $mouse_getX_hint:
 mouse.getX();
+  
 Get the 'x' coordinate of the last mouse event
   
   mouse.getX():int
 
 $mouse_getY_hint:
 mouse.getY();
+  
 Get the 'x' coordinate of the last mouse event
   
   mouse.getY():int
 
 $mouse_move_hint:
 mouse.move(0,0);
+  
 Move the cursor relative to the coordinates of the last event
   
   mouse.move(dx,dy);
@@ -378,9 +398,12 @@ Method consists of:
 
 $mouse_moveAndButton_hint:
 mouse.moveAndButton('LEFT','PRESS',0,0);
+  
+Move the cursor relative to the coordinates of the last event and perform a mouse button action
 
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and click the button
   
 mouse.moveAndClick('BTN',dx,dy);
@@ -397,6 +420,7 @@ Method consists of:
 
 $mouse_moveAndPress_hint:
 mouse.moveAndPress('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and press the button
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -411,6 +435,7 @@ Method consists of:
 
 $mouse_moveAndRelease_hint:
 mouse.moveAndRelease('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and release the button
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -425,6 +450,7 @@ Method consists of:
 
 $mouse_moveAndWheel_hint:
 mouse.moveAndWheel('DOWN',3,0,0);
+  
 Move the cursor relative to the coordinates of the last event and rotate the wheel
   
 mouse.moveAndWheel
@@ -441,6 +467,7 @@ Method consists of:
 
 $mouse_moveTo_hint:
 mouse.moveTo(0,0);
+  
 Move the cursor to the particular point
   
 mouse.moveTo(x,y);
@@ -452,6 +479,7 @@ Method consists of:
 
 $mouse_press_hint:
 mouse.press('LEFT');
+  
 Press the mouse button
   
 mouse.press('BTN');
@@ -463,6 +491,7 @@ Method consists of:
 
 $mouse_pressAt_hint:
 mouse.pressAt('LEFT',0,0);
+  
 Move the cursor to the particular point and press the button
   
 mouse.pressAt('BTN',x,y);
@@ -477,6 +506,7 @@ Method consists of:
 
 $mouse_release_hint:
 mouse.release('LEFT');
+  
 Release the mouse button
   
 mouse.release('BTN');
@@ -488,6 +518,7 @@ Method consists of:
 
 $mouse_releaseAt_hint:
 mouse.releaseAt('LEFT',0,0);
+  
 Move the cursor to the particular point and release the button
   
 mouse.releaseAt('BTN',x,y);
@@ -502,34 +533,43 @@ Method consists of:
 
 $mouse_resetDelays_hint:
 mouse.resetDelays();
+  
 Reset all delays to default values
 
 $mouse_resetMultiplier_hint:
 mouse.resetMultiplier();
+  
 Reset the delay multiplier to a default value
 
 $mouse_resetSpeed_hint:
 mouse.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $mouse_setDelays_hint:
 mouse.setDelays(10);
+  
 Set all delays to the specified value
   
 mouse.setDelays(int delay)
 
+
+$mouse_setMinDelay_hint:
+mouse.setMinDelay(5);
+  
+Set a value fo the minimum delay
+
 $mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
+  
 Set the mouse movement delay to the specified value
   
 mouse.setMoveDelay(int moveDelay)
   moveDelay - delay
 
-$mouse_setMinDelay_hint:
-mouse.setMinDelay(5);
-
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
@@ -538,6 +578,7 @@ mouse.setMultiplier(float multiplier)
 
 $mouse_setPressDelay_hint:
 mouse.setPressDelay(10);
+  
 Set the press delay to the specified value
   
 mouse.setPressDelay(pressDelay)
@@ -545,6 +586,7 @@ mouse.setPressDelay(pressDelay)
 
 $mouse_setReleaseDelay_hint:
 mouse.setReleaseDelay(10);
+  
 Set the release delay to the specified value
   
 mouse.setReleaseDelay(releaseDelay)
@@ -552,12 +594,14 @@ mouse.setReleaseDelay(releaseDelay)
 
 $mouse_setSpeed_hint:
 mouse.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $mouse_setWheelDelay_hint:
 mouse.setWheelDelay(10);
+  
 Set the wheel delay to the specified value
   
 mouse.setWheelDelay(wheelDelay)
@@ -565,6 +609,7 @@ mouse.setWheelDelay(wheelDelay)
 
 $mouse_setX_hint:
 mouse.setX(0);
+  
 Move the cursor along the 'x' axis to the specified coordinate
   
 mouse.setX(x);
@@ -576,6 +621,7 @@ Method consists of:
 
 $mouse_setY_hint:
 mouse.setY(0);
+  
 Move the cursor along the 'y' axis to the specified coordinate
   
 mouse.setY(y);
@@ -599,6 +645,7 @@ Method consists of:
 
 $mouse_wheelAt_hint:
 mouse.wheelAt('DOWN',3,0,0);
+  
 Rotate the mouse wheel on the specifies number of lines at the particular point
   
 mouse.wheelAt
