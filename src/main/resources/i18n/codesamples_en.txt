@@ -300,7 +300,7 @@ The method consists of two calls of pressing and releasing a button:
 $mouse_getMinDelay_hint:
 mouse.getMinDelay();
   
-Get еру minimum delay. The minimum delay is represent a threshold for an each delay in еру object
+Get the minimum delay. The minimum delay represents a threshold for an each delay in еру object
 
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
@@ -557,7 +557,7 @@ mouse.setDelays(int delay)
 $mouse_setMinDelay_hint:
 mouse.setMinDelay(5);
   
-Set a value fo the minimum delay
+Set a value for the minimum delay
 
 $mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
@@ -671,15 +671,22 @@ Method consists of:
 /////////////////////////////////////
 $key_getMinDelay_hint:
 key.getMinDelay();
+  
+Get the minimum delay. The minimum delay represents a threshold for an each delay in the object
 
 $key_getMultipliedPressDelay_hint:
 key.getMultipliedPressDelay();
+  
+Get a real value for the press key delay multiplied by multiplier
 
 $key_getMultipliedReleaseDelay_hint:
 key.getMultipliedReleaseDelay();
+  
+Get a real value for the release key delay multiplied by multiplier
 
 $key_getMultiplier_hint:
 key.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -690,18 +697,21 @@ key.getMultiplier():float
 
 $key_getPressDelay_hint:
 key.getPressDelay();
+  
 Get the key press delay in ms. (pressDelay)
   
 key.getPressDelay():int
 
 $key_getReleaseDelay_hint:
 key.getReleaseDelay();
+  
 Get the mouse button release delay in ms. (releaseDelay)
   
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
 key.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
@@ -710,25 +720,35 @@ key.getSpeed():float
 
 $key_isCapsLocked_hint:
 key.isCapsLocked();
+  
+Check if CAPS_LOCK is locked
 
 $key_isNumLocked_hint:
 key.isNumLocked();
+  
+Check if NUM_LOCK is locked
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
-Find out is the specified keys are pressed
+  
+Check if the specified keys are pressed
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - key's names
 
 $key_isScrollLocked_hint:
 key.isScrollLocked();
+  
+Check if SCROLL_LOCK is locked
 
 $key_perform_hint:
-key.perform();
+key.perform('CONTROL','PRESS');
+  
+Perform an action for the key
 
 $key_press_hint:
 key.press('CONTROL');
+  
 Press the specified key
   
 key.press('KEY');
@@ -740,6 +760,7 @@ Method consists of:
 
 $key_release_hint:
 key.release('CONTROL');
+  
 Release the specified key
   
 key.release('KEY');
@@ -751,27 +772,34 @@ The method consists of:
 
 $key_resetDelays_hint:
 key.resetDelays();
+  
 Reset all delays to default values
 
 $key_resetMultiplier_hint:
 key.resetMultiplier();
+  
 Reset the delay multiplier to a default value
 
 $key_resetSpeed_hint:
 key.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $key_setDelays_hint:
 key.setDelays(10);
+  
 Set all delays to the specified value
   
 key.setDelays(int delay)
 
 $key_setMinDelay_hint:
 key.setMinDelay(10);
+  
+Set a value for the minimum delay
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
@@ -780,6 +808,7 @@ key.setMultiplier(float multiplier)
 
 $key_setPressDelay_hint:
 key.setPressDelay(10);
+  
 Set the press delay to the specified value
   
 key.setPressDelay(pressDelay)
@@ -787,6 +816,7 @@ key.setPressDelay(pressDelay)
 
 $key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
+  
 Set the release delay to the specified value
   
 key.setReleaseDelay(releaseDelay)
@@ -794,12 +824,14 @@ key.setReleaseDelay(releaseDelay)
 
 $key_setSpeed_hint:
 key.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $key_type_hint:
 key.type('CONTROL');
+  
 Sequentially press and release each specified key
   
 key.type('KEY1 KEY2');

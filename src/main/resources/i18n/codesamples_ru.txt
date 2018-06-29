@@ -675,15 +675,22 @@ mouse.wheelAt
 /////////////////////////////////////
 $key_getMinDelay_hint:
 key.getMinDelay();
+  
+Получить минимальную задержку. Минимальная задержка представляет нижний предел всех задержек в объекте
 
 $key_getMultipliedPressDelay_hint:
 key.getMultipliedPressDelay();
+  
+Получить реальное значение задержки нажатия клавиши с учетом множителя
 
 $key_getMultipliedReleaseDelay_hint:
 key.getMultipliedReleaseDelay();
+  
+Получить реальное значение задержки отпускания клавиши с учетом множителя
 
 $key_getMultiplier_hint:
 key.getMultiplier();
+  
 Получить множитель задержек (multiplier)
   
 На данное число умножаются все задержки
@@ -694,18 +701,21 @@ key.getMultiplier():float
 
 $key_getPressDelay_hint:
 key.getPressDelay();
+  
 Получить задержку нажатия клавиши клавиатуры в мс. (pressDelay)
   
 key.getPressDelay():int
 
 $key_getReleaseDelay_hint:
 key.getReleaseDelay();
+  
 Получить задержку отпускания клавиши клавиатуры в мс. (releaseDelay)
   
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
 key.getSpeed();
+  
 Получить множитель скорости.
   
 Обратная величина к множителю задержек
@@ -714,12 +724,17 @@ key.getSpeed():float
 
 $key_isCapsLocked_hint:
 key.isCapsLocked();
+  
+Проверить включен ли CAPS_LOCK
 
 $key_isNumLocked_hint:
 key.isNumLocked();
+  
+Проверить включен ли NUM_LOCK
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
+  
 Узнать зажаты ли указанные клавиши клавиатуры
   
 key.isPressed('KEY1 KEY2'):boolean
@@ -727,12 +742,17 @@ key.isPressed('KEY1 KEY2'):boolean
 
 $key_isScrollLocked_hint:
 key.isScrollLocked();
+  
+Проверить включен ли SCROLL_LOCK
 
 $key_perform_hint:
-key.perform();
+key.perform('CONTROL','PRESS');
+  
+Выполнить дейсвие для клавиши
 
 $key_press_hint:
 key.press('CONTROL');
+  
 Нажать клавишу клавиатуры
   
 key.press('KEY');
@@ -744,6 +764,7 @@ key.press('KEY');
 
 $key_release_hint:
 key.release('CONTROL');
+  
 Отпустить клавишу клавиатуры
   
 key.release('KEY');
@@ -755,28 +776,34 @@ key.release('KEY');
 
 $key_resetDelays_hint:
 key.resetDelays();
+  
 Сбросить все задержки к стандартному значению
 
 $key_resetMultiplier_hint:
 key.resetMultiplier();
+  
 Сбросить множитель задержек к стандартному значению
 
 $key_resetSpeed_hint:
 key.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $key_setDelays_hint:
 key.setDelays(10);
+  
 Приствоить всем задержкам указанное значение
   
 key.setDelays(int delay)
 
 $key_setMinDelay_hint:
 key.setMinDelay(10);
-
+  
+Установить значение минимальной задержки
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
@@ -785,6 +812,7 @@ key.setMultiplier(float multiplier)
 
 $key_setPressDelay_hint:
 key.setPressDelay(10);
+  
 Установить задержку нажатия клавиши клавиатуры в мс.
   
 key.setPressDelay(pressDelay)
@@ -792,6 +820,7 @@ key.setPressDelay(pressDelay)
 
 $key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
+  
 Установить задержку отпускания клавиши клавиатуры в мс.
   
 key.setReleaseDelay(releaseDelay)
@@ -799,6 +828,7 @@ key.setReleaseDelay(releaseDelay)
 
 $key_setSpeed_hint:
 key.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек
@@ -807,6 +837,7 @@ key.setSpeed(float speed)
 
 $key_type_hint:
 key.type('CONTROL');
+  
 Последовательно нажать и отпустить каждую укзанную клавишу
   
 key.release('KEY1 KEY2');
