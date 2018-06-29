@@ -1036,7 +1036,7 @@ function Class (path) {
 Обращение к методу объекта:
   var out = obj.echo('someText');
 
-$language_class_hint:
+$language_class_template:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
