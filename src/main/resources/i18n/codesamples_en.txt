@@ -1018,6 +1018,7 @@ function Class (path) {
         return text;
     };
 }
+  
 The template for the class with the name 'Class'
   
 To create an object use the code:
@@ -1044,6 +1045,7 @@ $language_functionEcho_hint:
 function echo(text){
     return text;
 }
+  
 The template of a function with a returning value
 
 $language_functionEcho_template:
@@ -1058,6 +1060,7 @@ $language_functionVoid_hint:
 function foo(){
     
 }
+  
 The template for an empty function
 
 $language_functionVoid_template:
@@ -1072,6 +1075,7 @@ $language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
+  
 The template for an increasing loop 'for'
 
 $language_loopForPlus_template:
@@ -1086,6 +1090,7 @@ $language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
+  
 The template for a decreasing loop 'for'
 
 $language_loopForMinus_template:
@@ -1100,6 +1105,7 @@ $language_loopWhile_hint:
 while(true){
     
 }
+  
 The template for a loop 'while'
 
 $language_loopWhile_template:

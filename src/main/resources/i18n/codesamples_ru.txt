@@ -1024,6 +1024,7 @@ function Class (path) {
         return text;
     };
 }
+  
 Шаблон класса с именем 'Class'
   
 Для создания объекта используйте конструкцию типа:
@@ -1050,6 +1051,7 @@ $language_functionEcho_hint:
 function echo(text){
     return text;
 }
+  
 Шаблон функции сполучением и возвратом значения
 
 $language_functionEcho_template:
@@ -1064,6 +1066,7 @@ $language_functionVoid_hint:
 function foo(){
     
 }
+  
 Шаблон пустой функции
 
 $language_functionVoid_template:
@@ -1078,6 +1081,7 @@ $language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
+  
 Шаблон возрастающего цикла 'for'
 
 $language_loopForPlus_template:
@@ -1092,6 +1096,7 @@ $language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
+  
 Шаблон убывающего цикла 'for'
 
 $language_loopForMinus_template:
@@ -1106,6 +1111,7 @@ $language_loopWhile_hint:
 while(true){
     
 }
+  
 Шаблон цикла 'while'
 
 $language_loopWhile_template:
