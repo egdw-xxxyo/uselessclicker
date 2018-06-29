@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
@@ -40,6 +41,7 @@ import org.dikhim.jclicker.util.Out;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,8 +90,14 @@ public class MainController implements Initializable {
         eventsRecorder = new EventsRecorder(config, codeTextArea);
         // init toggles and template buttons
 
-        File file = new File(getClass().getResource(resources.getString("codesamples")).getFile());
-        SourcePropertyFile propertyFile = new SourcePropertyFile(file);
+        String source = null;
+        try {
+            source = IOUtils.toString(getClass().getResourceAsStream(resources.getString("codesamples")),"UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SourcePropertyFile propertyFile = new SourcePropertyFile();
+        propertyFile.setSource(source);
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 

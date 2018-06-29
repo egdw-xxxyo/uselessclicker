@@ -254,12 +254,17 @@ $combinedEncodingType:
 /////////////////////////////////////
 $mouse_button_hint:
 mouse.button('LEFT','PRESS');
+  
+Выполнить действие для клавиши мыши
 
 $mouse_buttonAt_hint:
 mouse.buttonAt('LEFT','PRESS',0,0);
+  
+Выполнить действие для клавиши мыши в указаннойточке
 
 $mouse_click_hint:
 mouse.click('LEFT');
+  
 Клик клавишей мыши
   
 mouse.click('BTN');

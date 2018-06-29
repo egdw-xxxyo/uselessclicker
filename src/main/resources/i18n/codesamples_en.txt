@@ -260,18 +260,23 @@ $combinedEncodingType:
 /////////////////////////////////////
 $mouse_button_hint:
 mouse.button('LEFT','PRESS');
+  
+Perform an action for a mouse button
 
 $mouse_buttonAt_hint:
 mouse.buttonAt('LEFT','PRESS',0,0);
+  
+Perform an action for a mouse button at a particular point
 
 $mouse_click_hint:
 mouse.click('LEFT');
+  
 A mouse button click
   
 mouse.click('BTN');
    BTN - button's name
   
-The method consists of two calls of pressing and releasing the button:
+The method consists of two calls of pressing and releasing a button:
   press('BTN');
     sleep(pressDelay);
   release('BTN');
