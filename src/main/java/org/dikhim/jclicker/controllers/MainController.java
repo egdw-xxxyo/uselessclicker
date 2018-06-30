@@ -15,8 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.WindowManager;
@@ -35,14 +33,11 @@ import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.Converters;
+import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.Resources;
 import org.dikhim.jclicker.util.SourcePropertyFile;
-import org.dikhim.jclicker.util.Out;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -787,7 +782,7 @@ public class MainController implements Initializable {
      * @param event - ActionEvent
      */
     @FXML
-    public void insertTemplate(ActionEvent event) {
+    private void insertTemplate(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String[] data = (String[]) btn.getUserData();
         if (data == null)
