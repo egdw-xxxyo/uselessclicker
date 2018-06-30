@@ -35,6 +35,7 @@ import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.util.Converters;
+import org.dikhim.jclicker.util.Resources;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.dikhim.jclicker.util.Out;
 
@@ -90,14 +91,8 @@ public class MainController implements Initializable {
         eventsRecorder = new EventsRecorder(config, codeTextArea);
         // init toggles and template buttons
 
-        String source = null;
-        try {
-            source = IOUtils.toString(getClass().getResourceAsStream(resources.getString("codesamples")),"UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         SourcePropertyFile propertyFile = new SourcePropertyFile();
-        propertyFile.setSource(source);
+        propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
