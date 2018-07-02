@@ -2,66 +2,63 @@ package org.dikhim.jclicker.actions.utils.layout;
 
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UsLayout implements Layout {
     private final String LAYOUT = "us";
     private final String DESCRIPTION = "English(US)";
-    private Map<String, List<String>> keys;
+    private Map<String, List<String>> layoutMap;
 
     {
-        keys = new HashMap<>();
-        keys.put("A", Arrays.asList("a", "A"));
-        keys.put("B", Arrays.asList("b", "B"));
-        keys.put("C", Arrays.asList("c", "C"));
-        keys.put("D", Arrays.asList("d", "D"));
-        keys.put("E", Arrays.asList("e", "E"));
-        keys.put("F", Arrays.asList("f", "F"));
-        keys.put("G", Arrays.asList("g", "G"));
-        keys.put("H", Arrays.asList("h", "H"));
-        keys.put("I", Arrays.asList("i", "I"));
-        keys.put("J", Arrays.asList("j", "J"));
-        keys.put("K", Arrays.asList("k", "K"));
-        keys.put("L", Arrays.asList("l", "L"));
-        keys.put("M", Arrays.asList("m", "M"));
-        keys.put("N", Arrays.asList("n", "N"));
-        keys.put("O", Arrays.asList("o", "O"));
-        keys.put("P", Arrays.asList("p", "P"));
-        keys.put("Q", Arrays.asList("q", "Q"));
-        keys.put("R", Arrays.asList("r", "R"));
-        keys.put("S", Arrays.asList("s", "S"));
-        keys.put("T", Arrays.asList("t", "T"));
-        keys.put("U", Arrays.asList("u", "U"));
-        keys.put("V", Arrays.asList("v", "V"));
-        keys.put("W", Arrays.asList("w", "W"));
-        keys.put("X", Arrays.asList("x", "X"));
-        keys.put("Y", Arrays.asList("y", "Y"));
-        keys.put("Z", Arrays.asList("z", "Z"));
-        keys.put("0", Arrays.asList("0", ")"));
-        keys.put("1", Arrays.asList("1", "!"));
-        keys.put("2", Arrays.asList("2", "@"));
-        keys.put("3", Arrays.asList("3", "#"));
-        keys.put("4", Arrays.asList("4", "$"));
-        keys.put("5", Arrays.asList("5", "%"));
-        keys.put("6", Arrays.asList("6", "^"));
-        keys.put("7", Arrays.asList("7", "&"));
-        keys.put("8", Arrays.asList("8", "*"));
-        keys.put("9", Arrays.asList("9", "("));
-        keys.put("`", Arrays.asList("`", "~"));
-        keys.put("-", Arrays.asList("-", "_"));
-        keys.put("=", Arrays.asList("=", "+"));
-        keys.put("[", Arrays.asList("[", "{"));
-        keys.put("]", Arrays.asList("]", "}"));
-        keys.put("\\", Arrays.asList("\\", "|"));
-        keys.put(",", Arrays.asList(",", "<"));
-        keys.put(".", Arrays.asList(".", ">"));
-        keys.put("/", Arrays.asList("/", "?"));
-        keys.put(";", Arrays.asList(";", ":"));
-        keys.put("'", Arrays.asList("'", "\""));
-        keys.put(" ", Arrays.asList(" ", " "));
+        layoutMap = new HashMap<>();
+        layoutMap.put("A", Arrays.asList("a", "A"));
+        layoutMap.put("B", Arrays.asList("b", "B"));
+        layoutMap.put("C", Arrays.asList("c", "C"));
+        layoutMap.put("D", Arrays.asList("d", "D"));
+        layoutMap.put("E", Arrays.asList("e", "E"));
+        layoutMap.put("F", Arrays.asList("f", "F"));
+        layoutMap.put("G", Arrays.asList("g", "G"));
+        layoutMap.put("H", Arrays.asList("h", "H"));
+        layoutMap.put("I", Arrays.asList("i", "I"));
+        layoutMap.put("J", Arrays.asList("j", "J"));
+        layoutMap.put("K", Arrays.asList("k", "K"));
+        layoutMap.put("L", Arrays.asList("l", "L"));
+        layoutMap.put("M", Arrays.asList("m", "M"));
+        layoutMap.put("N", Arrays.asList("n", "N"));
+        layoutMap.put("O", Arrays.asList("o", "O"));
+        layoutMap.put("P", Arrays.asList("p", "P"));
+        layoutMap.put("Q", Arrays.asList("q", "Q"));
+        layoutMap.put("R", Arrays.asList("r", "R"));
+        layoutMap.put("S", Arrays.asList("s", "S"));
+        layoutMap.put("T", Arrays.asList("t", "T"));
+        layoutMap.put("U", Arrays.asList("u", "U"));
+        layoutMap.put("V", Arrays.asList("v", "V"));
+        layoutMap.put("W", Arrays.asList("w", "W"));
+        layoutMap.put("X", Arrays.asList("x", "X"));
+        layoutMap.put("Y", Arrays.asList("y", "Y"));
+        layoutMap.put("Z", Arrays.asList("z", "Z"));
+        layoutMap.put("0", Arrays.asList("0", ")"));
+        layoutMap.put("1", Arrays.asList("1", "!"));
+        layoutMap.put("2", Arrays.asList("2", "@"));
+        layoutMap.put("3", Arrays.asList("3", "#"));
+        layoutMap.put("4", Arrays.asList("4", "$"));
+        layoutMap.put("5", Arrays.asList("5", "%"));
+        layoutMap.put("6", Arrays.asList("6", "^"));
+        layoutMap.put("7", Arrays.asList("7", "&"));
+        layoutMap.put("8", Arrays.asList("8", "*"));
+        layoutMap.put("9", Arrays.asList("9", "("));
+        layoutMap.put("`", Arrays.asList("`", "~"));
+        layoutMap.put("-", Arrays.asList("-", "_"));
+        layoutMap.put("=", Arrays.asList("=", "+"));
+        layoutMap.put("[", Arrays.asList("[", "{"));
+        layoutMap.put("]", Arrays.asList("]", "}"));
+        layoutMap.put("\\", Arrays.asList("\\", "|"));
+        layoutMap.put(",", Arrays.asList(",", "<"));
+        layoutMap.put(".", Arrays.asList(".", ">"));
+        layoutMap.put("/", Arrays.asList("/", "?"));
+        layoutMap.put(";", Arrays.asList(";", ":"));
+        layoutMap.put("'", Arrays.asList("'", "\""));
+        layoutMap.put(" ", Arrays.asList(" ", " "));
     }
 
     @Override
@@ -80,9 +77,29 @@ public class UsLayout implements Layout {
     }
 
     @Override
-    public Map<String, List<String>> getKeys() {
-        return keys;
+    public Map<String, List<String>> getLayoutMap() {
+        return layoutMap;
     }
-    
-    
+
+    public String getKeyFor(String character) {
+        Optional<Map.Entry<String,List<String>>> entry  =  layoutMap
+                .entrySet()
+                .stream()
+                .filter(
+                        stringListEntry -> stringListEntry
+                                .getValue()
+                                .contains(character))
+                .findFirst();
+        if (entry.isPresent()) {
+            return entry.get().getKey();
+        } else {
+            return "";
+        } 
+    }
+
+    public int getIndexFor(String character) {
+        String key = getKeyFor(character);
+        List<String> characters = layoutMap.get(key);
+        return characters.indexOf(character);
+    }
 }

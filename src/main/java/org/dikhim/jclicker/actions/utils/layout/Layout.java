@@ -12,5 +12,5 @@ public interface Layout {
     
     String getDescription();
 
-    Map<String, List<String>> getKeys();
+    Map<String, List<String>> getLayoutMap();
 }

@@ -255,10 +255,13 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
+    
     private int checkDelay(int delay) {
         if (delay < minDelay) return minDelay;
 
         return delay;
     }
+    
+    
 
 }
