@@ -38,7 +38,6 @@ public class StringToTypeConverter {
         chars.put("x", "X");
         chars.put("y", "Y");
         chars.put("z", "Z");
-        
         chars.put("0", ")");
         chars.put("1", "!");
         chars.put("2", "@");
@@ -49,7 +48,6 @@ public class StringToTypeConverter {
         chars.put("7", "&");
         chars.put("8", "*");
         chars.put("9", "(");
-
         chars.put("`", "~");
         chars.put("-", "_");
         chars.put("=", "+");
