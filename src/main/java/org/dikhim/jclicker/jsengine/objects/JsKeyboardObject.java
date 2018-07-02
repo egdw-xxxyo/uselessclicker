@@ -3,8 +3,10 @@ package org.dikhim.jclicker.jsengine.objects;
 import java.security.Key;
 import java.util.*;
 
+import org.dikhim.jclicker.actions.utils.KeyCode;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
+import org.dikhim.jclicker.actions.utils.StringToTypeConverter;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
