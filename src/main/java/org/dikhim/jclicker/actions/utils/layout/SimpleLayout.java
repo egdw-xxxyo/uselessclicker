@@ -57,6 +57,7 @@ public class SimpleLayout implements Layout {
     @Override
     public int getIndexFor(String key, String character) {
         List<String> characters = layoutMap.get(key);
+        if(characters == null) return -1;
         return characters.indexOf(character);
     }
 

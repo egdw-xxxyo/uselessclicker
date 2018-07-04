@@ -47,6 +47,7 @@ public class SimpleTyper implements Typer {
     }
 
     private void type(String key, int index) {
+        if (key.isEmpty() || index < 0) return;
         switch (index) {
             case 0:
                 // 0 - type without modifies key
