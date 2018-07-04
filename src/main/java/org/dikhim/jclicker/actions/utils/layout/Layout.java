@@ -17,4 +17,6 @@ public interface Layout {
     String getKeyFor(String character);
 
     int getIndexFor(String key, String character);
+
+    void put(String... ch);
 }

@@ -47,6 +47,20 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     @Override
+    public int getMultipliedPressDelay() {
+        synchronized (monitor) {
+            return checkDelay((int) (pressDelay * multiplier));
+        }
+    }
+
+    @Override
+    public int getMultipliedReleaseDelay() {
+        synchronized (monitor) {
+            return checkDelay((int) (releaseDelay * multiplier));
+        }
+    }
+
+    @Override
     public float getMultiplier() {
         synchronized (monitor) {
             return multiplier;
@@ -247,21 +261,6 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
-    /// private
-    @Override
-    public int getMultipliedPressDelay() {
-        synchronized (monitor) {
-            return checkDelay((int) (pressDelay * multiplier));
-        }
-    }
-
-    @Override
-    public int getMultipliedReleaseDelay() {
-        synchronized (monitor) {
-            return checkDelay((int) (releaseDelay * multiplier));
-        }
-    }
-
     @Override
     public void typeText(String layout, String text) {
         try {
@@ -271,13 +270,10 @@ public class JsKeyboardObject implements KeyboardObject {
             Out.println(e.getMessage());
         }
     }
-    
+
     private int checkDelay(int delay) {
         if (delay < minDelay) return minDelay;
 
         return delay;
     }
-    
-    
-
 }
