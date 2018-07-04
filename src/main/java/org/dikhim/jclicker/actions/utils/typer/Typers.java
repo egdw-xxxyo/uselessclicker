@@ -2,8 +2,8 @@ package org.dikhim.jclicker.actions.utils.typer;
 
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 
-public class TyperFactory {
-    public static Typer createTyperForLayout(KeyboardObject keyboardObject, String layoutName) throws Exception {
+public class Typers {
+    public static Typer create(KeyboardObject keyboardObject, String layoutName) throws Exception {
         if ("us".equals(layoutName)) {
             return new UsTyper(keyboardObject);
         } else if ("gb".equals(layoutName)) {
