@@ -8,6 +8,8 @@ public class TyperFactory {
             return new UsTyper(keyboardObject);
         } else if ("ru".equals(layoutName)) {
             return new RuTyper(keyboardObject);
+        }else if ("ua".equals(layoutName)) {
+            return new UaTyper(keyboardObject);
         }
         throw new Exception(String.format("Layout '%s' doesn't supported",layoutName));
     }
