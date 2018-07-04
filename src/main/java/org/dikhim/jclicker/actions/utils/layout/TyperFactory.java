@@ -6,6 +6,8 @@ public class TyperFactory {
     public static Typer createTyperForLayout(KeyboardObject keyboardObject, String layoutName) throws Exception {
         if ("us".equals(layoutName)) {
             return new UsTyper(keyboardObject);
+        } else if ("ru".equals(layoutName)) {
+            return new RuTyper(keyboardObject);
         }
         throw new Exception(String.format("Layout '%s' doesn't supported",layoutName));
     }
