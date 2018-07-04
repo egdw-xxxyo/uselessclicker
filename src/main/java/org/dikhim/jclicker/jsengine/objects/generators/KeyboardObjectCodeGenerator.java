@@ -151,4 +151,9 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     public void type(String keys) {
         buildStringForCurrentMethod(keys);
     }
+
+    @Override
+    public void typeText(String layout, String text) {
+        buildStringForCurrentMethod(layout, text);
+    }
 }

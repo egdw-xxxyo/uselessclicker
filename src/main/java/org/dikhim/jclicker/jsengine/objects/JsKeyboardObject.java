@@ -262,6 +262,7 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
+    @Override
     public void typeText(String layout, String text) {
         try {
             Typer typer = TyperFactory.createTyperForLayout(this, layout);
