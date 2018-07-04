@@ -142,7 +142,8 @@ public class KeyCodes {
         codes.add(new KeyCode("`", VC_BACKQUOTE, VK_BACK_QUOTE, 105));
         codes.add(new KeyCode("'", VC_QUOTE, VK_QUOTE, 106));
         codes.add(new KeyCode("DELETE", VC_DELETE, VK_DELETE, 107));
-        codes.add(new KeyCode(" ", VC_SPACE, VK_SPACE, 108));
+        codes.add(new KeyCode("ALT_GR", VC_ALT_R, VK_ALT, 108));
+
 
     }
     private static KeyCode getByName(String name){
