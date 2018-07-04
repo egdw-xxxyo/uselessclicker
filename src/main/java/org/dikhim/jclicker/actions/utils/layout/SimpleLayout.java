@@ -5,8 +5,8 @@ import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 import java.util.*;
 
 public class SimpleLayout implements Layout {
-    private final String LAYOUT = "us";
-    private final String DESCRIPTION = "English(US)";
+    private  String layout = "";
+    private  String description = "";
     private Map<String, List<String>> layoutMap = new HashMap<>();
 
     @Override
@@ -16,12 +16,20 @@ public class SimpleLayout implements Layout {
 
     @Override
     public String getLayout() {
-        return LAYOUT;
+        return layout;
+    }
+
+    public void setLayout(String layout) {
+        this.layout = layout;
     }
 
     @Override
     public String getDescription() {
-        return DESCRIPTION;
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override

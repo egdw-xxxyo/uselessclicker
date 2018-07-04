@@ -2,6 +2,8 @@ package org.dikhim.jclicker.actions.utils.layout;
 
 public class UsLayout extends SimpleLayout{
     {
+        setLayout("us");
+        setDescription("English(US)");
         put("A", "a", "A");
         put("B", "b", "B");
         put("C", "c", "C");
