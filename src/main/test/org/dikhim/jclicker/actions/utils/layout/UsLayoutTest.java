@@ -28,15 +28,12 @@ public class UsLayoutTest {
     @Test
     public void getIndexFor() {
         UsLayout usLayout = new UsLayout();
-        assertEquals(0, usLayout.getIndexFor("a"));
-        assertEquals(1, usLayout.getIndexFor("A"));
+        assertEquals(0, usLayout.getIndexFor(usLayout.getKeyFor("a"),"a"));
+        assertEquals(1, usLayout.getIndexFor(usLayout.getKeyFor("A"),"A"));
 
-        assertEquals(0, usLayout.getIndexFor("1"));
-        assertEquals(1, usLayout.getIndexFor("!"));
-
-        assertEquals(0, usLayout.getIndexFor("="));
-        assertEquals(1, usLayout.getIndexFor("+"));
+        assertEquals(0, usLayout.getIndexFor(usLayout.getKeyFor("1"),"1"));
+        assertEquals(1, usLayout.getIndexFor(usLayout.getKeyFor("!"),"!"));
         
-        assertEquals(0, usLayout.getIndexFor(" "));
+        assertEquals(0, usLayout.getIndexFor(usLayout.getKeyFor(" ")," "));
     }
 }

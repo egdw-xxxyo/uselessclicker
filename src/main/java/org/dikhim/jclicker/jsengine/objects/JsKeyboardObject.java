@@ -7,6 +7,8 @@ import org.dikhim.jclicker.actions.utils.KeyCode;
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.utils.StringToTypeConverter;
+import org.dikhim.jclicker.actions.utils.layout.Typer;
+import org.dikhim.jclicker.actions.utils.layout.TyperFactory;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
@@ -115,6 +117,7 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void press(String keys) {
+        System.out.println(keys);
         synchronized (monitor) {
             Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
             for (String key : keySet) {
@@ -131,6 +134,8 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void release(String keys) {
+        System.out.println(keys);
+
         synchronized (monitor) {
             Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
             for (String key : keySet) {
@@ -224,6 +229,8 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void type(String keys) {
+        System.out.println(keys);
+
         synchronized (monitor) {
             String[] keyList = keys.split(" ");
             for (String key : keyList) {
@@ -255,6 +262,14 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
+    public void typeText(String layout, String text) {
+        try {
+            Typer typer = TyperFactory.createTyperForLayout(this, layout);
+            typer.type(text);
+        } catch (Exception e) {
+            Out.println(e.getMessage());
+        }
+    }
     
     private int checkDelay(int delay) {
         if (delay < minDelay) return minDelay;

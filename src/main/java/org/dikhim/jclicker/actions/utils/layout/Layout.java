@@ -13,4 +13,8 @@ public interface Layout {
     String getDescription();
 
     Map<String, List<String>> getLayoutMap();
+
+    String getKeyFor(String character);
+
+    int getIndexFor(String key, String character);
 }

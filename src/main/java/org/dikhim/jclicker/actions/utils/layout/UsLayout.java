@@ -58,7 +58,7 @@ public class UsLayout implements Layout {
         layoutMap.put("/", Arrays.asList("/", "?"));
         layoutMap.put(";", Arrays.asList(";", ":"));
         layoutMap.put("'", Arrays.asList("'", "\""));
-        layoutMap.put(" ", Arrays.asList(" ", " "));
+        layoutMap.put("SPACE", Arrays.asList(" ", " "));
     }
 
     @Override
@@ -81,6 +81,7 @@ public class UsLayout implements Layout {
         return layoutMap;
     }
 
+    @Override
     public String getKeyFor(String character) {
         Optional<Map.Entry<String,List<String>>> entry  =  layoutMap
                 .entrySet()
@@ -96,9 +97,9 @@ public class UsLayout implements Layout {
             return "";
         } 
     }
-
-    public int getIndexFor(String character) {
-        String key = getKeyFor(character);
+    
+    @Override
+    public int getIndexFor(String key, String character) {
         List<String> characters = layoutMap.get(key);
         return characters.indexOf(character);
     }
