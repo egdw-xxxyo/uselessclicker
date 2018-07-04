@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.actions.utils.layout;
+package org.dikhim.jclicker.actions.utils.typer;
 
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 
@@ -11,6 +11,6 @@ public class TyperFactory {
         }else if ("ua".equals(layoutName)) {
             return new UaTyper(keyboardObject);
         }
-        throw new Exception(String.format("Layout '%s' doesn't supported",layoutName));
+        throw new Exception(String.format("Layout '%s' isn't supported",layoutName));
     }
 }

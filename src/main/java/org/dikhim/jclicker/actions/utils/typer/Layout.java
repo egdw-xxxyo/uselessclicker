@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.actions.utils.layout;
+package org.dikhim.jclicker.actions.utils.typer;
 
 import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
 
