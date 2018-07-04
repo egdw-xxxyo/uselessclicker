@@ -131,7 +131,6 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void press(String keys) {
-        System.out.println(keys);
         synchronized (monitor) {
             Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
             for (String key : keySet) {
@@ -148,8 +147,6 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void release(String keys) {
-        System.out.println(keys);
-
         synchronized (monitor) {
             Set<String> keySet = new LinkedHashSet<>(Arrays.asList(keys.split(" ")));
             for (String key : keySet) {
@@ -243,8 +240,6 @@ public class JsKeyboardObject implements KeyboardObject {
 
     @Override
     public void type(String keys) {
-        System.out.println(keys);
-
         synchronized (monitor) {
             String[] keyList = keys.split(" ");
             for (String key : keyList) {
