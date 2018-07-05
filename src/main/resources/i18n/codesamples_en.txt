@@ -843,6 +843,18 @@ Method consists of(fo each key):
   release('KEY');
     sleep(releaseDelay);
 
+$key_typeText_hint:
+key.typeText('us','Hello!');
+  
+Types text in a specified layout
+
+Layout names can be found in the documentation
+
+Correctly types text only in the case of unpressed modifiers keys(CAPS_LOCK, SHIFT, etc.)
+Does not change the state of modifier keys. Be attentive and check them yourself before calling the method
+
+Use the method in case you need exactly typing text from the keyboard. In other cases, it is better to use the clipboard
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 ////////////TEMPLATES////////////////
