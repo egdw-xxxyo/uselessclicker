@@ -3,6 +3,8 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
@@ -20,7 +22,10 @@ import org.dikhim.jclicker.jsengine.objects.generators.CombinedObjectCodeGenerat
 import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")
@@ -46,9 +51,8 @@ public class EventsRecorder {
     private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
-    public EventsRecorder(MainConfiguration mainConfiguration, CodeTextArea outputTextArea) {
+    public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
-        this.outputTextArea = outputTextArea;
         recordingParams = mainConfiguration.getRecordingParams();
     }
 
@@ -486,9 +490,23 @@ public class EventsRecorder {
             }));
         }));
     }
-    
-    public void selectImage(){
-        System.out.println("select image");
+
+    public void selectImage() {
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
+            mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", e -> {
+                int x = e.getX() - 50;
+                int y = e.getY() - 50;
+                int r = 100;
+                Rectangle rectangle = new Rectangle(x, y, r, r);
+                BufferedImage bufferedImage = RobotStatic.get().createScreenCapture(rectangle);
+                setImage(bufferedImage);
+            }));
+        }));
+        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
+                prefix + ".control.release", getMouseControl(), "RELEASE", controlEvent -> {
+            mouseEventsManager.removeListenersByPrefix(prefix);
+        }));
     }
 
     public String getPrefix() {
@@ -496,20 +514,18 @@ public class EventsRecorder {
     }
 
     // private 
-    private void putCode(Consumer<String> consumer, String code) {
-        Platform.runLater(() -> consumer.accept(code));
-    }
-
     private void putCode(String code) {
+        if (outputTextArea == null) return;
         Platform.runLater(() -> outputTextArea.insertTextIntoCaretPosition(code));
     }
 
-    private void setImage() {
-        if (outputImage != null) {
-            System.out.println("set image");
-        }
+    private void setImage(BufferedImage bufferedImage) {
+        if (outputImage == null) return;
+        System.out.println("set image");
+        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+        outputImage.setImage(image);
     }
-    
+
     private String getMouseControl() {
         return mainConfiguration.getHotKeys().getShortcut("mouseControl").getKeys().get();
     }
@@ -517,10 +533,13 @@ public class EventsRecorder {
     private String getCombinedControl() {
         return mainConfiguration.getHotKeys().getShortcut("combinedControl").getKeys().get();
     }
-    
-    // setters
 
-    public void setOutputImage(ImageView outputImage) {
+    // setters
+    public void setOutputTextArea(CodeTextArea outputTextArea) {
+        this.outputTextArea = outputTextArea;
+    }
+
+    public void setOutputImageView(ImageView outputImage) {
         this.outputImage = outputImage;
     }
 }
