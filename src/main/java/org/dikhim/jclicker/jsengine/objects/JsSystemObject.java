@@ -8,6 +8,8 @@ import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
+import java.awt.image.BufferedImage;
+
 
 @SuppressWarnings("unused")
 public class JsSystemObject implements SystemObject {
@@ -227,6 +229,12 @@ public class JsSystemObject implements SystemObject {
 
     @Override
     public void setSpeed(float multiplier) {
+        synchronized (monitor) {
+            this.multiplier = 1f / multiplier;
+        }
+    }
+
+    public void showImage(BufferedImage bufferedImage) {
         synchronized (monitor) {
             this.multiplier = 1f / multiplier;
         }

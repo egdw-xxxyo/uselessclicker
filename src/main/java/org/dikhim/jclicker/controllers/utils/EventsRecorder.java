@@ -18,6 +18,8 @@ import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
+import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
+import org.dikhim.jclicker.jsengine.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.objects.generators.CombinedObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
@@ -494,13 +496,23 @@ public class EventsRecorder {
     public void selectImage() {
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
-            mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", e -> {
-                int x = e.getX() - 50;
-                int y = e.getY() - 50;
-                int r = 100;
-                Rectangle rectangle = new Rectangle(x, y, r, r);
-                BufferedImage bufferedImage = RobotStatic.get().createScreenCapture(rectangle);
-                setImage(bufferedImage);
+            final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+            ImageCapturer imageCapturer = new ImageCapturer();
+            imageCapturer.setScreenObject(screenObject);
+            imageCapturer.setOnImageLoaded(this::setImage);
+            mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", new Consumer<MouseMoveEvent>() {
+
+                @Override
+                public void accept(MouseMoveEvent e) {
+                    if (!imageCapturer.isLocked()) {
+                        int rectSize = 200;
+                        int x0 = e.getX() - rectSize / 2;
+                        int y0 = e.getY() - rectSize / 2;
+                        int x1 = x0 + rectSize;
+                        int y1 = y0 + rectSize;
+                        imageCapturer.captureImage(x0, y0, x1, y1);
+                    }
+                }
             }));
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
@@ -521,9 +533,10 @@ public class EventsRecorder {
 
     private void setImage(BufferedImage bufferedImage) {
         if (outputImage == null) return;
-        System.out.println("set image");
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        outputImage.setImage(image);
+        Platform.runLater(() -> {
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            outputImage.setImage(image);
+        });
     }
 
     private String getMouseControl() {
