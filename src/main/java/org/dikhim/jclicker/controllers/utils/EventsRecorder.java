@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.image.ImageView;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -40,6 +41,7 @@ public class EventsRecorder {
     private MainConfiguration mainConfiguration;
 
     private CodeTextArea outputTextArea;
+    private ImageView outputImage;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
@@ -484,11 +486,16 @@ public class EventsRecorder {
             }));
         }));
     }
+    
+    public void selectImage(){
+        System.out.println("select image");
+    }
 
     public String getPrefix() {
         return prefix;
     }
 
+    // private 
     private void putCode(Consumer<String> consumer, String code) {
         Platform.runLater(() -> consumer.accept(code));
     }
@@ -497,11 +504,23 @@ public class EventsRecorder {
         Platform.runLater(() -> outputTextArea.insertTextIntoCaretPosition(code));
     }
 
+    private void setImage() {
+        if (outputImage != null) {
+            System.out.println("set image");
+        }
+    }
+    
     private String getMouseControl() {
         return mainConfiguration.getHotKeys().getShortcut("mouseControl").getKeys().get();
     }
 
     private String getCombinedControl() {
         return mainConfiguration.getHotKeys().getShortcut("combinedControl").getKeys().get();
+    }
+    
+    // setters
+
+    public void setOutputImage(ImageView outputImage) {
+        this.outputImage = outputImage;
     }
 }

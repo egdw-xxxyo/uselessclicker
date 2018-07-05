@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -156,6 +157,9 @@ public class MainController implements Initializable {
 
     @FXML
     private TextArea outTextArea;
+    
+    @FXML
+    private ImageView outputImage;
 
     @FXML
     private TextField txtAbsolutePathRate;
@@ -286,6 +290,10 @@ public class MainController implements Initializable {
     // click
     @FXML
     private ToggleButton btnInsertMouseCodeClick;
+    
+    // image
+    @FXML
+    private ToggleButton btnInsertSelectImage;
 
     // Combined
     @FXML
@@ -365,6 +373,9 @@ public class MainController implements Initializable {
         //mouse click
         listOfInsertCodeToggles.add(btnInsertMouseCodeClick);
 
+        // image
+        listOfInsertCodeToggles.add(btnInsertSelectImage);
+        
         // combined
         listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
@@ -734,6 +745,13 @@ public class MainController implements Initializable {
         });
     }
 
+    @FXML
+    void insertSelectImage(ActionEvent event) {
+        onToggleButtonPerformed(event, prefix -> {
+            eventsRecorder.selectImage();
+        });
+    }
+    
     //
     // TEMPLATES
     //

@@ -7,11 +7,15 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -25,7 +29,7 @@
 
 <!--suppress ALL -->
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
 
     <center>
         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -123,11 +127,44 @@
                             <CodeTextArea fx:id="codeTextArea" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0">
-                            <TextArea fx:id="outTextArea" styleClass="code-text-area" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <font>
-                                    <Font name="Monospaced Bold" size="13.0" />
-                                </font>
-                            </TextArea>
+                     <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                       <tabs>
+                         <Tab text="Output">
+                           <content>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                              <TextArea fx:id="outTextArea" styleClass="code-text-area" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <font>
+                                                      <Font name="Monospaced Bold" size="13.0" />
+                                                  </font>
+                                              </TextArea>
+                                    </children>
+                                 </AnchorPane>
+                           </content>
+                         </Tab>
+                         <Tab text="Image">
+                           <content>
+                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                       <ScrollPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                         <content>
+                                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+                                                <children>
+                                                   <ImageView fx:id="outputImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <image>
+                                                         <Image url="@../../images/cursor128.png" />
+                                                      </image>
+                                                   </ImageView>
+                                                </children>
+                                             </AnchorPane>
+                                         </content>
+                                       </ScrollPane>
+                                    </children>
+                                 </AnchorPane>
+                           </content>
+                         </Tab>
+                       </tabs>
+                     </TabPane>
                         </AnchorPane>
                     </SplitPane>
                     <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
@@ -219,6 +256,19 @@
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
+                              <TitledPane animated="false" focusTraversable="false" layoutX="10.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.image">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertSelectImage" styleClass="templateButton" text="%r.eRec.image.selectImage" />
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
                                     </panes>
                                 </Accordion>
                             </TitledPane>
