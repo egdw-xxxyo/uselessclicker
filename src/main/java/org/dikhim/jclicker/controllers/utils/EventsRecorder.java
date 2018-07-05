@@ -6,6 +6,8 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.PixelWriter;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -27,7 +29,10 @@ import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")
@@ -500,18 +505,25 @@ public class EventsRecorder {
             ImageCapturer imageCapturer = new ImageCapturer();
             imageCapturer.setScreenObject(screenObject);
             imageCapturer.setOnImageLoaded(this::setImage);
+
+            BiConsumer<Integer, Integer> onMove = (x, y) -> {
+                if (!imageCapturer.isLocked()) {
+                    int rectSize = 20;
+                    int x0 = x - rectSize / 2;
+                    int y0 = y - rectSize / 2;
+                    int x1 = x0 + rectSize;
+                    int y1 = y0 + rectSize;
+                    imageCapturer.captureImage(x0, y0, x1, y1);
+                }
+            };
+
+            onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
+
             mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", new Consumer<MouseMoveEvent>() {
 
                 @Override
                 public void accept(MouseMoveEvent e) {
-                    if (!imageCapturer.isLocked()) {
-                        int rectSize = 200;
-                        int x0 = e.getX() - rectSize / 2;
-                        int y0 = e.getY() - rectSize / 2;
-                        int x1 = x0 + rectSize;
-                        int y1 = y0 + rectSize;
-                        imageCapturer.captureImage(x0, y0, x1, y1);
-                    }
+                    onMove.accept(e.getX(), e.getY());
                 }
             }));
         }));
@@ -534,11 +546,22 @@ public class EventsRecorder {
     private void setImage(BufferedImage bufferedImage) {
         if (outputImage == null) return;
         Platform.runLater(() -> {
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
+            int w = (int) outputImage.getFitWidth();
+            int h = (int) outputImage.getFitHeight();
+            BufferedImage resizedImage = resizeImage(bufferedImage, w, h);
+            Image image = SwingFXUtils.toFXImage(resizedImage, null);
             outputImage.setImage(image);
         });
     }
 
+    private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height){
+        BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
+        Graphics2D g = resizedImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, width, height, null);
+        g.dispose();
+        return resizedImage;
+    }
+    
     private String getMouseControl() {
         return mainConfiguration.getHotKeys().getShortcut("mouseControl").getKeys().get();
     }
