@@ -921,15 +921,14 @@ public class MainController implements Initializable {
     @FXML
     private Label resolutionLabel;
     
-    private int resolution = 128;
     @FXML
     private void zoomIn(ActionEvent event) {
-        System.out.println("zoom in");
+        eventsRecorder.zoomIn();
     }
 
     @FXML
     private void zoomOut(ActionEvent event) {
-        System.out.println("zoom out");
+        eventsRecorder.zoomOut();
     }
     
 }

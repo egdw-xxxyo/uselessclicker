@@ -41,7 +41,6 @@ public class JsScreenObject implements ScreenObject {
 
             BufferedImage capturedImage = robot.createScreenCapture(fitsRectangle);
             if (rectangle.equals(fitsRectangle)) return capturedImage;
-            System.out.println("wrong");
             BufferedImage outputImage = new BufferedImage(rectangle.width, rectangle.height, capturedImage.getType());
             Graphics2D g = outputImage.createGraphics();
             int dx = 0;

@@ -2,7 +2,9 @@ package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,6 +60,8 @@ public class EventsRecorder {
     private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
+    private IntegerProperty resolution = new SimpleIntegerProperty(32);
+    
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
         recordingParams = mainConfiguration.getRecordingParams();
@@ -499,40 +503,45 @@ public class EventsRecorder {
     }
 
     public void selectImage() {
+        showImageOnMouseMove();
+        
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
-            final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
-            ImageCapturer imageCapturer = new ImageCapturer();
-            imageCapturer.setScreenObject(screenObject);
-            imageCapturer.setOnImageLoaded(this::setImage);
-
-            BiConsumer<Integer, Integer> onMove = (x, y) -> {
-                if (!imageCapturer.isLocked()) {
-                    int rectSize = 64;
-                    int x0 = x - rectSize / 2;
-                    int y0 = y - rectSize / 2;
-                    int x1 = x0 + rectSize;
-                    int y1 = y0 + rectSize;
-                    imageCapturer.captureImage(x0, y0, x1, y1);
-                }
-            };
-
-            onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
-
-            mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".move", new Consumer<MouseMoveEvent>() {
-
-                @Override
-                public void accept(MouseMoveEvent e) {
-                    onMove.accept(e.getX(), e.getY());
-                }
-            }));
+            
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.release", getMouseControl(), "RELEASE", controlEvent -> {
-            mouseEventsManager.removeListenersByPrefix(prefix);
+                    
         }));
     }
 
+    private void showImageOnMouseMove() {
+        final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+        ImageCapturer imageCapturer = new ImageCapturer();
+        imageCapturer.setScreenObject(screenObject);
+        imageCapturer.setOnImageLoaded(this::setImage);
+
+        BiConsumer<Integer, Integer> onMove = (x, y) -> {
+            if (!imageCapturer.isLocked()) {
+                int rectSize = resolution.get();
+                int x0 = x - rectSize / 2;
+                int y0 = y - rectSize / 2;
+                int x1 = x0 + rectSize;
+                int y1 = y0 + rectSize;
+                imageCapturer.captureImage(x0, y0, x1, y1);
+            }
+        };
+
+        onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
+
+        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".show.on.move", new Consumer<MouseMoveEvent>() {
+            @Override
+            public void accept(MouseMoveEvent e) {
+                onMove.accept(e.getX(), e.getY());
+            }
+        }));
+    }
+    
     public String getPrefix() {
         return prefix;
     }
@@ -577,5 +586,31 @@ public class EventsRecorder {
 
     public void setOutputImageView(ImageView outputImage) {
         this.outputImage = outputImage;
+    }
+
+    public int getResolution() {
+        return resolution.get();
+    }
+
+    public IntegerProperty resolutionProperty() {
+        return resolution;
+    }
+
+    public void setResolution(int resolution) {
+        this.resolution.set(resolution);
+    }
+    
+    public void zoomOut() {
+        int value = resolution.getValue();
+        if (value > 8) {
+            resolution.setValue(resolution.getValue()/2);
+        }
+    }
+    
+    public void zoomIn() {
+        int value = resolution.getValue();
+        if (value <128) {
+            resolution.setValue(resolution.getValue()*2);
+        }
     }
 }
