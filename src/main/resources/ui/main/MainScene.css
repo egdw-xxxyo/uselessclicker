@@ -63,6 +63,27 @@
 }
 
 
+.zoom-button{
+    -fx-background-radius: 0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 20px;
+
+    -fx-min-height: 22;
+    -fx-max-height: 22;
+    -fx-min-width: 22;
+    -fx-max-width: 22;
+
+    -fx-background-color: #fff;
+}
+
+#zoom-in{
+    -fx-background-image: url("../../images/zoom-in_32.png");
+}
+#zoom-out{
+    -fx-background-image: url("../../images/zoom-out_32.png");
+}
+
 /*Menu buttons*/
 #menu-keyboard-button {
     -fx-background-image: url("/images/keyboard.png");

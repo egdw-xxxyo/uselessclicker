@@ -911,4 +911,25 @@ public class MainController implements Initializable {
         keyListener.addKeyboardListener(stopScriptListener);
         keyListener.addKeyboardListener(runScriptListener);
     }
+
+    @FXML
+    private Label xCoordinate;
+    
+    @FXML
+    private Label yCoordinate;
+    
+    @FXML
+    private Label resolutionLabel;
+    
+    private int resolution = 128;
+    @FXML
+    private void zoomIn(ActionEvent event) {
+        System.out.println("zoom in");
+    }
+
+    @FXML
+    private void zoomOut(ActionEvent event) {
+        System.out.println("zoom out");
+    }
+    
 }

@@ -508,7 +508,7 @@ public class EventsRecorder {
 
             BiConsumer<Integer, Integer> onMove = (x, y) -> {
                 if (!imageCapturer.isLocked()) {
-                    int rectSize = 20;
+                    int rectSize = 64;
                     int x0 = x - rectSize / 2;
                     int y0 = y - rectSize / 2;
                     int x1 = x0 + rectSize;
