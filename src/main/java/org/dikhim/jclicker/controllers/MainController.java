@@ -86,6 +86,7 @@ public class MainController implements Initializable {
 
         eventsRecorder = new EventsRecorder(config);
         eventsRecorder.setOutputTextArea(codeTextArea);
+        eventsRecorder.setPreviewImageView(previewImage);
         eventsRecorder.setOutputImageView(outputImage);
         // init toggles and template buttons
 
@@ -159,6 +160,9 @@ public class MainController implements Initializable {
 
     @FXML
     private TextArea outTextArea;
+    
+    @FXML
+    private ImageView previewImage;
     
     @FXML
     private ImageView outputImage;

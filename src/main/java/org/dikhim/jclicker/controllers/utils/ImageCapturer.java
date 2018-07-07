@@ -16,12 +16,12 @@ public class ImageCapturer {
     private boolean locked = false;
 
     public void captureImage(int x0, int y0, int x1, int y1) {
-        if(isLocked()) return;
+        if (isLocked()) return;
         Platform.runLater(() -> {
             locked = true;
             BufferedImage bufferedImage = screenObject.getImageWithFilledBlank(x0, y0, x1, y1);
             bufferedImage = drawCursorInTheMiddle(bufferedImage);
-            
+
             onImageLoaded.accept(bufferedImage);
             locked = false;
         });
@@ -40,45 +40,47 @@ public class ImageCapturer {
     }
 
     private BufferedImage drawCursorInTheMiddle(BufferedImage inputImage) {
-        
+
         int centerX = (inputImage.getWidth() - inputImage.getMinX()) / 2;
         int centerY = (inputImage.getHeight() - inputImage.getMinY()) / 2;
         int[][] cursorArray = {
-                {0,1,1,1,1,1,1,0},
-                {1,1,0,0,0,0,0,0},
-                {1,0,1,0,0,0,0,0},
-                {1,0,0,1,0,0,0,0},
-                {1,0,0,0,1,0,0,0},
-                {1,0,0,0,0,1,0,0},
-                {1,0,0,0,0,0,1,0},
-                {0,0,0,0,0,0,0,1}
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
 
-        
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(cursorArray[j][i] !=1)continue;
-                int x = centerX + i;
-                int y = centerY + j;
-                if (x >= inputImage.getWidth() || y>= inputImage.getHeight()) continue;
-                
-                
-                Color color = new Color(inputImage.getRGB(x, y));
+        Color color = new Color(inputImage.getRGB(centerX, centerY));
+        float[] hsbVals = {0, 0, 0};
+        Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsbVals);
+        hsbVals[0] = 0f;
+        hsbVals[1] = 0f;
 
-                float[] hsbVals = {0, 0, 0};
-                Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsbVals);
-                hsbVals[0] = 0f;
-                hsbVals[1] = 0f;
+        // invert Brightness
+        if (hsbVals[2] > 0.5f) {
+            hsbVals[2] = 0.3f;
+        } else {
+            hsbVals[2] = 0.7f;
+        }
+
+        int newColor = Color.HSBtoRGB(hsbVals[0], hsbVals[1], hsbVals[2]);
+
+        for (int i = 0; i < 11; i++) {
+            for (int j = 0; j < 11; j++) {
+                if (cursorArray[j][i] != 1) continue;
+                int x = centerX + i - 5;
+                int y = centerY + j - 5;
+                if (x >= inputImage.getWidth() || y >= inputImage.getHeight()) continue;
+                if (x < 0 || y < 0) continue;
                 
-                // invert Brightness
-                if (hsbVals[2] > 0.5f) {
-                    hsbVals[2] = 0.3f;
-                } else {
-                    hsbVals[2] = 0.7f;
-                }
-                
-                int newColor =  Color.HSBtoRGB(hsbVals[0],hsbVals[1],hsbVals[2]);
-                inputImage.setRGB(x, y,newColor);
+                inputImage.setRGB(x, y, newColor);
             }
         }
         return inputImage;

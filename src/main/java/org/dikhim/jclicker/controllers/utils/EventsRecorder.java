@@ -6,10 +6,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.PixelWriter;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -29,10 +28,9 @@ import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerat
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -55,13 +53,14 @@ public class EventsRecorder {
     private MainConfiguration mainConfiguration;
 
     private CodeTextArea outputTextArea;
+    private ImageView previewImage;
     private ImageView outputImage;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
-    private IntegerProperty resolution = new SimpleIntegerProperty(32);
-    
+    private IntegerProperty resolution = new SimpleIntegerProperty(33);
+
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
         recordingParams = mainConfiguration.getRecordingParams();
@@ -504,14 +503,20 @@ public class EventsRecorder {
 
     public void selectImage() {
         showImageOnMouseMove();
-        
+        final Point point0 = new Point();
+        final Point point1 = new Point();
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
+                prefix + ".control.press", getMouseControl(), "PRESS", (e) -> {
+            point0.x = mouseEventsManager.getX();
+            point0.y = mouseEventsManager.getY();
             
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.release", getMouseControl(), "RELEASE", controlEvent -> {
-                    
+            point1.x = mouseEventsManager.getX();
+            point1.y = mouseEventsManager.getY();
+
+            setOutputImage(point1, point0);
         }));
     }
 
@@ -519,7 +524,7 @@ public class EventsRecorder {
         final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
         ImageCapturer imageCapturer = new ImageCapturer();
         imageCapturer.setScreenObject(screenObject);
-        imageCapturer.setOnImageLoaded(this::setImage);
+        imageCapturer.setOnImageLoaded(this::setPreviewImage);
 
         BiConsumer<Integer, Integer> onMove = (x, y) -> {
             if (!imageCapturer.isLocked()) {
@@ -541,7 +546,7 @@ public class EventsRecorder {
             }
         }));
     }
-    
+
     public String getPrefix() {
         return prefix;
     }
@@ -552,25 +557,39 @@ public class EventsRecorder {
         Platform.runLater(() -> outputTextArea.insertTextIntoCaretPosition(code));
     }
 
-    private void setImage(BufferedImage bufferedImage) {
-        if (outputImage == null) return;
-        Platform.runLater(() -> {
-            int w = (int) outputImage.getFitWidth();
-            int h = (int) outputImage.getFitHeight();
+    private void setPreviewImage(BufferedImage bufferedImage) {
+        if (previewImage == null) return;
+            int w = (int) previewImage.getFitWidth();
+            int h = (int) previewImage.getFitHeight();
             BufferedImage resizedImage = resizeImage(bufferedImage, w, h);
             Image image = SwingFXUtils.toFXImage(resizedImage, null);
+            previewImage.setImage(image);
+    }
+
+    private void setOutputImage(Point p1, Point p2) {
+        if (outputImage == null) return;
+        Platform.runLater(() -> {
+            final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+
+            Rectangle rectangle = ShapeUtil.createRectangle(p1, p2);
+            rectangle.height++;
+            rectangle.width++;
+            BufferedImage bufferedImage = screenObject.getImage(rectangle);
+            
+            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             outputImage.setImage(image);
         });
     }
-
-    private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height){
+    
+    
+    private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
         Graphics2D g = resizedImage.createGraphics();
         g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
         return resizedImage;
     }
-    
+
     private String getMouseControl() {
         return mainConfiguration.getHotKeys().getShortcut("mouseControl").getKeys().get();
     }
@@ -588,6 +607,10 @@ public class EventsRecorder {
         this.outputImage = outputImage;
     }
 
+    public void setPreviewImageView(ImageView previewImage) {
+        this.previewImage = previewImage;
+    }
+
     public int getResolution() {
         return resolution.get();
     }
@@ -599,18 +622,18 @@ public class EventsRecorder {
     public void setResolution(int resolution) {
         this.resolution.set(resolution);
     }
-    
+
     public void zoomOut() {
         int value = resolution.getValue();
-        if (value > 8) {
-            resolution.setValue(resolution.getValue()/2);
+        if (value > 9) {
+            resolution.setValue(resolution.getValue() / 2 + 1);
         }
     }
-    
+
     public void zoomIn() {
         int value = resolution.getValue();
-        if (value <128) {
-            resolution.setValue(resolution.getValue()*2);
+        if (value < 129) {
+            resolution.setValue((resolution.getValue() - 1) * 2);
         }
     }
 }

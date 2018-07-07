@@ -2,6 +2,7 @@ package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -69,27 +70,15 @@ public class JsScreenObject implements ScreenObject {
     }
 
     private Rectangle createRectangle(int x0, int y0, int x1, int y1) {
-        if (x0 < x1 && y0 < y1 && x0 >= 0 && y0 >= 0 && x1 <= getWidth() && y1 <= getHeight())
-            return new Rectangle(x0, y0, x1 - x0, y1 - y0);
-
-
-        int min = Math.min(x0, x1);
-        int max = Math.max(x0, x1);
-        x0 = min;
-        x1 = max;
-
-        min = Math.min(y0, y1);
-        max = Math.max(y0, y1);
-        y0 = min;
-        y1 = max;
-
-        return new Rectangle(x0, y0, x1 - x0, y1 - y0);
+        return ShapeUtil.createRectangle(x0, y0, x1, y1);
     }
 
     private Rectangle createFitsRectangle(int x0, int y0, int x1, int y1) {
         if (x0 < x1 && y0 < y1 && x0 >= 0 && y0 >= 0 && x1 <= getWidth() && y1 <= getHeight())
-            return new Rectangle(x0, y0, x1 - x0, y1 - y0);
+            return ShapeUtil.createRectangle(x0, y0, x1, y1);
 
+        
+        
         int min = Math.min(x0, x1);
         int max = Math.max(x0, x1);
         x0 = Math.max(min, 0);
@@ -100,6 +89,6 @@ public class JsScreenObject implements ScreenObject {
         y0 = Math.max(min, 0);
         y1 = Math.min(max, getHeight());
 
-        return new Rectangle(x0, y0, x1 - x0, y1 - y0);
+        return ShapeUtil.createRectangle(x0, y0, x1, y1);
     }
 }
