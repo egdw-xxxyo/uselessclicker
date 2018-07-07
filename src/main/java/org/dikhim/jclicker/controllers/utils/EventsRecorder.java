@@ -151,6 +151,8 @@ public class EventsRecorder {
     }
 
     public void insertMouseClickAt() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".clickAt";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + "control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -176,6 +178,8 @@ public class EventsRecorder {
     }
 
     public void insertMouseMove() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".move";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             eventLog.clear();
@@ -198,6 +202,8 @@ public class EventsRecorder {
     }
 
     public void insertMouseMoveTo() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".moveTo";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -227,6 +233,8 @@ public class EventsRecorder {
     }
 
     public void insertMousePressAt() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".pressAt";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".press", "", "PRESS", e -> {
@@ -255,6 +263,8 @@ public class EventsRecorder {
     }
 
     public void insertMouseReleaseAt() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".releaseAt";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".release", "", "RELEASE", e -> {
@@ -271,6 +281,8 @@ public class EventsRecorder {
     // mouse
 
     public void mouseButtonAndWheelAt() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".buttonAndWheelAt";
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             mouseEventsManager.addButtonListener(new MouseButtonHandler(prefix + ".buttons", "", "", (e) -> {
                 mouseObjectCodeGenerator.buttonAt(e.getButton(), e.getAction(), e.getX(), e.getY());
@@ -287,6 +299,8 @@ public class EventsRecorder {
     }
 
     public void mouseButtonAndWheelAtWithDelays() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".buttonsAndWheelAtWithDelays";
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.key.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
             eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -325,6 +339,8 @@ public class EventsRecorder {
     }
 
     public void mouseMoveAndButtonAndWheel() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".moveAndButtonAndWheel";
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
             eventLog.add(new MouseMoveEvent(mouseEventsManager.getX(), mouseEventsManager.getY(), System.currentTimeMillis()));
@@ -358,6 +374,8 @@ public class EventsRecorder {
     }
 
     public void click() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".click";
         final int[] a = new int[1];
         keyEventsManager.addKeyboardListener(new ShortcutEqualsListener(prefix + ".control.press", getMouseControl(), "PRESS", (controlEvent) -> {
             eventLog.clear();
@@ -437,6 +455,8 @@ public class EventsRecorder {
     }
 
     public void wheelAt() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".wheelAt";
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.press", getMouseControl(), "PRESS", controlEvent -> {
             mouseEventsManager.addWheelListener(new MouseWheelHandler(prefix + ".wheel", "", e -> {
@@ -451,6 +471,8 @@ public class EventsRecorder {
     }
 
     public void combined() {
+        showImageOnMouseMove();
+        String prefix = this.prefix + ".combined";
         String control = getCombinedControl();
         Combined combinedConfig = recordingParams.getCombined();
         final boolean[] recording = new boolean[1];
@@ -509,8 +531,9 @@ public class EventsRecorder {
         }));
     }
 
+    
+    // screen
     public void selectImage() {
-        startMouseRecording();
         showImageOnMouseMove();
         final Point point0 = new Point();
         final Point point1 = new Point();
@@ -529,7 +552,9 @@ public class EventsRecorder {
         }));
     }
 
+    //////////
     private void showImageOnMouseMove() {
+        startMouseRecording();
 
         final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
         ImageCapturer imageCapturer = new ImageCapturer();
