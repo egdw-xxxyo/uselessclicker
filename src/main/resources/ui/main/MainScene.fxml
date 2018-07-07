@@ -172,7 +172,7 @@
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </TextArea>
-               <VBox fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
+               <VBox fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
                   <children>
                      <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
                         <image>

@@ -67,15 +67,26 @@
     -fx-background-radius: 0;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
-    -fx-background-size: 20px;
+    -fx-background-size: 24px;
 
-    -fx-min-height: 22;
-    -fx-max-height: 22;
-    -fx-min-width: 22;
-    -fx-max-width: 22;
-
+    -fx-max-width: infinity;
+    -fx-min-height: 26;
+    -fx-max-height: 26;
     -fx-background-color: #fff;
 }
+
+.zoom-button:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.zoom-button:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.zoom-button:selected {
+    -fx-background-color: -fx-color-selected;
+}
+
 
 #zoom-in{
     -fx-background-image: url("../../images/zoom-in_32.png");
