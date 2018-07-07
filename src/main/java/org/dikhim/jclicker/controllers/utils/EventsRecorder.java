@@ -14,6 +14,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -63,6 +64,7 @@ public class EventsRecorder {
     private Pane previewPane;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
+
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
     private IntegerProperty resolution = new SimpleIntegerProperty(33);
@@ -508,6 +510,7 @@ public class EventsRecorder {
     }
 
     public void selectImage() {
+        startMouseRecording();
         showImageOnMouseMove();
         final Point point0 = new Point();
         final Point point1 = new Point();
@@ -515,7 +518,7 @@ public class EventsRecorder {
                 prefix + ".control.press", getMouseControl(), "PRESS", (e) -> {
             point0.x = mouseEventsManager.getX();
             point0.y = mouseEventsManager.getY();
-            
+
         }));
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".control.release", getMouseControl(), "RELEASE", controlEvent -> {
@@ -527,6 +530,7 @@ public class EventsRecorder {
     }
 
     private void showImageOnMouseMove() {
+
         final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
         ImageCapturer imageCapturer = new ImageCapturer();
         imageCapturer.setScreenObject(screenObject);
@@ -565,11 +569,11 @@ public class EventsRecorder {
 
     private void setPreviewImage(BufferedImage bufferedImage) {
         if (previewImage == null) return;
-            int w = (int) previewImage.getFitWidth();
-            int h = (int) previewImage.getFitHeight();
-            BufferedImage resizedImage = resizeImage(bufferedImage, w, h);
-            Image image = SwingFXUtils.toFXImage(resizedImage, null);
-            previewImage.setImage(image);
+        int w = (int) previewImage.getFitWidth();
+        int h = (int) previewImage.getFitHeight();
+        BufferedImage resizedImage = resizeImage(bufferedImage, w, h);
+        Image image = SwingFXUtils.toFXImage(resizedImage, null);
+        previewImage.setImage(image);
     }
 
     private void setOutputImage(Point p1, Point p2) {
@@ -581,13 +585,13 @@ public class EventsRecorder {
             rectangle.height++;
             rectangle.width++;
             BufferedImage bufferedImage = screenObject.getImage(rectangle);
-            
+
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             outputImage.setImage(image);
         });
     }
-    
-    
+
+
     private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
         BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
         Graphics2D g = resizedImage.createGraphics();
@@ -610,13 +614,14 @@ public class EventsRecorder {
     public void setPreviewPane(Pane previewPane) {
         this.previewPane = previewPane;
         ObservableList<Node> children = previewPane.getChildren();
-
-        ImageView previewImage = (ImageView) children.stream().filter(c -> c.getId().equals("previewImage")).findFirst().get();
-        Pane previewButtonPane = (Pane) children.stream().filter(c -> c.getId().equals("previewButtonPane")).findFirst().get();
-        Button zoomIn = (Button) previewButtonPane.getChildren().stream().filter(c -> c.getId().equals("previewZoomIn")).findFirst().get();
+        previewImage = (ImageView) children.stream().filter(c -> "previewImage".equals(c.getId())).findFirst().get();
+        Pane previewButtonPane = (Pane) children.stream().filter(c -> "previewButtonPane".equals(c.getId())).findFirst().get();
+        Button zoomIn = (Button) previewButtonPane.getChildren().stream().filter(c -> "zoom-in".equals(c.getId())).findFirst().get();
         zoomIn.setOnAction(this::zoomIn);
-        Button zoomOut = (Button) previewButtonPane.getChildren().stream().filter(c -> c.getId().equals("previewZoomOut")).findFirst().get();
+        Button zoomOut = (Button) previewButtonPane.getChildren().stream().filter(c -> "zoom-out".equals(c.getId())).findFirst().get();
         zoomOut.setOnAction(this::zoomOut);
+
+        previewPane.visibleProperty().bindBidirectional(mouseRecording);
     }
 
     public void setOutputTextArea(CodeTextArea outputTextArea) {
@@ -643,17 +648,59 @@ public class EventsRecorder {
         this.resolution.set(resolution);
     }
 
-    public void zoomOut(ActionEvent event) {
+    public void zoomIn(ActionEvent event) {
         int value = resolution.getValue();
         if (value > 9) {
             resolution.setValue(resolution.getValue() / 2 + 1);
         }
     }
 
-    public void zoomIn(ActionEvent event) {
+    public void zoomOut(ActionEvent event) {
         int value = resolution.getValue();
         if (value < 129) {
             resolution.setValue((resolution.getValue() - 1) * 2);
         }
     }
+
+    public void setRecording(boolean recording) {
+        this.recording.set(recording);
+    }
+
+    public void stopRecording() {
+        stopKeyboardRecording();
+        stopMouseRecording();
+    }
+
+    private BooleanProperty keyboardRecording = new SimpleBooleanProperty(false);
+    public void startKeyboardRecording() {
+        keyboardRecording.setValue(true);
+
+    }
+
+    public void stopKeyboardRecording() {
+        keyboardRecording.setValue(false);
+        removeKeyboardListeners();
+    }
+
+    private BooleanProperty mouseRecording = new SimpleBooleanProperty(false);
+    public void startMouseRecording() {
+        mouseRecording.setValue(true);
+    }
+
+    public void stopMouseRecording() {
+        mouseRecording.setValue(false);
+        removeMouseListeners();
+    }
+
+    //
+    private void removeKeyboardListeners() {
+        keyEventsManager.removeListenersByPrefix(prefix);
+    }
+
+    void removeMouseListeners() {
+        mouseEventsManager.removeListenersByPrefix(prefix);
+    }
+    
+    
+
 }

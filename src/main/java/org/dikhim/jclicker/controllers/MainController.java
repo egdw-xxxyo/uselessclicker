@@ -489,6 +489,7 @@ public class MainController implements Initializable {
         } else {
             deselect(toggleButton);
             // if toggle has been deselected
+            eventsRecorder.stopRecording();
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
             codeTextArea.setActive(true);

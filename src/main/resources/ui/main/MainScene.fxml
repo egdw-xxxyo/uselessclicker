@@ -190,7 +190,7 @@
                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                         </columnConstraints>
                      </GridPane>
-                     <GridPane>
+                     <GridPane fx:id="previewButtonPane">
                         <columnConstraints>
                            <ColumnConstraints hgrow="SOMETIMES" />
                            <ColumnConstraints hgrow="SOMETIMES" />
@@ -199,8 +199,8 @@
                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
-                           <Button id="zoom-out" fx:id="zoomOut" mnemonicParsing="false" onAction="#zoomIn" styleClass="zoom-button" GridPane.halignment="CENTER" />
-                           <Button id="zoom-in" fx:id="zoomIn" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#zoomOut" styleClass="zoom-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                           <Button id="zoom-out" fx:id="previewZoomOut" mnemonicParsing="false" styleClass="zoom-button" GridPane.halignment="CENTER" />
+                           <Button id="zoom-in" fx:id="previewZoomIn" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="zoom-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                         </children>
                      </GridPane>
                   </children>
