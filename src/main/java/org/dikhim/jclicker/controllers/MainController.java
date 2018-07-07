@@ -86,7 +86,7 @@ public class MainController implements Initializable {
 
         eventsRecorder = new EventsRecorder(config);
         eventsRecorder.setOutputTextArea(codeTextArea);
-        eventsRecorder.setPreviewImageView(previewImage);
+        eventsRecorder.setPreviewPane(previewPane);
         eventsRecorder.setOutputImageView(outputImage);
         // init toggles and template buttons
 
@@ -162,7 +162,7 @@ public class MainController implements Initializable {
     private TextArea outTextArea;
     
     @FXML
-    private ImageView previewImage;
+    private VBox previewPane;
     
     @FXML
     private ImageView outputImage;
@@ -915,24 +915,5 @@ public class MainController implements Initializable {
         keyListener.addKeyboardListener(stopScriptListener);
         keyListener.addKeyboardListener(runScriptListener);
     }
-
-    @FXML
-    private Label xCoordinate;
-    
-    @FXML
-    private Label yCoordinate;
-    
-    @FXML
-    private Label resolutionLabel;
-    
-    @FXML
-    private void zoomIn(ActionEvent event) {
-        eventsRecorder.zoomIn();
-    }
-
-    @FXML
-    private void zoomOut(ActionEvent event) {
-        eventsRecorder.zoomOut();
-    }
-    
+   
 }

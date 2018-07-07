@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -150,36 +151,6 @@
                                          <content>
                                            <AnchorPane minHeight="0.0" minWidth="0.0">
                                                 <children>
-                                                   <VBox prefHeight="200.0" prefWidth="100.0">
-                                                      <children>
-                                                         <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
-                                                            <image>
-                                                               <Image url="@../../images/cursor128.png" />
-                                                            </image>
-                                                         </ImageView>
-                                                         <GridPane>
-                                                           <columnConstraints>
-                                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                                                           </columnConstraints>
-                                                         </GridPane>
-                                                         <GridPane>
-                                                           <columnConstraints>
-                                                             <ColumnConstraints hgrow="SOMETIMES" />
-                                                             <ColumnConstraints hgrow="SOMETIMES" />
-                                                           </columnConstraints>
-                                                           <rowConstraints>
-                                                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                           </rowConstraints>
-                                                            <children>
-                                                               <Button id="zoom-out" fx:id="zoomOut" mnemonicParsing="false" onAction="#zoomIn" styleClass="zoom-button" GridPane.halignment="CENTER" />
-                                                               <Button id="zoom-in" fx:id="zoomIn" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#zoomOut" styleClass="zoom-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                                            </children>
-                                                         </GridPane>
-                                                      </children>
-                                                   </VBox>
                                                    <ImageView fx:id="outputImage" fitHeight="200.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                 </children>
                                              </AnchorPane>
@@ -201,6 +172,42 @@
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </TextArea>
+               <VBox fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
+                  <children>
+                     <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../images/cursor128.png" />
+                        </image>
+                        <VBox.margin>
+                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                        </VBox.margin>
+                     </ImageView>
+                     <GridPane>
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                        </columnConstraints>
+                     </GridPane>
+                     <GridPane>
+                        <columnConstraints>
+                           <ColumnConstraints hgrow="SOMETIMES" />
+                           <ColumnConstraints hgrow="SOMETIMES" />
+                        </columnConstraints>
+                        <rowConstraints>
+                           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                           <Button id="zoom-out" fx:id="zoomOut" mnemonicParsing="false" onAction="#zoomIn" styleClass="zoom-button" GridPane.halignment="CENTER" />
+                           <Button id="zoom-in" fx:id="zoomIn" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#zoomOut" styleClass="zoom-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                        </children>
+                     </GridPane>
+                  </children>
+                  <effect>
+                     <DropShadow />
+                  </effect>
+               </VBox>
                 </AnchorPane>
                 <AnchorPane id="insertCodePane" fx:id="templatePane">
                     <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

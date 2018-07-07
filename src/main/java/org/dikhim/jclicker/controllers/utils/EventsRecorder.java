@@ -5,10 +5,15 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -55,6 +60,7 @@ public class EventsRecorder {
     private CodeTextArea outputTextArea;
     private ImageView previewImage;
     private ImageView outputImage;
+    private Pane previewPane;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
@@ -599,6 +605,20 @@ public class EventsRecorder {
     }
 
     // setters
+
+
+    public void setPreviewPane(Pane previewPane) {
+        this.previewPane = previewPane;
+        ObservableList<Node> children = previewPane.getChildren();
+
+        ImageView previewImage = (ImageView) children.stream().filter(c -> c.getId().equals("previewImage")).findFirst().get();
+        Pane previewButtonPane = (Pane) children.stream().filter(c -> c.getId().equals("previewButtonPane")).findFirst().get();
+        Button zoomIn = (Button) previewButtonPane.getChildren().stream().filter(c -> c.getId().equals("previewZoomIn")).findFirst().get();
+        zoomIn.setOnAction(this::zoomIn);
+        Button zoomOut = (Button) previewButtonPane.getChildren().stream().filter(c -> c.getId().equals("previewZoomOut")).findFirst().get();
+        zoomOut.setOnAction(this::zoomOut);
+    }
+
     public void setOutputTextArea(CodeTextArea outputTextArea) {
         this.outputTextArea = outputTextArea;
     }
@@ -623,14 +643,14 @@ public class EventsRecorder {
         this.resolution.set(resolution);
     }
 
-    public void zoomOut() {
+    public void zoomOut(ActionEvent event) {
         int value = resolution.getValue();
         if (value > 9) {
             resolution.setValue(resolution.getValue() / 2 + 1);
         }
     }
 
-    public void zoomIn() {
+    public void zoomIn(ActionEvent event) {
         int value = resolution.getValue();
         if (value < 129) {
             resolution.setValue((resolution.getValue() - 1) * 2);
