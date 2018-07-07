@@ -50,6 +50,19 @@
     -fx-background-image: url("../../images/server.png");
 }
 
+.zoom-button{
+
+    -fx-background-radius: 0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 24px;
+
+    -fx-background-color: #fff;
+    -fx-min-height: 26;
+    -fx-max-height: 26;
+    -fx-max-width: infinity;
+}
+
 #config-button {
     -fx-background-image: url("../../images/config.png");
 }
@@ -58,21 +71,9 @@
     -fx-background-image: url("../../images/info.png");
 }
 
+
 #help-button {
     -fx-background-image: url("../../images/help.png");
-}
-
-
-.zoom-button{
-    -fx-background-radius: 0;
-    -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
-    -fx-background-size: 24px;
-
-    -fx-max-width: infinity;
-    -fx-min-height: 26;
-    -fx-max-height: 26;
-    -fx-background-color: #fff;
 }
 
 .zoom-button:hover {
