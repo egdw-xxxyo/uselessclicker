@@ -135,7 +135,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void topDownward(ActionEvent event) {
-        if (getCropedImageHeight() > 1) top.set(top.get() + 1);
+        if (getCroppedImageHeight() > 1) top.set(top.get() + 1);
     }
 
     @FXML
@@ -161,7 +161,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void bottomUpward(ActionEvent event) {
-        if (getCropedImageHeight() > 1) bottom.set(bottom.get() + 1);
+        if (getCroppedImageHeight() > 1) bottom.set(bottom.get() + 1);
     }
 
     @FXML
@@ -189,7 +189,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         return originalImage.getWidth() - right.get() - left.get();
     }
 
-    private int getCropedImageHeight() {
+    private int getCroppedImageHeight() {
         return originalImage.getHeight() - top.get() - bottom.get();
     }
 
