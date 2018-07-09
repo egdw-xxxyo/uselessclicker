@@ -31,7 +31,7 @@ public class ImageUtil {
         int height= originalImage.getHeight() - top - bottom;
         BufferedImage newImage = new BufferedImage(width, height, originalImage.getType());
         Graphics2D g = newImage.createGraphics();
-        g.drawImage(originalImage, left, top, width, height, null);
+        g.drawImage(originalImage, -left, -top, originalImage.getWidth(), originalImage.getHeight(), null);
         return newImage;
     }
 }
