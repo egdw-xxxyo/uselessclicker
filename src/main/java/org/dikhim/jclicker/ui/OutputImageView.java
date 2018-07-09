@@ -25,6 +25,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
+
 public class OutputImageView extends AnchorPane implements Initializable {
 
     public OutputImageView() {
@@ -200,12 +202,12 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void zoomIn(ActionEvent event) {
-        if (scale.get() < 16) scale.setValue(scale.get() * 2);
+        if (scale.get() < 32) scale.setValue(scale.get() * 2);
     }
 
     @FXML
     void zoomOut(ActionEvent event) {
-        if (scale.get() > 0.25) scale.setValue(scale.get() / 2);
+        if (scale.get() > 0.5) scale.setValue(scale.get() / 2);
 
     }
 
@@ -219,12 +221,28 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     private void repaint() {
         new Thread(() -> {
-            System.out.println(String.format("scale:%s crop:%s %s %s %s", scale.get(), top.get(), right.get(), bottom.get(), left.get()));
             transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
-            transformedImage = ImageUtil.resizeImage(transformedImage, scale.get());
+            
+            double scaleDiff;
+            final BufferedImage resizedImage;
+            if (Math.max(transformedImage.getHeight(), transformedImage.getWidth()) * scale.get() > 2048) {
+                int tempScale = 1;
+                while (Math.max(transformedImage.getHeight(), transformedImage.getWidth()) * scale.get() < 2048) {
+                    tempScale++;
+                }
+                transformedImage = resizeImage(transformedImage, tempScale);
+
+                scaleDiff = scale.get() / tempScale;
+                
+            } else {
+                transformedImage = resizeImage(transformedImage, scale.get());
+                scaleDiff = 1;
+            }
+            
+            
             Platform.runLater(()->{
-                image.setFitWidth(transformedImage.getWidth());
-                image.setFitHeight(transformedImage.getHeight());
+                image.setFitWidth(transformedImage.getWidth()*scaleDiff);
+                image.setFitHeight(transformedImage.getHeight()*scaleDiff);
                 image.setImage(SwingFXUtils.toFXImage(transformedImage, null));
                 System.gc();
             });
@@ -237,6 +255,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         AnchorPane.setRightAnchor(this, 0d);
         AnchorPane.setBottomAnchor(this, 0d);
         AnchorPane.setLeftAnchor(this, 0d);
+        image.setSmooth(false);
         try {
             originalImage = ImageIO.read(getClass().getResourceAsStream("/images/application.png"));
             scale.addListener((observable, oldValue, newValue) -> repaint());
