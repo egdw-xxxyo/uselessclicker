@@ -33,6 +33,7 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.Resources;
@@ -90,6 +91,8 @@ public class MainController implements Initializable {
         eventsRecorder.setOutputImageView(outputImage);
         // init toggles and template buttons
 
+        outputImagePane.getChildren().addAll(new OutputImageView());
+        
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
         initToggles(propertyFile);
@@ -166,6 +169,9 @@ public class MainController implements Initializable {
     
     @FXML
     private ImageView outputImage;
+    
+    @FXML
+    private AnchorPane outputImagePane;
 
     @FXML
     private TextField txtAbsolutePathRate;
