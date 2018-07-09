@@ -14,10 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.util.ImageUtil;
+import org.dikhim.jclicker.util.Out;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -96,6 +99,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
 
     private BufferedImage originalImage;
+    private BufferedImage transformedImage;
     private DoubleProperty scale = new SimpleDoubleProperty(1);
 
     private IntegerProperty top = new SimpleIntegerProperty(0);
@@ -115,17 +119,37 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void open(ActionEvent event) {
-
+        File file = WindowManager.getInstance().openImageFile();
+        if (file != null) {
+            try {
+                originalImage = ImageIO.read(file);
+                repaint();
+            } catch (IOException e) {
+                Out.println("Cannot open image");
+            }
+        }
+        reset();
     }
 
 
     @FXML
     void save(ActionEvent event) {
-
+        File file = WindowManager.getInstance().saveImageFileAs();
+        if (file != null) {
+            try {
+                ImageIO.write(transformedImage, "PNG", file);
+            } catch (IOException e) {
+                Out.println("Cannot save image");
+            }
+        }
     }
 
     @FXML
     void reset(ActionEvent event) {
+        reset();
+    }
+
+    private void reset() {
         scale.set(1);
         top.set(0);
         right.set(0);
@@ -196,12 +220,12 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private void repaint() {
         new Thread(() -> {
             System.out.println(String.format("scale:%s crop:%s %s %s %s", scale.get(), top.get(), right.get(), bottom.get(), left.get()));
-            BufferedImage transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
-            final BufferedImage resultImage = ImageUtil.resizeImage(transformedImage, scale.get());
+            transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
+            transformedImage = ImageUtil.resizeImage(transformedImage, scale.get());
             Platform.runLater(()->{
-                image.setFitWidth(resultImage.getWidth());
-                image.setFitHeight(resultImage.getHeight());
-                image.setImage(SwingFXUtils.toFXImage(resultImage, null));
+                image.setFitWidth(transformedImage.getWidth());
+                image.setFitHeight(transformedImage.getHeight());
+                image.setImage(SwingFXUtils.toFXImage(transformedImage, null));
                 System.gc();
             });
         }).start();

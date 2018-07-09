@@ -197,7 +197,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void openFile() {
-        File file = WindowManager.getInstance().openFile();
+        File file = WindowManager.getInstance().openScriptFile();
 
         if (file != null) {
             mainApplication.openFile(file);
@@ -210,7 +210,7 @@ public class MainController implements Initializable {
         if (script.isOpened()) {
             mainApplication.saveFile();
         } else {
-            File file = WindowManager.getInstance().saveFileAs();
+            File file = WindowManager.getInstance().saveScriptFileAs();
             if (file != null) {
                 mainApplication.saveFileAs(file);
             }
@@ -222,7 +222,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void saveFileAs() {
-        File file = WindowManager.getInstance().saveFileAs();
+        File file = WindowManager.getInstance().saveScriptFileAs();
         if (file != null) {
             mainApplication.saveFileAs(file);
         }

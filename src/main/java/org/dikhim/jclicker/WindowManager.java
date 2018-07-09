@@ -145,35 +145,71 @@ public class WindowManager {
     }
     
      
-    public File openFile(){
+    public File openScriptFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("open"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"),
                 new FileChooser.ExtensionFilter("*.js", "*.js"));
 
-        String pathFolder = preferences.get("last-opened-folder", "");
+        String pathFolder = preferences.get("last-opened-script-folder", "");
         if (!pathFolder.isEmpty()) {
             fileChooser.setInitialDirectory(new File(pathFolder));
         }
         File file = fileChooser.showOpenDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-opened-script-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }
-    public File saveFileAs(){
+    
+    public File saveScriptFileAs(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("newFile.js");
 
-        String pathFolder = preferences.get("last-saved-folder", "");
+        String pathFolder = preferences.get("last-script-saved-folder", "");
         if (!pathFolder.isEmpty())
             fileChooser.setInitialDirectory(new File(pathFolder));
 
         File file = fileChooser.showSaveDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-saved-script-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+
+    public File openImageFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("open"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"),
+                new FileChooser.ExtensionFilter("*.png", "*.png"));
+
+        String pathFolder = preferences.get("last-opened-image-folder", "");
+        if (!pathFolder.isEmpty()) {
+            fileChooser.setInitialDirectory(new File(pathFolder));
+        }
+        File file = fileChooser.showOpenDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-opened-image-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+
+
+    public File saveImageFileAs(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("saveAs"));
+        fileChooser.setInitialFileName("image.png");
+
+        String pathFolder = preferences.get("last-image-saved-folder", "");
+        if (!pathFolder.isEmpty())
+            fileChooser.setInitialDirectory(new File(pathFolder));
+
+        File file = fileChooser.showSaveDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-saved-image-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }
