@@ -224,7 +224,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
             transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
             
             double scaleDiff;
-            final BufferedImage resizedImage;
             if (Math.max(transformedImage.getHeight(), transformedImage.getWidth()) * scale.get() > 2048) {
                 int tempScale = 1;
                 while (Math.max(transformedImage.getHeight(), transformedImage.getWidth()) * scale.get() < 2048) {

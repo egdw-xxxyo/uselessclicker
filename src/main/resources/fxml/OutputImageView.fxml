@@ -2,7 +2,6 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root prefHeight="400.0" prefWidth="600.0" stylesheets="@OutputImageView.css" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: fff;" stylesheets="@OutputImageView.css" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
     <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
@@ -25,7 +24,7 @@
             <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: ccc;" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/application.png" />
             </ImageView>
@@ -119,10 +118,9 @@
             <Button id="save-button" fx:id="saveBtn" mnemonicParsing="false" onAction="#save" styleClass="toolbar-button" />
             <Button id="insert-button" fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" styleClass="toolbar-button" />
             <Button id="load-button" fx:id="loadBtn" mnemonicParsing="false" onAction="#load" styleClass="toolbar-button" />
-            <Button id="reset-button" fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" styleClass="toolbar-button" />
             <Button id="zoom-in-button" fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" styleClass="toolbar-button" />
             <Button id="zoom-out-button" fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" styleClass="toolbar-button" />
-           <Label fx:id="scaleLbl" text="x1" />
+         <Button id="reset-button" fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" styleClass="toolbar-button" />
         </VBox>
     </GridPane>
 </fx:root>

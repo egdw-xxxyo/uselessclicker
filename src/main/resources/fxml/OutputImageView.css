@@ -1,4 +1,11 @@
 
+* {
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+}
+
+
 .toolbar-button{
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
@@ -9,6 +16,7 @@
     -fx-max-height: 26;
     -fx-min-height: 26;
 }
+
 
 #open-button{
     -fx-background-image: url("../images/24/folder.png");
@@ -37,6 +45,18 @@
     -fx-background-position: center center;
     -fx-background-radius: 0;
     -fx-background-color: #fff;
+}
+
+
+.arrow-button:hover{
+    -fx-background-color: -fx-color-hover;
+}
+
+.arrow-button:selected{
+    -fx-background-color: -fx-color-selected;
+}
+.arrow-button:pressed{
+    -fx-background-color: -fx-color-pressed;
 }
 
 .vertical{
