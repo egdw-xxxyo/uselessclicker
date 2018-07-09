@@ -25,4 +25,13 @@ public class ImageUtil {
         g.drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight(), null);
         return newImage;
     }
+
+    public static BufferedImage crop(BufferedImage originalImage, int top, int right, int bottom, int left) {
+        int width = originalImage.getWidth() - left - right;
+        int height= originalImage.getHeight() - top - bottom;
+        BufferedImage newImage = new BufferedImage(width, height, originalImage.getType());
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(originalImage, left, top, width, height, null);
+        return newImage;
+    }
 }

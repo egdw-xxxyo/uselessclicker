@@ -2,6 +2,7 @@ package org.dikhim.jclicker.ui;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -10,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import org.dikhim.jclicker.util.ImageUtil;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -93,11 +95,91 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private BufferedImage loadedImage;
     private BufferedImage visibleImage;
     private DoubleProperty scale = new SimpleDoubleProperty(1);
+
+    @FXML
+    void bottomDownward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void bottomUpward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void insert(ActionEvent event) {
+
+    }
+
+    @FXML
+    void leftLeftward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void leftRightward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void load(ActionEvent event) {
+
+    }
+
+    @FXML
+    void open(ActionEvent event) {
+
+    }
+
+    @FXML
+    void reset(ActionEvent event) {
+
+    }
+
+    @FXML
+    void rightLeftward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void rightRightward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void save(ActionEvent event) {
+
+    }
+
+    @FXML
+    void topDownward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void topUpward(ActionEvent event) {
+
+    }
+
+    @FXML
+    void zoomIn(ActionEvent event) {
+
+    }
+
+    @FXML
+    void zoomOut(ActionEvent event) {
+
+    }
+    
+    private void repaint() {
+        
+    }
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
             loadedImage = ImageIO.read(getClass().getResourceAsStream("/images/application.png"));
+            visibleImage = ImageUtil.clone(loadedImage);
         } catch (IOException e) {
             e.printStackTrace();
         }

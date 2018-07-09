@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<!--suppress JavaFxDefaultTag -->
 <fx:root prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -44,8 +45,8 @@
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="leftLeftward" mnemonicParsing="false" text="←" GridPane.rowIndex="1" />
-                  <Button fx:id="leftRightward" mnemonicParsing="false" text="→" />
+                  <Button fx:id="leftLeftward" mnemonicParsing="false" onAction="#leftLeftward" text="←" GridPane.rowIndex="1" />
+                  <Button fx:id="leftRightward" mnemonicParsing="false" onAction="#leftRightward" text="→" />
                </children>
             </GridPane>
             <GridPane maxHeight="-Infinity" GridPane.columnIndex="2">
@@ -57,8 +58,8 @@
                 <RowConstraints vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="topDownward" mnemonicParsing="false" text="↓" />
-                  <Button fx:id="topUpward" mnemonicParsing="false" text="↑" GridPane.columnIndex="1" />
+                  <Button fx:id="topDownward" mnemonicParsing="false" onAction="#topDownward" text="↓" />
+                  <Button fx:id="topUpward" mnemonicParsing="false" onAction="#topUpward" text="↑" GridPane.columnIndex="1" />
                </children>
             </GridPane>
             <GridPane maxWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -70,8 +71,8 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="rightLeftward" mnemonicParsing="false" text="←" />
-                  <Button fx:id="rightRightward" mnemonicParsing="false" text="→" GridPane.rowIndex="1" />
+                  <Button fx:id="rightLeftward" mnemonicParsing="false" onAction="#rightLeftward" text="←" />
+                  <Button fx:id="rightRightward" mnemonicParsing="false" onAction="#rightRightward" text="→" GridPane.rowIndex="1" />
                </children>
             </GridPane>
             <GridPane maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="2">
@@ -83,21 +84,19 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button fx:id="bottomDownward" mnemonicParsing="false" text="↓" GridPane.columnIndex="1" />
-                  <Button fx:id="bottomUpward" mnemonicParsing="false" text="↑" />
+                  <Button fx:id="bottomDownward" mnemonicParsing="false" onAction="#bottomDownward" text="↓" GridPane.columnIndex="1" />
+                  <Button fx:id="bottomUpward" mnemonicParsing="false" onAction="#bottomUpward" text="↑" />
                </children>
             </GridPane>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
-               <children>
-                  <Button fx:id="openBtn" mnemonicParsing="false" text="Open" />
-                  <Button fx:id="saveBtn" mnemonicParsing="false" text="Save " />
-                  <Button fx:id="insertBtn" mnemonicParsing="false" text="Insert" />
-                  <Button fx:id="loadBtn" mnemonicParsing="false" text="load" />
-                  <Button fx:id="resetBtn" mnemonicParsing="false" text="reset" />
-                  <Button fx:id="zommInBtn" mnemonicParsing="false" text="zoomIn" />
-                  <Button fx:id="zoomOutBtn" mnemonicParsing="false" text="zoomOut" />
-               </children>
-            </VBox>
+             <VBox maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
+                 <Button fx:id="openBtn" mnemonicParsing="false" onAction="#open" text="Open"/>
+                 <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#save" text="Save "/>
+                 <Button fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" text="Insert"/>
+                 <Button fx:id="loadBtn" mnemonicParsing="false" onAction="#load" text="load"/>
+                 <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" text="reset"/>
+                 <Button fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" text="zoomIn"/>
+                 <Button fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" text="zoomOut"/>
+             </VBox>
             <Label fx:id="scaleLbl" text="x1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
