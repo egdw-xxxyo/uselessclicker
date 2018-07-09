@@ -50,12 +50,14 @@ public class JSEngine {
             SystemObject systemObject = new JsSystemObject(this);
             CombinedObject combinedObject = new JsCombinedObject(mouseObject, keyboardObject, systemObject);
             ClipboardObject clipboardObject = new JsClipboardObject(robot);
+            CreateObject createObject = new JsCreateObject();
 
             engine.put("mouse", mouseObject);
             engine.put("key", keyboardObject);
             engine.put("system", systemObject);
             engine.put("combined", combinedObject);
             engine.put("clipboard", clipboardObject);
+            engine.put("create", createObject);
             try {
                 engine.eval(code);
             } catch (ScriptException e) {
