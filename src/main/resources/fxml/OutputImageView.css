@@ -1,6 +1,5 @@
 
 * {
-    -fx-color-selected: #ffde66;
     -fx-color-pressed: #ffde66;
     -fx-color-hover: #ffec9d;
 }
@@ -10,12 +9,21 @@
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-radius: 0;
-    -fx-background-color: #fff;
-    -fx-max-width: 26;
-    -fx-min-width: 26;
-    -fx-max-height: 26;
-    -fx-min-height: 26;
+    -fx-background-color: #ddd;
+    -fx-max-width: 32;
+    -fx-min-width: 32;
+    -fx-max-height: 32;
+    -fx-min-height: 32;
 }
+
+.toolbar-button:hover {
+    -fx-background-color: #cccccc;
+}
+
+.toolbar-button:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
 
 
 #open-button{
@@ -52,9 +60,6 @@
     -fx-background-color: -fx-color-hover;
 }
 
-.arrow-button:selected{
-    -fx-background-color: -fx-color-selected;
-}
 .arrow-button:pressed{
     -fx-background-color: -fx-color-pressed;
 }

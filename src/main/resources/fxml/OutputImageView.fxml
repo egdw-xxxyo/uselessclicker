@@ -24,8 +24,8 @@
             <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: ccc;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: ccc; -fx-border-width: 2;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: fff; -fx-border-width: 3;">
                 <Image url="@../images/application.png" />
             </ImageView>
         </ScrollPane>
@@ -113,7 +113,7 @@
                <String fx:value="horizontal" />
             </styleClass></Button>
         </GridPane>
-        <VBox maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
+        <VBox maxWidth="-Infinity" style="-fx-background-color: ddd;" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
             <Button id="open-button" fx:id="openBtn" mnemonicParsing="false" onAction="#open" styleClass="toolbar-button" />
             <Button id="save-button" fx:id="saveBtn" mnemonicParsing="false" onAction="#save" styleClass="toolbar-button" />
             <Button id="insert-button" fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" styleClass="toolbar-button" />
