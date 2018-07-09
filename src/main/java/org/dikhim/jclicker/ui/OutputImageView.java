@@ -145,7 +145,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void rightLeftward(ActionEvent event) {
-        if (getCropedImageWidth() > 1) right.set(right.get() + 1);
+        if (getCroppedImageWidth() > 1) right.set(right.get() + 1);
     }
 
     @FXML
@@ -171,7 +171,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void leftRightward(ActionEvent event) {
-        if (getCropedImageWidth() > 1) left.set(left.get() + 1);
+        if (getCroppedImageWidth() > 1) left.set(left.get() + 1);
     }
 
     @FXML
@@ -185,7 +185,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     }
 
-    private int getCropedImageWidth() {
+    private int getCroppedImageWidth() {
         return originalImage.getWidth() - right.get() - left.get();
     }
 
@@ -209,6 +209,10 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        AnchorPane.setTopAnchor(this, 0d);
+        AnchorPane.setRightAnchor(this, 0d);
+        AnchorPane.setBottomAnchor(this, 0d);
+        AnchorPane.setLeftAnchor(this, 0d);
         try {
             originalImage = ImageIO.read(getClass().getResourceAsStream("/images/application.png"));
             scale.addListener((observable, oldValue, newValue) -> repaint());

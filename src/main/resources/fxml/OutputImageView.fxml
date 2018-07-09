@@ -11,94 +11,77 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<!--suppress JavaFxDefaultTag -->
 <fx:root prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
-         <children>
-            <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <content>
-                  <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/application.png" />
-                     </image>
-                  </ImageView>
-               </content>
-            </ScrollPane>
-            <GridPane maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
-              <columnConstraints>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../images/application.png" />
+            </ImageView>
+        </ScrollPane>
+        <GridPane maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" />
-              </columnConstraints>
-              <rowConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
-                <RowConstraints vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="leftLeftward" mnemonicParsing="false" onAction="#leftLeftward" text="←" GridPane.rowIndex="1" />
-                  <Button fx:id="leftRightward" mnemonicParsing="false" onAction="#leftRightward" text="→" />
-               </children>
-            </GridPane>
-            <GridPane maxHeight="-Infinity" GridPane.columnIndex="2">
-              <columnConstraints>
+            </rowConstraints>
+            <Button fx:id="leftLeftward" minWidth="-Infinity" mnemonicParsing="false" onAction="#leftLeftward" text="←" />
+            <Button fx:id="leftRightward" mnemonicParsing="false" onAction="#leftRightward" text="→" GridPane.columnIndex="1" />
+        </GridPane>
+        <GridPane maxHeight="-Infinity" GridPane.columnIndex="2">
+            <columnConstraints>
                 <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-              </columnConstraints>
-              <rowConstraints>
+            </columnConstraints>
+            <rowConstraints>
                 <RowConstraints vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Button fx:id="topDownward" mnemonicParsing="false" onAction="#topDownward" text="↓" />
-                  <Button fx:id="topUpward" mnemonicParsing="false" onAction="#topUpward" text="↑" GridPane.columnIndex="1" />
-               </children>
-            </GridPane>
-            <GridPane maxWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" />
-                  <RowConstraints vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Button fx:id="rightLeftward" mnemonicParsing="false" onAction="#rightLeftward" text="←" />
-                  <Button fx:id="rightRightward" mnemonicParsing="false" onAction="#rightRightward" text="→" GridPane.rowIndex="1" />
-               </children>
-            </GridPane>
-            <GridPane maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="2">
-               <columnConstraints>
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                  <Button fx:id="bottomDownward" mnemonicParsing="false" onAction="#bottomDownward" text="↓" GridPane.columnIndex="1" />
-                  <Button fx:id="bottomUpward" mnemonicParsing="false" onAction="#bottomUpward" text="↑" />
-               </children>
-            </GridPane>
-             <VBox maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
-                 <Button fx:id="openBtn" mnemonicParsing="false" onAction="#open" text="Open"/>
-                 <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#save" text="Save "/>
-                 <Button fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" text="Insert"/>
-                 <Button fx:id="loadBtn" mnemonicParsing="false" onAction="#load" text="load"/>
-                 <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" text="reset"/>
-                 <Button fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" text="zoomIn"/>
-                 <Button fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" text="zoomOut"/>
-             </VBox>
-            <Label fx:id="scaleLbl" text="x1" GridPane.rowIndex="1" />
-         </children>
-      </GridPane>
-   </children>
+            <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <Button fx:id="topDownward" mnemonicParsing="false" onAction="#topDownward" text="↓" GridPane.rowIndex="1" />
+            <Button fx:id="topUpward" mnemonicParsing="false" onAction="#topUpward" text="↑" />
+        </GridPane>
+        <GridPane maxWidth="-Infinity" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <Button fx:id="rightLeftward" mnemonicParsing="false" onAction="#rightLeftward" text="←" />
+            <Button fx:id="rightRightward" mnemonicParsing="false" onAction="#rightRightward" text="→" GridPane.columnIndex="1" />
+        </GridPane>
+        <GridPane maxHeight="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="2">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            </rowConstraints>
+            <Button fx:id="bottomDownward" mnemonicParsing="false" onAction="#bottomDownward" text="↓" GridPane.rowIndex="1" />
+            <Button fx:id="bottomUpward" mnemonicParsing="false" onAction="#bottomUpward" text="↑" />
+        </GridPane>
+        <VBox maxHeight="-Infinity" maxWidth="-Infinity" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
+            <Button fx:id="openBtn" mnemonicParsing="false" onAction="#open" text="Open" />
+            <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#save" text="Save " />
+            <Button fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" text="Insert" />
+            <Button fx:id="loadBtn" mnemonicParsing="false" onAction="#load" text="load" />
+            <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" text="reset" />
+            <Button fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" text="zoomIn" />
+            <Button fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" text="zoomOut" />
+           <Label fx:id="scaleLbl" text="x1" />
+        </VBox>
+    </GridPane>
 </fx:root>
