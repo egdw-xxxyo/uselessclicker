@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.ui;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -87,8 +89,10 @@ public class OutputImageView extends AnchorPane implements Initializable {
     @FXML
     private Label scaleLbl;
 
+    
     private BufferedImage loadedImage;
     private BufferedImage visibleImage;
+    private DoubleProperty scale = new SimpleDoubleProperty(1);
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {

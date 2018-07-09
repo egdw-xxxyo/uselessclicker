@@ -18,4 +18,11 @@ public class ImageUtil {
         int height = (int) (originalImage.getHeight() * scale);
         return resizeImage(originalImage, width, height);
     }
+
+    public static BufferedImage clone(BufferedImage originalImage) {
+        BufferedImage newImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
+        Graphics2D g = newImage.createGraphics();
+        g.drawImage(originalImage, 0, 0, originalImage.getWidth(), originalImage.getHeight(), null);
+        return newImage;
+    }
 }
