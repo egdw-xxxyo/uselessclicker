@@ -34,6 +34,7 @@ import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerat
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
@@ -596,7 +597,7 @@ public class EventsRecorder {
         if (previewImage == null) return;
         int w = (int) previewImage.getFitWidth();
         int h = (int) previewImage.getFitHeight();
-        BufferedImage resizedImage = resizeImage(bufferedImage, w, h);
+        BufferedImage resizedImage = ImageUtil.resizeImage(bufferedImage, w, h);
         Image image = SwingFXUtils.toFXImage(resizedImage, null);
         previewImage.setImage(image);
     }
@@ -614,15 +615,6 @@ public class EventsRecorder {
             Image image = SwingFXUtils.toFXImage(bufferedImage, null);
             outputImage.setImage(image);
         });
-    }
-
-
-    private static BufferedImage resizeImage(BufferedImage originalImage, int width, int height) {
-        BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
-        Graphics2D g = resizedImage.createGraphics();
-        g.drawImage(originalImage, 0, 0, width, height, null);
-        g.dispose();
-        return resizedImage;
     }
 
     private String getMouseControl() {
