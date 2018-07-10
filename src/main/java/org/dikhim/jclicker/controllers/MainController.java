@@ -94,6 +94,7 @@ public class MainController implements Initializable {
         OutputImageView outputImageView = new OutputImageView();
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
+        mainApplication.setOnSetOutputImage(outputImageView::loadImage);
         
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));

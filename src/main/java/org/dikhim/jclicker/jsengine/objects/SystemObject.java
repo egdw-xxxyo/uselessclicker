@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.jsengine.objects;
 
+import org.dikhim.jclicker.jsengine.objects.Classes.Image;
+
 @SuppressWarnings("unused")
 public interface SystemObject {
     void exit();
@@ -52,5 +54,7 @@ public interface SystemObject {
 
     void setSpeed(float multiplier);
 
+    void showImage(Image image);
+    
     void sleep(int ms);
 }

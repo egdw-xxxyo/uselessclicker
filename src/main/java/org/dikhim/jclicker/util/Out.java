@@ -1,7 +1,6 @@
 package org.dikhim.jclicker.util;
 
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 import java.util.List;

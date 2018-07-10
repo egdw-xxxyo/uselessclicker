@@ -3,7 +3,6 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -25,9 +24,7 @@
             <RowConstraints maxHeight="-Infinity" vgrow="SOMETIMES" />
         </rowConstraints>
         <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: ccc; -fx-border-width: 2;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: fff; -fx-border-width: 3;">
-                <Image url="@../images/application.png" />
-            </ImageView>
+            <ImageView fx:id="image" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-color: fff; -fx-border-width: 3;" />
         </ScrollPane>
         <GridPane maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.rowIndex="1">
             <columnConstraints>

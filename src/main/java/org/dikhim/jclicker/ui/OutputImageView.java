@@ -119,6 +119,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void insert(ActionEvent event) {
+        if(originalImage == null) return;
         BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
         try {
             byte[] data = ImageUtil.getByteArray(croppedImage);
@@ -141,7 +142,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
             try {
                 CreateObject createObject = new JsCreateObject();
                 originalImage = createObject.image(data);
-                if(originalImage==null) throw new IOException();
+                if (originalImage == null) throw new IOException();
                 reset();
                 repaint();
             } catch (Exception e) {
@@ -158,7 +159,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         if (file != null) {
             try {
                 originalImage = ImageIO.read(file);
-                if(originalImage==null) throw new IOException();
+                if (originalImage == null) throw new IOException();
                 reset();
                 repaint();
             } catch (Exception e) {
@@ -171,6 +172,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
+        if(originalImage == null) return;
         File file = WindowManager.getInstance().saveImageFileAs();
         if (file != null) {
             try {
@@ -183,6 +185,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void reset(ActionEvent event) {
+        if (originalImage == null) return;
         reset();
     }
 
@@ -197,30 +200,35 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void topDownward(ActionEvent event) {
+        if (originalImage == null) return;
         if (getCroppedImageHeight() > 1) top.set(top.get() + 1);
         repaint();
     }
 
     @FXML
     void topUpward(ActionEvent event) {
+        if (originalImage == null) return;
         if (top.get() > 0) top.set(top.get() - 1);
         repaint();
     }
 
     @FXML
     void rightLeftward(ActionEvent event) {
+        if (originalImage == null) return;
         if (getCroppedImageWidth() > 1) right.set(right.get() + 1);
         repaint();
     }
 
     @FXML
     void rightRightward(ActionEvent event) {
+        if (originalImage == null) return;
         if (right.get() > 0) right.set(right.get() - 1);
         repaint();
     }
 
     @FXML
     void bottomDownward(ActionEvent event) {
+        if (originalImage == null) return;
         if (bottom.get() > 0) bottom.set(bottom.get() - 1);
         repaint();
     }
@@ -233,24 +241,28 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void leftLeftward(ActionEvent event) {
+        if (originalImage == null) return;
         if (left.get() > 0) left.set(left.get() - 1);
         repaint();
     }
 
     @FXML
     void leftRightward(ActionEvent event) {
+        if (originalImage == null) return;
         if (getCroppedImageWidth() > 1) left.set(left.get() + 1);
         repaint();
     }
 
     @FXML
     void zoomIn(ActionEvent event) {
+        if (originalImage == null) return;
         if (scale.get() < 32) scale.setValue(scale.get() * 2);
         repaint();
     }
 
     @FXML
     void zoomOut(ActionEvent event) {
+        if (originalImage == null) return;
         if (scale.get() > 0.5) scale.setValue(scale.get() / 2);
         repaint();
     }
@@ -264,6 +276,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
     }
 
     private void repaint() {
+        if (originalImage == null) return;
         new Thread(() -> {
             transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
 
@@ -299,16 +312,18 @@ public class OutputImageView extends AnchorPane implements Initializable {
         AnchorPane.setBottomAnchor(this, 0d);
         AnchorPane.setLeftAnchor(this, 0d);
         image.setSmooth(false);
-        try {
-            originalImage = ImageIO.read(getClass().getResourceAsStream("/images/application.png"));
-            repaint();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        originalImage = null;
+        repaint();
     }
 
     ///
     public void setOnInsert(Consumer<String> onInsert) {
         this.onInsert = onInsert;
+    }
+
+    public void loadImage(BufferedImage image) {
+        originalImage = image;
+        reset();
+        repaint();
     }
 }

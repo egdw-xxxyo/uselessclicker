@@ -9,14 +9,10 @@ import org.dikhim.jclicker.jsengine.objects.*;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
-import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import javax.script.ScriptException; 
+
 
 /**
  * Created by dikobraz on 26.03.17.
