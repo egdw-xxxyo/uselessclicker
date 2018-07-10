@@ -14,7 +14,7 @@ public class Image extends BufferedImage {
     }
 
     public Image(BufferedImage bufferedImage) {
-        super(bufferedImage.getWidth(), bufferedImage.getHeight(), bufferedImage.getType());
+        super(bufferedImage.getWidth(), bufferedImage.getHeight(),  BufferedImage.TYPE_INT_RGB);
         ImageUtil.drawImage(bufferedImage,this);
     }
 }

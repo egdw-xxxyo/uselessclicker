@@ -18,12 +18,12 @@ public class JsCreateObject implements CreateObject {
 
     @Override
     public Image image(String zipBase64String) {
-        byte[] data = ZipBase64.decode(zipBase64String);
-        InputStream is = new ByteArrayInputStream(data);
         try {
+            byte[] data = ZipBase64.decode(zipBase64String);
+            InputStream is = new ByteArrayInputStream(data);
             return new Image(ImageIO.read(is));
-        } catch (IOException e) {
-            Out.println("Cannot read image from the string");
+        } catch (Exception e) {
+            Out.println("Cannot read create from the string");
             return null;
         }
     }
