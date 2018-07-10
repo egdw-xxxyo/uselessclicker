@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
 
@@ -109,14 +110,17 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private IntegerProperty bottom = new SimpleIntegerProperty(0);
     private IntegerProperty left = new SimpleIntegerProperty(0);
 
+    private Consumer<String> onInsert;
+    
+    
     @FXML
     void insert(ActionEvent event) {
-
+        
     }
 
     @FXML
     void load(ActionEvent event) {
-
+        
     }
 
     @FXML
