@@ -61,7 +61,6 @@ public class EventsRecorder {
 
     private CodeTextArea outputTextArea;
     private ImageView previewImage;
-    private ImageView outputImage;
     private Pane previewPane;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
@@ -69,6 +68,8 @@ public class EventsRecorder {
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
 
     private IntegerProperty resolution = new SimpleIntegerProperty(33);
+    
+    private Consumer<BufferedImage> onSetOutputImage;
 
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
@@ -603,7 +604,7 @@ public class EventsRecorder {
     }
 
     private void setOutputImage(Point p1, Point p2) {
-        if (outputImage == null) return;
+        if (onSetOutputImage == null) return;
         Platform.runLater(() -> {
             final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
 
@@ -612,8 +613,7 @@ public class EventsRecorder {
             rectangle.width++;
             BufferedImage bufferedImage = screenObject.getImage(rectangle);
 
-            Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-            outputImage.setImage(image);
+            onSetOutputImage.accept(bufferedImage);
         });
     }
 
@@ -645,8 +645,8 @@ public class EventsRecorder {
         this.outputTextArea = outputTextArea;
     }
 
-    public void setOutputImageView(ImageView outputImage) {
-        this.outputImage = outputImage;
+    public void setOnSetOutputImage(Consumer<BufferedImage> onSetOutputImage) {
+        this.onSetOutputImage = onSetOutputImage;
     }
 
     public void setPreviewImageView(ImageView previewImage) {

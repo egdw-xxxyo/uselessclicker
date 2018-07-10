@@ -85,19 +85,22 @@ public class MainController implements Initializable {
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
-        eventsRecorder = new EventsRecorder(config);
-        eventsRecorder.setOutputTextArea(codeTextArea);
-        eventsRecorder.setPreviewPane(previewPane);
-        eventsRecorder.setOutputImageView(outputImage);
-        // init toggles and template buttons
-
+        // output image
         OutputImageView outputImageView = new OutputImageView();
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
-        
+
+
+        // events recorder
+        eventsRecorder = new EventsRecorder(config);
+        eventsRecorder.setOutputTextArea(codeTextArea);
+        eventsRecorder.setPreviewPane(previewPane);
+        eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
+        // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
+        
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
