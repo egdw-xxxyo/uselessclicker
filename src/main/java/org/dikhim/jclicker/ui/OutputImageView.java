@@ -140,7 +140,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
             BufferedImage tmp = originalImage;
             try {
                 CreateObject createObject = new JsCreateObject();
-                originalImage = (BufferedImage) createObject.image(data);
+                originalImage = createObject.image(data);
                 if(originalImage==null) throw new IOException();
                 reset();
                 repaint();
@@ -308,8 +308,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
     }
 
     ///
-
-
     public void setOnInsert(Consumer<String> onInsert) {
         this.onInsert = onInsert;
     }

@@ -18,7 +18,7 @@ public class JsCreateObject implements CreateObject {
     @Override
     public Image image(String zipBase64String) {
         try {
-            // all text between ('  ')
+            // replace all unnecessary chars except base64 string
             zipBase64String = zipBase64String.replaceAll("[\\n\\r *]+|.*image\\('|'\\);.*|'[+\\n\\r ]+'", "");
             byte[] data = ZipBase64.decode(zipBase64String);
             InputStream is = new ByteArrayInputStream(data);
