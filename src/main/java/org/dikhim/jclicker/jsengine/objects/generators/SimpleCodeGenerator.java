@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class SimpleCodeGenerator implements CodeGenerator {
     private String objectName;
     private int lineSize;
-    private StringBuilder sb;
+    private StringBuilder sb = new StringBuilder();
 
     private Method[] allMethods;
 
@@ -161,5 +161,9 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
             return m;
         }
         return null;
+    }
+
+    public StringBuilder getSb() {
+        return sb;
     }
 }

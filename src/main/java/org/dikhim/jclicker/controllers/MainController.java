@@ -91,7 +91,9 @@ public class MainController implements Initializable {
         eventsRecorder.setOutputImageView(outputImage);
         // init toggles and template buttons
 
-        outputImagePane.getChildren().addAll(new OutputImageView());
+        OutputImageView outputImageView = new OutputImageView();
+        outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
+        outputImagePane.getChildren().addAll(outputImageView);
         
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));

@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
+import org.dikhim.jclicker.jsengine.objects.generators.CreateObjectGenerator;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.ZipBase64;
@@ -118,7 +119,17 @@ public class OutputImageView extends AnchorPane implements Initializable {
     @FXML
     void insert(ActionEvent event) {
         BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
-        
+        try {
+            byte[] data = ImageUtil.getByteArray(croppedImage);
+            String encodedData = ZipBase64.encode(data);
+            CreateObjectGenerator createObjectGenerator = new CreateObjectGenerator(120);
+            createObjectGenerator.image(encodedData);
+            String resultString = createObjectGenerator.getGeneratedCode();
+
+            onInsert.accept(resultString);            
+        } catch (IOException e) {
+            Out.println("Cannot convert image to the string representation");
+        }
     }
 
     @FXML
@@ -273,5 +284,12 @@ public class OutputImageView extends AnchorPane implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    ///
+
+
+    public void setOnInsert(Consumer<String> onInsert) {
+        this.onInsert = onInsert;
     }
 }

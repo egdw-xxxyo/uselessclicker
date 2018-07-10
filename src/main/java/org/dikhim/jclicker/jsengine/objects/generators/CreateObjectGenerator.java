@@ -10,8 +10,14 @@ public class CreateObjectGenerator extends SimpleCodeGenerator implements Create
         super("create", lineSize, CreateObject.class);
     }
 
-    CreateObjectGenerator() {
+    public CreateObjectGenerator() {
         super("create", CreateObject.class);
+    }
+
+    @Override
+    protected SimpleCodeGenerator append(String str) {
+        getSb().append(str);
+        return this;
     }
 
     @Override
