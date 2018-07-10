@@ -9,5 +9,7 @@ public interface CreateObject {
 
     Image image(String zipBase64String);
 
+    Image imageFile(String path);
+
     Point point(int x, int y);
 }

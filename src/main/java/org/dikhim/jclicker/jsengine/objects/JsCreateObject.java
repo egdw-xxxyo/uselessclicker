@@ -7,6 +7,8 @@ import org.dikhim.jclicker.util.ZipBase64;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class JsCreateObject implements CreateObject {
@@ -25,6 +27,16 @@ public class JsCreateObject implements CreateObject {
             return new Image(ImageIO.read(is));
         } catch (Exception e) {
             Out.println("Cannot create image from the string");
+            return null;
+        }
+    }
+
+    @Override
+    public Image imageFile(String path) {
+        try {
+            return new Image(ImageIO.read(new File(path)));
+        } catch (IOException e) {
+            Out.println("Cannot create image from filePath:"+path);
             return null;
         }
     }

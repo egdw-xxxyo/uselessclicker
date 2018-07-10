@@ -33,6 +33,12 @@ public class CreateObjectGenerator extends SimpleCodeGenerator implements Create
     }
 
     @Override
+    public Image imageFile(String path) {
+        append(String.format("var image = create.imageFile('%s');\n", path));
+        return null;
+    }
+
+    @Override
     public Point point(int x, int y) {
         append(String.format("var point = create.point(%s, %s);\n", x, y));
         return null;
