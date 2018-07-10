@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -49,7 +50,7 @@ public class WindowManager {
     }
 
     private void init() throws IOException {
-        resourceBundle = ResourceBundle.getBundle("i18n/WindowNames",locale);
+        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager",locale);
 
         sceneMap.put("about", loadAboutScene(locale));
         sceneMap.put("settings", loadConfigScene(locale));
@@ -105,7 +106,6 @@ public class WindowManager {
         loader.setResources(ResourceBundle.getBundle("i18n/MainScene", locale));
         Parent root = loader.load();
 
-        MainController controller = loader.getController();
         return new Scene(root);
     }
 
@@ -213,11 +213,14 @@ public class WindowManager {
     }
     
     public String showImageInputDialog() {
-        TextInputDialog dialog = new TextInputDialog("walter");
-        dialog.setTitle("Text Input Dialog");
-        dialog.setHeaderText("Look, a Text Input Dialog");
-        dialog.setContentText("Please enter your name:");
-        
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle(resourceBundle.getString("imageInputDialog.title"));
+        dialog.setHeaderText(resourceBundle.getString("imageInputDialog.header"));
+        dialog.setContentText(resourceBundle.getString("imageInputDialog.content"));
+        dialog.setGraphic(null);
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/images/24/download.png").toString()));
         Optional<String> result = dialog.showAndWait();
         return result.orElse("");
     }
