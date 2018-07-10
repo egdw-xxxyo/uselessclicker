@@ -118,7 +118,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
     @FXML
     void insert(ActionEvent event) {
         BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        
     }
 
     @FXML

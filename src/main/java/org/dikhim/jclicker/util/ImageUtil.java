@@ -1,7 +1,14 @@
 package org.dikhim.jclicker.util;
 
+import org.dikhim.jclicker.jsengine.objects.Classes.Image;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ImageUtil {
 
@@ -38,6 +45,18 @@ public class ImageUtil {
         g.drawImage(originalImage, -left, -top, originalImage.getWidth(), originalImage.getHeight(), null);
         return newImage;
     }
-    
-    
+
+    public static byte[] getByteArray(BufferedImage originalImage) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write( originalImage, "jpg", baos );
+        baos.flush();
+        byte[] imageInByte = baos.toByteArray();
+        baos.close();
+        return imageInByte;
+    }
+
+    public static BufferedImage imageFromByteArray(byte[] data) throws IOException {
+        InputStream is = new ByteArrayInputStream(data);
+        return new Image(ImageIO.read(is));
+    }
 }
