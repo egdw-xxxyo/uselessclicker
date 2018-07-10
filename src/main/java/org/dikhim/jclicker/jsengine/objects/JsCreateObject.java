@@ -19,7 +19,7 @@ public class JsCreateObject implements CreateObject {
     public Image image(String zipBase64String) {
         try {
             // replace all unnecessary chars except base64 string
-            zipBase64String = zipBase64String.replaceAll("[\\n\\r *]+|.*image\\('|'\\);.*|'[+\\n\\r ]+'", "");
+            zipBase64String = zipBase64String.replaceAll("^'|.*\\('|[\\n\\r *]+|'\\)?;?$|'[+\\n\\r ]+'", "");
             byte[] data = ZipBase64.decode(zipBase64String);
             InputStream is = new ByteArrayInputStream(data);
             return new Image(ImageIO.read(is));
