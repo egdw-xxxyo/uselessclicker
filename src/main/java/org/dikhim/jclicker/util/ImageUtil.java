@@ -48,7 +48,7 @@ public class ImageUtil {
 
     public static byte[] getByteArray(BufferedImage originalImage) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ImageIO.write( originalImage, "jpg", baos );
+        ImageIO.write( originalImage, "png", baos );
         baos.flush();
         byte[] imageInByte = baos.toByteArray();
         baos.close();

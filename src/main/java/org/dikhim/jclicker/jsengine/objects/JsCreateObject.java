@@ -7,7 +7,6 @@ import org.dikhim.jclicker.util.ZipBase64;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 public class JsCreateObject implements CreateObject {
@@ -19,11 +18,13 @@ public class JsCreateObject implements CreateObject {
     @Override
     public Image image(String zipBase64String) {
         try {
+            // all text between ('  ')
+            zipBase64String = zipBase64String.replaceAll("[\\n\\r *]+|.*image\\('|'\\);.*|'[+\\n\\r ]+'", "");
             byte[] data = ZipBase64.decode(zipBase64String);
             InputStream is = new ByteArrayInputStream(data);
             return new Image(ImageIO.read(is));
         } catch (Exception e) {
-            Out.println("Cannot read create from the string");
+            Out.println("Cannot create image from the string");
             return null;
         }
     }

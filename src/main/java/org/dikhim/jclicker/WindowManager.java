@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -12,10 +13,7 @@ import org.dikhim.jclicker.controllers.MainController;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.prefs.Preferences;
 
 @SuppressWarnings("AccessStaticViaInstance")
@@ -214,5 +212,14 @@ public class WindowManager {
         return file;
     }
     
+    public String showImageInputDialog() {
+        TextInputDialog dialog = new TextInputDialog("walter");
+        dialog.setTitle("Text Input Dialog");
+        dialog.setHeaderText("Look, a Text Input Dialog");
+        dialog.setContentText("Please enter your name:");
+        
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse("");
+    }
     
 }

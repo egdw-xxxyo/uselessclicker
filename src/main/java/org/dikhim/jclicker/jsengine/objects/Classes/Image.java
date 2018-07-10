@@ -10,11 +10,11 @@ public class Image extends BufferedImage {
     }
 
     public Image(int width, int height) {
-        super(width, height, BufferedImage.TYPE_INT_RGB);
+        super(width, height, BufferedImage.TYPE_INT_ARGB);
     }
 
     public Image(BufferedImage bufferedImage) {
-        super(bufferedImage.getWidth(), bufferedImage.getHeight(),  BufferedImage.TYPE_INT_RGB);
+        super(bufferedImage.getWidth(), bufferedImage.getHeight(),  BufferedImage.TYPE_INT_ARGB);
         ImageUtil.drawImage(bufferedImage,this);
     }
 }

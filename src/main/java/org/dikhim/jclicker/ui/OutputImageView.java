@@ -15,6 +15,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
+import org.dikhim.jclicker.jsengine.objects.CreateObject;
+import org.dikhim.jclicker.jsengine.objects.JsCreateObject;
 import org.dikhim.jclicker.jsengine.objects.generators.CreateObjectGenerator;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.Out;
@@ -22,7 +24,6 @@ import org.dikhim.jclicker.util.ZipBase64;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -114,8 +115,8 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private IntegerProperty left = new SimpleIntegerProperty(0);
 
     private Consumer<String> onInsert;
-    
-    
+
+
     @FXML
     void insert(ActionEvent event) {
         BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
@@ -126,7 +127,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
             createObjectGenerator.image(encodedData);
             String resultString = createObjectGenerator.getGeneratedCode();
 
-            onInsert.accept(resultString);            
+            onInsert.accept(resultString);
         } catch (IOException e) {
             Out.println("Cannot convert image to the string representation");
         }
@@ -134,21 +135,37 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void load(ActionEvent event) {
-        
+        String data = WindowManager.getInstance().showImageInputDialog();
+        if (!data.isEmpty()) {
+            BufferedImage tmp = originalImage;
+            try {
+                CreateObject createObject = new JsCreateObject();
+                originalImage = (BufferedImage) createObject.image(data);
+                if(originalImage==null) throw new IOException();
+                reset();
+                repaint();
+            } catch (Exception e) {
+                Out.println("Cannot load image from the string");
+                originalImage = tmp;
+            }
+        }
     }
 
     @FXML
     void open(ActionEvent event) {
         File file = WindowManager.getInstance().openImageFile();
+        BufferedImage tmp = originalImage;
         if (file != null) {
             try {
                 originalImage = ImageIO.read(file);
+                if(originalImage==null) throw new IOException();
+                reset();
                 repaint();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 Out.println("Cannot open image");
+                originalImage = tmp;
             }
         }
-        reset();
     }
 
 
@@ -175,58 +192,67 @@ public class OutputImageView extends AnchorPane implements Initializable {
         right.set(0);
         bottom.set(0);
         left.set(0);
+        repaint();
     }
 
     @FXML
     void topDownward(ActionEvent event) {
         if (getCroppedImageHeight() > 1) top.set(top.get() + 1);
+        repaint();
     }
 
     @FXML
     void topUpward(ActionEvent event) {
         if (top.get() > 0) top.set(top.get() - 1);
+        repaint();
     }
 
     @FXML
     void rightLeftward(ActionEvent event) {
         if (getCroppedImageWidth() > 1) right.set(right.get() + 1);
+        repaint();
     }
 
     @FXML
     void rightRightward(ActionEvent event) {
         if (right.get() > 0) right.set(right.get() - 1);
+        repaint();
     }
 
     @FXML
     void bottomDownward(ActionEvent event) {
         if (bottom.get() > 0) bottom.set(bottom.get() - 1);
-
+        repaint();
     }
 
     @FXML
     void bottomUpward(ActionEvent event) {
         if (getCroppedImageHeight() > 1) bottom.set(bottom.get() + 1);
+        repaint();
     }
 
     @FXML
     void leftLeftward(ActionEvent event) {
-        if (left.get() > 0) left.set(left.get() - 1);        
+        if (left.get() > 0) left.set(left.get() - 1);
+        repaint();
     }
 
     @FXML
     void leftRightward(ActionEvent event) {
         if (getCroppedImageWidth() > 1) left.set(left.get() + 1);
+        repaint();
     }
 
     @FXML
     void zoomIn(ActionEvent event) {
         if (scale.get() < 32) scale.setValue(scale.get() * 2);
+        repaint();
     }
 
     @FXML
     void zoomOut(ActionEvent event) {
         if (scale.get() > 0.5) scale.setValue(scale.get() / 2);
-
+        repaint();
     }
 
     private int getCroppedImageWidth() {
@@ -240,7 +266,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private void repaint() {
         new Thread(() -> {
             transformedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
-            
+
             double scaleDiff;
             if (Math.max(transformedImage.getHeight(), transformedImage.getWidth()) * scale.get() > 2048) {
                 int tempScale = 1;
@@ -250,16 +276,16 @@ public class OutputImageView extends AnchorPane implements Initializable {
                 transformedImage = resizeImage(transformedImage, tempScale);
 
                 scaleDiff = scale.get() / tempScale;
-                
+
             } else {
                 transformedImage = resizeImage(transformedImage, scale.get());
                 scaleDiff = 1;
             }
-            
-            
-            Platform.runLater(()->{
-                image.setFitWidth(transformedImage.getWidth()*scaleDiff);
-                image.setFitHeight(transformedImage.getHeight()*scaleDiff);
+
+
+            Platform.runLater(() -> {
+                image.setFitWidth(transformedImage.getWidth() * scaleDiff);
+                image.setFitHeight(transformedImage.getHeight() * scaleDiff);
                 image.setImage(SwingFXUtils.toFXImage(transformedImage, null));
                 System.gc();
             });
@@ -275,17 +301,12 @@ public class OutputImageView extends AnchorPane implements Initializable {
         image.setSmooth(false);
         try {
             originalImage = ImageIO.read(getClass().getResourceAsStream("/images/application.png"));
-            scale.addListener((observable, oldValue, newValue) -> repaint());
-            top.addListener((observable, oldValue, newValue) -> repaint());
-            right.addListener((observable, oldValue, newValue) -> repaint());
-            bottom.addListener((observable, oldValue, newValue) -> repaint());
-            left.addListener((observable, oldValue, newValue) -> repaint());
             repaint();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     ///
 
 

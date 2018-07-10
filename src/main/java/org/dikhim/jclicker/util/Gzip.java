@@ -36,20 +36,18 @@ public class Gzip {
         return sb.toString();
     }
 
-    public static byte[] compressBytes(byte[] uncompressedData) {
+    public static byte[] compressBytes(byte[] uncompressedData) throws IOException {
         byte[] result = new byte[]{};
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream(uncompressedData.length);
              GZIPOutputStream gzipOS = new GZIPOutputStream(bos)) {
             gzipOS.write(uncompressedData);
             gzipOS.close();
             result = bos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } 
         return result;
     }
 
-    public static byte[] decompressBytes(byte[] compressedData) {
+    public static byte[] decompressBytes(byte[] compressedData) throws IOException {
         byte[] result = new byte[]{};
         try (ByteArrayInputStream bis = new ByteArrayInputStream(compressedData);
              ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -60,9 +58,7 @@ public class Gzip {
                 bos.write(buffer, 0, len);
             }
             result = bos.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } 
         return result;
     }
 }
