@@ -26,6 +26,10 @@ public class ImageUtil {
         return newImage;
     }
 
+    public static void drawImage(BufferedImage inputImage, BufferedImage outputImage) {
+        outputImage.createGraphics().drawImage(inputImage,0,0,inputImage.getWidth(), inputImage.getHeight(),null);
+    }
+
     public static BufferedImage crop(BufferedImage originalImage, int top, int right, int bottom, int left) {
         int width = originalImage.getWidth() - left - right;
         int height= originalImage.getHeight() - top - bottom;
@@ -34,4 +38,6 @@ public class ImageUtil {
         g.drawImage(originalImage, -left, -top, originalImage.getWidth(), originalImage.getHeight(), null);
         return newImage;
     }
+    
+    
 }

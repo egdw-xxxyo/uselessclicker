@@ -7,5 +7,7 @@ import java.awt.*;
 public interface CreateObject {
     Image image(int width, int height);
 
+    Image image(String zipBase64String);
+
     Point point(int x, int y);
 }

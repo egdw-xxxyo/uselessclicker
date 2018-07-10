@@ -17,9 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.Out;
+import org.dikhim.jclicker.util.ZipBase64;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -115,7 +117,8 @@ public class OutputImageView extends AnchorPane implements Initializable {
     
     @FXML
     void insert(ActionEvent event) {
-        
+        BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
     }
 
     @FXML
