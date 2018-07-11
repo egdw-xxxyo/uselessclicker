@@ -6,5 +6,6 @@ const sidemenu = {
     "files.html": ["Файлы", "text", ""],
     "math.html": ["Математические функции", "text", ""],
     "doubleClick.html": ["Двойной клик", "text", ""],
+    "findImage.html": ["Поиск изображения", "text", ""],
     "threads.html": ["Потоки", "text", ""]
 };

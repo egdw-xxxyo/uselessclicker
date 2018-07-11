@@ -4,7 +4,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -12,10 +14,7 @@ import org.dikhim.jclicker.controllers.MainController;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.prefs.Preferences;
 
 @SuppressWarnings("AccessStaticViaInstance")
@@ -51,7 +50,7 @@ public class WindowManager {
     }
 
     private void init() throws IOException {
-        resourceBundle = ResourceBundle.getBundle("i18n/WindowNames",locale);
+        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager",locale);
 
         sceneMap.put("about", loadAboutScene(locale));
         sceneMap.put("settings", loadConfigScene(locale));
@@ -107,7 +106,6 @@ public class WindowManager {
         loader.setResources(ResourceBundle.getBundle("i18n/MainScene", locale));
         Parent root = loader.load();
 
-        MainController controller = loader.getController();
         return new Scene(root);
     }
 
@@ -145,38 +143,86 @@ public class WindowManager {
     }
     
      
-    public File openFile(){
+    public File openScriptFile(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("open"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"),
                 new FileChooser.ExtensionFilter("*.js", "*.js"));
 
-        String pathFolder = preferences.get("last-opened-folder", "");
+        String pathFolder = preferences.get("last-opened-script-folder", "");
         if (!pathFolder.isEmpty()) {
             fileChooser.setInitialDirectory(new File(pathFolder));
         }
         File file = fileChooser.showOpenDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-opened-script-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }
-    public File saveFileAs(){
+    
+    public File saveScriptFileAs(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("newFile.js");
 
-        String pathFolder = preferences.get("last-saved-folder", "");
+        String pathFolder = preferences.get("last-opened-script-folder", "");
         if (!pathFolder.isEmpty())
             fileChooser.setInitialDirectory(new File(pathFolder));
 
         File file = fileChooser.showSaveDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-saved-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-opened-script-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+
+    public File openImageFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("open"));
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"),
+                new FileChooser.ExtensionFilter("*.png", "*.png"));
+
+        String pathFolder = preferences.get("last-opened-image-folder", "");
+        if (!pathFolder.isEmpty()) {
+            fileChooser.setInitialDirectory(new File(pathFolder));
+        }
+        File file = fileChooser.showOpenDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-opened-image-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+
+
+    public File saveImageFileAs(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("saveAs"));
+        fileChooser.setInitialFileName("image.png");
+
+        String pathFolder = preferences.get("last-opened-image-folder", "");
+        if (!pathFolder.isEmpty())
+            fileChooser.setInitialDirectory(new File(pathFolder));
+
+        File file = fileChooser.showSaveDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-opened-image-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }
     
+    public String showImageInputDialog() {
+        TextInputDialog dialog = new TextInputDialog("");
+        dialog.setTitle(resourceBundle.getString("imageInputDialog.title"));
+        dialog.setHeaderText(resourceBundle.getString("imageInputDialog.header"));
+        dialog.setContentText(resourceBundle.getString("imageInputDialog.content"));
+        dialog.setGraphic(null);
+
+        Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new Image(this.getClass().getResource("/images/24/download.png").toString()));
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse("");
+    }
     
 }

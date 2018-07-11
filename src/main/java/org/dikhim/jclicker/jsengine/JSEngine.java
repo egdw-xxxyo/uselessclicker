@@ -9,14 +9,10 @@ import org.dikhim.jclicker.jsengine.objects.*;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
-import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-import java.util.*;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+import javax.script.ScriptException; 
+
 
 /**
  * Created by dikobraz on 26.03.17.
@@ -50,12 +46,14 @@ public class JSEngine {
             SystemObject systemObject = new JsSystemObject(this);
             CombinedObject combinedObject = new JsCombinedObject(mouseObject, keyboardObject, systemObject);
             ClipboardObject clipboardObject = new JsClipboardObject(robot);
+            CreateObject createObject = new JsCreateObject();
 
             engine.put("mouse", mouseObject);
             engine.put("key", keyboardObject);
             engine.put("system", systemObject);
             engine.put("combined", combinedObject);
             engine.put("clipboard", clipboardObject);
+            engine.put("create", createObject);
             try {
                 engine.eval(code);
             } catch (ScriptException e) {

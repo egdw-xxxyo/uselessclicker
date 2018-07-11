@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
+import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.objects.SystemObject;
 
 import java.util.List;
@@ -140,6 +141,11 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     @Override
     public void setSpeed(float multiplier) {
         buildStringForCurrentMethod(multiplier);
+    }
+
+    @Override
+    public void showImage(Image image) {
+        buildStringForCurrentMethod();
     }
 
     @Override

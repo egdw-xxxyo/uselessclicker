@@ -1,0 +1,89 @@
+
+* {
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+}
+
+
+.toolbar-button{
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-radius: 0;
+    -fx-background-color: #ddd;
+    -fx-max-width: 32;
+    -fx-min-width: 32;
+    -fx-max-height: 32;
+    -fx-min-height: 32;
+}
+
+.toolbar-button:hover {
+    -fx-background-color: #cccccc;
+}
+
+.toolbar-button:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+
+
+#open-button{
+    -fx-background-image: url("../images/24/folder.png");
+}
+#save-button{
+    -fx-background-image: url("../images/24/save.png");
+}
+#insert-button{
+    -fx-background-image: url("../images/24/upload.png");
+}
+#load-button{
+    -fx-background-image: url("../images/24/download.png");
+}
+#reset-button{
+    -fx-background-image: url("../images/24/refresh.png");
+}
+#zoom-in-button{
+    -fx-background-image: url("../images/24/zoom-in.png");
+}
+#zoom-out-button{
+    -fx-background-image: url("../images/24/zoom-out.png");
+}
+
+.arrow-button{
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+}
+
+
+.arrow-button:hover{
+    -fx-background-color: -fx-color-hover;
+}
+
+.arrow-button:pressed{
+    -fx-background-color: -fx-color-pressed;
+}
+
+.vertical{
+    -fx-max-width: 12;
+    -fx-min-width: 12;
+    -fx-max-height: infinity;
+}
+.horizontal{
+    -fx-max-height: 12;
+    -fx-min-height: 12;
+    -fx-max-width: infinity;
+}
+
+.up-arrow{
+    -fx-background-image: url("../images/arrow-up_12.png");
+}
+.right-arrow{
+    -fx-background-image: url("../images/arrow-right_12.png");
+}
+.down-arrow{
+    -fx-background-image: url("../images/arrow-down_12.png");
+}
+.left-arrow{
+    -fx-background-image: url("../images/arrow-left_12.png");
+}

@@ -1,12 +1,16 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 import javafx.application.Platform;
+import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
+
+import java.awt.image.BufferedImage;
 
 
 @SuppressWarnings("unused")
@@ -107,7 +111,7 @@ public class JsSystemObject implements SystemObject {
                 "script." + functionName + "." + keys + ".press",
                 keys,
                 "PRESS",
-                (e) -> engine.invokeFunction(functionName, args)    
+                (e) -> engine.invokeFunction(functionName, args)
         );
         KeyEventsManager.getInstance().addKeyboardListener(listener);
     }
@@ -229,6 +233,13 @@ public class JsSystemObject implements SystemObject {
     public void setSpeed(float multiplier) {
         synchronized (monitor) {
             this.multiplier = 1f / multiplier;
+        }
+    }
+
+    @Override
+    public void showImage(Image image) {
+        synchronized (monitor) {
+            Platform.runLater(() -> Clicker.getApplication().getMainApplication().getOnSetOutputImage().accept(image));
         }
     }
 }

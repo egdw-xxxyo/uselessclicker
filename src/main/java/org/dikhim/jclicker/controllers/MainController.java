@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,7 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.Resources;
@@ -83,11 +85,22 @@ public class MainController implements Initializable {
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
-        eventsRecorder = new EventsRecorder(config, codeTextArea);
-        // init toggles and template buttons
+        // output image
+        OutputImageView outputImageView = new OutputImageView();
+        outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
+        outputImagePane.getChildren().addAll(outputImageView);
+        mainApplication.setOnSetOutputImage(outputImageView::loadImage);
 
+
+        // events recorder
+        eventsRecorder = new EventsRecorder(config);
+        eventsRecorder.setOutputTextArea(codeTextArea);
+        eventsRecorder.setPreviewPane(previewPane);
+        eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
+        // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
+        
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
@@ -156,6 +169,15 @@ public class MainController implements Initializable {
 
     @FXML
     private TextArea outTextArea;
+    
+    @FXML
+    private VBox previewPane;
+    
+    @FXML
+    private ImageView outputImage;
+    
+    @FXML
+    private AnchorPane outputImagePane;
 
     @FXML
     private TextField txtAbsolutePathRate;
@@ -181,7 +203,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void openFile() {
-        File file = WindowManager.getInstance().openFile();
+        File file = WindowManager.getInstance().openScriptFile();
 
         if (file != null) {
             mainApplication.openFile(file);
@@ -194,7 +216,7 @@ public class MainController implements Initializable {
         if (script.isOpened()) {
             mainApplication.saveFile();
         } else {
-            File file = WindowManager.getInstance().saveFileAs();
+            File file = WindowManager.getInstance().saveScriptFileAs();
             if (file != null) {
                 mainApplication.saveFileAs(file);
             }
@@ -206,7 +228,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void saveFileAs() {
-        File file = WindowManager.getInstance().saveFileAs();
+        File file = WindowManager.getInstance().saveScriptFileAs();
         if (file != null) {
             mainApplication.saveFileAs(file);
         }
@@ -286,6 +308,10 @@ public class MainController implements Initializable {
     // click
     @FXML
     private ToggleButton btnInsertMouseCodeClick;
+    
+    // image
+    @FXML
+    private ToggleButton btnInsertSelectImage;
 
     // Combined
     @FXML
@@ -365,6 +391,9 @@ public class MainController implements Initializable {
         //mouse click
         listOfInsertCodeToggles.add(btnInsertMouseCodeClick);
 
+        // image
+        listOfInsertCodeToggles.add(btnInsertSelectImage);
+        
         // combined
         listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
@@ -472,6 +501,7 @@ public class MainController implements Initializable {
         } else {
             deselect(toggleButton);
             // if toggle has been deselected
+            eventsRecorder.stopRecording();
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
             codeTextArea.setActive(true);
@@ -734,6 +764,13 @@ public class MainController implements Initializable {
         });
     }
 
+    @FXML
+    void insertSelectImage(ActionEvent event) {
+        onToggleButtonPerformed(event, prefix -> {
+            eventsRecorder.selectImage();
+        });
+    }
+    
     //
     // TEMPLATES
     //
@@ -891,4 +928,5 @@ public class MainController implements Initializable {
         keyListener.addKeyboardListener(stopScriptListener);
         keyListener.addKeyboardListener(runScriptListener);
     }
+   
 }

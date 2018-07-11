@@ -6,5 +6,6 @@ const sidemenu = {
     "files.html": ["Files", "text", ""],
     "math.html": ["Math", "text", ""],
     "doubleClick.html": ["Double clicks", "text", ""],
+    "findImage.html": ["Find an image", "text", ""],
     "threads.html": ["Threads", "text", ""]
 };

@@ -1,6 +1,8 @@
 package org.dikhim.jclicker.model;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.configuration.MainConfiguration;
@@ -15,8 +17,11 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.script.ScriptException;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
+import java.util.function.Consumer;
 
 @SuppressWarnings("Duplicates")
 public class MainApplication {
@@ -31,6 +36,8 @@ public class MainApplication {
     
     private Robot robot;
     private JSEngine jse;
+    
+    private Consumer<BufferedImage> onSetOutputImage;
 
     private Script script = new Script();
 
@@ -125,5 +132,13 @@ public class MainApplication {
 
     public void setScript(String script) {
         this.script.codeProperty().setValue(script);
+    }
+
+    public Consumer<BufferedImage> getOnSetOutputImage() {
+        return onSetOutputImage;
+    }
+
+    public void setOnSetOutputImage(Consumer<BufferedImage> onSetOutputImage) {
+        this.onSetOutputImage = onSetOutputImage;
     }
 }
