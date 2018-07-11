@@ -45,8 +45,38 @@ public class Image extends BufferedImage {
 
     public Point findFirst(Image image) {
         Point point = null;
-        if (!isCompiled() && !image.isCompiled()) {
-            long time = System.currentTimeMillis();
+        if (isCompiled() && image.isCompiled()) {
+            List<Point> possiblePositions = new ArrayList<>();
+            List<ColorInfo> childColorInfoList = image.getPx().pixels;
+            for (ColorInfo colorInfo : childColorInfoList) {
+                // current color points
+                List<Point> childPoints = colorInfo.colorBlocks;
+                // points for the color in the parent image
+                List<Point> parentPoints = getPx().getForColor(colorInfo.rgb);
+
+                for (Point p : childPoints) {
+                    if (possiblePositions.isEmpty()) {
+                        // first fill the possiblePositions with 0 point in child object
+                        for (Point parentPoint : parentPoints) {
+                            int x = parentPoint.x - p.x;
+                            int y = parentPoint.y - p.y;
+                            if (x >= 0 && y >= 0) {
+                                possiblePositions.add(new Point(x, y));
+                            }
+                        }
+                    } else {
+                        // remove all wrong points
+                        possiblePositions.removeIf(point1 -> {
+                            // check the point from possible + coordinate inside current point
+                            int x = point1.x + p.x;
+                            int y = point1.y + p.y;
+                            return x >= getWidth() || y >= getHeight() || colorInfo.rgb != getRGB(x, y);
+                        });
+                    }
+                }
+            }
+            if (!possiblePositions.isEmpty()) point = possiblePositions.get(0);
+        } else {
             // i,j - parent image
             outOfLoop:
             for (int i = 0; i < getWidth(); i++) {
@@ -56,7 +86,6 @@ public class Image extends BufferedImage {
                     parentLoop:
                     for (int k = 0; k < image.getWidth(); k++) {
                         for (int l = 0; l < image.getHeight(); l++) {
-
                             if (i + k >= getWidth() || j + l >= getHeight() || getRGB(i + k, j + l) != image.getRGB(k, l)) {
                                 found = false;
                                 break parentLoop;
@@ -69,37 +98,6 @@ public class Image extends BufferedImage {
                     }
                 }
             }
-            System.out.println("uncompiled time:" + (System.currentTimeMillis() - time));
-        } else if (isCompiled() && image.isCompiled()) {
-            long time = System.currentTimeMillis();
-
-            List<Point> possiblePositions = new ArrayList<>();
-
-            List<ColorInfo> childColorInfoList = image.getPx().pixels;
-
-            for (ColorInfo colorInfo : childColorInfoList) {
-
-                // current color points
-                List<Point> childPoints = colorInfo.colorBlocks;
-                // points for the color in the parent image
-                List<Point> parentPoints = getPx().getForColor(colorInfo.rgb);
-                if (possiblePositions.isEmpty()) {
-                    // first fill the possiblePositions with 0 point in child object
-                    Point childPoint = childPoints.get(0);
-
-                    for (Point parentPoint : parentPoints) {
-                        int x = parentPoint.x - childPoint.x;
-                        int y = parentPoint.y - childPoint.y;
-                        if (x >= 0 && y >= 0) {
-                            possiblePositions.add(new Point(x, y));
-                        }
-                    }
-                }
-                
-            }
-
-
-            System.out.println("compiled time:" + (System.currentTimeMillis() - time));
         }
         return point;
     }
@@ -144,8 +142,6 @@ public class Image extends BufferedImage {
                     .map(colorInfo2 -> colorInfo2.colorBlocks)
                     .orElse(null);
         }
-
-
     }
 
     public Pixels getPx() {
