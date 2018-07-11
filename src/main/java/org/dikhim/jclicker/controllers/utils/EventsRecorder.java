@@ -674,7 +674,7 @@ public class EventsRecorder {
 
     public void zoomOut(ActionEvent event) {
         int value = resolution.getValue();
-        if (value < 129) {
+        if (value < 33) {
             resolution.setValue((resolution.getValue() - 1) * 2);
         }
     }
