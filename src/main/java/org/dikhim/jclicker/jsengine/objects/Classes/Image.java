@@ -6,7 +6,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public class Image extends BufferedImage {
     private Map<Integer, List<Point>> pixels = new TreeMap<>();
 
@@ -42,19 +44,39 @@ public class Image extends BufferedImage {
         return pixels;
     }
 
+    public List<Point> findAll(Image image) {
+        return findLimit(image, Integer.MAX_VALUE);
+    }
+    
     public Point findFirst(Image image) {
-        Point point = null;
+        List<Point> pointList = findLimit(image, 1);
+        if (!pointList.isEmpty()) {
+            return pointList.get(0);
+        } else {
+            return new Point(-1, -1);
+        }
+    }
+    
+    
+
+    public List<Point> findLimit(Image image, int limit) {
+        List<Point> resultList = new ArrayList<>();
+        Point point = new Point(-1, -1);
         if (isCompiled() && image.isCompiled()) {
             List<Point> possiblePositions = new ArrayList<>();
             List<ColorInfo> childColorInfoList = image.getPx().pixels;
+            boolean first = true;
+            outOfLoop:
             for (ColorInfo colorInfo : childColorInfoList) {
                 // current color points
                 List<Point> childPoints = colorInfo.colorBlocks;
                 // points for the color in the parent image
                 List<Point> parentPoints = getPx().getForColor(colorInfo.rgb);
+                if(parentPoints == null) break;
 
                 for (Point p : childPoints) {
-                    if (possiblePositions.isEmpty()) {
+                    if (first) {
+                        first = false;
                         // first fill the possiblePositions with 0 point in child object
                         for (Point parentPoint : parentPoints) {
                             int x = parentPoint.x - p.x;
@@ -63,6 +85,8 @@ public class Image extends BufferedImage {
                                 possiblePositions.add(new Point(x, y));
                             }
                         }
+                    } else if (possiblePositions.isEmpty()) {
+                        break outOfLoop;
                     } else {
                         // remove all wrong points
                         possiblePositions.removeIf(point1 -> {
@@ -74,7 +98,13 @@ public class Image extends BufferedImage {
                     }
                 }
             }
-            if (!possiblePositions.isEmpty()) point = possiblePositions.get(0);
+            for (Point p : possiblePositions) {
+                if (resultList.size() < possiblePositions.size() && resultList.size() < limit) {
+                    resultList.add(p);
+                } else {
+                    break;
+                }
+            }
         } else {
             // i,j - parent image
             outOfLoop:
@@ -92,14 +122,16 @@ public class Image extends BufferedImage {
                         }
                     }
                     if (found) {
-                        point = new Point(i, j);
-                        break outOfLoop;
+                        resultList.add(new Point(i, j));
+                        if (resultList.size() >= limit) break outOfLoop;
+
                     }
                 }
             }
         }
-        return point;
+        return resultList;
     }
+
 
     private static class ColorInfo {
         int rgb;
