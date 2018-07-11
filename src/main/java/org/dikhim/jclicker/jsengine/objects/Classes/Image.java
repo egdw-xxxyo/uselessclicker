@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class Image extends BufferedImage {
-    private Map<Integer, List<Point>> pixels = new TreeMap<>();
-
     private Pixels px = new Pixels();
 
     public Image(int width, int height, int imageType) {
@@ -38,10 +36,6 @@ public class Image extends BufferedImage {
 
     public boolean isCompiled() {
         return !px.pixels.isEmpty();
-    }
-
-    public Map<Integer, List<Point>> getPixels() {
-        return pixels;
     }
 
     public List<Point> findAll(Image image) {
@@ -197,7 +191,7 @@ public class Image extends BufferedImage {
         }
     }
 
-    public Pixels getPx() {
+    Pixels getPx() {
         return px;
     }
 }
