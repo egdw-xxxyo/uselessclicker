@@ -166,13 +166,13 @@ public class WindowManager {
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("newFile.js");
 
-        String pathFolder = preferences.get("last-script-saved-folder", "");
+        String pathFolder = preferences.get("last-opened-script-folder", "");
         if (!pathFolder.isEmpty())
             fileChooser.setInitialDirectory(new File(pathFolder));
 
         File file = fileChooser.showSaveDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-saved-script-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-opened-script-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }
@@ -201,13 +201,13 @@ public class WindowManager {
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("image.png");
 
-        String pathFolder = preferences.get("last-image-saved-folder", "");
+        String pathFolder = preferences.get("last-opened-image-folder", "");
         if (!pathFolder.isEmpty())
             fileChooser.setInitialDirectory(new File(pathFolder));
 
         File file = fileChooser.showSaveDialog(getStage("main"));
         if (file != null) {
-            preferences.put("last-saved-image-folder", file.getParentFile().getAbsolutePath());
+            preferences.put("last-opened-image-folder", file.getParentFile().getAbsolutePath());
         }
         return file;
     }

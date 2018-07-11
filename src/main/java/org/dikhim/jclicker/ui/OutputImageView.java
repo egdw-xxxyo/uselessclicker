@@ -300,7 +300,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
                 image.setFitWidth(transformedImage.getWidth() * scaleDiff);
                 image.setFitHeight(transformedImage.getHeight() * scaleDiff);
                 image.setImage(SwingFXUtils.toFXImage(transformedImage, null));
-                System.gc();
             });
         }).start();
     }

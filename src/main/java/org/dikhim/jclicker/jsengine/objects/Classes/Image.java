@@ -4,7 +4,6 @@ import org.dikhim.jclicker.util.ImageUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.PipedOutputStream;
 import java.util.*;
 import java.util.List;
 
