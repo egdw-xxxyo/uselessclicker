@@ -5,12 +5,12 @@ import org.dikhim.jclicker.jsengine.objects.CreateObject;
 
 import java.awt.*;
 
-public class CreateObjectGenerator extends SimpleCodeGenerator implements CreateObject {
-    public CreateObjectGenerator(int lineSize) {
+public class CreateObjectCodeGenerator extends SimpleCodeGenerator implements CreateObject {
+    public CreateObjectCodeGenerator(int lineSize) {
         super("create", lineSize, CreateObject.class);
     }
 
-    public CreateObjectGenerator() {
+    public CreateObjectCodeGenerator() {
         super("create", CreateObject.class);
     }
 
@@ -18,12 +18,6 @@ public class CreateObjectGenerator extends SimpleCodeGenerator implements Create
     protected SimpleCodeGenerator append(String str) {
         getSb().append(str);
         return this;
-    }
-
-    @Override
-    public Image image(int width, int height) {
-        append(String.format("var image = create.image(%s, %s);\n", width, height));
-        return null;
     }
 
     @Override

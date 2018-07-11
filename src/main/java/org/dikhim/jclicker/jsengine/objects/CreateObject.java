@@ -5,7 +5,6 @@ import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 import java.awt.*;
 
 public interface CreateObject {
-    Image image(int width, int height);
 
     Image image(String zipBase64String);
 
