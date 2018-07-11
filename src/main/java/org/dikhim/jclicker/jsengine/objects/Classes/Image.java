@@ -47,7 +47,16 @@ public class Image extends BufferedImage {
     public List<Point> findAll(Image image) {
         return findLimit(image, Integer.MAX_VALUE);
     }
-    
+
+    public List<Point> findAllCenter(Image image) {
+        return findAll(image).stream()
+                .peek(point -> {
+                    point.x = point.x + image.getWidth() / 2;
+                    point.y = point.y + image.getHeight() / 2;
+                })
+                .collect(Collectors.toList());
+    }
+
     public Point findFirst(Image image) {
         List<Point> pointList = findLimit(image, 1);
         if (!pointList.isEmpty()) {
@@ -56,8 +65,13 @@ public class Image extends BufferedImage {
             return new Point(-1, -1);
         }
     }
-    
-    
+
+    public Point findFirstCenter(Image image) {
+        Point point = findFirst(image);
+        point.x = point.x + image.getWidth() / 2;
+        point.y = point.y + image.getHeight() / 2;
+        return point;
+    }
 
     public List<Point> findLimit(Image image, int limit) {
         List<Point> resultList = new ArrayList<>();
@@ -72,7 +86,7 @@ public class Image extends BufferedImage {
                 List<Point> childPoints = colorInfo.colorBlocks;
                 // points for the color in the parent image
                 List<Point> parentPoints = getPx().getForColor(colorInfo.rgb);
-                if(parentPoints == null) break;
+                if (parentPoints == null) break;
 
                 for (Point p : childPoints) {
                     if (first) {
@@ -132,6 +146,14 @@ public class Image extends BufferedImage {
         return resultList;
     }
 
+    public List<Point> findLimitCenter(Image image, int limit) {
+        return findLimit(image, limit).stream()
+                .peek(point -> {
+                    point.x = point.x + image.getWidth() / 2;
+                    point.y = point.y + image.getHeight() / 2;
+                })
+                .collect(Collectors.toList());
+    }
 
     private static class ColorInfo {
         int rgb;
