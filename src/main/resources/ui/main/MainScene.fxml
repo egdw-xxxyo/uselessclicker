@@ -311,6 +311,24 @@
                                                 <VBox fx:id="systemTemplateButtonContainer" />
                                             </ScrollPane>
                                         </TitledPane>
+                              <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.clipboard">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox fx:id="clipboardTemplateButtonContainer" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
+                              <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.create">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox fx:id="createTemplateButtonContainer" />
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.language">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="languageTemplateButtonContainer" />

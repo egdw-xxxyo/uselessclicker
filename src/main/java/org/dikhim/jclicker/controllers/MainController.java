@@ -100,7 +100,7 @@ public class MainController implements Initializable {
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
-        
+
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
@@ -169,13 +169,13 @@ public class MainController implements Initializable {
 
     @FXML
     private TextArea outTextArea;
-    
+
     @FXML
     private VBox previewPane;
-    
+
     @FXML
     private ImageView outputImage;
-    
+
     @FXML
     private AnchorPane outputImagePane;
 
@@ -308,7 +308,7 @@ public class MainController implements Initializable {
     // click
     @FXML
     private ToggleButton btnInsertMouseCodeClick;
-    
+
     // image
     @FXML
     private ToggleButton btnInsertSelectImage;
@@ -393,7 +393,7 @@ public class MainController implements Initializable {
 
         // image
         listOfInsertCodeToggles.add(btnInsertSelectImage);
-        
+
         // combined
         listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
@@ -770,7 +770,7 @@ public class MainController implements Initializable {
             eventsRecorder.selectImage();
         });
     }
-    
+
     //
     // TEMPLATES
     //
@@ -781,13 +781,19 @@ public class MainController implements Initializable {
     public VBox keyboardTemplateButtonContainer;
 
     @FXML
-    public VBox languageTemplateButtonContainer;
-
-    @FXML
     public VBox mouseTemplateButtonContainer;
 
     @FXML
+    public VBox clipboardTemplateButtonContainer;
+    
+    @FXML
     public VBox systemTemplateButtonContainer;
+
+    @FXML
+    public VBox createTemplateButtonContainer;
+    
+    @FXML
+    public VBox languageTemplateButtonContainer;
 
 
     /**
@@ -797,9 +803,9 @@ public class MainController implements Initializable {
      * @param prop - property file
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
-        
+
         TemplateButtonGenerator buttonGenerator = new TemplateButtonGenerator()
-                .setLineSize(80)
+                .setLineSize(120)
                 .setProperties(prop)
                 .addStyleClass("templateButton")
                 .setOnMouseEntered(this::showCodeSample)
@@ -809,7 +815,9 @@ public class MainController implements Initializable {
 
         keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
+        clipboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForClipboardObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());
+        createTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForCreateObject());
         languageTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForLanguage());
     }
 
@@ -928,5 +936,5 @@ public class MainController implements Initializable {
         keyListener.addKeyboardListener(stopScriptListener);
         keyListener.addKeyboardListener(runScriptListener);
     }
-   
+
 }
