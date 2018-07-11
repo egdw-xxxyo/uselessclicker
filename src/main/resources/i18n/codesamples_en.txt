@@ -248,6 +248,12 @@ $combinedEncodingType:
   Using unicode characters a string takes less space but can be easily corrupted
   Using base64-zip encoding a string takes less space, but cannot be edited afterwards  
 
+
+/////////////////////////////////////
+//////////////IMAGE//////////////////
+$btnInsertSelectImage:
+  Insert a selected area to the image output view
+
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ////////////TEMPLATES////////////////
