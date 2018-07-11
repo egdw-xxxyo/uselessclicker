@@ -76,14 +76,14 @@
 }
 
 .up-arrow{
-    -fx-background-image: url("../images/arrow-up_16.png");
+    -fx-background-image: url("../images/arrow-up_12.png");
 }
 .right-arrow{
-    -fx-background-image: url("../images/arrow-right_16.png");
+    -fx-background-image: url("../images/arrow-right_12.png");
 }
 .down-arrow{
-    -fx-background-image: url("../images/arrow-down_16.png");
+    -fx-background-image: url("../images/arrow-down_12.png");
 }
 .left-arrow{
-    -fx-background-image: url("../images/arrow-left_16.png");
+    -fx-background-image: url("../images/arrow-left_12.png");
 }
