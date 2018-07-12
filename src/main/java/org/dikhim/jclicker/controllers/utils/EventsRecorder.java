@@ -15,7 +15,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
@@ -34,6 +33,7 @@ import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerat
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.ui.CodeTextArea;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.ShapeUtil;
 

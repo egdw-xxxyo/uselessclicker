@@ -16,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
@@ -33,6 +32,7 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.ui.CodeTextArea;
 import org.dikhim.jclicker.ui.OutTextArea;
 import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
@@ -78,13 +78,15 @@ public class MainController implements Initializable {
         this.resources = resources;
         config = mainApplication.getConfig();
         // init text areas
-        codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
-
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
+        // code area
+        codeTextArea = new CodeTextArea();
+        codeAreaPane.getChildren().addAll(codeTextArea);
+        codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
 
         // output text pane
         OutTextArea outTextArea = new OutTextArea();
@@ -168,7 +170,6 @@ public class MainController implements Initializable {
     @FXML
     private Button btnShowConfigWindow;
 
-    @FXML
     private CodeTextArea codeTextArea;
 
     @FXML
@@ -178,6 +179,11 @@ public class MainController implements Initializable {
     @FXML
     private VBox previewPane;
 
+    // code pane
+
+    @FXML
+    private AnchorPane codeAreaPane;
+    
     // output pane
     @FXML
     private TabPane outputTabPane;

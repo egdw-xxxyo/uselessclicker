@@ -6,6 +6,7 @@ import javafx.scene.layout.AnchorPane;
 public class OutTextArea extends TextArea {
 
     public OutTextArea() {
+        super();
         AnchorPane.setTopAnchor(this, 0d);
         AnchorPane.setRightAnchor(this, 0d);
         AnchorPane.setBottomAnchor(this, 0d);
