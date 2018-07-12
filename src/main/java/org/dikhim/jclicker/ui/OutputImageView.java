@@ -5,6 +5,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
@@ -48,10 +50,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-    }
-
-    private void load() {
-        
     }
 
     @FXML
@@ -325,5 +323,9 @@ public class OutputImageView extends AnchorPane implements Initializable {
         originalImage = image;
         reset();
         repaint();
+    }
+    
+    public void addChangeListener(Runnable listener) {
+        image.imageProperty().addListener((observable, oldValue, newValue) -> listener.run());
     }
 }

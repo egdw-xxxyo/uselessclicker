@@ -89,6 +89,9 @@ public class MainController implements Initializable {
         OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
+        outputImageView.addChangeListener(()->{
+            outputTabPane.getSelectionModel().select(1);
+        });
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
 
         // events recorder
@@ -171,6 +174,9 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox previewPane;
+    
+    @FXML
+    private TabPane outputTabPane;
 
     @FXML
     private ImageView outputImage;
