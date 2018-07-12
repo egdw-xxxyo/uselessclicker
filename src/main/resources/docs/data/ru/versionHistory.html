@@ -1,0 +1,56 @@
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "versionHistory.html";</script>
+    <script src='../../js/jquery.min.js'></script>
+    <script src='../../js/root.js'></script>
+    <script src="index.js"></script>
+
+    <link rel='stylesheet prefetch' href='../../css/index.css'>
+</head>
+<body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h3>Версия 0.4.0</h3>
+    <h4>Работа с экраном</h4>
+    <ul>
+        <li>добален объект screen, при помощи которого можно захватить изображение с дисплея;</li>
+        <li>добавлена вкладка Screen, где можно быстро выделить необходимую часть экрана и сохранить ее.</li>
+    </ul>
+
+    <h4>Работа с изображениями</h4>
+    <ul>
+        <li>новый класс Image, который содержит все необходимые методы для обработки изображения;</li>
+        <li>поиск изображения в другом изображении используя методы findFirst, findAll и findLimit;</li>
+        <li>изображения можно предварительно скомпилировать вызвав метод image.compile(), тем самым затратить время на
+            компиляцию, но ускорить дальнейший поиск;
+        </li>
+        <li>добавлено поле вывода изображения, где его можно предварительно отредактировать, сохранить, загрузить
+            из файла либо из выбранной строки;
+        </li>
+        <li>загрузить изображение в поле вывода из скрипта можно вызвав метод system.showImage();</li>
+
+    </ul>
+    <h4>Клавиатура</h4>
+    <ul>
+        <li>Добавлен новый метод key.typeText(String layout, String text) для набора текста в указанной раскладке;</li>
+        <li>для набора текста методом key.typeText добавлена поддержка раскладок:
+            <br>"us" - English(US),
+            <br>"gb" - English(UK),
+            <br>"ru" - Russian,
+            <br>"ua" - Ukrainian.
+        </li>
+        <li>Добавлена клавиша ALT_GR для тестирования<./li>
+    </ul>
+</div>
+</body>
+</html>

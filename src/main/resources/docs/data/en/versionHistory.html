@@ -1,0 +1,51 @@
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "versionHistory.html";</script>
+    <script src='../../js/jquery.min.js'></script>
+    <script src='../../js/root.js'></script>
+    <script src="index.js"></script>
+
+    <link rel='stylesheet prefetch' href='../../css/index.css'>
+</head>
+<body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h3>Version 0.4.0</h3>
+    <h4>Screen capturing</h4>
+    <ul>
+        <li>Added a screen object, with which you can capture an image from the display;</li>
+        <li>added tab Screen, where you can quickly select the part of the screen and save it.</li>
+    </ul>
+
+    <h4>Images</h4>
+    <ul>
+        <li>a new Image class that contains all the necessary methods for image processing;</li>
+        <li>searching for an image in another image using the findFirst, findAll, and findLimit methods;</li>
+        <li>images can be compiled by calling the method image.compile(), thereby consuming time for the compilation, but speed up further search;</li>
+        <li>added the image output view, where an image can be loaded, edited, saved to file or inserted to a script;</li>
+        <li>you can upload an image to the image output view from the script using the system.showImage() method.</li>
+    </ul>
+    <h4>Keyboard</h4>
+    <ul>
+        <li>Added new method key.typeText(String layout, String text) that typing the passed text in the specified layout;</li>
+        <li>the method key.typeText() supported layouts:
+            <br>"us" - English(US),
+            <br>"gb" - English(UK),
+            <br>"ru" - Russian,
+            <br>"ua" - Ukrainian.
+        </li>
+        <li>Added the key ALT_GR for testing</li>
+    </ul> 
+</div>
+</body>
+</html>
