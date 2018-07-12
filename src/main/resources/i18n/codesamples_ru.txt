@@ -1075,6 +1075,7 @@ screen.getImage(0,0,0,0);
   
 Использование:
   getImage(int x0, int y0, int x1, int y1)
+  getImage(Point p1, Point p2)
   getImage(Rectangle rectangle)
   
 $screen_getFilledImage_hint:
@@ -1082,6 +1083,10 @@ screen.getFilledImage(0,0,0,0);
   
 Получить изображение указанной области
 Если область выходит за края экрана, то пустая область будет заполнена черным цветом
+  
+Использование:
+  getFilledImage(int x0, int y0, int x1, int y1)
+  getFilledImage(Point p1, Point p2)
 
 $screen_getHeight_hint:
 screen.getHeight();

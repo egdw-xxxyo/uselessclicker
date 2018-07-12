@@ -1070,6 +1070,7 @@ If the area is beyond the edges of the screen, the image will be cropped
   
 Usages:
   getImage(int x0, int y0, int x1, int y1)
+  getImage(Point p1, Point p2)
   getImage(Rectangle rectangle)
   
 $screen_getFilledImage_hint:
@@ -1077,6 +1078,10 @@ screen.getFilledImage(0,0,0,0);
   
 Get an image for the selected area
 If the area is beyond the edges of the screen, the blank area wil be filled with the black color
+  
+Usages:
+  getFilledImage(int x0, int y0, int x1, int y1)
+  getFilledImage(Point p1, Point p2)
 
 $screen_getHeight_hint:
 screen.getHeight();
