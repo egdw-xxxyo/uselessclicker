@@ -7,5 +7,6 @@ const sidemenu = {
     "math.html": ["Math", "text", ""],
     "doubleClick.html": ["Double clicks", "text", ""],
     "findImage.html": ["Find an image", "text", ""],
+    "typeText.html": ["Text typing", "text", ""],
     "threads.html": ["Threads", "text", ""]
 };

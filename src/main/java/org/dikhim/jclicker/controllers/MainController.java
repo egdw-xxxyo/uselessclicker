@@ -91,12 +91,12 @@ public class MainController implements Initializable {
         outputImagePane.getChildren().addAll(outputImageView);
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
 
-
         // events recorder
         eventsRecorder = new EventsRecorder(config);
         eventsRecorder.setOutputTextArea(codeTextArea);
         eventsRecorder.setPreviewPane(previewPane);
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
+        
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
@@ -108,7 +108,6 @@ public class MainController implements Initializable {
         setToggleStatus(null);
 
         bindConfig();
-
     }
 
 
