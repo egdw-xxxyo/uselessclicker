@@ -30,308 +30,532 @@
 
 <!--suppress ALL -->
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0"
+            stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.dikhim.jclicker.controllers.MainController">
 
     <center>
         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints/>
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints />
-                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints/>
+                <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <VBox>
-                <FlowPane maxWidth="1.7976931348623157E308" rowValignment="TOP" style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" vgap="4.0">
-                    <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0" mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0" text="%button.new">
+                <FlowPane maxWidth="1.7976931348623157E308" rowValignment="TOP"
+                          style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;"
+                          vgap="4.0">
+                    <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0"
+                            mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0"
+                            text="%button.new">
                         <font>
-                            <Font size="14.0" />
+                            <Font size="14.0"/>
                         </font>
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false" onAction="#openFile" text="%button.open">
+                    <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false"
+                            onAction="#openFile" text="%button.open">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false" onAction="#saveFile" text="%button.save">
+                    <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false"
+                            onAction="#saveFile" text="%button.save">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="save-as-script-button" fx:id="btnSaveFileAs" ellipsisString="." focusTraversable="false" mnemonicParsing="false" onAction="#saveFileAs" text="%button.saveAs">
+                    <Button id="save-as-script-button" fx:id="btnSaveFileAs" ellipsisString="." focusTraversable="false"
+                            mnemonicParsing="false" onAction="#saveFileAs" text="%button.saveAs">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="%button.run">
+                    <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false"
+                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                            minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="%button.run">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="%button.stop">
+                    <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false"
+                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                            minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="%button.stop">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="server-button" fx:id="btnShowSeverWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showServerWindow" text="%button.server">
+                    <Button id="server-button" fx:id="btnShowSeverWindow" focusTraversable="false"
+                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                            minWidth="32.0" mnemonicParsing="false" onAction="#showServerWindow" text="%button.server">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="config-button" fx:id="btnShowConfigWindow" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showConfigWindow" text="%button.settings">
+                    <Button id="config-button" fx:id="btnShowConfigWindow" focusTraversable="false"
+                            maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0"
+                            minWidth="32.0" mnemonicParsing="false" onAction="#showConfigWindow"
+                            text="%button.settings">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="info-button" fx:id="btnAboutWindow" ellipsisString="." focusTraversable="false" layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showAboutWindow" text="%button.about">
+                    <Button id="info-button" fx:id="btnAboutWindow" ellipsisString="." focusTraversable="false"
+                            layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"
+                            onAction="#showAboutWindow" text="%button.about">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
-                    <Button id="help-button" fx:id="btnHelpWindow" ellipsisString="." focusTraversable="false" layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#showHelpWindow" text="%button.help">
+                    <Button id="help-button" fx:id="btnHelpWindow" ellipsisString="." focusTraversable="false"
+                            layoutX="465.0" layoutY="10.0" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"
+                            onAction="#showHelpWindow" text="%button.help">
                         <styleClass>
-                            <String fx:value="script-button" />
-                            <String fx:value="gray-element" />
+                            <String fx:value="script-button"/>
+                            <String fx:value="gray-element"/>
                         </styleClass>
                     </Button>
                 </FlowPane>
                 <HBox>
-                    <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton" text="Running:   newFile.js">
+                    <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"
+                                  onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton"
+                                  text="Running:   newFile.js">
                         <font>
-                            <Font name="FreeMono Bold" size="13.0" />
+                            <Font name="FreeMono Bold" size="13.0"/>
                         </font>
                     </ToggleButton>
-                    <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnStatusToggles" styleClass="templateButton" text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
+                    <ToggleButton fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                  onAction="#onBtnStatusToggles" styleClass="templateButton"
+                                  text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease"
+                                  HBox.hgrow="SOMETIMES">
                         <font>
-                            <Font name="FreeMono Bold" size="13.0" />
+                            <Font name="FreeMono Bold" size="13.0"/>
                         </font>
                     </ToggleButton>
                 </HBox>
             </VBox>
             <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                    <SplitPane dividerPositions="0.5720524017467249" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <SplitPane dividerPositions="0.5720524017467249" orientation="VERTICAL"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                               AnchorPane.topAnchor="0.0">
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                            <CodeTextArea fx:id="codeTextArea" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                            <CodeTextArea fx:id="codeTextArea" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0"
+                                          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                          AnchorPane.topAnchor="0.0"/>
                         </AnchorPane>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0">
-                     <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                       <tabs>
-                         <Tab text="Output">
-                           <content>
-                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <children>
-                                              <TextArea fx:id="outTextArea" styleClass="code-text-area" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                  <font>
-                                                      <Font name="Monospaced Bold" size="13.0" />
-                                                  </font>
-                                              </TextArea>
-                                    </children>
-                                 </AnchorPane>
-                           </content>
-                         </Tab>
-                         <Tab text="Image">
-                           <content>
-                             <AnchorPane fx:id="outputImagePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                           </content>
-                         </Tab>
-                       </tabs>
-                     </TabPane>
+                            <TabPane tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0"
+                                     AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                                     AnchorPane.topAnchor="0.0">
+                                <tabs>
+                                    <Tab text="Output">
+                                        <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+                                                        prefWidth="200.0">
+                                                <children>
+                                                    <TextArea fx:id="outTextArea" styleClass="code-text-area" text=""
+                                                              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                        <font>
+                                                            <Font name="Monospaced Bold" size="13.0"/>
+                                                        </font>
+                                                    </TextArea>
+                                                </children>
+                                            </AnchorPane>
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Image">
+                                        <content>
+                                            <AnchorPane fx:id="outputImagePane" minHeight="0.0" minWidth="0.0"
+                                                        prefHeight="180.0" prefWidth="200.0"/>
+                                        </content>
+                                    </Tab>
+                                </tabs>
+                            </TabPane>
                         </AnchorPane>
                     </SplitPane>
-                    <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
+                    <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false"
+                              maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0"
+                              prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false"
+                              wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0"
+                              AnchorPane.topAnchor="10.0">
                         <effect>
-                            <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0" />
+                            <DropShadow color="#000000ac" height="15.0" radius="7.0" width="15.0"/>
                         </effect>
                         <font>
-                            <Font name="FreeMono Bold" size="13.0" />
+                            <Font name="FreeMono Bold" size="13.0"/>
                         </font>
                     </TextArea>
-               <VBox fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
-                  <children>
-                     <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../../images/cursor128.png" />
-                        </image>
-                        <VBox.margin>
-                           <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                        </VBox.margin>
-                     </ImageView>
-                     <GridPane>
-                        <columnConstraints>
-                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-                        </columnConstraints>
-                     </GridPane>
-                     <GridPane fx:id="previewButtonPane">
-                        <columnConstraints>
-                           <ColumnConstraints hgrow="SOMETIMES" />
-                           <ColumnConstraints hgrow="SOMETIMES" />
-                        </columnConstraints>
-                        <rowConstraints>
-                           <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        </rowConstraints>
+                    <VBox fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;"
+                          AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0">
                         <children>
-                           <Button id="zoom-out" fx:id="previewZoomOut" mnemonicParsing="false" styleClass="zoom-button" GridPane.halignment="CENTER" />
-                           <Button id="zoom-in" fx:id="previewZoomIn" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="zoom-button" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                            <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0"
+                                       fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
+                                <image>
+                                    <Image url="@../../images/cursor128.png"/>
+                                </image>
+                                <VBox.margin>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0"/>
+                                </VBox.margin>
+                            </ImageView>
+                            <GridPane>
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                                </columnConstraints>
+                            </GridPane>
+                            <GridPane fx:id="previewButtonPane">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES"/>
+                                    <ColumnConstraints hgrow="SOMETIMES"/>
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                                </rowConstraints>
+                                <children>
+                                    <Button id="zoom-out" fx:id="previewZoomOut" mnemonicParsing="false"
+                                            styleClass="zoom-button" GridPane.halignment="CENTER"/>
+                                    <Button id="zoom-in" fx:id="previewZoomIn" mnemonicParsing="false"
+                                            nodeOrientation="LEFT_TO_RIGHT" styleClass="zoom-button"
+                                            GridPane.columnIndex="1" GridPane.halignment="CENTER"/>
+                                </children>
+                            </GridPane>
                         </children>
-                     </GridPane>
-                  </children>
-                  <effect>
-                     <DropShadow />
-                  </effect>
-               </VBox>
+                        <effect>
+                            <DropShadow/>
+                        </effect>
+                    </VBox>
                 </AnchorPane>
                 <AnchorPane id="insertCodePane" fx:id="templatePane">
-                    <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                         <panes>
-                            <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.eRec">
+                            <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane"
+                                        text="%r.eRec">
                                 <Accordion styleClass="childAccordion">
                                     <panes>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.eRec.keyboard">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.eRec.keyboard">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
-                                                    <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyName" styleClass="templateButton" text="%r.eRec.keyboard.keyName" />
-                                                    <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCode" styleClass="templateButton" text="%r.eRec.keyboard.pressRelease" />
-                                                    <ToggleButton fx:id="btnInsertKeyCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertKeyCodeWithDelay" styleClass="templateButton" text="%r.eRec.keyboard.pressReleaseSleep" />
+                                                    <ToggleButton fx:id="btnInsertKeyName" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertKeyName"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.keyboard.keyName"/>
+                                                    <ToggleButton fx:id="btnInsertKeyCode" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertKeyCode"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.keyboard.pressRelease"/>
+                                                    <ToggleButton fx:id="btnInsertKeyCodeWithDelay"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#insertKeyCodeWithDelay"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.keyboard.pressReleaseSleep"/>
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.mouseBasics">
+                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
+                                                    prefWidth="200.0" styleClass="insert-code-titled-pane"
+                                                    text="%r.eRec.mouseBasics">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
-                                                    <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseName" styleClass="templateButton" text="%r.eRec.mouseBasics.buttonName" />
-                                                    <ToggleButton fx:id="btnInsertMouseClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClick" styleClass="templateButton" text="%r.eRec.mouseBasics.click" />
-                                                    <ToggleButton fx:id="btnInsertMouseClickAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseClickAt" styleClass="templateButton" text="%r.eRec.mouseBasics.clickAt" />
-                                                    <ToggleButton fx:id="btnInsertMouseMove" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMove" styleClass="templateButton" text="%r.eRec.mouseBasics.move" />
-                                                    <ToggleButton fx:id="btnInsertMouseMoveTo" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseMoveTo" styleClass="templateButton" text="%r.eRec.mouseBasics.moveTo" />
-                                                    <ToggleButton fx:id="btnInsertMousePress" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePress" styleClass="templateButton" text="%r.eRec.mouseBasics.press" />
-                                                    <ToggleButton fx:id="btnInsertMousePressAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMousePressAt" styleClass="templateButton" text="%r.eRec.mouseBasics.pressAt" />
-                                                    <ToggleButton fx:id="btnInsertMouseRelease" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelease" styleClass="templateButton" text="%r.eRec.mouseBasics.release" />
-                                                    <ToggleButton fx:id="btnInsertMouseReleaseAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseReleaseAt" styleClass="templateButton" text="%r.eRec.mouseBasics.releaseAt" />
-                                                    <ToggleButton fx:id="btnInsertMouseWheel" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseWheel" styleClass="templateButton" text="%r.eRec.mouseBasics.wheel" />
+                                                    <ToggleButton fx:id="btnInsertMouseName" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseName"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.buttonName"/>
+                                                    <ToggleButton fx:id="btnInsertMouseClick" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseClick"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.click"/>
+                                                    <ToggleButton fx:id="btnInsertMouseClickAt" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseClickAt"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.clickAt"/>
+                                                    <ToggleButton fx:id="btnInsertMouseMove" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseMove"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.move"/>
+                                                    <ToggleButton fx:id="btnInsertMouseMoveTo" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseMoveTo"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.moveTo"/>
+                                                    <ToggleButton fx:id="btnInsertMousePress" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMousePress"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.press"/>
+                                                    <ToggleButton fx:id="btnInsertMousePressAt" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMousePressAt"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.pressAt"/>
+                                                    <ToggleButton fx:id="btnInsertMouseRelease" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseRelease"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.release"/>
+                                                    <ToggleButton fx:id="btnInsertMouseReleaseAt"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#insertMouseReleaseAt"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.releaseAt"/>
+                                                    <ToggleButton fx:id="btnInsertMouseWheel" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseWheel"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseBasics.wheel"/>
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.mouseButtons">
+                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
+                                                    prefWidth="200.0" styleClass="insert-code-titled-pane"
+                                                    text="%r.eRec.mouseButtons">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
-                                                    <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCode" styleClass="templateButton" text="%r.eRec.mouseButtons.buttonWheelAt" />
-                                                    <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeWithDelay" styleClass="templateButton" text="%r.eRec.mouseButtons.buttonWheelAtSleep" />
-                                                    <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseRelativeCode" styleClass="templateButton" text="%r.eRec.mouseButtons.moveAndButtonWheel" />
+                                                    <ToggleButton fx:id="btnInsertMouseCode" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertMouseCode"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseButtons.buttonWheelAt"/>
+                                                    <ToggleButton fx:id="btnInsertMouseCodeWithDelay"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#insertMouseCodeWithDelay"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseButtons.buttonWheelAtSleep"/>
+                                                    <ToggleButton fx:id="btnInsertMouseRelativeCode"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#insertMouseRelativeCode"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseButtons.moveAndButtonWheel"/>
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.mouseClick">
+                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0"
+                                                    prefWidth="200.0" styleClass="insert-code-titled-pane"
+                                                    text="%r.eRec.mouseClick">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
-                                                    <ToggleButton fx:id="btnInsertMouseCodeClick" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertMouseCodeClick" styleClass="templateButton" text="%r.eRec.mouseClick.click" />
+                                                    <ToggleButton fx:id="btnInsertMouseCodeClick"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#insertMouseCodeClick"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.mouseClick.click"/>
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.eRec.combined">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.eRec.combined">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox>
-                                                    <ToggleButton fx:id="btnInsertCombinedLog" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertCombinedLog" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="%r.eRec.combined.activate" />
-                                                    <Label styleClass="combined-label" text="%r.eRec.combined.keyboard" />
-                                                    <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.keys" />
-                                                    <Label styleClass="combined-label" text="%r.eRec.combined.mouse" />
-                                                    <ToggleButton fx:id="btnCombinedMouseButtons" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.buttons" />
-                                                    <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.wheel" />
-                                                    <Label styleClass="combined-label" text="%r.eRec.combined.movement" />
-                                                    <ToggleButton fx:id="btnCombinedAbsolutePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedAbsolutePathAction" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.absolute" />
-                                                    <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="%r.eRec.combined.relative" />
-                                                    <Label styleClass="combined-label" text="%r.eRec.combined.options" />
-                                                    <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.delays" />
-                                       <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
-                                                    <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.fixedRate">
+                                                    <ToggleButton fx:id="btnInsertCombinedLog" focusTraversable="false"
+                                                                  maxHeight="100.0" maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" onAction="#insertCombinedLog"
+                                                                  prefHeight="100.0" prefWidth="250.0"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.activate"/>
+                                                    <Label styleClass="combined-label"
+                                                           text="%r.eRec.combined.keyboard"/>
+                                                    <ToggleButton fx:id="btnCombinedKeys" focusTraversable="false"
+                                                                  maxHeight="100.0" maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" prefHeight="100.0"
+                                                                  prefWidth="250.0" selected="true"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.keys"/>
+                                                    <Label styleClass="combined-label" text="%r.eRec.combined.mouse"/>
+                                                    <ToggleButton fx:id="btnCombinedMouseButtons"
+                                                                  focusTraversable="false" maxHeight="100.0"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" prefHeight="100.0"
+                                                                  prefWidth="250.0" selected="true"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.buttons"/>
+                                                    <ToggleButton fx:id="btnCombinedMouseWheel" focusTraversable="false"
+                                                                  maxHeight="100.0" maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" prefHeight="100.0"
+                                                                  prefWidth="250.0" selected="true"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.wheel"/>
+                                                    <Label styleClass="combined-label"
+                                                           text="%r.eRec.combined.movement"/>
+                                                    <ToggleButton fx:id="btnCombinedAbsolutePath"
+                                                                  focusTraversable="false" maxHeight="100.0"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#onCombinedAbsolutePathAction"
+                                                                  prefHeight="100.0" prefWidth="250.0" selected="true"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.absolute"/>
+                                                    <ToggleButton fx:id="btnCombinedRelativePath"
+                                                                  focusTraversable="false" maxHeight="100.0"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  onAction="#onCombinedRelativePathAction"
+                                                                  prefHeight="100.0" prefWidth="250.0"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.relative"/>
+                                                    <Label styleClass="combined-label" text="%r.eRec.combined.options"/>
+                                                    <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false"
+                                                                  maxHeight="100.0" maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false" prefHeight="100.0"
+                                                                  prefWidth="250.0" selected="true"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.delays"/>
+                                                    <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0"
+                                                               styleClass="templateButton"/>
+                                                    <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  nodeOrientation="LEFT_TO_RIGHT"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.fixedRate">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
+                                                            <TextField fx:id="txtCombinedFixRate" maxWidth="50.0"
+                                                                       text="30"/>
                                                         </graphic>
                                                     </ToggleButton>
-                                                    <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.minDistance">
+                                                    <ToggleButton fx:id="btnCombinedMinDistance"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  nodeOrientation="LEFT_TO_RIGHT"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.minDistance">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" text="5" />
+                                                            <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0"
+                                                                       text="5"/>
                                                         </graphic>
                                                     </ToggleButton>
-                                                    <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.stopPoints">
+                                                    <ToggleButton fx:id="btnCombinedDetectStopPoints"
+                                                                  focusTraversable="false"
+                                                                  maxWidth="1.7976931348623157E308"
+                                                                  mnemonicParsing="false"
+                                                                  nodeOrientation="LEFT_TO_RIGHT"
+                                                                  styleClass="templateButton"
+                                                                  text="%r.eRec.combined.stopPoints">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" text="100" />
+                                                            <TextField fx:id="txtCombinedDetectStopPoints"
+                                                                       maxWidth="50.0" text="100"/>
                                                         </graphic>
                                                     </ToggleButton>
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>
-                              <TitledPane animated="false" focusTraversable="false" layoutX="10.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.image">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertSelectImage" styleClass="templateButton" text="%r.eRec.image.selectImage" />
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" layoutX="10.0"
+                                                    layoutY="85.0" prefHeight="200.0" prefWidth="200.0"
+                                                    styleClass="insert-code-titled-pane" text="%r.eRec.image">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox>
+                                                            <children>
+                                                                <ToggleButton fx:id="btnInsertSelectImage"
+                                                                              focusTraversable="false"
+                                                                              maxWidth="1.7976931348623157E308"
+                                                                              mnemonicParsing="false"
+                                                                              onAction="#insertSelectImage"
+                                                                              styleClass="templateButton"
+                                                                              text="%r.eRec.image.selectImage"/>
+                                                            </children>
+                                                        </VBox>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
                                     </panes>
                                 </Accordion>
                             </TitledPane>
-                            <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates">
+                            <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane"
+                                        text="%r.templates">
                                 <Accordion styleClass="childAccordion">
                                     <panes>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.key">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.key">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="keyboardTemplateButtonContainer" />
+                                                <VBox fx:id="keyboardTemplateButtonContainer"/>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.mouse">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.mouse">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="mouseTemplateButtonContainer" />
+                                                <VBox fx:id="mouseTemplateButtonContainer"/>
                                             </ScrollPane>
                                         </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.system">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.system">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="systemTemplateButtonContainer" />
+                                                <VBox fx:id="systemTemplateButtonContainer"/>
                                             </ScrollPane>
                                         </TitledPane>
-                              <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.clipboard">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox fx:id="clipboardTemplateButtonContainer" />
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
-                              <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.create">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox fx:id="createTemplateButtonContainer" />
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
-                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.language">
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.clipboard">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="clipboardTemplateButtonContainer"/>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.screen">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="screenTemplateButtonContainer"/>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.create">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="createTemplateButtonContainer"/>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false"
+                                                    styleClass="insert-code-titled-pane" text="%r.templates.language">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                                <VBox fx:id="languageTemplateButtonContainer" />
+                                                <VBox fx:id="languageTemplateButtonContainer"/>
                                             </ScrollPane>
                                         </TitledPane>
                                     </panes>

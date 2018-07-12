@@ -21,6 +21,7 @@ public class TemplateButtonGenerator {
     private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator;
     private MouseObjectCodeGenerator mouseObjectCodeGenerator;
     private SystemObjectCodeGenerator systemObjectCodeGenerator;
+    private ScreenObjectCodeGenerator screenObjectCodeGenerator;
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator;
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator;
     private CreateObjectCodeGenerator createObjectCodeGenerator;
@@ -67,6 +68,7 @@ public class TemplateButtonGenerator {
         keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
         mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
         systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
+        screenObjectCodeGenerator = new ScreenObjectCodeGenerator(lineSize);
         clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
         combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
         createObjectCodeGenerator = new CreateObjectCodeGenerator(lineSize);
@@ -83,6 +85,10 @@ public class TemplateButtonGenerator {
 
     public List<Button> getButtonListForSystemObject() {
         return createButtons("system", systemObjectCodeGenerator.getMethodNames());
+    }
+    
+    public List<Button> getButtonListForScreenObject() {
+        return createButtons("screen", screenObjectCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForClipboardObject() {

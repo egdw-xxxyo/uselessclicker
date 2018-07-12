@@ -21,6 +21,12 @@ public class CreateObjectCodeGenerator extends SimpleCodeGenerator implements Cr
     }
 
     @Override
+    public Image image(int width, int height) {
+        append(String.format("var image = create.image(%s, %s);\n", width, height));
+        return null;
+    }
+
+    @Override
     public Image image(String zipBase64String) {
         append(String.format("var image = create.image('%s');\n", zipBase64String));
         return null;

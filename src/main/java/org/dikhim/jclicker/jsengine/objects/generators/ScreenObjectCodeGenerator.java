@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class ScreenObjectCodeGenerator extends SimpleCodeGenerator implements ScreenObject {
-    ScreenObjectCodeGenerator(int lineSize) {
+    public ScreenObjectCodeGenerator(int lineSize) {
         super("screen", lineSize, ScreenObject.class);
     }
 

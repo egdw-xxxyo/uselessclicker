@@ -788,6 +788,9 @@ public class MainController implements Initializable {
     
     @FXML
     public VBox systemTemplateButtonContainer;
+    
+    @FXML
+    public VBox screenTemplateButtonContainer;
 
     @FXML
     public VBox createTemplateButtonContainer;
@@ -817,6 +820,7 @@ public class MainController implements Initializable {
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
         clipboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForClipboardObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());
+        screenTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForScreenObject());
         createTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForCreateObject());
         languageTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForLanguage());
     }

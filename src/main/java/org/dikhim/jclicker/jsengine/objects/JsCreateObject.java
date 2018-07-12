@@ -14,6 +14,11 @@ import java.io.InputStream;
 public class JsCreateObject implements CreateObject {
 
     @Override
+    public Image image(int width, int height) {
+        return new Image(width, height);
+    }
+
+    @Override
     public Image image(String zipBase64String) {
         try {
             // replace all unnecessary chars except base64 string
