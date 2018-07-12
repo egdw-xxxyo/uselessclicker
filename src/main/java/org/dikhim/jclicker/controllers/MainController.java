@@ -33,6 +33,7 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.ui.OutTextArea;
 import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
 import org.dikhim.jclicker.util.Out;
@@ -78,14 +79,19 @@ public class MainController implements Initializable {
         config = mainApplication.getConfig();
         // init text areas
         codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
-        Out.addPrintMethod(outTextArea::appendText);
-        Out.addClearMethod(outTextArea::clear);
+        
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
-        // output image
+        // output text pane
+        OutTextArea outTextArea = new OutTextArea();
+        outputTextPane.getChildren().addAll(outTextArea);
+        Out.addPrintMethod(outTextArea::appendText);
+        Out.addClearMethod(outTextArea::clear);
+        
+        // output image pane
         OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
@@ -170,17 +176,15 @@ public class MainController implements Initializable {
     private StringProperty codeSampleProperty = new SimpleStringProperty("");
 
     @FXML
-    private TextArea outTextArea;
-
-    @FXML
     private VBox previewPane;
     
+    // output pane
     @FXML
     private TabPane outputTabPane;
 
     @FXML
-    private ImageView outputImage;
-
+    private AnchorPane outputTextPane;
+    
     @FXML
     private AnchorPane outputImagePane;
 

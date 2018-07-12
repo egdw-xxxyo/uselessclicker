@@ -132,15 +132,7 @@
                                 <tabs>
                                     <Tab text="Output">
                                         <content>
-                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                                <children>
-                                                    <TextArea fx:id="outTextArea" styleClass="code-text-area" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                                        <font>
-                                                            <Font name="Monospaced Bold" size="13.0" />
-                                                        </font>
-                                                    </TextArea>
-                                                </children>
-                                            </AnchorPane>
+                                            <AnchorPane fx:id="outputTextPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                         </content>
                                     </Tab>
                                     <Tab text="Image">
