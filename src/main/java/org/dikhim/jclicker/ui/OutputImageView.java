@@ -34,14 +34,11 @@ import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
 
 public class OutputImageView extends AnchorPane implements Initializable {
 
-    public OutputImageView() {
-        load();
-    }
-
-    private void load() {
+    public OutputImageView(ResourceBundle resources) {
         FXMLLoader fxmlLoader = new FXMLLoader();
 
         fxmlLoader.setClassLoader(getClass().getClassLoader());
+        fxmlLoader.setResources(resources);
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         fxmlLoader.setLocation(getClass().getResource("/fxml/OutputImageView.fxml"));
@@ -51,6 +48,10 @@ public class OutputImageView extends AnchorPane implements Initializable {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
+
+    private void load() {
+        
     }
 
     @FXML

@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -111,13 +112,34 @@
             </styleClass></Button>
         </GridPane>
         <VBox maxWidth="-Infinity" style="-fx-background-color: ddd;" GridPane.rowSpan="2147483647" GridPane.valignment="TOP">
-            <Button id="open-button" fx:id="openBtn" mnemonicParsing="false" onAction="#open" styleClass="toolbar-button" />
-            <Button id="save-button" fx:id="saveBtn" mnemonicParsing="false" onAction="#save" styleClass="toolbar-button" />
-            <Button id="insert-button" fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" styleClass="toolbar-button" />
-            <Button id="load-button" fx:id="loadBtn" mnemonicParsing="false" onAction="#load" styleClass="toolbar-button" />
-            <Button id="zoom-in-button" fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" styleClass="toolbar-button" />
-            <Button id="zoom-out-button" fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" styleClass="toolbar-button" />
-         <Button id="reset-button" fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" styleClass="toolbar-button" />
+            <Button id="open-button" fx:id="openBtn" mnemonicParsing="false" onAction="#open" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip styleClass="tooltip-class" text="%tooltip.loadImageFromFile" />
+            </tooltip></Button>
+            <Button id="save-button" fx:id="saveBtn" mnemonicParsing="false" onAction="#save" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.saveImageToFile" />
+            </tooltip></Button>
+            <Button id="insert-button" fx:id="insertBtn" mnemonicParsing="false" onAction="#insert" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.insertImage" />
+            </tooltip></Button>
+            <Button id="load-button" fx:id="loadBtn" mnemonicParsing="false" onAction="#load" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.loadImageFromSelection" />
+            </tooltip></Button>
+            <Button id="zoom-in-button" fx:id="zommInBtn" mnemonicParsing="false" onAction="#zoomIn" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.zoomIn" />
+            </tooltip></Button>
+            <Button id="zoom-out-button" fx:id="zoomOutBtn" mnemonicParsing="false" onAction="#zoomOut" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.zoomOut" />
+            </tooltip></Button>
+         <Button id="reset-button" fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" styleClass="toolbar-button">
+            <tooltip>
+               <Tooltip text="%tooltip.refresh" />
+            </tooltip></Button>
         </VBox>
     </GridPane>
 </fx:root>

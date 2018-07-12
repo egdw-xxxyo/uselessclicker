@@ -86,7 +86,7 @@ public class MainController implements Initializable {
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
         // output image
-        OutputImageView outputImageView = new OutputImageView();
+        OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);

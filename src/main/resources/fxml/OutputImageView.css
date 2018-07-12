@@ -4,8 +4,7 @@
     -fx-color-hover: #ffec9d;
 }
 
-
-.toolbar-button{
+.toolbar-button {
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-radius: 0;
@@ -24,66 +23,83 @@
     -fx-background-color: -fx-color-pressed;
 }
 
-
-
-#open-button{
+#open-button {
     -fx-background-image: url("../images/24/folder.png");
 }
-#save-button{
+
+#save-button {
     -fx-background-image: url("../images/24/save.png");
 }
-#insert-button{
+
+#insert-button {
     -fx-background-image: url("../images/24/upload.png");
 }
-#load-button{
+
+#load-button {
     -fx-background-image: url("../images/24/download.png");
 }
-#reset-button{
+
+#reset-button {
     -fx-background-image: url("../images/24/refresh.png");
 }
-#zoom-in-button{
+
+#zoom-in-button {
     -fx-background-image: url("../images/24/zoom-in.png");
 }
-#zoom-out-button{
+
+#zoom-out-button {
     -fx-background-image: url("../images/24/zoom-out.png");
 }
 
-.arrow-button{
+.arrow-button {
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center;
     -fx-background-radius: 0;
     -fx-background-color: #fff;
 }
 
-
-.arrow-button:hover{
+.arrow-button:hover {
     -fx-background-color: -fx-color-hover;
 }
 
-.arrow-button:pressed{
+.arrow-button:pressed {
     -fx-background-color: -fx-color-pressed;
 }
 
-.vertical{
+.vertical {
     -fx-max-width: 12;
     -fx-min-width: 12;
     -fx-max-height: infinity;
 }
-.horizontal{
+
+.horizontal {
     -fx-max-height: 12;
     -fx-min-height: 12;
     -fx-max-width: infinity;
 }
 
-.up-arrow{
+.up-arrow {
     -fx-background-image: url("../images/arrow-up_12.png");
 }
-.right-arrow{
+
+.right-arrow {
     -fx-background-image: url("../images/arrow-right_12.png");
 }
-.down-arrow{
+
+.down-arrow {
     -fx-background-image: url("../images/arrow-down_12.png");
 }
-.left-arrow{
+
+.left-arrow {
     -fx-background-image: url("../images/arrow-left_12.png");
+}
+
+.tooltip {
+    -fx-background: rgba(30,30,30,0.2);
+    -fx-text-fill: white;
+    -fx-background-color: rgba(30,30,30,0.8);
+    -fx-background-radius: 0px;
+    -fx-background-insets: 0;
+    -fx-padding: 0.667em 0.75em 0.667em 0.75em; /* 10px */
+    -fx-font-size: 0.85em;
 }
