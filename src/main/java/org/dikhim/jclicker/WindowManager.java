@@ -1,16 +1,12 @@
 package org.dikhim.jclicker;
 
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-import org.dikhim.jclicker.controllers.MainController;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,12 +21,11 @@ public class WindowManager {
     private ResourceBundle resourceBundle;
     private Map<String, Stage> stageMap = new HashMap<>();
     private Map<String, Scene> sceneMap = new HashMap<>();
-    private Map<String, Object> paramMap = new HashMap<>();
     private Locale locale;
 
-    public static void initialization(Map<String, Object> paramMap, Locale locale) {
+    public static void initialization(Locale locale) {
         if (windowManager == null) {
-            windowManager = new WindowManager(paramMap, locale);
+            windowManager = new WindowManager(locale);
         }
     }
 
@@ -39,8 +34,7 @@ public class WindowManager {
     }
 
 
-    private WindowManager(Map<String, Object> paramMap, Locale locale) {
-        this.paramMap = paramMap;
+    private WindowManager(Locale locale) {
         this.locale = locale;
         try {
             init();

@@ -8,7 +8,7 @@ public interface ScreenObject {
 
     BufferedImage getImage(int x0, int y0, int x1, int y1);
 
-    BufferedImage getImageWithFilledBlank(int x0, int y0, int x1, int y1);
+    BufferedImage getFilledImage(int x0, int y0, int x1, int y1);
 
     int getHeight();
 

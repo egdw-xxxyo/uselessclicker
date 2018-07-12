@@ -1,8 +1,6 @@
 package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.image.Image;
 import org.dikhim.jclicker.jsengine.objects.ScreenObject;
 
 import java.awt.*;
@@ -19,7 +17,7 @@ public class ImageCapturer {
         if (isLocked()) return;
         Platform.runLater(() -> {
             locked = true;
-            BufferedImage bufferedImage = screenObject.getImageWithFilledBlank(x0, y0, x1, y1);
+            BufferedImage bufferedImage = screenObject.getFilledImage(x0, y0, x1, y1);
             bufferedImage = drawCursorInTheMiddle(bufferedImage);
 
             onImageLoaded.accept(bufferedImage);

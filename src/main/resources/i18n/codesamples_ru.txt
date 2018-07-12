@@ -1026,6 +1026,76 @@ system.setSpeed(1);
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
+////////////CLIPBOARD////////////////
+/////////////////////////////////////
+$clipboard_get_hint:
+clipboard.get();
+  
+Получить текстовое содержимое буфера обмена
+
+$clipboard_set_hint:
+clipboard.set('TEXT');
+  
+Скопировать текст в буфер обмена
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CREATE///////////////////
+/////////////////////////////////////
+$create_image_hint:
+var image = create.image(16,16);
+  
+Создать изображение
+  
+Использование:
+  image(int width, int height)
+  image(String base64String)
+
+$create_imageFile_hint:
+var image = create.imageFile('file.png');
+  
+Создать изображения по указанному пути к файлу
+
+$create_point_hint:
+var point = create.point(0,0);
+  
+Создать точку
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////SCREEN///////////////////
+/////////////////////////////////////
+$screen_getImage_hint:
+screen.getImage(0,0,0,0);
+  
+Получить изображение указанной области
+Если область выходит за края экрана, то изображение будет обрезано 
+  
+Использование:
+  getImage(int x0, int y0, int x1, int y1)
+  getImage(Rectangle rectangle)
+  
+$screen_getFilledImage_hint:
+screen.getFilledImage(0,0,0,0);
+  
+Получить изображение указанной области
+Если область выходит за края экрана, то пустая область будет заполнена черным цветом
+
+$screen_getHeight_hint:
+screen.getHeight();
+  
+Get the screen height
+
+$screen_getWidth_hint:
+screen.getWidth();
+  
+Get the screen width
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
 ////////////LANGUAGE/////////////////
 /////////////////////////////////////
 /////////////////////////////////////

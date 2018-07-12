@@ -35,7 +35,7 @@ public class JsScreenObject implements ScreenObject {
     }
 
     @Override
-    public BufferedImage getImageWithFilledBlank(int x0, int y0, int x1, int y1) {
+    public BufferedImage getFilledImage(int x0, int y0, int x1, int y1) {
         synchronized (monitor) {
             Rectangle rectangle = createRectangle(x0, y0, x1, y1);
             Rectangle fitsRectangle = createFitsRectangle(x0, y0, x1, y1);

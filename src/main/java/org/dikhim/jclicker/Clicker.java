@@ -1,10 +1,6 @@
 package org.dikhim.jclicker;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
@@ -17,7 +13,6 @@ import org.jnativehook.NativeHookException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -40,7 +35,7 @@ public class Clicker extends Application {
 
         if (cli.isGuiApplication()) {
             String language = mainApplication.getConfig().getLocalization().getApplicationLanguage().get();
-            WindowManager.initialization(new HashMap<>(), new Locale(language));
+            WindowManager.initialization(new Locale(language));
             loadMainScene();
         }
         Out.addPrintMethod(System.out::print);

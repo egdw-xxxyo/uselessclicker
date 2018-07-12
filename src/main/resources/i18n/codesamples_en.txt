@@ -1021,6 +1021,76 @@ The reciprocal of the delay multiplier
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
+////////////CLIPBOARD////////////////
+/////////////////////////////////////
+$clipboard_get_hint:
+clipboard.get();
+  
+Get clipboard text content
+
+$clipboard_set_hint:
+clipboard.set('TEXT');
+  
+Copy the text to the clipboard
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CREATE///////////////////
+/////////////////////////////////////
+$create_image_hint:
+var image = create.image(16,16);
+  
+Create an image
+  
+Usages:
+  image(int width, int height)
+  image(String base64String)
+
+$create_imageFile_hint:
+var image = create.imageFile('file.png');
+  
+Create an image from the file path
+
+$create_point_hint:
+var point = create.point(0,0);
+  
+Create a point
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////SCREEN///////////////////
+/////////////////////////////////////
+$screen_getImage_hint:
+screen.getImage(0,0,0,0);
+  
+Get an image for the selected area
+If the area is beyond the edges of the screen, the image will be cropped
+  
+Usages:
+  getImage(int x0, int y0, int x1, int y1)
+  getImage(Rectangle rectangle)
+  
+$screen_getFilledImage_hint:
+screen.getFilledImage(0,0,0,0);
+  
+Get an image for the selected area
+If the area is beyond the edges of the screen, the blank area wil be filled with the black color
+
+$screen_getHeight_hint:
+screen.getHeight();
+  
+Get the screen height
+
+$screen_getWidth_hint:
+screen.getWidth();
+  
+Get the screen width
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
 ////////////LANGUAGE/////////////////
 /////////////////////////////////////
 /////////////////////////////////////
