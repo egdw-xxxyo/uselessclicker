@@ -52,58 +52,20 @@ public class OutputImageView extends AnchorPane implements Initializable {
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        AnchorPane.setTopAnchor(this, 0d);
+        AnchorPane.setRightAnchor(this, 0d);
+        AnchorPane.setBottomAnchor(this, 0d);
+        AnchorPane.setLeftAnchor(this, 0d);
+        image.setSmooth(false);
+        originalImage = null;
+        repaint();
+    }
+
     @FXML
     private ImageView image;
-
-    @FXML
-    private Button leftLeftward;
-
-    @FXML
-    private Button leftRightward;
-
-    @FXML
-    private Button topDownward;
-
-    @FXML
-    private Button topUpward;
-
-    @FXML
-    private Button rightLeftward;
-
-    @FXML
-    private Button rightRightward;
-
-    @FXML
-    private Button bottomDownward;
-
-    @FXML
-    private Button bottomUpward;
-
-    @FXML
-    private Button openBtn;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
-    private Button insertBtn;
-
-    @FXML
-    private Button loadBtn;
-
-    @FXML
-    private Button resetBtn;
-
-    @FXML
-    private Button zommInBtn;
-
-    @FXML
-    private Button zoomOutBtn;
-
-    @FXML
-    private Label scaleLbl;
-
-
+    
     private BufferedImage originalImage;
     private BufferedImage transformedImage;
     private DoubleProperty scale = new SimpleDoubleProperty(1);
@@ -114,7 +76,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private IntegerProperty left = new SimpleIntegerProperty(0);
 
     private Consumer<String> onInsert;
-
 
     @FXML
     void insert(ActionEvent event) {
@@ -186,15 +147,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
     void reset(ActionEvent event) {
         if (originalImage == null) return;
         reset();
-    }
-
-    private void reset() {
-        scale.set(1);
-        top.set(0);
-        right.set(0);
-        bottom.set(0);
-        left.set(0);
-        repaint();
     }
 
     @FXML
@@ -303,21 +255,20 @@ public class OutputImageView extends AnchorPane implements Initializable {
         }).start();
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        AnchorPane.setTopAnchor(this, 0d);
-        AnchorPane.setRightAnchor(this, 0d);
-        AnchorPane.setBottomAnchor(this, 0d);
-        AnchorPane.setLeftAnchor(this, 0d);
-        image.setSmooth(false);
-        originalImage = null;
+
+    private void reset() {
+        scale.set(1);
+        top.set(0);
+        right.set(0);
+        bottom.set(0);
+        left.set(0);
         repaint();
     }
 
-    ///
     public void setOnInsert(Consumer<String> onInsert) {
         this.onInsert = onInsert;
     }
+   
 
     public void loadImage(BufferedImage image) {
         originalImage = image;

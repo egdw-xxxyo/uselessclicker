@@ -1,0 +1,32 @@
+
+*{
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+}
+.zoom-button{
+    -fx-background-radius: 0;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 24px;
+
+    -fx-background-color: #fff;
+    -fx-min-height: 26;
+    -fx-max-height: 26;
+    -fx-max-width: infinity;
+}
+
+
+.zoom-button:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.zoom-button:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+#zoom-in{
+    -fx-background-image: url("../images/zoom-in_32.png");
+}
+#zoom-out{
+    -fx-background-image: url("../images/zoom-out_32.png");
+}

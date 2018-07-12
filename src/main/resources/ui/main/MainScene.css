@@ -76,25 +76,6 @@
     -fx-background-image: url("../../images/help.png");
 }
 
-.zoom-button:hover {
-    -fx-background-color: -fx-color-hover;
-}
-
-.zoom-button:pressed {
-    -fx-background-color: -fx-color-pressed;
-}
-
-.zoom-button:selected {
-    -fx-background-color: -fx-color-selected;
-}
-
-
-#zoom-in{
-    -fx-background-image: url("../../images/zoom-in_32.png");
-}
-#zoom-out{
-    -fx-background-image: url("../../images/zoom-out_32.png");
-}
 
 /*Menu buttons*/
 #menu-keyboard-button {
