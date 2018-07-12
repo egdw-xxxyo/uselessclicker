@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 
 public class ImageCapturer {
-    private Object monitor = new Object();
     private ScreenObject screenObject;
     private Consumer<BufferedImage> onImageLoaded;
     private boolean locked = false;

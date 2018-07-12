@@ -1,10 +1,12 @@
 package org.dikhim.jclicker.jsengine.objects;
 
+import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+
 
 public class JsScreenObject implements ScreenObject {
 
@@ -17,7 +19,7 @@ public class JsScreenObject implements ScreenObject {
     }
 
     @Override
-    public BufferedImage getImage(int x0, int y0, int x1, int y1) {
+    public Image getImage(int x0, int y0, int x1, int y1) {
         synchronized (monitor) {
             Rectangle rectangle = createFitsRectangle(x0, y0, x1, y1);
             return getImage(rectangle);
@@ -25,27 +27,27 @@ public class JsScreenObject implements ScreenObject {
     }
 
     @Override
-    public BufferedImage getImage(Point p1, Point p2) {
+    public Image getImage(Point p1, Point p2) {
         synchronized (monitor) {
             return getImage(p1.x, p1.y, p2.x, p2.y);
         }
     }
     
     @Override
-    public BufferedImage getImage(Rectangle rectangle) {
+    public Image getImage(Rectangle rectangle) {
         synchronized (monitor) {
-            return robot.createScreenCapture(rectangle);
+            return new Image(robot.createScreenCapture(rectangle));
         }
     }
 
     @Override
-    public BufferedImage getFilledImage(int x0, int y0, int x1, int y1) {
+    public Image getFilledImage(int x0, int y0, int x1, int y1) {
         synchronized (monitor) {
             Rectangle rectangle = createRectangle(x0, y0, x1, y1);
             Rectangle fitsRectangle = createFitsRectangle(x0, y0, x1, y1);
 
             BufferedImage capturedImage = robot.createScreenCapture(fitsRectangle);
-            if (rectangle.equals(fitsRectangle)) return capturedImage;
+            if (rectangle.equals(fitsRectangle)) return new Image(capturedImage);
             BufferedImage outputImage = new BufferedImage(rectangle.width, rectangle.height, capturedImage.getType());
             Graphics2D g = outputImage.createGraphics();
             int dx = 0;
@@ -59,12 +61,12 @@ public class JsScreenObject implements ScreenObject {
 
             g.drawImage(capturedImage, dx, dy, fitsRectangle.width, fitsRectangle.height, null);
             g.dispose();
-            return outputImage;
+            return new Image(outputImage);
         }
     }
 
     @Override
-    public BufferedImage getFilledImage(Point p1, Point p2) {
+    public Image getFilledImage(Point p1, Point p2) {
         synchronized (monitor) {
             return getFilledImage(p1.x, p1.y, p2.x, p2.y);
         }
