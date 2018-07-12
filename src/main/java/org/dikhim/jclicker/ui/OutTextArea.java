@@ -11,6 +11,10 @@ public class OutTextArea extends TextArea {
         AnchorPane.setBottomAnchor(this, 0d);
         AnchorPane.setLeftAnchor(this, 0d);
         
-        textProperty().addListener((observable, oldValue, newValue) -> appendText(""));
+        addChangeListener(() -> appendText(""));
+    }
+
+    public void addChangeListener(Runnable runnable) {
+        textProperty().addListener((observable, oldValue, newValue) -> runnable.run());
     }
 }

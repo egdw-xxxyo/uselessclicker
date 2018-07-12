@@ -79,25 +79,25 @@ public class MainController implements Initializable {
         config = mainApplication.getConfig();
         // init text areas
         codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
-        
+
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
+
 
         // output text pane
         OutTextArea outTextArea = new OutTextArea();
         outputTextPane.getChildren().addAll(outTextArea);
         Out.addPrintMethod(outTextArea::appendText);
         Out.addClearMethod(outTextArea::clear);
-        
+        outTextArea.addChangeListener(() -> outputTabPane.getSelectionModel().select(0));
+
         // output image pane
         OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
         outputImagePane.getChildren().addAll(outputImageView);
-        outputImageView.addChangeListener(()->{
-            outputTabPane.getSelectionModel().select(1);
-        });
+        outputImageView.addChangeListener(() -> outputTabPane.getSelectionModel().select(1));
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
 
         // events recorder
@@ -105,7 +105,7 @@ public class MainController implements Initializable {
         eventsRecorder.setOutputTextArea(codeTextArea);
         eventsRecorder.setPreviewPane(previewPane);
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
-        
+
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
@@ -177,14 +177,14 @@ public class MainController implements Initializable {
 
     @FXML
     private VBox previewPane;
-    
+
     // output pane
     @FXML
     private TabPane outputTabPane;
 
     @FXML
     private AnchorPane outputTextPane;
-    
+
     @FXML
     private AnchorPane outputImagePane;
 
@@ -794,16 +794,16 @@ public class MainController implements Initializable {
 
     @FXML
     public VBox clipboardTemplateButtonContainer;
-    
+
     @FXML
     public VBox systemTemplateButtonContainer;
-    
+
     @FXML
     public VBox screenTemplateButtonContainer;
 
     @FXML
     public VBox createTemplateButtonContainer;
-    
+
     @FXML
     public VBox languageTemplateButtonContainer;
 
