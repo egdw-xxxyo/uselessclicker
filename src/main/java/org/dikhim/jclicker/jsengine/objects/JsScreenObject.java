@@ -1,7 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
@@ -18,18 +17,23 @@ public class JsScreenObject implements ScreenObject {
     }
 
     @Override
-    public BufferedImage getImage(Rectangle rectangle) {
+    public BufferedImage getImage(int x0, int y0, int x1, int y1) {
         synchronized (monitor) {
-            BufferedImage bufferedImage = RobotStatic.get().createScreenCapture(rectangle);
-
-            return bufferedImage;
+            Rectangle rectangle = createFitsRectangle(x0, y0, x1, y1);
+            return getImage(rectangle);
         }
     }
 
     @Override
-    public BufferedImage getImage(int x0, int y0, int x1, int y1) {
+    public BufferedImage getImage(Point p1, Point p2) {
         synchronized (monitor) {
-            Rectangle rectangle = createFitsRectangle(x0, y0, x1, y1);
+            return getImage(p1.x, p1.y, p2.x, p2.y);
+        }
+    }
+    
+    @Override
+    public BufferedImage getImage(Rectangle rectangle) {
+        synchronized (monitor) {
             return robot.createScreenCapture(rectangle);
         }
     }
@@ -56,6 +60,13 @@ public class JsScreenObject implements ScreenObject {
             g.drawImage(capturedImage, dx, dy, fitsRectangle.width, fitsRectangle.height, null);
             g.dispose();
             return outputImage;
+        }
+    }
+
+    @Override
+    public BufferedImage getFilledImage(Point p1, Point p2) {
+        synchronized (monitor) {
+            return getFilledImage(p1.x, p1.y, p2.x, p2.y);
         }
     }
 
