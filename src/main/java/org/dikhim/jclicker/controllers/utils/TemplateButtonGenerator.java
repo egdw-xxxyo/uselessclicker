@@ -5,8 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.util.SourcePropertyFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,17 +15,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TemplateButtonGenerator {
-    private static Logger LOGGER = LoggerFactory.getLogger(TemplateButtonGenerator.class);
-
-    private boolean isBuilt;
 
     private int lineSize;
     private SourcePropertyFile properties;
     private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator;
     private MouseObjectCodeGenerator mouseObjectCodeGenerator;
     private SystemObjectCodeGenerator systemObjectCodeGenerator;
+    private ScreenObjectCodeGenerator screenObjectCodeGenerator;
     private CombinedObjectCodeGenerator combinedObjectCodeGenerator;
     private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator;
+    private CreateObjectCodeGenerator createObjectCodeGenerator;
     private List<String> styleClasses = new ArrayList<>();
 
     private Consumer<MouseEvent> onMouseEntered;
@@ -39,37 +36,31 @@ public class TemplateButtonGenerator {
 
     public TemplateButtonGenerator addStyleClass(String clazz) {
         styleClasses.add(clazz);
-        isBuilt = false;
         return this;
     }
 
     public TemplateButtonGenerator setOnMouseEntered(Consumer<MouseEvent> consumer) {
         this.onMouseEntered = consumer;
-        isBuilt = false;
         return this;
     }
 
     public TemplateButtonGenerator setOnMouseExited(Consumer<MouseEvent> consumer) {
         this.onMouseExited = consumer;
-        isBuilt = false;
         return this;
     }
 
     public TemplateButtonGenerator setOnAction(Consumer<ActionEvent> onAction) {
         this.onAction = onAction;
-        isBuilt = false;
         return this;
     }
 
     public TemplateButtonGenerator setLineSize(int lineSize) {
         this.lineSize = lineSize;
-        isBuilt = false;
         return this;
     }
 
     public TemplateButtonGenerator setProperties(SourcePropertyFile properties) {
         this.properties = properties;
-        isBuilt = false;
         return this;
     }
 
@@ -77,9 +68,10 @@ public class TemplateButtonGenerator {
         keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
         mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
         systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
+        screenObjectCodeGenerator = new ScreenObjectCodeGenerator(lineSize);
         clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
         combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
-        isBuilt = true;
+        createObjectCodeGenerator = new CreateObjectCodeGenerator(lineSize);
         return this;
     }
 
@@ -94,6 +86,10 @@ public class TemplateButtonGenerator {
     public List<Button> getButtonListForSystemObject() {
         return createButtons("system", systemObjectCodeGenerator.getMethodNames());
     }
+    
+    public List<Button> getButtonListForScreenObject() {
+        return createButtons("screen", screenObjectCodeGenerator.getMethodNames());
+    }
 
     public List<Button> getButtonListForClipboardObject() {
         return createButtons("clipboard", clipboardObjectCodeGenerator.getMethodNames());
@@ -101,6 +97,9 @@ public class TemplateButtonGenerator {
 
     public List<Button> getButtonListForCombinedObject() {
         return createButtons("combined", combinedObjectCodeGenerator.getMethodNames());
+    }
+    public List<Button> getButtonListForCreateObject() {
+        return createButtons("create", createObjectCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForLanguage() {

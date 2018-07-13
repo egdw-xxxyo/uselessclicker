@@ -10,13 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-import org.apache.commons.io.IOUtils;
-import org.dikhim.componentlibrary.components.CodeTextArea;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
@@ -33,13 +32,16 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
+import org.dikhim.jclicker.ui.CodeTextArea;
+import org.dikhim.jclicker.ui.LupeImageView;
+import org.dikhim.jclicker.ui.OutTextArea;
+import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
-import org.dikhim.jclicker.util.SourcePropertyFile;
 import org.dikhim.jclicker.util.Out;
+import org.dikhim.jclicker.util.Resources;
+import org.dikhim.jclicker.util.SourcePropertyFile;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,19 +79,45 @@ public class MainController implements Initializable {
         this.resources = resources;
         config = mainApplication.getConfig();
         // init text areas
-        codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
-        Out.addPrintMethod(outTextArea::appendText);
-        Out.addClearMethod(outTextArea::clear);
-        areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 
+        areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
         btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
 
-        eventsRecorder = new EventsRecorder(config, codeTextArea);
-        // init toggles and template buttons
+        // code area
+        codeTextArea = new CodeTextArea();
+        codeAreaPane.getChildren().addAll(codeTextArea);
+        codeTextArea.textProperty().bindBidirectional(mainApplication.getScript().codeProperty());
 
-        File file = new File(getClass().getResource(resources.getString("codesamples")).getFile());
-        SourcePropertyFile propertyFile = new SourcePropertyFile(file);
+        // output text pane
+        OutTextArea outTextArea = new OutTextArea();
+        outputTextPane.getChildren().addAll(outTextArea);
+        Out.addPrintMethod(outTextArea::appendText);
+        Out.addClearMethod(outTextArea::clear);
+        outTextArea.addChangeListener(() -> outputTabPane.getSelectionModel().select(0));
+
+        // output image pane
+        OutputImageView outputImageView = new OutputImageView(resources);
+        outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
+        outputImagePane.getChildren().addAll(outputImageView);
+        outputImageView.addChangeListener(() -> outputTabPane.getSelectionModel().select(1));
+        mainApplication.setOnSetOutputImage(outputImageView::loadImage);
+
+        // lupe pane
+        LupeImageView lupeImageView = new LupeImageView(resources);
+        lupePane.getChildren().addAll(lupeImageView);
+
+        // events recorder
+        eventsRecorder = new EventsRecorder(config);
+        eventsRecorder.setOutputTextArea(codeTextArea);
+
+        eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
+        lupeImageView.visibleProperty().bindBidirectional(eventsRecorder.mouseRecordingProperty());
+
+        // codesamples file
+        SourcePropertyFile propertyFile = new SourcePropertyFile();
+        propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
+
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
 
@@ -97,7 +125,6 @@ public class MainController implements Initializable {
         setToggleStatus(null);
 
         bindConfig();
-
     }
 
 
@@ -149,15 +176,31 @@ public class MainController implements Initializable {
     @FXML
     private Button btnShowConfigWindow;
 
-    @FXML
     private CodeTextArea codeTextArea;
 
     @FXML
     private TextArea areaCodeSample;
     private StringProperty codeSampleProperty = new SimpleStringProperty("");
 
+    // code pane
     @FXML
-    private TextArea outTextArea;
+    private AnchorPane codeAreaPane;
+
+    // output pane
+    @FXML
+    private TabPane outputTabPane;
+
+    //// text output
+    @FXML
+    private AnchorPane outputTextPane;
+
+    //// image output
+    @FXML
+    private AnchorPane outputImagePane;
+
+    // lupe pane    
+    @FXML
+    private AnchorPane lupePane;
 
     @FXML
     private TextField txtAbsolutePathRate;
@@ -183,7 +226,7 @@ public class MainController implements Initializable {
 
     @FXML
     public void openFile() {
-        File file = WindowManager.getInstance().openFile();
+        File file = WindowManager.getInstance().openScriptFile();
 
         if (file != null) {
             mainApplication.openFile(file);
@@ -196,7 +239,7 @@ public class MainController implements Initializable {
         if (script.isOpened()) {
             mainApplication.saveFile();
         } else {
-            File file = WindowManager.getInstance().saveFileAs();
+            File file = WindowManager.getInstance().saveScriptFileAs();
             if (file != null) {
                 mainApplication.saveFileAs(file);
             }
@@ -208,7 +251,7 @@ public class MainController implements Initializable {
      */
     @FXML
     public void saveFileAs() {
-        File file = WindowManager.getInstance().saveFileAs();
+        File file = WindowManager.getInstance().saveScriptFileAs();
         if (file != null) {
             mainApplication.saveFileAs(file);
         }
@@ -289,6 +332,10 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnInsertMouseCodeClick;
 
+    // image
+    @FXML
+    private ToggleButton btnInsertSelectImage;
+
     // Combined
     @FXML
     private ToggleButton btnInsertCombinedLog;
@@ -366,6 +413,9 @@ public class MainController implements Initializable {
 
         //mouse click
         listOfInsertCodeToggles.add(btnInsertMouseCodeClick);
+
+        // image
+        listOfInsertCodeToggles.add(btnInsertSelectImage);
 
         // combined
         listOfInsertCodeToggles.add(btnInsertCombinedLog);
@@ -474,6 +524,7 @@ public class MainController implements Initializable {
         } else {
             deselect(toggleButton);
             // if toggle has been deselected
+            eventsRecorder.stopRecording();
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
             codeTextArea.setActive(true);
@@ -736,6 +787,13 @@ public class MainController implements Initializable {
         });
     }
 
+    @FXML
+    void insertSelectImage(ActionEvent event) {
+        onToggleButtonPerformed(event, prefix -> {
+            eventsRecorder.selectImage();
+        });
+    }
+
     //
     // TEMPLATES
     //
@@ -746,13 +804,22 @@ public class MainController implements Initializable {
     public VBox keyboardTemplateButtonContainer;
 
     @FXML
-    public VBox languageTemplateButtonContainer;
-
-    @FXML
     public VBox mouseTemplateButtonContainer;
 
     @FXML
+    public VBox clipboardTemplateButtonContainer;
+
+    @FXML
     public VBox systemTemplateButtonContainer;
+
+    @FXML
+    public VBox screenTemplateButtonContainer;
+
+    @FXML
+    public VBox createTemplateButtonContainer;
+
+    @FXML
+    public VBox languageTemplateButtonContainer;
 
 
     /**
@@ -762,9 +829,9 @@ public class MainController implements Initializable {
      * @param prop - property file
      */
     private void initTemplateButtons(SourcePropertyFile prop) {
-        
+
         TemplateButtonGenerator buttonGenerator = new TemplateButtonGenerator()
-                .setLineSize(80)
+                .setLineSize(120)
                 .setProperties(prop)
                 .addStyleClass("templateButton")
                 .setOnMouseEntered(this::showCodeSample)
@@ -774,7 +841,10 @@ public class MainController implements Initializable {
 
         keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
+        clipboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForClipboardObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());
+        screenTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForScreenObject());
+        createTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForCreateObject());
         languageTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForLanguage());
     }
 
@@ -784,7 +854,7 @@ public class MainController implements Initializable {
      * @param event - ActionEvent
      */
     @FXML
-    public void insertTemplate(ActionEvent event) {
+    private void insertTemplate(ActionEvent event) {
         Button btn = (Button) event.getSource();
         String[] data = (String[]) btn.getUserData();
         if (data == null)
@@ -893,4 +963,5 @@ public class MainController implements Initializable {
         keyListener.addKeyboardListener(stopScriptListener);
         keyListener.addKeyboardListener(runScriptListener);
     }
+
 }

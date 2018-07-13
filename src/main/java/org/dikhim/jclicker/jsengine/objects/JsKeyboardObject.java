@@ -1,11 +1,11 @@
 package org.dikhim.jclicker.jsengine.objects;
 
-import java.security.Key;
 import java.util.*;
 
 import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.actions.utils.typer.Typer;
+import org.dikhim.jclicker.actions.utils.typer.Typers;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;
 
@@ -39,6 +39,20 @@ public class JsKeyboardObject implements KeyboardObject {
     public int getMinDelay() {
         synchronized (monitor) {
             return minDelay;
+        }
+    }
+
+    @Override
+    public int getMultipliedPressDelay() {
+        synchronized (monitor) {
+            return checkDelay((int) (pressDelay * multiplier));
+        }
+    }
+
+    @Override
+    public int getMultipliedReleaseDelay() {
+        synchronized (monitor) {
+            return checkDelay((int) (releaseDelay * multiplier));
         }
     }
 
@@ -238,18 +252,13 @@ public class JsKeyboardObject implements KeyboardObject {
         }
     }
 
-    /// private
     @Override
-    public int getMultipliedPressDelay() {
-        synchronized (monitor) {
-            return checkDelay((int) (pressDelay * multiplier));
-        }
-    }
-
-    @Override
-    public int getMultipliedReleaseDelay() {
-        synchronized (monitor) {
-            return checkDelay((int) (releaseDelay * multiplier));
+    public void typeText(String layout, String text) {
+        try {
+            Typer typer = Typers.create(this, layout);
+            typer.type(text);
+        } catch (Exception e) {
+            Out.println(e.getMessage());
         }
     }
 
@@ -258,5 +267,4 @@ public class JsKeyboardObject implements KeyboardObject {
 
         return delay;
     }
-
 }

@@ -242,6 +242,11 @@ $combinedEncodingType:
   Используя юникод символы, строка занимает меньше места, но может быть легко испорчена
   Используя base64-zip кодирование, строка занимает меньше места, но в последствии не может быть изменена
 
+/////////////////////////////////////
+//////////////IMAGE//////////////////
+$btnInsertSelectImage:
+  Вставить выдлеленную область в область вывода изображений
+
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ////////////TEMPLATES////////////////
@@ -254,12 +259,17 @@ $combinedEncodingType:
 /////////////////////////////////////
 $mouse_button_hint:
 mouse.button('LEFT','PRESS');
+  
+Выполнить действие для клавиши мыши
 
 $mouse_buttonAt_hint:
 mouse.buttonAt('LEFT','PRESS',0,0);
+  
+Выполнить действие для клавиши мыши в указаннойточке
 
 $mouse_click_hint:
 mouse.click('LEFT');
+  
 Клик клавишей мыши
   
 mouse.click('BTN');
@@ -273,6 +283,7 @@ mouse.click('BTN');
 
 $mouse_clickAt_hint:
 mouse.clickAt('LEFT',0,0);
+  
 Клик клавишей мыши в укзанной точке
   
 mouse.clickAt('BTN',x,y);
@@ -287,27 +298,39 @@ mouse.clickAt('BTN',x,y);
 
 $mouse_getMinDelay_hint:
 mouse.getMinDelay();
+  
+Получить минимальную задержку. Минимальная задержка представляет нижний предел всех задержек в объекте
 
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
+  
 Получить задержку передвижения курсора мыши в мс. (moveDelay)
   
   mouse.getMoveDelay():int
 
 $mouse_getMultipliedMoveDelay_hint:
 mouse.getMultipliedMoveDelay();
+  
+Получить реальное значение задержки передвижения с учетом множителя
 
 $mouse_getMultipliedPressDelay_hint:
 mouse.getMultipliedPressDelay();
+  
+Получить реальное значение задержки нажатия кнопки с учетом множителя
 
 $mouse_getMultipliedReleaseDelay_hint:
 mouse.getMultipliedReleaseDelay();
+  
+Получить реальное значение задержки отпускания кнопки с учетом множителя
 
 $mouse_getMultipliedWheelDelay_hint:
 mouse.getMultipliedWheelDelay();
+  
+Получить реальное значение задержки колесика мыши с учетом множителя
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
+  
 Получить множитель задержек.
   
 На данное число умножаются все задержки для объекта
@@ -318,18 +341,21 @@ mouse.getMultiplier();
 
 $mouse_getPressDelay_hint:
 mouse.getPressDelay();
+  
 Получить задержку нажатия клавиши мыши в мс. (pressDelay)
   
   mouse.getPressDelay():int
 
 $mouse_getReleaseDelay_hint:
 mouse.getReleaseDelay();
+  
 Получить задержку отпускания клавиши мыши в мс. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
 $mouse_getSpeed_hint:
 mouse.getSpeed();
+  
 Получить множитель скорости
   
 Обратная величина к множителю задержек
@@ -338,12 +364,14 @@ mouse.getSpeed();
 
 $mouse_getWheelDelay_hint:
 mouse.getWheelDelay();
+  
 Получить задержку колеса мыши в мс. (wheelDelay)
   
   mouse.getWheelDelay():int
 
 $mouse_getX_hint:
 mouse.getX();
+  
 Получить координату 'x' последнего события мыши
   
   mouse.getX():int
@@ -352,6 +380,7 @@ mouse.getX();
 
 $mouse_getY_hint:
 mouse.getY();
+  
 Получить координату 'y' последнего события мыши
   
   mouse.getY():int
@@ -360,6 +389,7 @@ mouse.getY();
 
 $mouse_move_hint:
 mouse.move(0,0);
+  
 Передвинуть курсор относительно координат последнего события
   
   mouse.move(x,y);
@@ -371,9 +401,12 @@ mouse.move(0,0);
 
 $mouse_moveAndButton_hint:
 mouse.moveAndButton('LEFT','PRESS',0,0);
+  
+Передвинуть курсор относительно координат последнего события и выполнить дейсвие для кнопки мыши
 
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и кликнуть
   
 mouse.moveAndClick('BTN',dx,dy);
@@ -390,6 +423,7 @@ mouse.moveAndClick('BTN',dx,dy);
 
 $mouse_moveAndPress_hint:
 mouse.moveAndPress('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и нажать клавишу мыши
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -404,6 +438,7 @@ mouse.moveAndPress('BTN',dx,dy);
 
 $mouse_moveAndRelease_hint:
 mouse.moveAndRelease('LEFT',0,0);
+  
 Передвинуть курсор относительно координат последнего события и отпустить клавишу мыши
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -418,6 +453,7 @@ mouse.moveAndPress('BTN',dx,dy);
 
 $mouse_moveAndWheel_hint:
 mouse.moveAndWheel('DOWN',0,0,0);
+  
 Передвинуть курсор относительно координат последнего события и прокруть колесо мыши
   
 mouse.moveAndWheel
@@ -434,6 +470,7 @@ mouse.moveAndWheel
 
 $mouse_moveTo_hint:
 mouse.moveTo(0,0);
+  
 Передвинуть курсор в указанную точку
   
 mouse.moveTo(x,y);
@@ -445,6 +482,7 @@ mouse.moveTo(x,y);
 
 $mouse_press_hint:
 mouse.press('LEFT');
+  
 Нажать клавишу мыши
   
 mouse.press('BTN');
@@ -456,6 +494,7 @@ mouse.press('BTN');
 
 $mouse_pressAt_hint:
 mouse.pressAt('LEFT',0,0);
+  
 Передвинуть курсор в указанную точку и нажать клавишу мыши
   
 mouse.pressAt('BTN',x,y);
@@ -470,6 +509,7 @@ mouse.pressAt('BTN',x,y);
 
 $mouse_release_hint:
 mouse.release('LEFT');
+  
 Отпустить клавишу мыши
   
 mouse.release('BTN');
@@ -481,6 +521,7 @@ mouse.release('BTN');
 
 $mouse_releaseAt_hint:
 mouse.releaseAt('LEFT',0,0);
+  
 Передвинуть курсор в указанную точку и отпустить клавишу мыши
   
 mouse.releaseAt('BTN',x,y);
@@ -495,24 +536,29 @@ mouse.releaseAt('BTN',x,y);
 
 $mouse_resetDelays_hint:
 mouse.resetDelays();
+  
 Сбросить все задержки к стандартному значению
 
 $mouse_resetMultiplier_hint:
 mouse.resetMultiplier();
+  
 Сбросить множитель задержек к стандартному значению
 
 $mouse_resetSpeed_hint:
 mouse.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $mouse_setDelays_hint:
 mouse.setDelays(10);
+  
 Приствоить всем задержкам указанное значение
   
 mouse.setDelays(int delay)
 
 $mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
+  
 Установить задержку передвижения
 курсора мыши в мс.
   
@@ -521,9 +567,12 @@ mouse.setMoveDelay(int moveDelay)
 
 $mouse_setMinDelay_hint:
 mouse.setMinDelay(5);
+  
+Установить значение минимальной задержки
 
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
@@ -532,6 +581,7 @@ mouse.setMultiplier(float multiplier)
 
 $mouse_setPressDelay_hint:
 mouse.setPressDelay(10);
+  
 Установить задержку нажатия клавиши мыши в мс
   
 mouse.setPressDelay(pressDelay)
@@ -539,6 +589,7 @@ mouse.setPressDelay(pressDelay)
 
 $mouse_setReleaseDelay_hint:
 mouse.setReleaseDelay(10);
+  
 Установить задержку отпускания клавиши мыши в мс.
   
 mouse.setReleaseDelay(releaseDelay)
@@ -546,6 +597,7 @@ mouse.setReleaseDelay(releaseDelay)
 
 $mouse_setSpeed_hint:
 mouse.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек
@@ -555,6 +607,7 @@ mouse.setSpeed(speed)
 
 $mouse_setWheelDelay_hint:
 mouse.setWheelDelay(10);
+  
 Установить задержку колеса мыши в мс.
   
 mouse.setWheelDelay(wheelDelay)
@@ -562,6 +615,7 @@ mouse.setWheelDelay(wheelDelay)
 
 $mouse_setX_hint:
 mouse.setX(0);
+  
 Передвинуть курсор мыши по оси 'x' в указанную координату
   
 mouse.setX(x);
@@ -573,6 +627,7 @@ mouse.setX(x);
 
 $mouse_setY_hint:
 mouse.setY(0);
+  
 Передвинуть курсор мыши по оси 'y' в указанную координату
   
 mouse.setY(y);
@@ -584,6 +639,7 @@ mouse.setY(y);
 
 $mouse_wheel_hint:
 mouse.wheel('DOWN',0);
+  
 Прокрутить колесо мыши на указанное
 количество строк
   
@@ -597,7 +653,8 @@ mouse.wheel(direction, amount);
 
 $mouse_wheelAt_hint:
 mouse.wheelAt('DOWN',3,0,0);
-Прокрутить колесо мыши на указанное количество строк
+  
+Прокрутить колесо мыши на указанное количество строк ы указанной точке
   
 mouse.wheelAt
   (direction, amount, x, y);
@@ -623,15 +680,22 @@ mouse.wheelAt
 /////////////////////////////////////
 $key_getMinDelay_hint:
 key.getMinDelay();
+  
+Получить минимальную задержку. Минимальная задержка представляет нижний предел всех задержек в объекте
 
 $key_getMultipliedPressDelay_hint:
 key.getMultipliedPressDelay();
+  
+Получить реальное значение задержки нажатия клавиши с учетом множителя
 
 $key_getMultipliedReleaseDelay_hint:
 key.getMultipliedReleaseDelay();
+  
+Получить реальное значение задержки отпускания клавиши с учетом множителя
 
 $key_getMultiplier_hint:
 key.getMultiplier();
+  
 Получить множитель задержек (multiplier)
   
 На данное число умножаются все задержки
@@ -642,18 +706,21 @@ key.getMultiplier():float
 
 $key_getPressDelay_hint:
 key.getPressDelay();
+  
 Получить задержку нажатия клавиши клавиатуры в мс. (pressDelay)
   
 key.getPressDelay():int
 
 $key_getReleaseDelay_hint:
 key.getReleaseDelay();
+  
 Получить задержку отпускания клавиши клавиатуры в мс. (releaseDelay)
   
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
 key.getSpeed();
+  
 Получить множитель скорости.
   
 Обратная величина к множителю задержек
@@ -662,12 +729,17 @@ key.getSpeed():float
 
 $key_isCapsLocked_hint:
 key.isCapsLocked();
+  
+Проверить включен ли CAPS_LOCK
 
 $key_isNumLocked_hint:
 key.isNumLocked();
+  
+Проверить включен ли NUM_LOCK
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
+  
 Узнать зажаты ли указанные клавиши клавиатуры
   
 key.isPressed('KEY1 KEY2'):boolean
@@ -675,12 +747,17 @@ key.isPressed('KEY1 KEY2'):boolean
 
 $key_isScrollLocked_hint:
 key.isScrollLocked();
+  
+Проверить включен ли SCROLL_LOCK
 
 $key_perform_hint:
-key.perform();
+key.perform('CONTROL','PRESS');
+  
+Выполнить дейсвие для клавиши
 
 $key_press_hint:
 key.press('CONTROL');
+  
 Нажать клавишу клавиатуры
   
 key.press('KEY');
@@ -692,6 +769,7 @@ key.press('KEY');
 
 $key_release_hint:
 key.release('CONTROL');
+  
 Отпустить клавишу клавиатуры
   
 key.release('KEY');
@@ -703,28 +781,34 @@ key.release('KEY');
 
 $key_resetDelays_hint:
 key.resetDelays();
+  
 Сбросить все задержки к стандартному значению
 
 $key_resetMultiplier_hint:
 key.resetMultiplier();
+  
 Сбросить множитель задержек к стандартному значению
 
 $key_resetSpeed_hint:
 key.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $key_setDelays_hint:
 key.setDelays(10);
+  
 Приствоить всем задержкам указанное значение
   
 key.setDelays(int delay)
 
 $key_setMinDelay_hint:
 key.setMinDelay(10);
-
+  
+Установить значение минимальной задержки
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
@@ -733,6 +817,7 @@ key.setMultiplier(float multiplier)
 
 $key_setPressDelay_hint:
 key.setPressDelay(10);
+  
 Установить задержку нажатия клавиши клавиатуры в мс.
   
 key.setPressDelay(pressDelay)
@@ -740,6 +825,7 @@ key.setPressDelay(pressDelay)
 
 $key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
+  
 Установить задержку отпускания клавиши клавиатуры в мс.
   
 key.setReleaseDelay(releaseDelay)
@@ -747,6 +833,7 @@ key.setReleaseDelay(releaseDelay)
 
 $key_setSpeed_hint:
 key.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек
@@ -755,6 +842,7 @@ key.setSpeed(float speed)
 
 $key_type_hint:
 key.type('CONTROL');
+  
 Последовательно нажать и отпустить каждую укзанную клавишу
   
 key.release('KEY1 KEY2');
@@ -767,6 +855,18 @@ key.release('KEY1 KEY2');
   release('KEY');
     sleep(releaseDelay);
 
+$key_typeText_hint:
+key.typeText('ru','Привет!');
+  
+Печатает указанный текст в данной раскладке
+  
+Имена раскладок можно найти в документации
+ 
+Корректно вводит текст только в случае не зажатых клавишь-модификаторов (CAPS_LOCK, SHIFT и т.п.)
+Не изменяет состояния клавишь-модификаторов. Будьте внимательны и проверяте их до выполнения метода самостоятельно
+ 
+Используйте метод в случае, если необходим именно ввод текста с клавиатуры. В остальных случаях, лучше используйте буфер обмена
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 ////////////TEMPLATES////////////////
@@ -777,9 +877,12 @@ key.release('KEY1 KEY2');
 /////////////////////////////////////
 $system_exit_hint:
 system.exit();
+  
+Закрыть приложение
 
 $system_sleep_hint:
 system.sleep(0);
+  
 Приостановить скрипт на заданное время в мс.
 
 system.sleep(ms);
@@ -787,18 +890,22 @@ system.sleep(ms);
 
 $system_print_hint:
 system.print('');
+  
 Вывести сообщение в поле вывода
 
 $system_println_hint:
 system.println('');
+  
 Вывести сообщение в поле вывода и перейти на новую строку
 
 $system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
+  
 Получить значение задержки пермноженое на множитель задержек
 
 $system_getMultiplier_hint:
 system.getMultiplier();
+  
 Получить множитель задержек (multiplier)
   
 На данное число умножаются все задержки
@@ -807,71 +914,196 @@ system.getMultiplier();
 
 $system_getSpeed_hint:
 system.getSpeed();
+  
 Получить значение параметра скорости
   
 Обратная величина к множителю задержек
 
 $system_keyIgnore_hint:
 system.keyIgnore();
+  
+Игнорировать события клавиатуры для вызовов методов
+  
+Пока данная опция включена, вызов методов по событиям клавиш клавиатуры будет невозможен
 
 $system_keyResume_hint:
 system.keyResume();
+  
+Восстановить захват событий клавиатуры. Отменяет вызов keyIgnore()
 
 $system_mouseIgnore_hint:
 system.mouseIgnore();
+  
+Игнорировать события мыши для вызовов методов
+  
+Пока данная опция включена, вызов методов по событиям мыши будет невозможен
 
 $system_mouseResume_hint:
 system.mouseResume();
+  
+Восстановить захват событий клавиатуры. Отменяет вызов mouseIgnore()
 
 $system_onKeyPress_hint:
 system.onKeyPress('foo','CONTROL');
+  
+Зарегестрировать вызов метода по нажатию указанной клавиши
 
 $system_onKeyRelease_hint:
 system.onKeyRelease('foo');
+  
+Зарегестрировать вызов метода по отпусканию указанной клавиши
 
 $system_onMouseMove_hint:
 system.onMouseMove('foo');
+  
+Зарегестрировать вызов метода при перемещении курсора
 
 $system_onMousePress_hint:
 system.onMousePress('foo','LEFT');
+  
+Зарегестрировать вызов метода по нажатию указанной кропки мыши
 
 $system_onMouseRelease_hint:
 system.onMouseRelease('foo','LEFT');
+  
+Зарегестрировать вызов метода по отпусканию указанной кропки мыши
 
 $system_onShortcutPress_hint:
 system.onShortcutPress('foo','CONTROL 1');
+  
+Зарегестрировать вызов метода по нажатию указанного сочетания клавиш
 
 $system_onShortcutRelease_hint:
 system.onShortcutRelease('foo','CONTROL 1');
+  
+Зарегестрировать вызов метода по отпусканию указанного сочетания клавиш
 
 $system_onWheelDown_hint:
 system.onWheelDown('foo');
+  
+Зарегестрировать вызов метода по прокрутке колесика мыши вниз
 
 $system_onWheelUp_hint:
 system.onWheelUp('foo');
+  
+Зарегестрировать вызов метода по прокрутке колесика мыши вверх
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
+  
   Сбросить множитель задержек к стандартному значению
 
 $system_resetSpeed_hint:
 system.resetSpeed();
+  
 Сбросить множитель скорости к стандартному значению
 
 $system_setMaxThreads_hint:
 system.setMaxThreads('foo',1);
+  
+Установить максимальное количество потоков для вызова метода
+  
+Данное параметр ограничивает максимальное количество вызов метода по события клавитару и мыши.
+  
+Если в данный момет метод выполняется указанное количество раз, то следующие вызовы убдут проигнорированы
+  
+Этот параметр никак не влияет на вызов метода другими средствами программы, а только на вызовы зарегестрированные по событиям клавиатуры и мыши
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);
+  
 Установить множитель задержек
   
 Обратная величина к множителю скорости
 
 $system_setSpeed_hint:
 system.setSpeed(1);
+  
 Установить множитель скорости
   
 Обратная величина к множителю задержек
+
+$system_showImage_hint:
+system.showImage();
+  
+Load an image to the output image view
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CLIPBOARD////////////////
+/////////////////////////////////////
+$clipboard_get_hint:
+clipboard.get();
+  
+Получить текстовое содержимое буфера обмена
+
+$clipboard_set_hint:
+clipboard.set('TEXT');
+  
+Скопировать текст в буфер обмена
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CREATE///////////////////
+/////////////////////////////////////
+$create_image_hint:
+var image = create.image(16,16);
+  
+Создать изображение
+  
+Использование:
+  image(int width, int height)
+  image(String base64String)
+
+$create_imageFile_hint:
+var image = create.imageFile('file.png');
+  
+Создать изображения по указанному пути к файлу
+
+$create_point_hint:
+var point = create.point(0,0);
+  
+Создать точку
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////SCREEN///////////////////
+/////////////////////////////////////
+$screen_getImage_hint:
+screen.getImage(0,0,0,0);
+  
+Получить изображение указанной области
+  
+Если область выходит за края экрана, то изображение будет обрезано 
+  
+Использование:
+  getImage(int x0, int y0, int x1, int y1)
+  getImage(Point p1, Point p2)
+  getImage(Rectangle rectangle)
+
+$screen_getFilledImage_hint:
+screen.getFilledImage(0,0,0,0);
+  
+Получить изображение указанной области
+  
+Если область выходит за края экрана, то пустая область будет заполнена черным цветом
+  
+Использование:
+  getFilledImage(int x0, int y0, int x1, int y1)
+  getFilledImage(Point p1, Point p2)
+
+$screen_getHeight_hint:
+screen.getHeight();
+  
+Get the screen height
+
+$screen_getWidth_hint:
+screen.getWidth();
+  
+Get the screen width
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
@@ -891,6 +1123,7 @@ function Class (path) {
         return text;
     };
 }
+  
 Шаблон класса с именем 'Class'
   
 Для создания объекта используйте конструкцию типа:
@@ -902,7 +1135,7 @@ function Class (path) {
 Обращение к методу объекта:
   var out = obj.echo('someText');
 
-$language_class_hint:
+$language_class_template:
 function Class (path) {
     this.path = path;
     this.echo = function(text){
@@ -917,6 +1150,7 @@ $language_functionEcho_hint:
 function echo(text){
     return text;
 }
+  
 Шаблон функции сполучением и возвратом значения
 
 $language_functionEcho_template:
@@ -931,6 +1165,7 @@ $language_functionVoid_hint:
 function foo(){
     
 }
+  
 Шаблон пустой функции
 
 $language_functionVoid_template:
@@ -945,6 +1180,7 @@ $language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
+  
 Шаблон возрастающего цикла 'for'
 
 $language_loopForPlus_template:
@@ -959,6 +1195,7 @@ $language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
+  
 Шаблон убывающего цикла 'for'
 
 $language_loopForMinus_template:
@@ -973,6 +1210,7 @@ $language_loopWhile_hint:
 while(true){
     
 }
+  
 Шаблон цикла 'while'
 
 $language_loopWhile_template:

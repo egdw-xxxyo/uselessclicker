@@ -5,7 +5,7 @@ import java.util.List;
 public interface CodeGenerator {
 
     void buildStringForCurrentMethod(Object... params);
-
+    
     void invokeMethodWithDefaultParams(String methodName);
 
     String getGeneratedCode();

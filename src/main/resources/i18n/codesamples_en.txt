@@ -248,6 +248,12 @@ $combinedEncodingType:
   Using unicode characters a string takes less space but can be easily corrupted
   Using base64-zip encoding a string takes less space, but cannot be edited afterwards  
 
+
+/////////////////////////////////////
+//////////////IMAGE//////////////////
+$btnInsertSelectImage:
+  Insert a selected area to the image output view
+
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ////////////TEMPLATES////////////////
@@ -260,18 +266,23 @@ $combinedEncodingType:
 /////////////////////////////////////
 $mouse_button_hint:
 mouse.button('LEFT','PRESS');
+  
+Perform an action for a mouse button
 
 $mouse_buttonAt_hint:
 mouse.buttonAt('LEFT','PRESS',0,0);
+  
+Perform an action for a mouse button at a particular point
 
 $mouse_click_hint:
 mouse.click('LEFT');
+  
 A mouse button click
   
 mouse.click('BTN');
    BTN - button's name
   
-The method consists of two calls of pressing and releasing the button:
+The method consists of two calls of pressing and releasing a button:
   press('BTN');
     sleep(pressDelay);
   release('BTN');
@@ -279,13 +290,14 @@ The method consists of two calls of pressing and releasing the button:
 
 $mouse_clickAt_hint:
 mouse.clickAt('LEFT',0,0);
+  
 The click the button at the particular point 
   
 mouse.clickAt('BTN',x,y);
   BTN - button's name
   x,y - coordinates
   
-The method consists of two calls of pressing and releasing the button:
+The method consists of two calls of pressing and releasing a button:
   pressAt('BTN',x,y);
     sleep(pressDelay);
   releaseAt('BTN',x,y);
@@ -293,27 +305,39 @@ The method consists of two calls of pressing and releasing the button:
 
 $mouse_getMinDelay_hint:
 mouse.getMinDelay();
+  
+Get the minimum delay. The minimum delay represents a threshold for an each delay in еру object
 
 $mouse_getMoveDelay_hint:
 mouse.getMoveDelay();
+  
 Get the mouse movement delay in ms. (moveDelay)
   
   mouse.getMoveDelay():int
 
 $mouse_getMultipliedMoveDelay_hint:
 mouse.getMultipliedMoveDelay();
+  
+Get a real value for the movement delay multiplied by multiplier
 
 $mouse_getMultipliedPressDelay_hint:
 mouse.getMultipliedPressDelay();
+  
+Get a real value for the button pressing delay multiplied by multiplier
 
 $mouse_getMultipliedReleaseDelay_hint:
 mouse.getMultipliedReleaseDelay();
+  
+Get a real value for the button releasing delay multiplied by multiplier
 
 $mouse_getMultipliedWheelDelay_hint:
 mouse.getMultipliedWheelDelay();
+  
+Get a real value for the scroll wheel delay multiplied by multiplier
 
 $mouse_getMultiplier_hint:
 mouse.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -324,18 +348,21 @@ The reciprocal of the speed multiplier
 
 $mouse_getPressDelay_hint:
 mouse.getPressDelay();
+  
 Get the mouse button press delay in ms. (pressDelay)
   
   mouse.getPressDelay():int
 
 $mouse_getReleaseDelay_hint:
 mouse.getReleaseDelay();
+  
 Get the mouse button release delay in ms. (releaseDelay)
   
   mouse.getReleaseDelay():int
 
 $mouse_getSpeed_hint:
 mouse.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
@@ -344,24 +371,28 @@ The reciprocal of the delay multiplier
 
 $mouse_getWheelDelay_hint:
 mouse.getWheelDelay();
+  
 Get the mouse wheel delay in ms. (wheelDelay)
   
   mouse.getWheelDelay():int
 
 $mouse_getX_hint:
 mouse.getX();
+  
 Get the 'x' coordinate of the last mouse event
   
   mouse.getX():int
 
 $mouse_getY_hint:
 mouse.getY();
+  
 Get the 'x' coordinate of the last mouse event
   
   mouse.getY():int
 
 $mouse_move_hint:
 mouse.move(0,0);
+  
 Move the cursor relative to the coordinates of the last event
   
   mouse.move(dx,dy);
@@ -373,9 +404,12 @@ Method consists of:
 
 $mouse_moveAndButton_hint:
 mouse.moveAndButton('LEFT','PRESS',0,0);
+  
+Move the cursor relative to the coordinates of the last event and perform a mouse button action
 
 $mouse_moveAndClick_hint:
 mouse.moveAndClick('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and click the button
   
 mouse.moveAndClick('BTN',dx,dy);
@@ -392,6 +426,7 @@ Method consists of:
 
 $mouse_moveAndPress_hint:
 mouse.moveAndPress('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and press the button
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -406,6 +441,7 @@ Method consists of:
 
 $mouse_moveAndRelease_hint:
 mouse.moveAndRelease('LEFT',0,0);
+  
 Move the cursor relative to the coordinates of the last event and release the button
   
 mouse.moveAndPress('BTN',dx,dy);
@@ -420,6 +456,7 @@ Method consists of:
 
 $mouse_moveAndWheel_hint:
 mouse.moveAndWheel('DOWN',3,0,0);
+  
 Move the cursor relative to the coordinates of the last event and rotate the wheel
   
 mouse.moveAndWheel
@@ -436,6 +473,7 @@ Method consists of:
 
 $mouse_moveTo_hint:
 mouse.moveTo(0,0);
+  
 Move the cursor to the particular point
   
 mouse.moveTo(x,y);
@@ -447,6 +485,7 @@ Method consists of:
 
 $mouse_press_hint:
 mouse.press('LEFT');
+  
 Press the mouse button
   
 mouse.press('BTN');
@@ -458,6 +497,7 @@ Method consists of:
 
 $mouse_pressAt_hint:
 mouse.pressAt('LEFT',0,0);
+  
 Move the cursor to the particular point and press the button
   
 mouse.pressAt('BTN',x,y);
@@ -472,6 +512,7 @@ Method consists of:
 
 $mouse_release_hint:
 mouse.release('LEFT');
+  
 Release the mouse button
   
 mouse.release('BTN');
@@ -483,6 +524,7 @@ Method consists of:
 
 $mouse_releaseAt_hint:
 mouse.releaseAt('LEFT',0,0);
+  
 Move the cursor to the particular point and release the button
   
 mouse.releaseAt('BTN',x,y);
@@ -497,34 +539,43 @@ Method consists of:
 
 $mouse_resetDelays_hint:
 mouse.resetDelays();
+  
 Reset all delays to default values
 
 $mouse_resetMultiplier_hint:
 mouse.resetMultiplier();
+  
 Reset the delay multiplier to a default value
 
 $mouse_resetSpeed_hint:
 mouse.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $mouse_setDelays_hint:
 mouse.setDelays(10);
+  
 Set all delays to the specified value
   
 mouse.setDelays(int delay)
 
+
+$mouse_setMinDelay_hint:
+mouse.setMinDelay(5);
+  
+Set a value for the minimum delay
+
 $mouse_setMoveDelay_hint:
 mouse.setMoveDelay(10);
+  
 Set the mouse movement delay to the specified value
   
 mouse.setMoveDelay(int moveDelay)
   moveDelay - delay
 
-$mouse_setMinDelay_hint:
-mouse.setMinDelay(5);
-
 $mouse_setMultiplier_hint:
 mouse.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
@@ -533,6 +584,7 @@ mouse.setMultiplier(float multiplier)
 
 $mouse_setPressDelay_hint:
 mouse.setPressDelay(10);
+  
 Set the press delay to the specified value
   
 mouse.setPressDelay(pressDelay)
@@ -540,6 +592,7 @@ mouse.setPressDelay(pressDelay)
 
 $mouse_setReleaseDelay_hint:
 mouse.setReleaseDelay(10);
+  
 Set the release delay to the specified value
   
 mouse.setReleaseDelay(releaseDelay)
@@ -547,12 +600,14 @@ mouse.setReleaseDelay(releaseDelay)
 
 $mouse_setSpeed_hint:
 mouse.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $mouse_setWheelDelay_hint:
 mouse.setWheelDelay(10);
+  
 Set the wheel delay to the specified value
   
 mouse.setWheelDelay(wheelDelay)
@@ -560,6 +615,7 @@ mouse.setWheelDelay(wheelDelay)
 
 $mouse_setX_hint:
 mouse.setX(0);
+  
 Move the cursor along the 'x' axis to the specified coordinate
   
 mouse.setX(x);
@@ -571,6 +627,7 @@ Method consists of:
 
 $mouse_setY_hint:
 mouse.setY(0);
+  
 Move the cursor along the 'y' axis to the specified coordinate
   
 mouse.setY(y);
@@ -594,6 +651,7 @@ Method consists of:
 
 $mouse_wheelAt_hint:
 mouse.wheelAt('DOWN',3,0,0);
+  
 Rotate the mouse wheel on the specifies number of lines at the particular point
   
 mouse.wheelAt
@@ -619,15 +677,22 @@ Method consists of:
 /////////////////////////////////////
 $key_getMinDelay_hint:
 key.getMinDelay();
+  
+Get the minimum delay. The minimum delay represents a threshold for an each delay in the object
 
 $key_getMultipliedPressDelay_hint:
 key.getMultipliedPressDelay();
+  
+Get a real value for the press key delay multiplied by multiplier
 
 $key_getMultipliedReleaseDelay_hint:
 key.getMultipliedReleaseDelay();
+  
+Get a real value for the release key delay multiplied by multiplier
 
 $key_getMultiplier_hint:
 key.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -638,18 +703,21 @@ key.getMultiplier():float
 
 $key_getPressDelay_hint:
 key.getPressDelay();
+  
 Get the key press delay in ms. (pressDelay)
   
 key.getPressDelay():int
 
 $key_getReleaseDelay_hint:
 key.getReleaseDelay();
+  
 Get the mouse button release delay in ms. (releaseDelay)
   
 key.getReleaseDelay():int
 
 $key_getSpeed_hint:
 key.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
@@ -658,25 +726,35 @@ key.getSpeed():float
 
 $key_isCapsLocked_hint:
 key.isCapsLocked();
+  
+Check if CAPS_LOCK is locked
 
 $key_isNumLocked_hint:
 key.isNumLocked();
+  
+Check if NUM_LOCK is locked
 
 $key_isPressed_hint:
 key.isPressed('CONTROL');
-Find out is the specified keys are pressed
+  
+Check if the specified keys are pressed
   
 key.isPressed('KEY1 KEY2'):boolean
   KEY1, KEY2 - key's names
 
 $key_isScrollLocked_hint:
 key.isScrollLocked();
+  
+Check if SCROLL_LOCK is locked
 
 $key_perform_hint:
-key.perform();
+key.perform('CONTROL','PRESS');
+  
+Perform an action for the key
 
 $key_press_hint:
 key.press('CONTROL');
+  
 Press the specified key
   
 key.press('KEY');
@@ -688,6 +766,7 @@ Method consists of:
 
 $key_release_hint:
 key.release('CONTROL');
+  
 Release the specified key
   
 key.release('KEY');
@@ -699,27 +778,34 @@ The method consists of:
 
 $key_resetDelays_hint:
 key.resetDelays();
+  
 Reset all delays to default values
 
 $key_resetMultiplier_hint:
 key.resetMultiplier();
+  
 Reset the delay multiplier to a default value
 
 $key_resetSpeed_hint:
 key.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $key_setDelays_hint:
 key.setDelays(10);
+  
 Set all delays to the specified value
   
 key.setDelays(int delay)
 
 $key_setMinDelay_hint:
 key.setMinDelay(10);
+  
+Set a value for the minimum delay
 
 $key_setMultiplier_hint:
 key.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
@@ -728,6 +814,7 @@ key.setMultiplier(float multiplier)
 
 $key_setPressDelay_hint:
 key.setPressDelay(10);
+  
 Set the press delay to the specified value
   
 key.setPressDelay(pressDelay)
@@ -735,6 +822,7 @@ key.setPressDelay(pressDelay)
 
 $key_setReleaseDelay_hint:
 key.setReleaseDelay(10);
+  
 Set the release delay to the specified value
   
 key.setReleaseDelay(releaseDelay)
@@ -742,12 +830,14 @@ key.setReleaseDelay(releaseDelay)
 
 $key_setSpeed_hint:
 key.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $key_type_hint:
 key.type('CONTROL');
+  
 Sequentially press and release each specified key
   
 key.type('KEY1 KEY2');
@@ -759,6 +849,18 @@ Method consists of(fo each key):
   release('KEY');
     sleep(releaseDelay);
 
+$key_typeText_hint:
+key.typeText('us','Hello!');
+  
+Types text in a specified layout
+
+Layout names can be found in the documentation
+
+Correctly types text only in the case of unpressed modifiers keys(CAPS_LOCK, SHIFT, etc.)
+Does not change the state of modifier keys. Be attentive and check them yourself before calling the method
+
+Use the method in case you need exactly typing text from the keyboard. In other cases, it is better to use the clipboard
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 ////////////TEMPLATES////////////////
@@ -769,9 +871,12 @@ Method consists of(fo each key):
 /////////////////////////////////////
 $system_exit_hint:
 system.exit();
+  
+Close the application
 
 $system_sleep_hint:
 system.sleep(0);
+  
 Pause script running on the specified amount of time in ms.
 
 system.sleep(ms);
@@ -779,18 +884,22 @@ system.sleep(ms);
 
 $system_print_hint:
 system.print('');
+  
 Print the message
 
 $system_println_hint:
 system.println('');
+  
 Print the message and terminate the line
 
 $system_getMultipliedDelay_hint:
 system.getMultipliedDelay(delay);
+  
 Get the multiplied delay
 
 $system_getMultiplier_hint:
 system.getMultiplier();
+  
 Get the delay multiplier
   
 At this number, all delays for the object are multiplied
@@ -799,71 +908,197 @@ The reciprocal of the speed multiplier
 
 $system_getSpeed_hint:
 system.getSpeed();
+  
 Get the speed multiplier
   
 The reciprocal of the delay multiplier
 
 $system_keyIgnore_hint:
 system.keyIgnore();
+  
+Ignore keyboard events for method calls
+  
+While this option is on, it wil be impossible to call methods by keyboard events
 
 $system_keyResume_hint:
 system.keyResume();
+  
+Resume keyboard events capturing. Cancels the keyIgnore() call
 
 $system_mouseIgnore_hint:
 system.mouseIgnore();
+  
+Ignore mouse events for method calls
+  
+While this option is on, it wil be impossible to call methods by mouse events
+
 
 $system_mouseResume_hint:
 system.mouseResume();
+  
+Resume mouse events capturing. Cancels the mouseIgnore() call
 
 $system_onKeyPress_hint:
 system.onKeyPress('foo','CONTROL');
+  
+Register a method call by pressing the specified key
 
 $system_onKeyRelease_hint:
 system.onKeyRelease('foo');
+  
+Register a method call by releasing the specified key
 
 $system_onMouseMove_hint:
 system.onMouseMove('foo');
+  
+Register a method call by mouse moving
 
 $system_onMousePress_hint:
 system.onMousePress('foo','LEFT');
+  
+Register a method call by pressing the specified button
 
 $system_onMouseRelease_hint:
 system.onMouseRelease('foo','LEFT');
+  
+Register a method call by releasing the specified button
 
 $system_onShortcutPress_hint:
 system.onShortcutPress('foo','CONTROL 1');
+  
+Register a method call by pressing the specified keyboard shortcut
 
 $system_onShortcutRelease_hint:
 system.onShortcutRelease('foo','CONTROL 1');
+  
+Register a method call by releasing the specified keyboard shortcut
 
 $system_onWheelDown_hint:
 system.onWheelDown('foo');
+  
+Register a method call by scrolling down the wheel
 
 $system_onWheelUp_hint:
 system.onWheelUp('foo');
+  
+Register a method call by scrolling up the wheel
 
 $system_resetMultiplier_hint:
 system.resetMultiplier();
+  
   Reset the delay multiplier to a default value
 
 $system_resetSpeed_hint:
 system.resetSpeed();
+  
 Reset the speed multiplier to a default value
 
 $system_setMaxThreads_hint:
 system.setMaxThreads('foo',1);
+  
+Set the maximum number of threads to call the method
+  
+This parameter limits the maximum number of method calls for the keyboard and mouse events
+  
+If the given method is executed the specified number of times, then the following calls will be ignored
+  
+This parameter does not affect the call of the method by other ways, but only calls registered on the events of the keyboard and mouse
 
 $system_setMultiplier_hint:
 system.setMultiplier(1);
+  
 Set the delay multiplier to the specified value
   
 The reciprocal of the speed multiplier
 
 $system_setSpeed_hint:
 system.setSpeed(1);
+  
 Set the speed multiplier
   
 The reciprocal of the delay multiplier
+
+$system_showImage_hint:
+system.showImage();
+  
+Загрузить изображение в поле вывода изображений
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CLIPBOARD////////////////
+/////////////////////////////////////
+$clipboard_get_hint:
+clipboard.get();
+  
+Get clipboard text content
+
+$clipboard_set_hint:
+clipboard.set('TEXT');
+  
+Copy the text to the clipboard
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////CREATE///////////////////
+/////////////////////////////////////
+$create_image_hint:
+var image = create.image(16,16);
+  
+Create an image
+  
+Usages:
+  image(int width, int height)
+  image(String base64String)
+
+$create_imageFile_hint:
+var image = create.imageFile('file.png');
+  
+Create an image from the file path
+
+$create_point_hint:
+var point = create.point(0,0);
+  
+Create a point
+
+/////////////////////////////////////
+///THIS IS MAX SIZE FOR EACH LINE////
+/////////////////////////////////////
+////////////SCREEN///////////////////
+/////////////////////////////////////
+$screen_getImage_hint:
+screen.getImage(0,0,0,0);
+  
+Get an image for the selected area
+  
+If the area is beyond the edges of the screen, the image will be cropped
+  
+Usages:
+  getImage(int x0, int y0, int x1, int y1)
+  getImage(Point p1, Point p2)
+  getImage(Rectangle rectangle)
+
+$screen_getFilledImage_hint:
+screen.getFilledImage(0,0,0,0);
+  
+Get an image for the selected area
+  
+If the area is beyond the edges of the screen, the blank area will be filled with the black color
+  
+Usages:
+  getFilledImage(int x0, int y0, int x1, int y1)
+  getFilledImage(Point p1, Point p2)
+
+$screen_getHeight_hint:
+screen.getHeight();
+  
+Get the screen height
+
+$screen_getWidth_hint:
+screen.getWidth();
+  
+Get the screen width
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
@@ -883,6 +1118,7 @@ function Class (path) {
         return text;
     };
 }
+  
 The template for the class with the name 'Class'
   
 To create an object use the code:
@@ -909,6 +1145,7 @@ $language_functionEcho_hint:
 function echo(text){
     return text;
 }
+  
 The template of a function with a returning value
 
 $language_functionEcho_template:
@@ -923,6 +1160,7 @@ $language_functionVoid_hint:
 function foo(){
     
 }
+  
 The template for an empty function
 
 $language_functionVoid_template:
@@ -937,6 +1175,7 @@ $language_loopForPlus_hint:
 for(i=0;i<10;i++){
     
 }
+  
 The template for an increasing loop 'for'
 
 $language_loopForPlus_template:
@@ -951,6 +1190,7 @@ $language_loopForMinus_hint:
 for(i=10;i>0;i--){
     
 }
+  
 The template for a decreasing loop 'for'
 
 $language_loopForMinus_template:
@@ -965,6 +1205,7 @@ $language_loopWhile_hint:
 while(true){
     
 }
+  
 The template for a loop 'while'
 
 $language_loopWhile_template:

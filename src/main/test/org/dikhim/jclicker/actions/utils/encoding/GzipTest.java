@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.actions.utils.encoding;
 
+import org.dikhim.jclicker.util.Gzip;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -101,7 +102,7 @@ public class GzipTest {
     @Test
     public void compress_Decompress_Equality() {
         try {
-            byte[] compresed = Gzip.compress(string);
+            byte[] compresed = Gzip.compressString(string);
             System.out.println(new String(compresed));
             System.out.println();
             System.out.println(String.format("size before =%s after=%s",string.length(),compresed.length));
@@ -109,7 +110,7 @@ public class GzipTest {
 
             System.out.println(sb.toString());
             System.out.println(Base64.getEncoder().encodeToString(compresed).length());
-            String out = Gzip.decompress(compresed);
+            String out = Gzip.decompressString(compresed);
             assertEquals(out,string);
         } catch (IOException e) {
             e.printStackTrace();

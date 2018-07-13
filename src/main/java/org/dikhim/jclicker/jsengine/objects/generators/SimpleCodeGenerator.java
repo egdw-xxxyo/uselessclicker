@@ -4,14 +4,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public abstract class SimpleCodeGenerator implements CodeGenerator {
     private String objectName;
     private int lineSize;
-    private StringBuilder sb;
+    private StringBuilder sb = new StringBuilder();
 
     private Method[] allMethods;
 
@@ -143,13 +141,14 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
 
     @Override
     public List<String> getMethodNames() {
-        List<String> methodsNames = new ArrayList<>();
+        Set<String> methodsNamesSet = new HashSet<>();
         for (Method m : allMethods) {
             if (Modifier.isPublic(m.getModifiers()))
-                methodsNames.add(m.getName());
+                methodsNamesSet.add(m.getName());
         }
-        methodsNames.sort(Comparator.naturalOrder());
-        return methodsNames;
+        List<String> methodNames = new ArrayList<>(methodsNamesSet);
+        methodNames.sort(Comparator.naturalOrder());
+        return methodNames;
     }
 
 
@@ -161,5 +160,9 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
             return m;
         }
         return null;
+    }
+
+    public StringBuilder getSb() {
+        return sb;
     }
 }

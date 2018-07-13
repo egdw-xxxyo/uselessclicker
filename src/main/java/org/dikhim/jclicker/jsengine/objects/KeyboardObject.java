@@ -55,4 +55,6 @@ public interface KeyboardObject {
 
     //T
     void type(String keys);
+
+    void typeText(String layout, String text);
 }

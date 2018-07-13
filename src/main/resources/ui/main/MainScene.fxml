@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -21,11 +23,10 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import org.dikhim.componentlibrary.components.CodeTextArea?>
 
 <!--suppress ALL -->
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
 
     <center>
         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -118,16 +119,23 @@
             </VBox>
             <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                    <SplitPane dividerPositions="0.8" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                            <CodeTextArea fx:id="codeTextArea" styleClass="code-text-area" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0">
-                            <TextArea fx:id="outTextArea" styleClass="code-text-area" text="" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <font>
-                                    <Font name="Monospaced Bold" size="13.0" />
-                                </font>
-                            </TextArea>
+                    <SplitPane dividerPositions="0.5720524017467249" orientation="VERTICAL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="codeAreaPane" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0">
+                            <TabPane fx:id="outputTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <tabs>
+                                    <Tab text="Output">
+                                        <content>
+                                            <AnchorPane fx:id="outputTextPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                        </content>
+                                    </Tab>
+                                    <Tab text="Image">
+                                        <content>
+                                            <AnchorPane fx:id="outputImagePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                        </content>
+                                    </Tab>
+                                </tabs>
+                            </TabPane>
                         </AnchorPane>
                     </SplitPane>
                     <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
@@ -138,6 +146,7 @@
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </TextArea>
+               <AnchorPane fx:id="lupePane" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
                 </AnchorPane>
                 <AnchorPane id="insertCodePane" fx:id="templatePane">
                     <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -200,7 +209,7 @@
                                                     <ToggleButton fx:id="btnCombinedRelativePath" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCombinedRelativePathAction" prefHeight="100.0" prefWidth="250.0" styleClass="templateButton" text="%r.eRec.combined.relative" />
                                                     <Label styleClass="combined-label" text="%r.eRec.combined.options" />
                                                     <ToggleButton fx:id="btnCombinedDelays" focusTraversable="false" maxHeight="100.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="100.0" prefWidth="250.0" selected="true" styleClass="templateButton" text="%r.eRec.combined.delays" />
-                                       <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
+                                                    <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
                                                     <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.fixedRate">
                                                         <graphic>
                                                             <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
@@ -218,6 +227,19 @@
                                                     </ToggleButton>
                                                 </VBox>
                                             </ScrollPane>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" layoutX="10.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.image">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox>
+                                                            <children>
+                                                                <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#insertSelectImage" styleClass="templateButton" text="%r.eRec.image.selectImage" />
+                                                            </children>
+                                                        </VBox>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
                                         </TitledPane>
                                     </panes>
                                 </Accordion>
@@ -239,6 +261,33 @@
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
                                                 <VBox fx:id="systemTemplateButtonContainer" />
                                             </ScrollPane>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.clipboard">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="clipboardTemplateButtonContainer" />
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.screen">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="screenTemplateButtonContainer" />
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.create">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox fx:id="createTemplateButtonContainer" />
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
                                         </TitledPane>
                                         <TitledPane animated="false" focusTraversable="false" styleClass="insert-code-titled-pane" text="%r.templates.language">
                                             <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
