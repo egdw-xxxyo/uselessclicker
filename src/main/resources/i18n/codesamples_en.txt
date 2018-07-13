@@ -1018,6 +1018,11 @@ Set the speed multiplier
   
 The reciprocal of the delay multiplier
 
+$system_showImage_hint:
+system.showImage();
+  
+Загрузить изображение в поле вывода изображений
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////

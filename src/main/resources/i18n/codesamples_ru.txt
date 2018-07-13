@@ -1023,6 +1023,11 @@ system.setSpeed(1);
   
 Обратная величина к множителю задержек
 
+$system_showImage_hint:
+system.showImage();
+  
+Load an image to the output image view
+
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
