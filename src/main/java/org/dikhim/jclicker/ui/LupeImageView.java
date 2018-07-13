@@ -1,8 +1,6 @@
 package org.dikhim.jclicker.ui;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -12,10 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.dikhim.jclicker.actions.MouseMoveHandler;
-import org.dikhim.jclicker.actions.events.MouseMoveEvent;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.controllers.utils.ImageCapturer;
 import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
@@ -28,7 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public class LupeImageView extends VBox implements Initializable {
 
