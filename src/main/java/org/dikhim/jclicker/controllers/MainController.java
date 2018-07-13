@@ -33,6 +33,7 @@ import org.dikhim.jclicker.jsengine.objects.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.ui.CodeTextArea;
+import org.dikhim.jclicker.ui.LupeImageView;
 import org.dikhim.jclicker.ui.OutTextArea;
 import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
@@ -102,11 +103,17 @@ public class MainController implements Initializable {
         outputImageView.addChangeListener(() -> outputTabPane.getSelectionModel().select(1));
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
 
+        // lupe pane
+        LupeImageView lupeImageView = new LupeImageView(resources);
+        lupePane.getChildren().addAll(lupeImageView);
+
         // events recorder
         eventsRecorder = new EventsRecorder(config);
         eventsRecorder.setOutputTextArea(codeTextArea);
         eventsRecorder.setPreviewPane(previewPane);
+
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
+        lupeImageView.visibleProperty().bindBidirectional(eventsRecorder.mouseRecordingProperty());
 
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -180,19 +187,24 @@ public class MainController implements Initializable {
     private VBox previewPane;
 
     // code pane
-
     @FXML
     private AnchorPane codeAreaPane;
-    
+
     // output pane
     @FXML
     private TabPane outputTabPane;
 
+    //// text output
     @FXML
     private AnchorPane outputTextPane;
 
+    //// image output
     @FXML
     private AnchorPane outputImagePane;
+
+    // lupe pane    
+    @FXML
+    private AnchorPane lupePane;
 
     @FXML
     private TextField txtAbsolutePathRate;

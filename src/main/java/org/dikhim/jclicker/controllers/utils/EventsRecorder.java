@@ -557,6 +557,7 @@ public class EventsRecorder {
     //////////
     private void showImageOnMouseMove() {
         startMouseRecording();
+        if(previewPane != null) return;
 
         final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
         ImageCapturer imageCapturer = new ImageCapturer();
@@ -717,7 +718,13 @@ public class EventsRecorder {
     void removeMouseListeners() {
         mouseEventsManager.removeListenersByPrefix(prefix);
     }
-    
-    
 
+
+    public boolean isMouseRecording() {
+        return mouseRecording.get();
+    }
+
+    public BooleanProperty mouseRecordingProperty() {
+        return mouseRecording;
+    }
 }

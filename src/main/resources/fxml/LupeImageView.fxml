@@ -12,7 +12,7 @@
 
 <fx:root fx:id="previewPane" prefHeight="160.0" prefWidth="129.0" style="-fx-background-color: fff;" stylesheets="@LupeImageView.css" type="VBox" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="previewImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="lupeImage" cache="true" cacheHint="SPEED" fitHeight="129.0" fitWidth="129.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/cursor128.png" />
          </image>

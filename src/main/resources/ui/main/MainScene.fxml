@@ -185,6 +185,7 @@
                             <DropShadow />
                         </effect>
                     </VBox>
+               <AnchorPane fx:id="lupePane" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="177.0" />
                 </AnchorPane>
                 <AnchorPane id="insertCodePane" fx:id="templatePane">
                     <Accordion styleClass="rootAccordion" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

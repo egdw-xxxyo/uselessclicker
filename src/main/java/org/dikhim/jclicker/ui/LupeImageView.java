@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.dikhim.jclicker.actions.MouseMoveHandler;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
@@ -53,13 +54,23 @@ public class LupeImageView extends VBox implements Initializable {
         AnchorPane.setRightAnchor(this, 0d);
         AnchorPane.setBottomAnchor(this, 0d);
         AnchorPane.setLeftAnchor(this, 0d);
+        
+        // on change visibility hide/show parent and start/stop recording
+        visibleProperty().addListener((observable, oldValue, newValue) -> {
+            getParent().visibleProperty().bindBidirectional(this.visibleProperty());
+            if (newValue) {
+                start();
+            } else {
+                stop();
+            } 
+        });        
     }
 
     @FXML
     private ImageView lupeImage;
-    
+
+    private String prefix = "lupe";
     private IntegerProperty resolution = new SimpleIntegerProperty(33);
-    private BooleanProperty mouseRecording = new SimpleBooleanProperty(false);
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -77,38 +88,6 @@ public class LupeImageView extends VBox implements Initializable {
         }
     }
 
-    private void showImageOnMouseMove() {
-        startMouseRecording();
-
-        
-        final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
-        ImageCapturer imageCapturer = new ImageCapturer();
-        imageCapturer.setScreenObject(screenObject);
-        imageCapturer.setOnImageLoaded(this::setPreviewImage);
-
-        BiConsumer<Integer, Integer> onMove = (x, y) -> {
-            if (!imageCapturer.isLocked()) {
-                int rectSize = resolution.get();
-                int x0 = x - rectSize / 2;
-                int y0 = y - rectSize / 2;
-                int x1 = x0 + rectSize;
-                int y1 = y0 + rectSize;
-                imageCapturer.captureImage(x0, y0, x1, y1);
-            }
-        };
-
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
-
-        String prefix = "loupe";
-        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".show.on.move", new Consumer<MouseMoveEvent>() {
-            @Override
-            public void accept(MouseMoveEvent e) {
-                onMove.accept(e.getX(), e.getY());
-            }
-        }));
-    }
-
     private void setPreviewImage(BufferedImage bufferedImage) {
         int w = (int) lupeImage.getFitWidth();
         int h = (int) lupeImage.getFitHeight();
@@ -117,12 +96,34 @@ public class LupeImageView extends VBox implements Initializable {
         lupeImage.setImage(image);
     }
 
-    public void startMouseRecording() {
-        mouseRecording.setValue(true);
+    private void start() {
+        final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+        ImageCapturer imageCapturer = new ImageCapturer();
+        imageCapturer.setScreenObject(screenObject);
+        imageCapturer.setOnImageLoaded(this::setPreviewImage);
+
+        BiConsumer<Integer, Integer> onMove = (x, y) -> {
+            
+        };
+
+        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
+        onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
+
+        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".show.on.move", e -> {
+            if (!imageCapturer.isLocked()) {
+                int x = e.getX();
+                int y = e.getY();
+                int rectSize = resolution.get();
+                int x0 = x - rectSize / 2;
+                int y0 = y - rectSize / 2;
+                int x1 = x0 + rectSize;
+                int y1 = y0 + rectSize;
+                imageCapturer.captureImage(x0, y0, x1, y1);
+            }
+        }));
+    }
+    private void stop() {
+        MouseEventsManager.getInstance().removeListenersByPrefix(prefix);
     }
 
-    public void stopMouseRecording() {
-        mouseRecording.setValue(false);
-        removeMouseListeners();
-    }
 }
