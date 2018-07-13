@@ -110,7 +110,6 @@ public class MainController implements Initializable {
         // events recorder
         eventsRecorder = new EventsRecorder(config);
         eventsRecorder.setOutputTextArea(codeTextArea);
-        eventsRecorder.setPreviewPane(previewPane);
 
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
         lupeImageView.visibleProperty().bindBidirectional(eventsRecorder.mouseRecordingProperty());
@@ -182,9 +181,6 @@ public class MainController implements Initializable {
     @FXML
     private TextArea areaCodeSample;
     private StringProperty codeSampleProperty = new SimpleStringProperty("");
-
-    @FXML
-    private VBox previewPane;
 
     // code pane
     @FXML
