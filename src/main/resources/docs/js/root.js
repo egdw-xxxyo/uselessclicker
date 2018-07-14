@@ -8,7 +8,7 @@ $(document).ready(function () {
             .addClass('nav-label')
             .text(data[0]);
 
-        if (data[1] === "icon") {
+        if (data[1] === "1") {
             $icon.addClass(data[2]);
             $a.addClass('list-level-1');
         } else {

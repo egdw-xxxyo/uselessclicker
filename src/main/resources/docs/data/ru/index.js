@@ -1,6 +1,6 @@
 const sidemenu = {
-    "index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
-    "versionHistory.html": ["История версий", "text", ""],
-    "guide/guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
-    "examples/examples.html": ["Примеры", "icon", "glyphicon glyphicon-file"]
+    "index.html": ["Главная страница", "1", "glyphicon glyphicon-home"],
+    "versionHistory.html": ["История версий", "2", ""],
+    "guide/guide.html": ["Руководство пользователя", "1", "glyphicon glyphicon-list"],
+    "examples/examples.html": ["Примеры", "1", "glyphicon glyphicon-file"]
 };
