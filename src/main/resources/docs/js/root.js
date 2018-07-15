@@ -11,9 +11,9 @@ $(document).ready(function () {
         if (data[1] === "1") {
             $icon.addClass(data[2]);
             $a.addClass('list-level-1');
-        } else  if(data[1]==="2"){
+        } else if (data[1] === "2") {
             $a.addClass('list-level-2');
-        }else {
+        } else {
             $a.addClass('list-level-3');
         }
 
@@ -25,6 +25,9 @@ $(document).ready(function () {
         $a.append($text);
         $(".navbar-primary-menu li").append($a);
     });
+
+    //////////////////////////////////////////
+    // code area
 
     // add copy buttons to "codebox" elements
     let $li = $("<li>")
@@ -52,9 +55,34 @@ $(document).ready(function () {
                 sys.set(text);
             }));
 
+    //show more button
+
+    let $showMoreButton = $li.clone().append(
+        $a.clone()
+            .addClass("glyphicon glyphicon-chevron-down")
+            .attr("title", "Show more")
+            .click(function (e) {
+                $(e.target).toggleClass("glyphicon-chevron-down")
+                    .toggleClass("glyphicon-chevron-up");
+                $(e.target).parent().parent().parent().find("pre").toggleClass("show-more");
+            }));
+
+    // code buttons in code area
     let $codeButtonBar = $("<ul>")
         .addClass("code-bar")
         .append($copyButton)
         .append($setButton);
-    $(".codebox").append($codeButtonBar);
+    let $codeboxes = $(".codebox");
+    $codeboxes.append($codeButtonBar);
+
+    $codeboxes.each(function () {
+        if ($(this).height() >= 200) {
+            $(this).find('.code-bar').append($showMoreButton);
+        }
+    })
+    ////////////////////////////////////
+    // code area
+    // collapse
+
+
 });
