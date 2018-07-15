@@ -4,5 +4,6 @@ const sidemenu = {
     "../../examples/examples.html": ["Examples", "1", "glyphicon glyphicon-file"],
     "../api.html": ["API", "1", "glyphicon glyphicon-list-alt"],
     "classes.html": ["Classes", "2", ""],
+    "image.html": ["Image", "3", ""],
     "../objects/objects.html": ["Objects", "2", ""]
 };
