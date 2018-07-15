@@ -26,8 +26,23 @@
         <li>-S,--socket-server &gt;port&gt; -> set a port for the Socket server and start it</li>
         <li>-o,--open-file &gt;file path&gt; -> open file in the script editor</li>
         <li>-r,--run-file &gt;file path&gt; -> open file in the script editor and run it</li>
-        <li>-R,--recording &gt;enable&gt; -> if false, then mouse and keyboard recording will be disabled. Kills the mouse and keyboard capturing thread to save some RAM and CPU usage. No mouse/keyboard recording, no onKey/onMouse/onShortcut method calls, no stop/run script shortcuts, etc.</li>
+        <li>-R,--recording &gt;enable&gt; -> if false, then mouse and keyboard recording will be disabled. The default value is true. Kills the mouse and keyboard capturing thread to save some RAM and CPU usage. No mouse/keyboard recording, no onKey/onMouse/onShortcut method calls, no stop/run script shortcuts, etc.</li>
     </ul>
+    
+    <h3>Examples</h3>
+    <p>For example, we have an application file <strong>Useless_Auto_Clicker.jar </strong>and some scripts in the folder <strong>/home/user/scripts/</strong></p><br>
+    
+    Open a certain script:
+    <p>java -jar Useless_Auto_Clicker.jar -o=/home/user/scripts/script1.js</p><br>
+    
+    Run a certain script:
+    <p>java -jar Useless_Auto_Clicker.jar -o=/home/user/scripts/script1.js</p><br>
+
+    Run a certain script without gui:
+    <p>java -jar Useless_Auto_Clicker.jar -g=false -o=/home/user/scripts/script1.js</p><br>
+
+    Run a Socket server without gui and mouse/keyboard recording:
+    <p>java -jar Useless_Auto_Clicker.jar -g=false -R=false -S=5000</p><br>
 </div>
 <script src="api.js">
 </script>
