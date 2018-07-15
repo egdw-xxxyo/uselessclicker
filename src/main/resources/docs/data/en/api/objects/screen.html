@@ -4,7 +4,7 @@
     <meta charset='UTF-8'>
     <meta name="robots" content="noindex">
     <link rel='stylesheet prefetch' href='../../../../css/bootstrap.min.css'>
-    <script type="text/javascript">const current_page = "clipboard.html";</script>
+    <script type="text/javascript">const current_page = "screen.html";</script>
     <script src='../../../../js/jquery.min.js'></script>
     <script src='../../../../js/root.js'></script>
     <link rel='stylesheet prefetch' href='../../../../css/index.css'>
@@ -20,9 +20,20 @@
 <div class="main-content">
     <h3>Useless API</h3>
     <ul>
-        <li>String get();</li>
-
-        <li>void set(String str);</li>
+        <li> Image getImage(int x0, int y0, int x1, int y1);
+        </li>
+        <li> Image getImage(Point p1, Point p2);
+        </li>
+        <li> Image getImage(Rectangle rectangle);
+        </li>
+        <li> Image getFilledImage(int x0, int y0, int x1, int y1);
+        </li>
+        <li> Image getFilledImage(Point p1, Point p2);
+        </li>
+        <li> int getHeight();
+        </li>
+        <li> int getWidth();
+        </li>
     </ul>
 </div>
 <script src="objects.js">
