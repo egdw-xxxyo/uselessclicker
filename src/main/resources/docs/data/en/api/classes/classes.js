@@ -5,5 +5,6 @@ const sidemenu = {
     "../api.html": ["API", "1", "glyphicon glyphicon-list-alt"],
     "classes.html": ["Classes", "2", ""],
     "image.html": ["Image", "3", ""],
-    "../objects/objects.html": ["Objects", "2", ""]
+    "../objects/objects.html": ["Objects", "2", ""],
+    "../cli.html": ["Command line parameters", "2", ""]
 };

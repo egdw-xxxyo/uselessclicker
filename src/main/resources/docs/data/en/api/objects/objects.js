@@ -10,5 +10,6 @@ const sidemenu = {
     "key.html": ["key", "3", ""],
     "mouse.html": ["mouse", "3", ""],
     "screen.html": ["screen", "3", ""],
-    "system.html": ["system", "3", ""]
+    "system.html": ["system", "3", ""],
+    "../cli.html": ["Command line parameters", "2", ""]
 };
