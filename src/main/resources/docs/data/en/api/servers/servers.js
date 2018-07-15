@@ -6,5 +6,7 @@ const sidemenu = {
     "../classes/classes.html": ["Classes", "2", ""],
     "../objects/objects.html": ["Objects", "2", ""],
     "servers.html": ["Servers", "2", ""],
+    "http.html": ["HTTP", "3", ""],
+    "socket.html": ["Socket", "3", ""],
     "../cli.html": ["Command line parameters", "2", ""],    
 };
