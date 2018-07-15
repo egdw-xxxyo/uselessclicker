@@ -8,5 +8,6 @@ const sidemenu = {
     "doubleClick.html": ["Double clicks", "2", ""],
     "findImage.html": ["Find an image", "2", ""],
     "typeText.html": ["Text typing", "2", ""],
-    "threads.html": ["Threads", "2", ""]
+    "threads.html": ["Threads", "2", ""],
+    "../api/api.html": ["API", "1", "glyphicon glyphicon-list-alt"]
 };

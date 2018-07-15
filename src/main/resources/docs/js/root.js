@@ -11,8 +11,10 @@ $(document).ready(function () {
         if (data[1] === "1") {
             $icon.addClass(data[2]);
             $a.addClass('list-level-1');
-        } else {
+        } else  if(data[1]==="2"){
             $a.addClass('list-level-2');
+        }else {
+            $a.addClass('list-level-3');
         }
 
         if (current_page === page) {

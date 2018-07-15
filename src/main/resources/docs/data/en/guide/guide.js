@@ -13,5 +13,6 @@ const sidemenu = {
     "delaySystem.html": ["Delays system", "2", ""],
     "delayMultiplier.html": ["Speed and delay multiplier", "2", ""],
     "delaysInCombined.html": ["Delays in combined.run method", "2", ""],
-    "../examples/examples.html": ["Examples", "1", "glyphicon glyphicon-file"]
+    "../examples/examples.html": ["Examples", "1", "glyphicon glyphicon-file"],
+    "../api/api.html": ["API", "1", "glyphicon glyphicon-list-alt"]
 };

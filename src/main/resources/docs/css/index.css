@@ -89,6 +89,10 @@ p {
     padding: 2px 33px !important;
 }
 
+.list-level-3{
+    padding: 2px 48px !important;
+}
+
 .navbar-primary-menu li a:hover {
     background-color: #181818;
     text-decoration: none;
