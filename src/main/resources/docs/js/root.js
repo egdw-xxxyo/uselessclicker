@@ -62,7 +62,6 @@ $(document).ready(function () {
             class: "glyphicon glyphicon-chevron-down",
             title: "Show more"
         }).click(function (e) {
-            console.log("show more");
             $(e.target).toggleClass("glyphicon-chevron-down")
                 .toggleClass("glyphicon-chevron-up");
 
