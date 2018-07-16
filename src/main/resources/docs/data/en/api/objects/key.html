@@ -75,6 +75,28 @@
         <li> void type(String keys);
         </li>
         <li> void typeText(String layout, String text);
+            <br>Types the passed text in the specified layout. It actually generates events to reach a specific letter
+            with modifier keys. For the letter 'H' will be generated the event sequence 'press(SHIFT) press(H)
+            release(H)' and if the next letter is 'e', then will be generated the sequence "release(SHIFT) press(E)
+            release(E)", etc. If there is no such key in the specified layout than a letter will be ignored even if
+            letters look the same.
+            <div class="codebox"><pre><code>system.sleep(1000);
+key.typeText('us','Hello World! :)');
+key.type('ENTER');
+
+system.sleep(1000);
+key.typeText('us','Hello World! :) Привет Мир! :)');
+key.type('ENTER');
+
+system.sleep(1000);
+key.typeText('ru','Привет Мир! :)');
+key.type('ENTER');</code></pre>
+            </div>
+            supported layouts:
+            <br>"us" - English(US),
+            <br>"gb" - English(UK),
+            <br>"ru" - Russian,
+            <br>"ua" - Ukrainian.
         </li>
     </ul>
 </div>
