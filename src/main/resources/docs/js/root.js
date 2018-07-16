@@ -75,14 +75,12 @@ $(document).ready(function () {
     let $codeboxes = $(".codebox");
     $codeboxes.append($codeButtonBar);
 
+    // add show more button
     $codeboxes.each(function () {
         if ($(this).height() >= 200) {
-            $(this).find('.code-bar').append($showMoreButton);
+            $(this).find('.code-bar').append($showMoreButton.clone());
         }
     })
-    ////////////////////////////////////
-    // code area
-    // collapse
-
 
 });
+
