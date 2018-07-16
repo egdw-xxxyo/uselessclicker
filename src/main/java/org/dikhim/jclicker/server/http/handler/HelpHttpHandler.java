@@ -12,6 +12,7 @@ public class HelpHttpHandler extends DefaultHttpHandler {
 
     @Override
     protected void handle() throws IOException {
+        System.out.println("help");
         String response = "Server is running\n\n" +
                 "Available methods:\n" +
                 "/help\n" +
