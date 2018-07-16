@@ -32,12 +32,10 @@ $(document).ready(function () {
     // add copy buttons to "codebox" elements
     let $li = $("<li>")
         .addClass("code-button");
-    let $a = $("<a>")
-        .attr("href", "#");
 
     // copy button
     let $copyButton = $li.clone().append(
-        $a.clone()
+        $("<a>")
             .addClass("glyphicon glyphicon-duplicate")
             .attr("title", "Copy to clipboard")
             .click(function (e) {
@@ -47,38 +45,42 @@ $(document).ready(function () {
 
     //set button
     let $setButton = $li.clone().append(
-        $a.clone()
+        $("<a>")
             .addClass("glyphicon glyphicon-save-file")
             .attr("title", "Set to the script editor field")
             .click(function (e) {
+                console.log("set");
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
                 sys.set(text);
             }));
 
     //show more button
 
-    let $showMoreButton = $li.clone().append(
-        $a.clone()
-            .addClass("glyphicon glyphicon-chevron-down")
-            .attr("title", "Show more")
-            .click(function (e) {
-                $(e.target).toggleClass("glyphicon-chevron-down")
-                    .toggleClass("glyphicon-chevron-up");
-                $(e.target).parent().parent().parent().find("pre").toggleClass("show-more");
-            }));
 
+    let getMoreButton = function(){
+        return $li.clone().append($('<a />', {
+            class: "glyphicon glyphicon-chevron-down",
+            title: "Show more"
+        }).click(function (e) {
+            console.log("show more");
+            $(e.target).toggleClass("glyphicon-chevron-down")
+                .toggleClass("glyphicon-chevron-up");
+
+            $(e.target).parent().parent().parent().find("pre").toggleClass("show-more");
+        }));
+    };
     // code buttons in code area
     let $codeButtonBar = $("<ul>")
         .addClass("code-bar")
         .append($copyButton)
         .append($setButton);
     let $codeboxes = $(".codebox");
-    $codeboxes.append($codeButtonBar);
 
+    $codeboxes.append($codeButtonBar);
     // add show more button
     $codeboxes.each(function () {
         if ($(this).height() >= 200) {
-            $(this).find('.code-bar').append($showMoreButton.clone());
+            $(this).find('.code-bar').append(getMoreButton());
         }
     })
 
