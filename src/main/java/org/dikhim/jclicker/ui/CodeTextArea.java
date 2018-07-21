@@ -63,6 +63,11 @@ public class CodeTextArea extends TextArea {
     }
 
     private void insertEnter() {
+        int spacesCount = getSpacesForPreviousLine();
+        insertNewLineWithSpaces(spacesCount);
+    }
+
+    private int getSpacesForPreviousLine() {
         char[] charArray = this.getText().toCharArray();
         int caret = this.getCaretPosition();
         int lineBeginning = 0;
@@ -80,24 +85,32 @@ public class CodeTextArea extends TextArea {
                 break;
             }
         }
-        insertNewLineWithSpaces(spacesCount);
+        return spacesCount;
     }
-
+    
     private void insertNewLineWithSpaces(int spaceCount) {
         if(spaceCount>0){
             char[] c = new char[spaceCount];
             Arrays.fill(c,' ');
             String s = "\n" + String.valueOf(c);
-            insertTextIntoCaretPosition(s);
+            insertIntoCaretPosition(s);
         }else if(spaceCount==0) {
-            insertTextIntoCaretPosition("\n");
+            insertIntoCaretPosition("\n");
         }
     }
-
-    public void insertTextIntoCaretPosition(String text) {
+    
+    public void insertIntoCaretPosition(String text) {
         this.insertText(this.getCaretPosition(), text);
     }
     
+    public void insertTextIntoCaretPosition(String text) {
+        String[] lines = text.split("\n");
+        int spaces = getSpacesForPreviousLine();
+        for (String line : lines) {
+            insertIntoCaretPosition(line);
+            insertNewLineWithSpaces(spaces);
+        }
+    }
 
     public int getTabSize() {
         return tabSize;

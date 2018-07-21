@@ -920,8 +920,7 @@ public class MainController implements Initializable {
 
     private void putTextIntoCaretPosition(TextArea textArea, String text) {
         Platform.runLater(() -> {
-            int caretPosition = textArea.getCaretPosition();
-            codeTextArea.insertText(caretPosition, text);
+            codeTextArea.insertTextIntoCaretPosition(text);
         });
     }
 
