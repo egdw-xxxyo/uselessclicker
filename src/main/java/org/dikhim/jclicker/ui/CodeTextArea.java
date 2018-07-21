@@ -104,6 +104,7 @@ public class CodeTextArea extends TextArea {
     }
     
     public void insertTextIntoCaretPosition(String text) {
+        if(!text.contains("\n")) insertIntoCaretPosition(text);
         String[] lines = text.split("\n");
         int spaces = getSpacesForPreviousLine();
         for (String line : lines) {
