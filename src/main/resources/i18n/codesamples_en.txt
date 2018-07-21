@@ -944,7 +944,7 @@ system.onKeyPress('foo','CONTROL');
 Register a method call by pressing the specified key
 
 $system_onKeyRelease_hint:
-system.onKeyRelease('foo');
+system.onKeyRelease('foo','CONTROL');
   
 Register a method call by releasing the specified key
 

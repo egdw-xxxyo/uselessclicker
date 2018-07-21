@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(function () {    
     $.each(sidemenu, function (page, data) {
         let $a = $("<a>")
             .attr("href", page);
