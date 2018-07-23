@@ -56,7 +56,7 @@
                 <RowConstraints vgrow="SOMETIMES" />
             <RowConstraints vgrow="SOMETIMES" />
             </rowConstraints>
-            <Button fx:id="topDownward" mnemonicParsing="false" onAction="#topDownward" GridPane.rowIndex="1">
+            <Button fx:id="topDownward" mnemonicParsing="false" onAction="#topDownward" onMousePressed="#arrowOnPress" onMouseReleased="#arrowOnRelease" GridPane.rowIndex="1">
             <styleClass>
                <String fx:value="arrow-button" />
                <String fx:value="down-arrow" />

@@ -10,12 +10,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.jsengine.objects.CreateObject;
 import org.dikhim.jclicker.jsengine.objects.JsCreateObject;
 import org.dikhim.jclicker.jsengine.objects.generators.CreateObjectCodeGenerator;
+import org.dikhim.jclicker.ui.util.DoWhilePressed;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.ZipBase64;
@@ -28,6 +31,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+import static org.dikhim.jclicker.util.ImageUtil.imageFromByteArray;
 import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
 
 public class OutputImageView extends AnchorPane implements Initializable {
@@ -57,11 +61,17 @@ public class OutputImageView extends AnchorPane implements Initializable {
         image.setSmooth(false);
         originalImage = null;
         repaint();
+
+        topDownward.pressedProperty().addListener(observable -> {
+
+        });
     }
 
     @FXML
     private ImageView image;
-    
+
+    @FXML
+    private Button topDownward;
     private BufferedImage originalImage;
     private BufferedImage transformedImage;
     private DoubleProperty scale = new SimpleDoubleProperty(1);
@@ -73,9 +83,10 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     private Consumer<String> onInsert;
 
+
     @FXML
     void insert(ActionEvent event) {
-        if(originalImage == null) return;
+        if (originalImage == null) return;
         BufferedImage croppedImage = ImageUtil.crop(originalImage, top.get(), right.get(), bottom.get(), left.get());
         try {
             byte[] data = ImageUtil.getByteArray(croppedImage);
@@ -128,7 +139,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        if(originalImage == null) return;
+        if (originalImage == null) return;
         File file = WindowManager.getInstance().saveImageFileAs();
         if (file != null) {
             try {
@@ -200,6 +211,39 @@ public class OutputImageView extends AnchorPane implements Initializable {
         repaint();
     }
 
+
+    ///////////////
+
+    private boolean pressed = false;
+    private DoWhilePressed doWhilePressed = new DoWhilePressed()
+            .setInitDelay(200)
+            .setRepeatDelay(50)
+            .setDoWhilePressed(() -> System.out.println("pressed"));
+
+    @FXML
+    void arrowOnPress(MouseEvent event) {
+        doWhilePressed.press();
+        String id = ((Button) event.getSource()).getId();
+        switch (id) {
+            case "topDownward":
+                
+                break;
+            case "topUpward":
+            case "rightLeftward":
+            case "rightRightward":
+            case "bottomDownward":
+            case "bottomUpward":
+            case "leftLeftward":
+            case "leftRightward":
+        }
+    }
+
+    @FXML
+    void arrowOnRelease(MouseEvent event) {
+        doWhilePressed.release();
+    }
+
+    //////////////
     @FXML
     void zoomIn(ActionEvent event) {
         if (originalImage == null) return;
@@ -264,14 +308,14 @@ public class OutputImageView extends AnchorPane implements Initializable {
     public void setOnInsert(Consumer<String> onInsert) {
         this.onInsert = onInsert;
     }
-   
+
 
     public void loadImage(BufferedImage image) {
         originalImage = image;
         reset();
         repaint();
     }
-    
+
     public void addChangeListener(Runnable listener) {
         image.imageProperty().addListener((observable, oldValue, newValue) -> listener.run());
     }
