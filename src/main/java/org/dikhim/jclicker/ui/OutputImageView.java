@@ -60,10 +60,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
         image.setSmooth(false);
         originalImage = null;
         repaint();
-
-        topDownward.pressedProperty().addListener(observable -> {
-
-        });
     }
 
     @FXML
