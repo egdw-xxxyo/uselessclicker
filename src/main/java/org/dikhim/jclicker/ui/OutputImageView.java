@@ -31,7 +31,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import static org.dikhim.jclicker.util.ImageUtil.imageFromByteArray;
 import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
 
 public class OutputImageView extends AnchorPane implements Initializable {
@@ -85,7 +84,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     private Consumer<String> onInsert;
 
-    private DoWhilePressed doWhilePressed = new DoWhilePressed();
+    private DoWhilePressed moveImageBorderWhilePressed = new DoWhilePressed();
 
     //
     @FXML
@@ -165,42 +164,42 @@ public class OutputImageView extends AnchorPane implements Initializable {
         String id = ((Button) event.getSource()).getId();
         switch (id) {
             case "topDownward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::topDownward)
                         .press();
                 break;
             case "topUpward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::topUpward)
                         .press();
                 break;
             case "rightLeftward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::rightLeftward)
                         .press();
                 break;
             case "rightRightward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::rightRightward)
                         .press();
                 break;
             case "bottomDownward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::bottomDownward)
                         .press();
                 break;
             case "bottomUpward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::bottomUpward)
                         .press();
                 break;
             case "leftLeftward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::leftLeftward)
                         .press();
                 break;
             case "leftRightward":
-                doWhilePressed
+                moveImageBorderWhilePressed
                         .setDoWhilePressed(this::leftRightward)
                         .press();
                 break;
@@ -209,7 +208,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void arrowOnRelease(MouseEvent event) {
-        doWhilePressed.release();
+        moveImageBorderWhilePressed.release();
     }
 
     @FXML
