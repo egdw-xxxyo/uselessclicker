@@ -72,6 +72,8 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     private Button topDownward;
+    
+    //
     private BufferedImage originalImage;
     private BufferedImage transformedImage;
     private DoubleProperty scale = new SimpleDoubleProperty(1);
@@ -83,7 +85,9 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     private Consumer<String> onInsert;
 
+    private DoWhilePressed doWhilePressed = new DoWhilePressed();
 
+    //
     @FXML
     void insert(ActionEvent event) {
         if (originalImage == null) return;
@@ -157,84 +161,49 @@ public class OutputImageView extends AnchorPane implements Initializable {
     }
 
     @FXML
-    void topDownward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (getCroppedImageHeight() > 1) top.set(top.get() + 1);
-        repaint();
-    }
-
-    @FXML
-    void topUpward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (top.get() > 0) top.set(top.get() - 1);
-        repaint();
-    }
-
-    @FXML
-    void rightLeftward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (getCroppedImageWidth() > 1) right.set(right.get() + 1);
-        repaint();
-    }
-
-    @FXML
-    void rightRightward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (right.get() > 0) right.set(right.get() - 1);
-        repaint();
-    }
-
-    @FXML
-    void bottomDownward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (bottom.get() > 0) bottom.set(bottom.get() - 1);
-        repaint();
-    }
-
-    @FXML
-    void bottomUpward(ActionEvent event) {
-        if (getCroppedImageHeight() > 1) bottom.set(bottom.get() + 1);
-        repaint();
-    }
-
-    @FXML
-    void leftLeftward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (left.get() > 0) left.set(left.get() - 1);
-        repaint();
-    }
-
-    @FXML
-    void leftRightward(ActionEvent event) {
-        if (originalImage == null) return;
-        if (getCroppedImageWidth() > 1) left.set(left.get() + 1);
-        repaint();
-    }
-
-
-    ///////////////
-
-    private boolean pressed = false;
-    private DoWhilePressed doWhilePressed = new DoWhilePressed()
-            .setInitDelay(200)
-            .setRepeatDelay(50)
-            .setDoWhilePressed(() -> System.out.println("pressed"));
-
-    @FXML
     void arrowOnPress(MouseEvent event) {
-        doWhilePressed.press();
         String id = ((Button) event.getSource()).getId();
         switch (id) {
             case "topDownward":
-                
+                doWhilePressed
+                        .setDoWhilePressed(this::topDownward)
+                        .press();
                 break;
             case "topUpward":
+                doWhilePressed
+                        .setDoWhilePressed(this::topUpward)
+                        .press();
+                break;
             case "rightLeftward":
+                doWhilePressed
+                        .setDoWhilePressed(this::rightLeftward)
+                        .press();
+                break;
             case "rightRightward":
+                doWhilePressed
+                        .setDoWhilePressed(this::rightRightward)
+                        .press();
+                break;
             case "bottomDownward":
+                doWhilePressed
+                        .setDoWhilePressed(this::bottomDownward)
+                        .press();
+                break;
             case "bottomUpward":
+                doWhilePressed
+                        .setDoWhilePressed(this::bottomUpward)
+                        .press();
+                break;
             case "leftLeftward":
+                doWhilePressed
+                        .setDoWhilePressed(this::leftLeftward)
+                        .press();
+                break;
             case "leftRightward":
+                doWhilePressed
+                        .setDoWhilePressed(this::leftRightward)
+                        .press();
+                break;
         }
     }
 
@@ -243,7 +212,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
         doWhilePressed.release();
     }
 
-    //////////////
     @FXML
     void zoomIn(ActionEvent event) {
         if (originalImage == null) return;
@@ -255,6 +223,54 @@ public class OutputImageView extends AnchorPane implements Initializable {
     void zoomOut(ActionEvent event) {
         if (originalImage == null) return;
         if (scale.get() > 0.5) scale.setValue(scale.get() / 2);
+        repaint();
+    }
+
+    //
+    private void topDownward() {
+        if (originalImage == null) return;
+        if (getCroppedImageHeight() > 1) top.set(top.get() + 1);
+        repaint();
+    }
+
+    private void topUpward() {
+        if (originalImage == null) return;
+        if (top.get() > 0) top.set(top.get() - 1);
+        repaint();
+    }
+
+    private void rightLeftward() {
+        if (originalImage == null) return;
+        if (getCroppedImageWidth() > 1) right.set(right.get() + 1);
+        repaint();
+    }
+
+    private void rightRightward() {
+        if (originalImage == null) return;
+        if (right.get() > 0) right.set(right.get() - 1);
+        repaint();
+    }
+
+    private void bottomDownward() {
+        if (originalImage == null) return;
+        if (bottom.get() > 0) bottom.set(bottom.get() - 1);
+        repaint();
+    }
+
+    private void bottomUpward() {
+        if (getCroppedImageHeight() > 1) bottom.set(bottom.get() + 1);
+        repaint();
+    }
+
+    private void leftLeftward() {
+        if (originalImage == null) return;
+        if (left.get() > 0) left.set(left.get() - 1);
+        repaint();
+    }
+
+    private void leftRightward() {
+        if (originalImage == null) return;
+        if (getCroppedImageWidth() > 1) left.set(left.get() + 1);
         repaint();
     }
 
@@ -295,7 +311,6 @@ public class OutputImageView extends AnchorPane implements Initializable {
         }).start();
     }
 
-
     private void reset() {
         scale.set(1);
         top.set(0);
@@ -309,7 +324,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         this.onInsert = onInsert;
     }
 
-
+    //
     public void loadImage(BufferedImage image) {
         originalImage = image;
         reset();
