@@ -16,6 +16,7 @@ import java.io.PrintStream;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 public class Clicker extends Application {
     private static Clicker application;
@@ -34,6 +35,12 @@ public class Clicker extends Application {
         this.primaryStage = primaryStage;
 
         if (cli.isGuiApplication()) {
+            if(Preferences.userRoot().node("main").getBoolean("isFirstLaunch",true)){
+                Preferences.userRoot().node("main").putBoolean("isFirstLaunch",false);
+                String language = WindowManager.showChooseLanguageDialog();
+                mainApplication.getConfig().getLocalization().getApplicationLanguage().set(language);
+                mainApplication.getConfig().save();
+            }
             String language = mainApplication.getConfig().getLocalization().getApplicationLanguage().get();
             WindowManager.initialization(new Locale(language));
             loadMainScene();

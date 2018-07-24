@@ -5,8 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.dikhim.jclicker.ui.controllers.ChooseLanguageDialogController;
 
 import java.io.File;
 import java.io.IOException;
@@ -86,6 +89,7 @@ public class WindowManager {
         stageMap.put("main", stage);
     }
 
+
     public void showStage(String stageName) {
         Stage stage = stageMap.get(stageName);
         if (stage != null) {
@@ -94,6 +98,13 @@ public class WindowManager {
         }
     }
 
+
+    private Scene loadInitScene()  throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/ChooseLanguageDialogScene.fxml"));
+        Parent root = loader.load();
+
+        return new Scene(root);
+    }
 
     private Scene loadMainScene(Locale locale) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/MainScene.fxml"));
@@ -217,6 +228,35 @@ public class WindowManager {
         stage.getIcons().add(new Image(this.getClass().getResource("/images/24/download.png").toString()));
         Optional<String> result = dialog.showAndWait();
         return result.orElse("");
+    }
+    
+    public static String showChooseLanguageDialog() {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(WindowManager.class.getResource("/fxml/ChooseLanguageDialogScene.fxml"));
+            GridPane page = (GridPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(" ");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            //dialogStage.initOwner(getStage("main"));
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            dialogStage.getIcons().add(new Image(WindowManager.class.getClass().getResourceAsStream("/images/24/globe.png")));
+
+            // Set the person into the controller.
+            ChooseLanguageDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.getSelectedLanguage();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "en";
+        }
     }
     
 }
