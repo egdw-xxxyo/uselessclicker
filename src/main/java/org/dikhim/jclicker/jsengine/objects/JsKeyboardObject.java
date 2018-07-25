@@ -200,7 +200,7 @@ public class JsKeyboardObject implements KeyboardObject {
             if (multiplier < 0) {
                 this.multiplier = 0;
             } else {
-                this.multiplier = multiplier;
+                this.multiplier = (float) (Math.round(multiplier * 100.0) / 100.0);
             }
         }
     }

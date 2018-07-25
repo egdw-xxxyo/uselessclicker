@@ -1153,7 +1153,9 @@ function echo(text){
     return text;
 }
 
-$language_functionVoid_hint:
+
+
+$language_functionVoid:
 function 'void'
 
 $language_functionVoid_hint:

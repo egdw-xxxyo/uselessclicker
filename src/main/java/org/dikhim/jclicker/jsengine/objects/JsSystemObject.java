@@ -216,7 +216,11 @@ public class JsSystemObject implements SystemObject {
     @Override
     public void setMultiplier(float multiplier) {
         synchronized (monitor) {
-            this.multiplier = multiplier;
+            if (multiplier < 0) {
+                this.multiplier = 0;
+            } else {
+                this.multiplier = (float) (Math.round(multiplier * 100.0) / 100.0);
+            }
         }
     }
 
@@ -232,7 +236,7 @@ public class JsSystemObject implements SystemObject {
     @Override
     public void setSpeed(float multiplier) {
         synchronized (monitor) {
-            this.multiplier = 1f / multiplier;
+            setMultiplier(1f / multiplier);
         }
     }
 

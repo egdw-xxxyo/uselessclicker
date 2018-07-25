@@ -359,7 +359,7 @@ public class JsMouseObject implements MouseObject {
             if (multiplier < 0) {
                 this.multiplier = 0;
             } else {
-                this.multiplier = multiplier;
+                this.multiplier = (float) (Math.round(multiplier * 100.0) / 100.0);
             }
         }
     }

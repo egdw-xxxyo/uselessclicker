@@ -51,7 +51,7 @@ public class EventsRecorder {
 
     private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator();
     private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();
-    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator();
+    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(120);
     private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator();
 
     private EventLogger eventLog = new EventLogger(10000);
