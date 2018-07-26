@@ -59,6 +59,16 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
         sb.append(f);
         return this;
     }
+    /**
+     * Appends the string representation of the double argument to this sequence.
+     *
+     * @param f a double.
+     * @return a reference to this object
+     */
+    protected SimpleCodeGenerator append(double f) {
+        sb.append(f);
+        return this;
+    }
 
     @Override
     public int getLineSize() {
@@ -107,6 +117,8 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
                 append((int) params[i]);
             } else if (gpType[i].equals(float.class)) {
                 append((float) params[i]);
+            }else if (gpType[i].equals(double.class)) {
+                append((double) params[i]);
             }
             if (i != gpType.length - 1) sb.append(",");
         }

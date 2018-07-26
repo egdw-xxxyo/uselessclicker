@@ -69,7 +69,7 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -87,7 +87,7 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -196,7 +196,7 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 
@@ -211,7 +211,7 @@ public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements Mou
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void setSpeed(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 

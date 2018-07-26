@@ -8,9 +8,9 @@ public interface SystemObject {
     
     int getMultipliedDelay(int delay);
 
-    float getMultiplier();
+    double getMultiplier();
 
-    float getSpeed();
+    double getSpeed();
     
     void keyIgnore();
     
@@ -50,9 +50,9 @@ public interface SystemObject {
 
     void resetSpeed();
 
-    void setMultiplier(float multiplier);
+    void setMultiplier(double multiplier);
 
-    void setSpeed(float multiplier);
+    void setSpeed(double multiplier);
 
     void showImage(Image image);
     
