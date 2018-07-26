@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
 import org.dikhim.jclicker.actions.events.MouseMoveEvent;
@@ -39,6 +40,7 @@ import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -561,6 +563,15 @@ public class EventsRecorder {
         }));
     }
 
+    // miscellaneous
+    
+    public void filePath() {
+        File file = WindowManager.getInstance().openFile();
+        if (file != null) {
+            putCode(file.getAbsolutePath());
+        }
+    }
+     
     //////////
     public String getPrefix() {
         return prefix;

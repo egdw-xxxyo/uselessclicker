@@ -254,6 +254,11 @@ $combinedEncodingType:
 $btnInsertSelectImage:
   Insert a selected area to the image output view
 
+/////////////////////////////////////
+//////////////OTHER//////////////////
+$recFilePath:
+  Insert an absolute file path
+
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
 ////////////TEMPLATES////////////////

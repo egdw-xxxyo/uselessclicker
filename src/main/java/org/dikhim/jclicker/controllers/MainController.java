@@ -340,6 +340,10 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnInsertCombinedLog;
 
+    // Other
+    @FXML
+    private Button recFilePath;
+
     @FXML
     TextField txtCombinedDetectStopPoints;
 
@@ -432,10 +436,13 @@ public class MainController implements Initializable {
 
 
         // set user data 'String' hint
-        List<ToggleButton> listOfToggles = new ArrayList<>();
-        listOfToggles.addAll(simpleToggles);
-        listOfToggles.addAll(listOfInsertCodeToggles);
-        for (ToggleButton b : listOfToggles) {
+        List<Node> nodes = new ArrayList<>();
+
+        nodes.add(recFilePath);
+        
+        nodes.addAll(simpleToggles);
+        nodes.addAll(listOfInsertCodeToggles);
+        for (Node b : nodes) {
             b.setUserData(new String[]{properties.get(b.getId()), ""});
             b.setOnMouseEntered(this::showCodeSample);
             b.setOnMouseExited(this::hideCodeSample);
@@ -791,6 +798,13 @@ public class MainController implements Initializable {
         onToggleButtonPerformed(event, prefix -> {
             eventsRecorder.selectImage();
         });
+    }
+
+    // Other
+
+    @FXML
+    void recFilePath(ActionEvent event) {
+        eventsRecorder.filePath();
     }
 
     //

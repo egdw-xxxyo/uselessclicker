@@ -20,7 +20,7 @@ import java.util.prefs.Preferences;
 public class WindowManager {
     private static WindowManager windowManager;
     private Preferences preferences = Preferences.userRoot().node(getClass().getName());
-    
+
     private ResourceBundle resourceBundle;
     private Map<String, Stage> stageMap = new HashMap<>();
     private Map<String, Scene> sceneMap = new HashMap<>();
@@ -47,7 +47,7 @@ public class WindowManager {
     }
 
     private void init() throws IOException {
-        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager",locale);
+        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager", locale);
 
         sceneMap.put("about", loadAboutScene(locale));
         sceneMap.put("settings", loadConfigScene(locale));
@@ -74,7 +74,6 @@ public class WindowManager {
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/help.png")));
         stageMap.put("help", stage);
 
-        
 
         stage = new Stage();
         stage.setScene(sceneMap.get("server"));
@@ -85,7 +84,7 @@ public class WindowManager {
         stage = new Stage();
         stage.setScene(sceneMap.get("main"));
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
-        stage.setOnCloseRequest(event -> stageMap.forEach((k, v)-> v.hide()));
+        stage.setOnCloseRequest(event -> stageMap.forEach((k, v) -> v.hide()));
         stageMap.put("main", stage);
     }
 
@@ -99,7 +98,7 @@ public class WindowManager {
     }
 
 
-    private Scene loadInitScene()  throws IOException {
+    private Scene loadInitScene() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/ChooseLanguageDialogScene.fxml"));
         Parent root = loader.load();
 
@@ -146,9 +145,9 @@ public class WindowManager {
     public Stage getStage(String stageName) {
         return stageMap.get(stageName);
     }
-    
-     
-    public File openScriptFile(){
+
+
+    public File openScriptFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("open"));
         fileChooser.getExtensionFilters().addAll(
@@ -165,8 +164,8 @@ public class WindowManager {
         }
         return file;
     }
-    
-    public File saveScriptFileAs(){
+
+    public File saveScriptFileAs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("newFile.js");
@@ -181,6 +180,24 @@ public class WindowManager {
         }
         return file;
     }
+
+
+    public File openFile() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle(resourceBundle.getString("open"));
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(resourceBundle.getString("allTypes"), "*.*"));
+
+        String pathFolder = preferences.get("last-opened-folder", "");
+        if (!pathFolder.isEmpty()) {
+            fileChooser.setInitialDirectory(new File(pathFolder));
+        }
+        File file = fileChooser.showOpenDialog(getStage("main"));
+        if (file != null) {
+            preferences.put("last-opened-folder", file.getParentFile().getAbsolutePath());
+        }
+        return file;
+    }
+
 
     public File openImageFile() {
         FileChooser fileChooser = new FileChooser();
@@ -201,7 +218,7 @@ public class WindowManager {
     }
 
 
-    public File saveImageFileAs(){
+    public File saveImageFileAs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(resourceBundle.getString("saveAs"));
         fileChooser.setInitialFileName("image.png");
@@ -216,7 +233,7 @@ public class WindowManager {
         }
         return file;
     }
-    
+
     public String showImageInputDialog() {
         TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle(resourceBundle.getString("imageInputDialog.title"));
@@ -229,7 +246,7 @@ public class WindowManager {
         Optional<String> result = dialog.showAndWait();
         return result.orElse("");
     }
-    
+
     public static String showChooseLanguageDialog() {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -258,5 +275,5 @@ public class WindowManager {
             return "en";
         }
     }
-    
+
 }
