@@ -78,9 +78,7 @@ public class EventsRecorder {
     public void keyName() {
         keyEventsManager.addKeyboardListener(new KeyListener(
                 prefix + ".press", "", "RELEASE", e -> {
-            String code = e.getKey() + " ";
-            System.out.println(code);
-            putCode(code);
+            putCode(e.getKey() + " ");
         }));
     }
 
