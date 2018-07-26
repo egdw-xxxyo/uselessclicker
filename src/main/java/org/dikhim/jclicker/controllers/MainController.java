@@ -541,7 +541,6 @@ public class MainController implements Initializable {
     void insertKeyName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
             eventsRecorder.keyName();
-
         });
     }
 

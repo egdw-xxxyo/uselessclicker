@@ -76,9 +76,11 @@ public class EventsRecorder {
     // keyboard
 
     public void keyName() {
-        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                prefix + ".press", "", "PRESS", e -> {
-            putCode(e.getKey() + " ");
+        keyEventsManager.addKeyboardListener(new KeyListener(
+                prefix + ".press", "", "RELEASE", e -> {
+            String code = e.getKey() + " ";
+            System.out.println(code);
+            putCode(code);
         }));
     }
 
