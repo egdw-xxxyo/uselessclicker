@@ -74,12 +74,9 @@ public class CodeTextArea extends TextArea {
             }
         };
         this.setSkin(customContextSkin);
-
     }
 
-    
     private void insertTab() {
-
         IndexRange selection = this.getSelection();
         if (selection.getLength() > 0) {
             // compute index of first line
@@ -95,14 +92,14 @@ public class CodeTextArea extends TextArea {
 
             // insert spaces after each line separator
             String selectedText = this.getSelectedText();
-            selectedText = selectedText.replaceAll("\n", "\n"+getTab());
+            selectedText = selectedText.replaceAll("\n", "\n" + getTab());
             this.replaceSelection(selectedText);
-            
+
             // insert spaces in first line
-            this.insertText(firstLineSelectionIndex,getTab());
-        }else {
+            this.insertText(firstLineSelectionIndex, getTab());
+        } else {
             this.insertText(this.getCaretPosition(), getTab());
-        }        
+        }
     }
 
     private void insertEnter() {
@@ -164,7 +161,7 @@ public class CodeTextArea extends TextArea {
         Arrays.fill(c, ' ');
         return String.valueOf(c);
     }
-    
+
     public int getTabSize() {
         return tabSize;
     }
