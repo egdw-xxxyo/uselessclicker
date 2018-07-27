@@ -99,6 +99,7 @@ public class MainController implements Initializable {
         // output image pane
         OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
+        outputImageView.setOnLoad(codeTextArea::getSelectedText);
         outputImagePane.getChildren().addAll(outputImageView);
         outputImageView.addChangeListener(() -> outputTabPane.getSelectionModel().select(1));
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);

@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static org.dikhim.jclicker.util.ImageUtil.resizeImage;
 
@@ -67,7 +68,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     private Button topDownward;
-    
+
     //
     private BufferedImage originalImage;
     private BufferedImage transformedImage;
@@ -79,6 +80,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private IntegerProperty left = new SimpleIntegerProperty(0);
 
     private Consumer<String> onInsert;
+    private Supplier<String> onLoad;
 
     private DoWhilePressed moveImageBorderWhilePressed = new DoWhilePressed();
 
@@ -102,20 +104,16 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
     @FXML
     void load(ActionEvent event) {
-        String data = WindowManager.getInstance().showImageInputDialog();
-        if (!data.isEmpty()) {
-            BufferedImage tmp = originalImage;
-            try {
-                CreateObject createObject = new JsCreateObject();
-                originalImage = createObject.image(data);
-                if (originalImage == null) throw new IOException();
-                reset();
-                repaint();
-            } catch (Exception e) {
-                Out.println("Cannot load image from the string");
-                originalImage = tmp;
-            }
+        // try to get text from selection
+        String selectedText = onLoad.get();
+        if (!selectedText.isEmpty()) {
+            if (loadImageFromString(selectedText)) return;
+            // or else show input dialog
         }
+        
+        selectedText = WindowManager.getInstance().showImageInputDialog();
+        if (loadImageFromString(selectedText)) return;
+        Out.println("Cannot load image from the string");
     }
 
     @FXML
@@ -315,11 +313,30 @@ public class OutputImageView extends AnchorPane implements Initializable {
         repaint();
     }
 
+    private boolean loadImageFromString(String string) {
+        BufferedImage tmp = originalImage;
+        try {
+            CreateObject createObject = new JsCreateObject();
+            originalImage = createObject.image(string);
+            if (originalImage == null) throw new IOException();
+            reset();
+            repaint();
+            return true;
+        } catch (Exception e) {
+            originalImage = tmp;
+            return false;
+        }
+    }
+
+    //
     public void setOnInsert(Consumer<String> onInsert) {
         this.onInsert = onInsert;
     }
 
-    //
+    public void setOnLoad(Supplier<String> onLoad) {
+        this.onLoad = onLoad;
+    }
+
     public void loadImage(BufferedImage image) {
         originalImage = image;
         reset();
