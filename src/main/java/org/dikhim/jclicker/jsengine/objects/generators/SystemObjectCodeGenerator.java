@@ -152,4 +152,9 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     public void sleep(int ms) {
         buildStringForCurrentMethod(ms);
     }
+
+    @Override
+    public void sleepNonMultiplied(int ms) {
+        buildStringForCurrentMethod(ms);
+    }
 }

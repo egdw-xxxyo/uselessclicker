@@ -236,6 +236,15 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
+    public void sleepNonMultiplied(int ms) {
+        if (ms <= 0) return;
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    @Override
     public void setSpeed(double speed) {
         synchronized (monitor) {
             if (speed < 0.1) {

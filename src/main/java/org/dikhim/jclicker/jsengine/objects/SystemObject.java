@@ -55,6 +55,8 @@ public interface SystemObject {
     void setSpeed(double multiplier);
 
     void showImage(Image image);
-    
+
     void sleep(int ms);
+
+    void sleepNonMultiplied(int ms);
 }
