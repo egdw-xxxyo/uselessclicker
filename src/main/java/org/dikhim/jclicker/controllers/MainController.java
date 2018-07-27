@@ -99,6 +99,7 @@ public class MainController implements Initializable {
         // output image pane
         OutputImageView outputImageView = new OutputImageView(resources);
         outputImageView.setOnInsert(codeTextArea::insertTextIntoCaretPosition);
+        outputImageView.setOnLoad(codeTextArea::getSelectedText);
         outputImagePane.getChildren().addAll(outputImageView);
         outputImageView.addChangeListener(() -> outputTabPane.getSelectionModel().select(1));
         mainApplication.setOnSetOutputImage(outputImageView::loadImage);
@@ -340,6 +341,10 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnInsertCombinedLog;
 
+    // Other
+    @FXML
+    private Button recFilePath;
+
     @FXML
     TextField txtCombinedDetectStopPoints;
 
@@ -432,10 +437,13 @@ public class MainController implements Initializable {
 
 
         // set user data 'String' hint
-        List<ToggleButton> listOfToggles = new ArrayList<>();
-        listOfToggles.addAll(simpleToggles);
-        listOfToggles.addAll(listOfInsertCodeToggles);
-        for (ToggleButton b : listOfToggles) {
+        List<Node> nodes = new ArrayList<>();
+
+        nodes.add(recFilePath);
+        
+        nodes.addAll(simpleToggles);
+        nodes.addAll(listOfInsertCodeToggles);
+        for (Node b : nodes) {
             b.setUserData(new String[]{properties.get(b.getId()), ""});
             b.setOnMouseEntered(this::showCodeSample);
             b.setOnMouseExited(this::hideCodeSample);
@@ -541,7 +549,6 @@ public class MainController implements Initializable {
     void insertKeyName(ActionEvent event) {
         onToggleButtonPerformed(event, prefix -> {
             eventsRecorder.keyName();
-
         });
     }
 
@@ -794,6 +801,13 @@ public class MainController implements Initializable {
         });
     }
 
+    // Other
+
+    @FXML
+    void recFilePath(ActionEvent event) {
+        eventsRecorder.filePath();
+    }
+
     //
     // TEMPLATES
     //
@@ -920,8 +934,7 @@ public class MainController implements Initializable {
 
     private void putTextIntoCaretPosition(TextArea textArea, String text) {
         Platform.runLater(() -> {
-            int caretPosition = textArea.getCaretPosition();
-            codeTextArea.insertText(caretPosition, text);
+            codeTextArea.insertTextIntoCaretPosition(text);
         });
     }
 

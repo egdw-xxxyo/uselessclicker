@@ -1,0 +1,30 @@
+
+* {
+    -fx-color-background:#eee;
+
+
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+
+}
+
+.language-button {
+    -fx-min-width: 200px;
+    -fx-max-width: 200px;
+    -fx-background-color: -fx-color-background;
+}
+
+.language-button:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.language-button:pressed{
+    -fx-background-color: -fx-color-pressed;
+
+}
+
+.language-button:selected {
+    -fx-background-color: -fx-color-selected;
+
+}

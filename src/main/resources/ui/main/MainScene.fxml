@@ -241,6 +241,19 @@
                                                 </ScrollPane>
                                             </content>
                                         </TitledPane>
+                              <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.other">
+                                 <content>
+                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                       <content>
+                                          <VBox>
+                                             <children>
+                                                <Button fx:id="recFilePath" mnemonicParsing="false" onAction="#recFilePath" styleClass="templateButton" text="%r.eRec.other.filePath" />
+                                             </children>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </content>
+                              </TitledPane>
                                     </panes>
                                 </Accordion>
                             </TitledPane>

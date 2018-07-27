@@ -1,0 +1,50 @@
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "cli.html";</script>
+    <script src='../../../js/jquery.min.js'></script>
+    <script src='../../../js/root.js'></script>
+    <link rel='stylesheet prefetch' href='../../../css/index.css'>
+</head>
+<body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h3>Command line parameters</h3>
+    <ul>
+        <li>-h,--help -> show help</li>
+        <li>-g,--gui &gt;enable&gt; -> if false, then run cli application. The default value is true. It helps if there is no need to start a gui. Saves RAM an CPU usage</li>
+        <li>-H,--http-server &gt;port&gt; -> set a port for the HTTP server and start it</li>
+        <li>-S,--socket-server &gt;port&gt; -> set a port for the Socket server and start it</li>
+        <li>-o,--open-file &gt;file path&gt; -> open file in the script editor</li>
+        <li>-r,--run-file &gt;file path&gt; -> open file in the script editor and run it</li>
+        <li>-R,--recording &gt;enable&gt; -> if false, then mouse and keyboard recording will be disabled. The default value is true. Kills the mouse and keyboard capturing thread to save some RAM and CPU usage. No mouse/keyboard recording, no onKey/onMouse/onShortcut method calls, no stop/run script shortcuts, etc.</li>
+    </ul>
+    
+    <h3>Examples</h3>
+    <p>For example, we have an application file <strong>Useless_Auto_Clicker.jar </strong>and some scripts in the folder <strong>/home/user/scripts/</strong></p><br>
+    
+    Open a certain script:
+    <p>java -jar Useless_Auto_Clicker.jar -o=/home/user/scripts/script1.js</p><br>
+    
+    Run a certain script:
+    <p>java -jar Useless_Auto_Clicker.jar -o=/home/user/scripts/script1.js</p><br>
+
+    Run a certain script without gui:
+    <p>java -jar Useless_Auto_Clicker.jar -g=false -o=/home/user/scripts/script1.js</p><br>
+
+    Run a Socket server without gui and mouse/keyboard recording:
+    <p>java -jar Useless_Auto_Clicker.jar -g=false -R=false -S=5000</p><br>
+</div>
+<script src="api.js">
+</script>
+</body>
+</html>

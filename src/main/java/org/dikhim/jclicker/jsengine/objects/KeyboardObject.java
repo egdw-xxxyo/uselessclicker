@@ -9,13 +9,13 @@ public interface KeyboardObject {
 
     int getMultipliedReleaseDelay();
 
-    float getMultiplier();
+    double getMultiplier();
 
     int getPressDelay();
 
     int getReleaseDelay();
 
-    float getSpeed();
+    double getSpeed();
 
     // I
     boolean isPressed(String keys);
@@ -45,13 +45,13 @@ public interface KeyboardObject {
 
     void setMinDelay(int delay);
 
-    void setMultiplier(float multiplier);
+    void setMultiplier(double multiplier);
 
     void setPressDelay(int pressDelay);
 
     void setReleaseDelay(int releaseDelay);
 
-    void setSpeed(float multiplier);
+    void setSpeed(double multiplier);
 
     //T
     void type(String keys);

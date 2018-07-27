@@ -40,7 +40,7 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -58,7 +58,7 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -128,7 +128,7 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 
@@ -143,7 +143,7 @@ public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements 
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void setSpeed(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 

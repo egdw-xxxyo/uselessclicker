@@ -4,6 +4,7 @@ package org.dikhim.jclicker.jsengine.objects;
 import org.dikhim.jclicker.actions.utils.MouseCodes;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.util.MathUtil;
 import org.dikhim.jclicker.util.Out;
 
 /**
@@ -24,7 +25,7 @@ public class JsMouseObject implements MouseObject {
     private int releaseDelay = RELEASE_DELAY;
     private int moveDelay = MOVE_DELAY;
     private int wheelDelay = WHEEL_DELAY;
-    private float multiplier = MULTIPLIER;
+    private double multiplier = MULTIPLIER;
     private int minDelay = MIN_DELAY;
 
 
@@ -347,14 +348,14 @@ public class JsMouseObject implements MouseObject {
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         synchronized (monitor) {
             return multiplier;
         }
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         synchronized (monitor) {
             if (multiplier < 0) {
                 this.multiplier = 0;
@@ -372,16 +373,21 @@ public class JsMouseObject implements MouseObject {
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         synchronized (monitor) {
-            return 1f / getMultiplier();
+            if (multiplier == 0) return 999999999;
+            return MathUtil.roundTo1(1.0 / multiplier);
         }
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void setSpeed(double speed) {
         synchronized (monitor) {
-            setMultiplier(1f / multiplier);
+            if (speed < 0.1) {
+                speed = 0.1;
+            }
+            speed = MathUtil.roundTo1(speed);
+            setMultiplier(1f / speed);
         }
     }
 
@@ -494,14 +500,9 @@ public class JsMouseObject implements MouseObject {
     }
     
     // private
-    private int multiply(int delay) {
-        return checkDelay(Math.round(delay * multiplier));
-    }
-
     private int checkDelay(int delay) {
         synchronized (monitor) {
             if (delay < minDelay) return minDelay;
-
             return delay;
         }
     }

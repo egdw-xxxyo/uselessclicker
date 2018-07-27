@@ -25,13 +25,13 @@ public interface MouseObject {
 
     int getMultipliedWheelDelay();
 
-    float getMultiplier();
+    double getMultiplier();
 
     int getPressDelay();
 
     int getReleaseDelay();
 
-    float getSpeed();
+    double getSpeed();
 
     int getWheelDelay();
 
@@ -78,13 +78,13 @@ public interface MouseObject {
 
     void setMoveDelay(int moveDelay);
 
-    void setMultiplier(float multiplier);
+    void setMultiplier(double multiplier);
 
     void setPressDelay(int pressDelay);
 
     void setReleaseDelay(int releaseDelay);
 
-    void setSpeed(float multiplier);
+    void setSpeed(double multiplier);
 
     void setWheelDelay(int wheelDelay);
 

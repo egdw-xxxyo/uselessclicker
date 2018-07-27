@@ -89,6 +89,10 @@ p {
     padding: 2px 33px !important;
 }
 
+.list-level-3{
+    padding: 2px 48px !important;
+}
+
 .navbar-primary-menu li a:hover {
     background-color: #181818;
     text-decoration: none;
@@ -161,6 +165,11 @@ p {
 
 .codebox pre{
     padding-bottom: 2px;
+    max-height: 200px;
+}
+
+.show-more{
+    max-height: fit-content !important;
 }
 
 .code-bar{

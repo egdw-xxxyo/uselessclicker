@@ -27,13 +27,13 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         buildStringForCurrentMethod();
         return 0;
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         buildStringForCurrentMethod();
         return 0;
     }
@@ -134,12 +134,12 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void setSpeed(double multiplier) {
         buildStringForCurrentMethod(multiplier);
     }
 
@@ -150,6 +150,11 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
 
     @Override
     public void sleep(int ms) {
+        buildStringForCurrentMethod(ms);
+    }
+
+    @Override
+    public void sleepNonMultiplied(int ms) {
         buildStringForCurrentMethod(ms);
     }
 }

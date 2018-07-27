@@ -1,12 +1,12 @@
 const sidemenu = {
-    "../index.html": ["Главная страница", "icon", "glyphicon glyphicon-home"],
-    "../guide/guide.html": ["Руководство пользователя", "icon", "glyphicon glyphicon-list"],
-    "examples.html": ["Примеры", "icon", "glyphicon glyphicon-file"],
-    "endlessExecution.html": ["Бесконечное выполнение", "text", ""],
-    "files.html": ["Файлы", "text", ""],
-    "math.html": ["Математические функции", "text", ""],
-    "doubleClick.html": ["Двойной клик", "text", ""],
-    "findImage.html": ["Поиск изображения", "text", ""],
-    "typeText.html": ["Набор текста", "text", ""],
-    "threads.html": ["Потоки", "text", ""]
+    "../index.html": ["Главная страница", "1", "glyphicon glyphicon-home"],
+    "../guide/guide.html": ["Руководство пользователя", "1", "glyphicon glyphicon-list"],
+    "examples.html": ["Примеры", "1", "glyphicon glyphicon-file"],
+    "endlessExecution.html": ["Бесконечное выполнение", "2", ""],
+    "files.html": ["Файлы", "2", ""],
+    "math.html": ["Математические функции", "2", ""],
+    "doubleClick.html": ["Двойной клик", "2", ""],
+    "findImage.html": ["Поиск изображения", "2", ""],
+    "typeText.html": ["Набор текста", "2", ""],
+    "threads.html": ["Потоки", "2", ""]
 };

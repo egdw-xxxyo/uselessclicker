@@ -80,9 +80,9 @@ public class ActionRunner {
                     break;
                 case DELAY_MILLISECONDS:
                     actionDelay = ((DelayMillisecondsAction) a).getDelay();
-                    calculatedDelay = actionDelay - delayDiff;
+                    calculatedDelay = systemObject.getMultipliedDelay(actionDelay) - delayDiff;
                     if (calculatedDelay < 0) calculatedDelay = 0;
-                    systemObject.sleep(calculatedDelay);
+                    systemObject.sleepNonMultiplied(calculatedDelay);
                     scriptTime += systemObject.getMultipliedDelay(actionDelay);
                     break;
             }

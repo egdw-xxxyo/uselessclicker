@@ -1,12 +1,13 @@
 const sidemenu = {
-    "../index.html": ["Main page", "icon", "glyphicon glyphicon-home"],
-    "../guide/guide.html": ["User's guide", "icon", "glyphicon glyphicon-list"],
-    "examples.html": ["Examples", "icon", "glyphicon glyphicon-file"],
-    "endlessExecution.html": ["Endless execution", "text", ""],
-    "files.html": ["Files", "text", ""],
-    "math.html": ["Math", "text", ""],
-    "doubleClick.html": ["Double clicks", "text", ""],
-    "findImage.html": ["Find an image", "text", ""],
-    "typeText.html": ["Text typing", "text", ""],
-    "threads.html": ["Threads", "text", ""]
+    "../index.html": ["Main page", "1", "glyphicon glyphicon-home"],
+    "../guide/guide.html": ["User's guide", "1", "glyphicon glyphicon-list"],
+    "examples.html": ["Examples", "1", "glyphicon glyphicon-file"],
+    "endlessExecution.html": ["Endless execution", "2", ""],
+    "files.html": ["Files", "2", ""],
+    "math.html": ["Math", "2", ""],
+    "doubleClick.html": ["Double clicks", "2", ""],
+    "findImage.html": ["Find an image", "2", ""],
+    "typeText.html": ["Text typing", "2", ""],
+    "threads.html": ["Threads", "2", ""],
+    "../api/api.html": ["API", "1", "glyphicon glyphicon-list-alt"]
 };

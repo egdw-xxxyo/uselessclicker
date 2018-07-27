@@ -8,6 +8,7 @@ import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.util.MathUtil;
 import org.dikhim.jclicker.util.Out;
 
 import java.awt.image.BufferedImage;
@@ -19,9 +20,9 @@ public class JsSystemObject implements SystemObject {
     private Robot robot;
     private final Object monitor;
 
-    private final float MULTIPLIER = 1;
+    private final double MULTIPLIER = 1;
 
-    private float multiplier = MULTIPLIER;
+    private double multiplier = MULTIPLIER;
 
     public JsSystemObject(JSEngine engine) {
         this.engine = engine;
@@ -52,16 +53,17 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         synchronized (monitor) {
             return multiplier;
         }
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         synchronized (monitor) {
-            return 1f / multiplier;
+            if(multiplier==0) return 999999999;
+            return MathUtil.roundTo1(1.0 / multiplier);
         }
     }
 
@@ -214,9 +216,13 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         synchronized (monitor) {
-            this.multiplier = multiplier;
+            if (multiplier < 0) {
+                this.multiplier = 0;
+            } else {
+                this.multiplier = multiplier;
+            }
         }
     }
 
@@ -230,9 +236,22 @@ public class JsSystemObject implements SystemObject {
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void sleepNonMultiplied(int ms) {
+        if (ms <= 0) return;
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    @Override
+    public void setSpeed(double speed) {
         synchronized (monitor) {
-            this.multiplier = 1f / multiplier;
+            if (speed < 0.1) {
+                speed = 0.1;
+            }
+            speed = MathUtil.roundTo1(speed);
+            setMultiplier(1f / speed);
         }
     }
 

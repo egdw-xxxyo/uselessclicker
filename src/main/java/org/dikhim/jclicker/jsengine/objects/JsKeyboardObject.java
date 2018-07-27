@@ -7,6 +7,7 @@ import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.utils.typer.Typer;
 import org.dikhim.jclicker.actions.utils.typer.Typers;
 import org.dikhim.jclicker.jsengine.robot.Robot;
+import org.dikhim.jclicker.util.MathUtil;
 import org.dikhim.jclicker.util.Out;
 
 /**
@@ -18,12 +19,12 @@ public class JsKeyboardObject implements KeyboardObject {
     // Constants
     private final int PRESS_DELAY = 10;
     private final int RELEASE_DELAY = 10;
-    private final float MULTIPLIER = 1f;
+    private final double MULTIPLIER = 1f;
     private final int MIN_DELAY = 5;
 
     private int pressDelay = PRESS_DELAY;
     private int releaseDelay = RELEASE_DELAY;
-    private float multiplier = MULTIPLIER;
+    private double multiplier = MULTIPLIER;
     private int minDelay = MIN_DELAY;
 
 
@@ -57,7 +58,7 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     @Override
-    public float getMultiplier() {
+    public double getMultiplier() {
         synchronized (monitor) {
             return multiplier;
         }
@@ -78,9 +79,10 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     @Override
-    public float getSpeed() {
+    public double getSpeed() {
         synchronized (monitor) {
-            return 1f / getMultiplier();
+            if (multiplier == 0) return 999999999;
+            return MathUtil.roundTo1(1.0 / multiplier);
         }
     }
 
@@ -195,7 +197,7 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     @Override
-    public void setMultiplier(float multiplier) {
+    public void setMultiplier(double multiplier) {
         synchronized (monitor) {
             if (multiplier < 0) {
                 this.multiplier = 0;
@@ -228,9 +230,13 @@ public class JsKeyboardObject implements KeyboardObject {
     }
 
     @Override
-    public void setSpeed(float multiplier) {
+    public void setSpeed(double speed) {
         synchronized (monitor) {
-            setMultiplier(1f / multiplier);
+            if (speed < 0.1) {
+                speed = 0.1;
+            }
+            speed = MathUtil.roundTo1(speed);
+            setMultiplier(1f / speed);
         }
     }
 
