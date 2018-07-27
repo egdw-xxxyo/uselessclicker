@@ -3,10 +3,7 @@ package org.dikhim.jclicker.ui;
 import com.sun.javafx.scene.control.skin.TextAreaSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
@@ -80,10 +77,32 @@ public class CodeTextArea extends TextArea {
 
     }
 
+    
     private void insertTab() {
-        char[] c = new char[tabSize];
-        Arrays.fill(c, ' ');
-        this.insertText(this.getCaretPosition(), String.valueOf(c));
+
+        IndexRange selection = this.getSelection();
+        if (selection.getLength() > 0) {
+            // compute index of first line
+            char[] charArray = this.getText().toCharArray();
+            int caret = selection.getStart();
+            int firstLineSelectionIndex = 0;
+            for (int i = caret - 1; i >= 0; i--) {
+                if (charArray[i] == '\n') {
+                    firstLineSelectionIndex = i + 1;
+                    break;
+                }
+            }
+
+            // insert spaces after each line separator
+            String selectedText = this.getSelectedText();
+            selectedText = selectedText.replaceAll("\n", "\n"+getTab());
+            this.replaceSelection(selectedText);
+            
+            // insert spaces in first line
+            this.insertText(firstLineSelectionIndex,getTab());
+        }else {
+            this.insertText(this.getCaretPosition(), getTab());
+        }        
     }
 
     private void insertEnter() {
@@ -140,6 +159,12 @@ public class CodeTextArea extends TextArea {
         }
     }
 
+    private String getTab() {
+        char[] c = new char[tabSize];
+        Arrays.fill(c, ' ');
+        return String.valueOf(c);
+    }
+    
     public int getTabSize() {
         return tabSize;
     }
