@@ -1,8 +1,13 @@
 package org.dikhim.jclicker.ui;
 
+import com.sun.javafx.scene.control.skin.TextAreaSkin;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.Clipboard;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
@@ -11,8 +16,8 @@ import java.util.Arrays;
 public class CodeTextArea extends TextArea {
     private int tabSize = 4;
 
-    private BooleanProperty active= new SimpleBooleanProperty(true);
-    
+    private BooleanProperty active = new SimpleBooleanProperty(true);
+
     public CodeTextArea() {
         AnchorPane.setTopAnchor(this, 0d);
         AnchorPane.setRightAnchor(this, 0d);
@@ -22,25 +27,7 @@ public class CodeTextArea extends TextArea {
                 e -> {
                     if (!isActive()) {
                         e.consume();
-                    }else{
-                        switch (e.getCode()) {
-                            case TAB:
-                                insertTab();
-                                e.consume();
-                                break;
-                            case ENTER:
-                                insertEnter();
-                                e.consume();
-                                break;
-                        }
-                    }
-                    
-                });
-        addEventFilter(KeyEvent.KEY_TYPED,
-                e -> {
-                    if (!isActive()) {
-                        e.consume();
-                    }else{
+                    } else {
                         switch (e.getCode()) {
                             case TAB:
                                 insertTab();
@@ -54,6 +41,43 @@ public class CodeTextArea extends TextArea {
                     }
 
                 });
+        addEventFilter(KeyEvent.KEY_TYPED,
+                e -> {
+                    if (!isActive()) {
+                        e.consume();
+                    } else {
+                        switch (e.getCode()) {
+                            case TAB:
+                                insertTab();
+                                e.consume();
+                                break;
+                            case ENTER:
+                                insertEnter();
+                                e.consume();
+                                break;
+                        }
+                    }
+
+                });
+        TextAreaSkin customContextSkin = new TextAreaSkin(this) {
+            @Override
+            public void populateContextMenu(ContextMenu contextMenu) {
+                super.populateContextMenu(contextMenu);
+
+                MenuItem insert = new MenuItem("Insert");
+                insert.setOnAction(event -> {
+                    Clipboard clipboard = Clipboard.getSystemClipboard();
+                    String s = clipboard.getString();
+                    if (s == null) return;
+                    CodeTextArea.this.insertTextIntoCaretPosition(s);
+                });
+
+                contextMenu.getItems().add(0, new SeparatorMenuItem());
+                contextMenu.getItems().add(0, insert);
+            }
+        };
+        this.setSkin(customContextSkin);
+
     }
 
     private void insertTab() {
@@ -71,9 +95,9 @@ public class CodeTextArea extends TextArea {
         char[] charArray = this.getText().toCharArray();
         int caret = this.getCaretPosition();
         int lineBeginning = 0;
-        for (int i = caret-1; i >= 0; i--) {
+        for (int i = caret - 1; i >= 0; i--) {
             if (charArray[i] == '\n') {
-                lineBeginning = i+1;
+                lineBeginning = i + 1;
                 break;
             }
         }
@@ -87,24 +111,24 @@ public class CodeTextArea extends TextArea {
         }
         return spacesCount;
     }
-    
+
     private void insertNewLineWithSpaces(int spaceCount) {
-        if(spaceCount>0){
+        if (spaceCount > 0) {
             char[] c = new char[spaceCount];
-            Arrays.fill(c,' ');
+            Arrays.fill(c, ' ');
             String s = "\n" + String.valueOf(c);
             insertIntoCaretPosition(s);
-        }else if(spaceCount==0) {
+        } else if (spaceCount == 0) {
             insertIntoCaretPosition("\n");
         }
     }
-    
+
     public void insertIntoCaretPosition(String text) {
         this.insertText(this.getCaretPosition(), text);
     }
-    
+
     public void insertTextIntoCaretPosition(String text) {
-        if(!text.contains("\n")) {
+        if (!text.contains("\n")) {
             insertIntoCaretPosition(text);
             return;
         }
