@@ -1,12 +1,15 @@
 package org.dikhim.jclicker.ui;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -24,6 +27,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public class LupeImageView extends VBox implements Initializable {
 
@@ -49,7 +53,7 @@ public class LupeImageView extends VBox implements Initializable {
         AnchorPane.setRightAnchor(this, 0d);
         AnchorPane.setBottomAnchor(this, 0d);
         AnchorPane.setLeftAnchor(this, 0d);
-        
+
         // on change visibility hide/show parent and start/stop recording
         visibleProperty().addListener((observable, oldValue, newValue) -> {
             getParent().visibleProperty().bindBidirectional(this.visibleProperty());
@@ -57,8 +61,18 @@ public class LupeImageView extends VBox implements Initializable {
                 start();
             } else {
                 stop();
-            } 
-        });        
+            }
+        });
+
+        // change position on click
+        lupeImage.setOnMouseClicked(event -> {
+            if (position == Position.LEFT) {
+                position = Position.RIGHT;
+            } else {
+                position = Position.LEFT;
+            }
+            onChangePosition.accept(position);
+        });
     }
 
     @FXML
@@ -66,6 +80,8 @@ public class LupeImageView extends VBox implements Initializable {
 
     private String prefix = "lupe";
     private IntegerProperty resolution = new SimpleIntegerProperty(33);
+    private Position position = Position.LEFT;
+    private Consumer<Position> onChangePosition = (p)-> {};
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -98,7 +114,7 @@ public class LupeImageView extends VBox implements Initializable {
         imageCapturer.setOnImageLoaded(this::setPreviewImage);
 
         BiConsumer<Integer, Integer> onMove = (x, y) -> {
-            
+
         };
 
         MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
@@ -117,8 +133,17 @@ public class LupeImageView extends VBox implements Initializable {
             }
         }));
     }
+
     private void stop() {
         MouseEventsManager.getInstance().removeListenersByPrefix(prefix);
     }
 
+    public void setOnChangePosition(Consumer<Position> onChangePosition) {
+        this.onChangePosition = onChangePosition;
+    }
+
+    public enum Position {
+        LEFT,
+        RIGHT
+    }
 }

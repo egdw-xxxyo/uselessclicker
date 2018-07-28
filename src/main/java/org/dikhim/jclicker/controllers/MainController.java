@@ -106,7 +106,17 @@ public class MainController implements Initializable {
 
         // lupe pane
         LupeImageView lupeImageView = new LupeImageView(resources);
+        lupeImageView.setOnChangePosition(position -> {
+            if (position == LupeImageView.Position.LEFT) {
+                AnchorPane.setLeftAnchor(lupePane, 0d);
+                AnchorPane.setRightAnchor(lupePane, null);
+            } else {
+                AnchorPane.setLeftAnchor(lupePane, null);
+                AnchorPane.setRightAnchor(lupePane, 0d);
+            } 
+        });
         lupePane.getChildren().addAll(lupeImageView);
+        
 
         // events recorder
         eventsRecorder = new EventsRecorder(config);
