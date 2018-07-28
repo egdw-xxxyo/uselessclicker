@@ -123,7 +123,8 @@ public class MainController implements Initializable {
         eventsRecorder.setOutputTextArea(codeTextArea);
 
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
-        lupeImageView.visibleProperty().bindBidirectional(eventsRecorder.mouseRecordingProperty());
+        lupeImageView.visibleProperty().bind(eventsRecorder.mouseRecordingProperty());
+        codeTextArea.activeProperty().bind(eventsRecorder.keyboardRecordingProperty().not());
 
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -537,7 +538,6 @@ public class MainController implements Initializable {
         if (toggleButton.isSelected()) {
             select(toggleButton);
             // if toggle has been selected
-            codeTextArea.setActive(false);
             consumer.accept(prefix);
         } else {
             deselect(toggleButton);
@@ -545,7 +545,6 @@ public class MainController implements Initializable {
             eventsRecorder.stopRecording();
             keyEventsManager.removeListenersByPrefix(prefix);
             mouseEventsManager.removeListenersByPrefix(prefix);
-            codeTextArea.setActive(true);
         }
     }
     // Keyboard

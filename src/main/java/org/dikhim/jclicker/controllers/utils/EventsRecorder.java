@@ -63,13 +63,14 @@ public class EventsRecorder {
     private CodeTextArea outputTextArea;
 
     private BooleanProperty recording = new SimpleBooleanProperty(false);
-    
+
     private BooleanProperty mouseRecording = new SimpleBooleanProperty(false);
     private BooleanProperty keyboardRecording = new SimpleBooleanProperty(false);
 
     private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
-    
+
     private Consumer<BufferedImage> onSetOutputImage;
+
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
         recordingParams = mainConfiguration.getRecordingParams();
@@ -78,6 +79,7 @@ public class EventsRecorder {
     // keyboard
 
     public void keyName() {
+        startKeyboardRecording();
         keyEventsManager.addKeyboardListener(new KeyListener(
                 prefix + ".press", "", "RELEASE", e -> {
             putCode(e.getKey() + " ");
@@ -85,6 +87,7 @@ public class EventsRecorder {
     }
 
     public void keyPerform() {
+        startKeyboardRecording();
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".perform", "", "", (e) -> {
             keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
@@ -93,6 +96,7 @@ public class EventsRecorder {
     }
 
     public void keyPerformWithDelays() {
+        startKeyboardRecording();
         eventLog.clear();
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
             eventLog.add(e);
@@ -472,10 +476,14 @@ public class EventsRecorder {
     }
 
     public void combined() {
-        startMouseRecording();
         String prefix = this.prefix + ".combined";
         String control = getCombinedControl();
         Combined combinedConfig = recordingParams.getCombined();
+        if (combinedConfig.isKeysIncluded()) startKeyboardRecording();
+        if (combinedConfig.isMouseButtonsIncluded()
+                || combinedConfig.isMouseWheelIncluded()
+                || combinedConfig.isAbsolute()
+                || combinedConfig.isRelative()) startMouseRecording();
         final boolean[] recording = new boolean[1];
         keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
                 prefix + ".start", control, "RELEASE", controlEvent -> {
@@ -564,14 +572,14 @@ public class EventsRecorder {
     }
 
     // miscellaneous
-    
+
     public void filePath() {
         File file = WindowManager.getInstance().openFile();
         if (file != null) {
             putCode(file.getAbsolutePath());
         }
     }
-     
+
     //////////
     public String getPrefix() {
         return prefix;
@@ -608,7 +616,6 @@ public class EventsRecorder {
 
     public void startKeyboardRecording() {
         keyboardRecording.setValue(true);
-
     }
 
     public void stopKeyboardRecording() {
@@ -657,6 +664,15 @@ public class EventsRecorder {
     public BooleanProperty mouseRecordingProperty() {
         return mouseRecording;
     }
+
+    public boolean isKeyboardRecording() {
+        return keyboardRecording.get();
+    }
+
+    public BooleanProperty keyboardRecordingProperty() {
+        return keyboardRecording;
+    }
+
     public void setOnSetOutputImage(Consumer<BufferedImage> onSetOutputImage) {
         this.onSetOutputImage = onSetOutputImage;
     }

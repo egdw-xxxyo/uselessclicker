@@ -1,15 +1,12 @@
 package org.dikhim.jclicker.ui;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -56,7 +53,7 @@ public class LupeImageView extends VBox implements Initializable {
 
         // on change visibility hide/show parent and start/stop recording
         visibleProperty().addListener((observable, oldValue, newValue) -> {
-            getParent().visibleProperty().bindBidirectional(this.visibleProperty());
+            getParent().visibleProperty().bind(this.visibleProperty());
             if (newValue) {
                 start();
             } else {
