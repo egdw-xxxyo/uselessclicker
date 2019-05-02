@@ -1,8 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
-import org.dikhim.jclicker.jsengine.objects.ClipboardObject;
-
-import java.util.List;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ClipboardObject;
 
 public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements ClipboardObject {
 

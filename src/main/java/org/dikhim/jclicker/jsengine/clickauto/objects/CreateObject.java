@@ -1,6 +1,7 @@
-package org.dikhim.jclicker.jsengine.objects;
+package org.dikhim.jclicker.jsengine.clickauto.objects;
 
-import org.dikhim.jclicker.jsengine.objects.Classes.Image;
+
+import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 
 import java.awt.*;
 

@@ -3,6 +3,7 @@ package org.dikhim.jclicker.jsengine.objects;
 
 import org.dikhim.jclicker.actions.utils.MouseCodes;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.MathUtil;
 import org.dikhim.jclicker.util.Out;

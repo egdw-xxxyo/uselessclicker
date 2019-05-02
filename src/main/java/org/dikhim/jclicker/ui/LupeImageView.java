@@ -15,7 +15,7 @@ import org.dikhim.jclicker.actions.MouseMoveHandler;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.controllers.utils.ImageCapturer;
 import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
-import org.dikhim.jclicker.jsengine.objects.ScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.util.ImageUtil;
 

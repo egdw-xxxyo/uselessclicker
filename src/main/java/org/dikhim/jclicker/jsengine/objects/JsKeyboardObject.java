@@ -6,14 +6,11 @@ import org.dikhim.jclicker.actions.utils.KeyCodes;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.utils.typer.Typer;
 import org.dikhim.jclicker.actions.utils.typer.Typers;
+import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.MathUtil;
 import org.dikhim.jclicker.util.Out;
 
-/**
- * Created by dikobraz on 31.03.17.
- */
-@SuppressWarnings({"unused", "WeakerAccess"})
 public class JsKeyboardObject implements KeyboardObject {
 
     // Constants

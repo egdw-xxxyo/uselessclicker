@@ -1,9 +1,7 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
 import org.dikhim.jclicker.jsengine.objects.Classes.Image;
-import org.dikhim.jclicker.jsengine.objects.SystemObject;
-
-import java.util.List;
+import org.dikhim.jclicker.jsengine.clickauto.objects.SystemObject;
 
 public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
 

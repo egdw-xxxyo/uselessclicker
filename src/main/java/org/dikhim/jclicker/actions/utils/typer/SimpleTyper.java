@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.actions.utils.typer;
 
-import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 
 import java.util.List;
 import java.util.stream.Collectors;

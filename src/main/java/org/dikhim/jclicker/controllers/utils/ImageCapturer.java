@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
-import org.dikhim.jclicker.jsengine.objects.ScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

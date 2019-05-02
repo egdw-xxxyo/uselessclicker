@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import org.dikhim.jclicker.jsengine.objects.*;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.Out;

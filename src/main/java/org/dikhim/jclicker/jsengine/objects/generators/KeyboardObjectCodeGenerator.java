@@ -1,14 +1,8 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
-import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements KeyboardObject {
     private static Logger LOGGER = LoggerFactory.getLogger(KeyboardObjectCodeGenerator.class);

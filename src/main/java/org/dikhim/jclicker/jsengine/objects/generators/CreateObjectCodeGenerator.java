@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
-import org.dikhim.jclicker.jsengine.objects.Classes.Image;
-import org.dikhim.jclicker.jsengine.objects.CreateObject;
+import org.dikhim.clickauto.jsengine.objects.Classes.Image;
+import org.dikhim.jclicker.jsengine.clickauto.objects.CreateObject;
 
 import java.awt.*;
 

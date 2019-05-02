@@ -1,12 +1,13 @@
 package org.dikhim.jclicker.jsengine.objects;
 
+import org.dikhim.jclicker.jsengine.clickauto.objects.ClipboardObject;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 
 import java.awt.*;
 import java.awt.datatransfer.*;
 import java.io.IOException;
 
-public class JsClipboardObject implements ClipboardObject{
+public class JsClipboardObject implements ClipboardObject {
     private final Object monitor;
     
     public JsClipboardObject(Robot robot) {

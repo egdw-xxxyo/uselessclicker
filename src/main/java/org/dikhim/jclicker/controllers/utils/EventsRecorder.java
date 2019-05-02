@@ -2,19 +2,7 @@ package org.dikhim.jclicker.controllers.utils;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -28,20 +16,18 @@ import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
 import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
-import org.dikhim.jclicker.jsengine.objects.ScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.objects.generators.CombinedObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.ui.CodeTextArea;
-import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.ShapeUtil;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")

@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
-import org.dikhim.jclicker.jsengine.objects.CreateObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.CreateObject;
 import org.dikhim.jclicker.jsengine.objects.JsCreateObject;
 import org.dikhim.jclicker.jsengine.objects.generators.CreateObjectCodeGenerator;
 import org.dikhim.jclicker.ui.util.DoWhilePressed;

@@ -1,6 +1,7 @@
 package org.dikhim.jclicker.jsengine.objects;
 
-import org.dikhim.jclicker.jsengine.objects.Classes.Image;
+import org.dikhim.clickauto.jsengine.objects.Classes.Image;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.util.ShapeUtil;
 

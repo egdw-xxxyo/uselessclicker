@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine.objects;
+package org.dikhim.jclicker.jsengine.clickauto.objects;
 
 @SuppressWarnings("unused")
 public interface KeyboardObject {

@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unused")
+
 public class Image extends BufferedImage {
     private Pixels px = new Pixels();
 
