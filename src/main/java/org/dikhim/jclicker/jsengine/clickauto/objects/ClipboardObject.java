@@ -1,8 +1,5 @@
 package org.dikhim.jclicker.jsengine.clickauto.objects;
 
-@SuppressWarnings("unused")
-public interface ClipboardObject {
-    String get();
+public interface ClipboardObject extends org.dikhim.clickauto.jsengine.objects.ClipboardObject {
 
-    void set(String str);
 }

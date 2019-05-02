@@ -2,12 +2,12 @@ package org.dikhim.jclicker.jsengine.clickauto.objects;
 
 import javafx.application.Platform;
 import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
+import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.clickauto.jsengine.objects.ScriptSystemObject;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
-import org.dikhim.jclicker.jsengine.objects.Classes.Image;
 
 public class UselessSystemObject extends ScriptSystemObject implements SystemObject {
     public UselessSystemObject(ClickAutoScriptEngine engine) {

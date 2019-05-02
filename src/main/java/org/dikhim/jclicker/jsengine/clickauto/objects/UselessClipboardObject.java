@@ -1,6 +1,5 @@
 package org.dikhim.jclicker.jsengine.clickauto.objects;
 
-import org.dikhim.clickauto.jsengine.objects.ClipboardObject;
 import org.dikhim.clickauto.jsengine.objects.ScriptClipboardObject;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 
