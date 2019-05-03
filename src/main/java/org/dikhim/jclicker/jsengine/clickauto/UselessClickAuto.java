@@ -47,9 +47,27 @@ public class UselessClickAuto {
     
     public void start() {
         clickAuto.start();
+        isRunning.setValue(true);
     }
     
     public void stop() {
         clickAuto.stop();
+        isRunning.setValue(false);
+    }
+
+    public void removeScripts() {
+        clickAuto.removeScripts();
+    }
+    
+    public boolean isIsRunning() {
+        return isRunning.get();
+    }
+
+    public BooleanProperty isRunningProperty() {
+        return isRunning;
+    }
+
+    public void setIsRunning(boolean isRunning) {
+        this.isRunning.set(isRunning);
     }
 }

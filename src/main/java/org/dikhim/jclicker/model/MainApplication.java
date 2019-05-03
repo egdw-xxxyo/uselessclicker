@@ -7,6 +7,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.JSEngine;
+import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.jsengine.robot.Robot;
 import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.server.http.HttpServer;
@@ -30,13 +31,14 @@ public class MainApplication {
 
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
-    
+
     private HttpServer httpServer;
     private SocketServer socketServer;
-    
+
     private Robot robot;
     private JSEngine jse;
-    
+    private UselessClickAuto clickAuto;
+
     private Consumer<BufferedImage> onSetOutputImage;
 
     private Script script = new Script();
@@ -48,6 +50,7 @@ public class MainApplication {
     public MainApplication() {
         robot = RobotStatic.get();
         jse = new JSEngine(robot);
+        clickAuto = new UselessClickAuto();
         bindProperties();
 
         InputStream is = getClass().getResourceAsStream("/config.json");
@@ -83,16 +86,16 @@ public class MainApplication {
      */
     public void runScript() {
         Out.clear();
-        jse.putCode(script.codeProperty().get());
-        jse.start();
+        clickAuto.removeScripts();
+        clickAuto.putScript(script.codeProperty().getValue());
+        clickAuto.start();
     }
 
     /**
      * Stop running script
      */
     public void stopScript() {
-        jse.stop();
-
+        clickAuto.stop();
     }
 
     public void stop() {
@@ -103,11 +106,15 @@ public class MainApplication {
 
     private void bindProperties() {
         title.bind(script.nameProperty());
-        status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(jse.runningProperty()));
+        status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(clickAuto.isRunningProperty()));
     }
 
     public JSEngine getJse() {
         return jse;
+    }
+
+    public UselessClickAuto getClickAuto() {
+        return clickAuto;
     }
 
     public StringProperty titleProperty() {

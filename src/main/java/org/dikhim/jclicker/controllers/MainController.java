@@ -82,7 +82,7 @@ public class MainController implements Initializable {
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
         btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
-        btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getJse().runningProperty());
+        btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getClickAuto().isRunningProperty());
 
         // code area
         codeTextArea = new CodeTextArea();
