@@ -1,15 +1,11 @@
 package org.dikhim.jclicker.model;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.dikhim.jclicker.Dependecy;
 import org.dikhim.jclicker.configuration.MainConfiguration;
-import org.dikhim.jclicker.jsengine.JSEngine;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
-import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Out;
@@ -17,14 +13,12 @@ import org.dikhim.jclicker.util.Out;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.script.ScriptException;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
-@SuppressWarnings("Duplicates")
 public class MainApplication {
     private MainConfiguration config;
 
@@ -35,8 +29,6 @@ public class MainApplication {
     private HttpServer httpServer;
     private SocketServer socketServer;
 
-    private Robot robot;
-    private JSEngine jse;
     private UselessClickAuto clickAuto;
 
     private Consumer<BufferedImage> onSetOutputImage;
@@ -48,9 +40,11 @@ public class MainApplication {
     }
 
     public MainApplication() {
-        robot = RobotStatic.get();
-        jse = new JSEngine(robot);
-        clickAuto = new UselessClickAuto();
+        try {
+            clickAuto = new UselessClickAuto();
+        } catch (AWTException ignored) {
+        }
+        Dependecy.setClickAuto(clickAuto);
         bindProperties();
 
         InputStream is = getClass().getResourceAsStream("/config.json");
@@ -107,10 +101,6 @@ public class MainApplication {
     private void bindProperties() {
         title.bind(script.nameProperty());
         status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(clickAuto.isRunningProperty()));
-    }
-
-    public JSEngine getJse() {
-        return jse;
     }
 
     public UselessClickAuto getClickAuto() {

@@ -15,9 +15,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CreateObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.objects.CreateObject;
-import org.dikhim.jclicker.jsengine.objects.JsCreateObject;
-import org.dikhim.jclicker.jsengine.objects.generators.CreateObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.objects.UselessCreateObject;
 import org.dikhim.jclicker.ui.util.DoWhilePressed;
 import org.dikhim.jclicker.util.ImageUtil;
 import org.dikhim.jclicker.util.Out;
@@ -316,7 +316,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
     private boolean loadImageFromString(String string) {
         BufferedImage tmp = originalImage;
         try {
-            CreateObject createObject = new JsCreateObject();
+            CreateObject createObject = new UselessCreateObject();
             originalImage = createObject.image(string);
             if (originalImage == null) throw new IOException();
             reset();

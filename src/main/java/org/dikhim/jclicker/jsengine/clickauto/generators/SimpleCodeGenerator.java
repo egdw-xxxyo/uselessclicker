@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine.objects.generators;
+package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

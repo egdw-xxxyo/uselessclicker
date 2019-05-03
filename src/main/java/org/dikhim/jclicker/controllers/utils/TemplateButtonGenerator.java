@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
-import org.dikhim.jclicker.jsengine.objects.generators.*;
+import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
 import java.util.ArrayList;

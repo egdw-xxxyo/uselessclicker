@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine.objects.generators;
+package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 import org.junit.BeforeClass;

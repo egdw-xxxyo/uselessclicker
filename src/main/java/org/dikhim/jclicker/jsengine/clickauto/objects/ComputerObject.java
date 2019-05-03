@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine.objects;
+package org.dikhim.jclicker.jsengine.clickauto.objects;
 
 import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;

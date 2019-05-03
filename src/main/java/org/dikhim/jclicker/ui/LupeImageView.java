@@ -11,12 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.dikhim.jclicker.Dependecy;
 import org.dikhim.jclicker.actions.MouseMoveHandler;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.controllers.utils.ImageCapturer;
-import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.UselessScreenObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
 import org.dikhim.jclicker.util.ImageUtil;
 
 import java.awt.image.BufferedImage;
@@ -105,7 +105,7 @@ public class LupeImageView extends VBox implements Initializable {
     }
 
     private void start() {
-        final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+        final ScreenObject screenObject = new UselessScreenObject(Dependecy.getRobot());
         ImageCapturer imageCapturer = new ImageCapturer();
         imageCapturer.setScreenObject(screenObject);
         imageCapturer.setOnImageLoaded(this::setPreviewImage);

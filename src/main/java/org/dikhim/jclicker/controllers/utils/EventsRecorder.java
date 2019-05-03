@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.dikhim.jclicker.Dependecy;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -15,13 +16,12 @@ import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
-import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CombinedObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
-import org.dikhim.jclicker.jsengine.objects.generators.CombinedObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.KeyboardObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.MouseObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.objects.generators.SystemObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.jsengine.clickauto.objects.UselessScreenObject;
 import org.dikhim.jclicker.ui.CodeTextArea;
 import org.dikhim.jclicker.util.ShapeUtil;
 
@@ -545,7 +545,7 @@ public class EventsRecorder {
 
             if (onSetOutputImage == null) return;
             Platform.runLater(() -> {
-                final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+                final ScreenObject screenObject = new UselessScreenObject(Dependecy.getRobot());
 
                 Rectangle rectangle = ShapeUtil.createRectangle(point1, point0);
                 rectangle.height++;
@@ -622,7 +622,7 @@ public class EventsRecorder {
     private void setOutputImage(Point p1, Point p2) {
         if (onSetOutputImage == null) return;
         Platform.runLater(() -> {
-            final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
+            final ScreenObject screenObject = new UselessScreenObject(Dependecy.getRobot());
 
             Rectangle rectangle = ShapeUtil.createRectangle(p1, p2);
             rectangle.height++;

@@ -1,8 +1,9 @@
 package org.dikhim.jclicker.server.socket;
 
-import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
-import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.clickauto.jsengine.robot.Robot;
+import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.UselessMouseObject;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.Out;
 
@@ -20,13 +21,13 @@ public class ClientSocketThread extends Thread {
     private int soTimeout = 500;
 
     private int threadTimeOut = 60000; //1 minute
-    private JsMouseObject mouse;
+    private MouseObject mouse;
 
     ClientSocketThread(Socket socket, SocketServerThread socketServerThread) {
         super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
         this.socketServerThread = socketServerThread;
-        Robot robot = RobotStatic.get();
-        mouse = new JsMouseObject(robot);
+        Robot robot = Dependecy.getRobot();
+        mouse = new UselessMouseObject(robot);
         this.socket = socket;
         try {
             this.socket.setSoTimeout(soTimeout);

@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.jsengine.objects.generators;
+package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
