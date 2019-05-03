@@ -2,6 +2,7 @@ package org.dikhim.jclicker;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import org.dikhim.clickauto.util.logger.Log;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.model.MainApplication;
@@ -46,7 +47,8 @@ public class Clicker extends Application {
             loadMainScene();
         }
         Out.addPrintMethod(System.out::print);
-
+        Log.addOutHandler(Out::print);
+        Log.addErrorHandler(Out::print);
         if (cli.isOpenFile()) {
             mainApplication.openFile(cli.getFile());
         }
