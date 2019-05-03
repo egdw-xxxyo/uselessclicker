@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.controllers.utils;
 
-import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ClipboardObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.UselessClipboardObject;
 
@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 public class WebViewObject {
     private Consumer<String> openInBrowser;
     private Consumer<String> onSetText;
-    private ClipboardObject clipboardObject = new UselessClipboardObject(Dependecy.getRobot());
+    private ClipboardObject clipboardObject = new UselessClipboardObject(Dependency.getRobot());
 
     public WebViewObject() {
     }

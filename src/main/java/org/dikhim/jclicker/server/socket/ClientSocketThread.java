@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.server.socket;
 
 import org.dikhim.clickauto.jsengine.robot.Robot;
-import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.UselessMouseObject;
 import org.dikhim.jclicker.util.WebUtils;
@@ -26,7 +26,7 @@ public class ClientSocketThread extends Thread {
     ClientSocketThread(Socket socket, SocketServerThread socketServerThread) {
         super("Client " + socket.getRemoteSocketAddress().toString().substring(1));
         this.socketServerThread = socketServerThread;
-        Robot robot = Dependecy.getRobot();
+        Robot robot = Dependency.getRobot();
         mouse = new UselessMouseObject(robot);
         this.socket = socket;
         try {

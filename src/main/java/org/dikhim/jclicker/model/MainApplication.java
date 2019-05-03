@@ -3,7 +3,7 @@ package org.dikhim.jclicker.model;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.server.http.HttpServer;
@@ -44,7 +44,7 @@ public class MainApplication {
             clickAuto = new UselessClickAuto();
         } catch (AWTException ignored) {
         }
-        Dependecy.setClickAuto(clickAuto);
+        Dependency.setClickAuto(clickAuto);
         bindProperties();
 
         InputStream is = getClass().getResourceAsStream("/config.json");

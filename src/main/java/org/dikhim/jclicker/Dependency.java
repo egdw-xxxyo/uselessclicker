@@ -4,13 +4,13 @@ import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 
-public class Dependecy {
+public class Dependency {
     private static volatile ClickAuto clickAuto;
     private static volatile ClickAutoScriptEngine engine;
     private static volatile Robot robot;
 
     public static void setClickAuto(ClickAuto clickAuto) {
-        Dependecy.clickAuto = clickAuto;
+        Dependency.clickAuto = clickAuto;
         engine = clickAuto.getEngine();
         robot = clickAuto.robot();
     }

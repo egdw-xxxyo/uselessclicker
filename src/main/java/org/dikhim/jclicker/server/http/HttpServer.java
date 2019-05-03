@@ -3,16 +3,13 @@ package org.dikhim.jclicker.server.http;
 
 import javafx.beans.property.*;
 import org.dikhim.clickauto.ClickAuto;
-import org.dikhim.clickauto.jsengine.robot.Robot;
-import org.dikhim.clickauto.jsengine.robot.RobotFactory;
-import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.configuration.servers.ServerConfig;
 import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.Out;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -35,7 +32,7 @@ public class HttpServer {
 
     public HttpServer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
-        this.clickAuto = Dependecy.getClickAuto();
+        this.clickAuto = Dependency.getClickAuto();
         
         KeyboardObject keyboardObject = new UselessKeyboardObject(clickAuto.robot());
         MouseObject mouseObject = new UselessMouseObject(clickAuto.robot());

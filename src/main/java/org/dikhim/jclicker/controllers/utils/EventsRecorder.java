@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import org.dikhim.jclicker.Dependecy;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.events.MouseButtonEvent;
@@ -545,7 +545,7 @@ public class EventsRecorder {
 
             if (onSetOutputImage == null) return;
             Platform.runLater(() -> {
-                final ScreenObject screenObject = new UselessScreenObject(Dependecy.getRobot());
+                final ScreenObject screenObject = new UselessScreenObject(Dependency.getRobot());
 
                 Rectangle rectangle = ShapeUtil.createRectangle(point1, point0);
                 rectangle.height++;
@@ -622,7 +622,7 @@ public class EventsRecorder {
     private void setOutputImage(Point p1, Point p2) {
         if (onSetOutputImage == null) return;
         Platform.runLater(() -> {
-            final ScreenObject screenObject = new UselessScreenObject(Dependecy.getRobot());
+            final ScreenObject screenObject = new UselessScreenObject(Dependency.getRobot());
 
             Rectangle rectangle = ShapeUtil.createRectangle(p1, p2);
             rectangle.height++;
