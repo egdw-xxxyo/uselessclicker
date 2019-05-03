@@ -11,7 +11,7 @@ import java.awt.*;
 
 public class UselessClickAuto extends ClickAuto {
     private BooleanProperty isRunning = new SimpleBooleanProperty(false);
-    ClickAuto clickAuto;
+    private ClickAuto clickAuto;
     private Robot robot;
 
     public UselessClickAuto() throws AWTException {

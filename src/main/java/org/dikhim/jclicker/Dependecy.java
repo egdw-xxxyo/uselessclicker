@@ -5,9 +5,9 @@ import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 
 public class Dependecy {
-    private static ClickAuto clickAuto;
-    private static ClickAutoScriptEngine engine;
-    private static Robot robot;
+    private static volatile ClickAuto clickAuto;
+    private static volatile ClickAutoScriptEngine engine;
+    private static volatile Robot robot;
 
     public static void setClickAuto(ClickAuto clickAuto) {
         Dependecy.clickAuto = clickAuto;
