@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.jsengine.objects.generators;
 
-import org.dikhim.jclicker.jsengine.objects.Classes.Image;
+import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.clickauto.objects.SystemObject;
 
 public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
@@ -145,6 +145,7 @@ public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements Sy
     public void showImage(Image image) {
         buildStringForCurrentMethod();
     }
+
 
     @Override
     public void sleep(int ms) {

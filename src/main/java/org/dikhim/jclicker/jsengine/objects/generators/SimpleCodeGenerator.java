@@ -11,19 +11,26 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
     private int lineSize;
     private StringBuilder sb = new StringBuilder();
 
-    private Method[] allMethods;
+    private List<Method> methods = new ArrayList<>();
 
     private final int MIN_LINE_SIZE = 50;
 
     SimpleCodeGenerator(String objectName, int lineSize, Class c) {
         this.objectName = objectName;
         setLineSize(lineSize);
-        allMethods = c.getDeclaredMethods();
+        methods.addAll(Arrays.asList(c.getDeclaredMethods()));
+        for(Class<?> inf: c.getInterfaces()){
+            methods.addAll(Arrays.asList(inf.getDeclaredMethods()));
+        }
     }
 
     SimpleCodeGenerator(String objectName, Class c) {
         this.objectName = objectName;
-        allMethods = c.getDeclaredMethods();
+        methods.addAll(Arrays.asList(c.getDeclaredMethods()));
+        for(Class<?> inf: c.getInterfaces()){
+            methods.addAll(Arrays.asList(inf.getDeclaredMethods()));
+        }
+        
         setLineSize(MIN_LINE_SIZE);
     }
 
@@ -154,7 +161,7 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
     @Override
     public List<String> getMethodNames() {
         Set<String> methodsNamesSet = new HashSet<>();
-        for (Method m : allMethods) {
+        for (Method m : methods) {
             if (Modifier.isPublic(m.getModifiers()))
                 methodsNamesSet.add(m.getName());
         }
@@ -165,7 +172,7 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
 
 
     private Method getMethodWithName(String methodName) {
-        for (Method m : allMethods) {
+        for (Method m : methods) {
             if (!m.getName().equals(methodName)) {
                 continue;
             }

@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.jsengine.clickauto;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 import org.dikhim.clickauto.jsengine.robot.RobotFactory;
@@ -8,6 +10,7 @@ import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import java.awt.*;
 
 public class UselessClickAuto {
+    private BooleanProperty isRunning = new SimpleBooleanProperty(false);
     ClickAuto clickAuto;
     private Robot robot;
 
@@ -36,5 +39,17 @@ public class UselessClickAuto {
         } catch (AWTException ignore) {
         }
 
+    }
+
+    public void putScript(String script) {
+        clickAuto.putScript(script);
+    }
+    
+    public void start() {
+        clickAuto.start();
+    }
+    
+    public void stop() {
+        clickAuto.stop();
     }
 }
