@@ -39,11 +39,8 @@ public class MainApplication {
         return script;
     }
 
-    public MainApplication() {
-        try {
-            clickAuto = new UselessClickAuto();
-        } catch (AWTException ignored) {
-        }
+    public MainApplication() throws AWTException {
+        clickAuto = new UselessClickAuto();
         Dependency.setClickAuto(clickAuto);
         bindProperties();
 
