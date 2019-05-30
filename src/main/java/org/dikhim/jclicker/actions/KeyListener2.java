@@ -4,13 +4,13 @@ import org.dikhim.jclicker.actions.events.KeyboardEvent;
 
 import java.util.function.Consumer;
 
-public class KeyListener implements KeyboardListener {
+public class KeyListener2 implements KeyboardListener {
     private String name;
     private String key;
     private String action;
     private Consumer<KeyboardEvent> handler;
 
-    public KeyListener(String name, String key, String action, Consumer<KeyboardEvent> handler) {
+    public KeyListener2(String name, String key, String action, Consumer<KeyboardEvent> handler) {
         this.name = name;
         this.key = key;
         this.action = action;

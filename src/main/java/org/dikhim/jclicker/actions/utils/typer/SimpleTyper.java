@@ -55,7 +55,7 @@ public class SimpleTyper implements Typer {
                 keyboard.type(key);
                 break;
             case 1:
-                // 1 - type key with SHIFT key pressed
+                // 1 - type key with SHIFT key press
                 pressShift();
                 keyboard.type(key);
                 break;

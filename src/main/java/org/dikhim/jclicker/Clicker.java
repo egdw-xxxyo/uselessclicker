@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.util.Cli;
 import org.dikhim.jclicker.util.Out;
@@ -35,6 +36,10 @@ public class Clicker extends Application {
         application = this;
         this.primaryStage = primaryStage;
 
+        if (cli.isEventRecording()) {
+            jNativeHookStart();
+        }
+        
         if (cli.isGuiApplication()) {
             if(Preferences.userRoot().node("main").getBoolean("isFirstLaunch",true)){
                 Preferences.userRoot().node("main").putBoolean("isFirstLaunch",false);
@@ -68,10 +73,6 @@ public class Clicker extends Application {
             mainApplication.getSocketServer().start();
         }
 
-        if (cli.isEventRecording()) {
-            jNativeHookStart();
-        }
-
     }
 
     @Override
@@ -93,30 +94,19 @@ public class Clicker extends Application {
      * Initialization of JNativeHook
      */
     private void jNativeHookStart() {
-        // suppress logger of jNativeHook
-        Logger logger = Logger
-                .getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.OFF);
-        logger.setUseParentHandlers(false);
-
-        // suppress output of jNativeHook
-        PrintStream oldOut = System.out;
-        System.setOut(new PrintStream(new OutputStream() {
-            @Override
-            public void write(int b) throws IOException {
-            }
-        }));
         try {
-            GlobalScreen.registerNativeHook();
+            EventManager eventManager = new EventManager();
+            Dependency.setEventManager(eventManager);
+            
+            //TODO
+           /* GlobalScreen.registerNativeHook();
             MouseEventsManager mouseListener = MouseEventsManager.getInstance();
             GlobalScreen.addNativeMouseListener(mouseListener);
             GlobalScreen.addNativeMouseMotionListener(mouseListener);
             GlobalScreen.addNativeMouseWheelListener(mouseListener);
             KeyEventsManager keyListener = KeyEventsManager.getInstance();
-            GlobalScreen.addNativeKeyListener(keyListener);
-            System.setOut(oldOut);
-        } catch (NativeHookException e) {
-            System.setOut(oldOut);
+            GlobalScreen.addNativeKeyListener(keyListener);*/
+        } catch (Exception e) {
             Out.println("Cannot create keyboard/mouse recording object");
             Out.println("Recording events won't be available");
         }

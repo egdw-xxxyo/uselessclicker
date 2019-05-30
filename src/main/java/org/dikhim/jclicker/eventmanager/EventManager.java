@@ -12,6 +12,9 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 import org.jnativehook.mouse.*;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,16 +24,32 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
 
     private Map<String, EventListener> listeners = new LinkedHashMap<>();
 
-    public EventManager() throws NativeHookException {
-        Logger logger = Logger
-                .getLogger(GlobalScreen.class.getPackage().getName());
-        logger.setLevel(Level.OFF);
-        logger.setUseParentHandlers(false);
-        GlobalScreen.registerNativeHook();
-        GlobalScreen.addNativeKeyListener(this);
-        GlobalScreen.addNativeMouseListener(this);
-        GlobalScreen.addNativeMouseMotionListener(this);
-        GlobalScreen.addNativeMouseWheelListener(this);
+    public EventManager(){
+        PrintStream oldOut = System.out;
+        
+        try {
+            Logger logger = Logger
+                    .getLogger(GlobalScreen.class.getPackage().getName());
+            logger.setLevel(Level.OFF);
+            logger.setUseParentHandlers(false);
+            System.setOut(new PrintStream(new OutputStream() {
+                @Override
+                public void write(int b) throws IOException {
+                }
+            }));
+            
+            
+            GlobalScreen.registerNativeHook();
+            GlobalScreen.addNativeKeyListener(this);
+            GlobalScreen.addNativeMouseListener(this);
+            GlobalScreen.addNativeMouseMotionListener(this);
+            GlobalScreen.addNativeMouseWheelListener(this);
+        } catch (NativeHookException ignored) {
+            System.out.println("JnativeHooker");
+        }finally {
+            System.setOut(oldOut);
+        }
+        
     }
 
     // KEY

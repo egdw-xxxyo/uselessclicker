@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import org.apache.commons.collections4.map.MultiValueMap;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.*;
@@ -16,6 +17,13 @@ import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
+import org.dikhim.jclicker.controllers.utils.recording.KeyNameRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.Recorder;
+import org.dikhim.jclicker.eventmanager.EventManager;
+import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
+import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
+import org.dikhim.jclicker.eventmanager.listener.KeyListener;
+import org.dikhim.jclicker.eventmanager.listener.KeyPressListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CombinedObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
@@ -28,6 +36,8 @@ import org.dikhim.jclicker.util.ShapeUtil;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")
@@ -57,28 +67,48 @@ public class EventsRecorder {
 
     private Consumer<BufferedImage> onSetOutputImage;
 
+    private EventManager eventManager = Dependency.getEventManager();
+
+    private MultiValueMap<Object, Runnable> toggleButtonMam = new MultiValueMap<>();
+
+    public void bindToggleButton(Object toggleButton, Runnable onStart, Runnable onStop) {
+        
+    }
+
+    private Map<String, Recorder> recoders = new HashMap<>();
+
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
         recordingParams = mainConfiguration.getRecordingParams();
+        ////
+        recoders.put("keyName", new KeyNameRecorder(this::putCode));
     }
-
     // keyboard
 
-    public void keyName() {
-        startKeyboardRecording();
-        keyEventsManager.addKeyboardListener(new KeyListener(
-                prefix + ".press", "", "RELEASE", e -> {
-            putCode(e.getKey() + " ");
-        }));
+    
+    public void keyNameStart() {
+        recoders.get("keyName").start();
+    }
+    
+    public void keyNameStop() {
+        recoders.get("keyName").stop();
     }
 
-    public void keyPerform() {
+    public void startKeyPerform() {
         startKeyboardRecording();
-        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(
-                prefix + ".perform", "", "", (e) -> {
-            keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
-            putCode(keyboardObjectCodeGenerator.getGeneratedCode());
-        }));
+        eventManager.addListener("recording.key.name", new KeyListener() {
+            @Override
+            public void keyPressed(KeyPressEvent event) {
+                keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
+                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
+            }
+
+            @Override
+            public void keyReleased(KeyReleaseEvent event) {
+                keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
+                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
+            }
+        });
     }
 
     public void keyPerformWithDelays() {

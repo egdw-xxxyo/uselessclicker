@@ -41,7 +41,7 @@ public class UselessSystemObject extends ScriptSystemObject implements SystemObj
 
     @Override
     public void onKeyPress(String functionName, String key, Object... args) {
-        KeyboardListener listener = new KeyListener(
+        KeyboardListener listener = new KeyListener2(
                 "script." + functionName + "." + key + ".press",
                 key,
                 "PRESS",
@@ -51,7 +51,7 @@ public class UselessSystemObject extends ScriptSystemObject implements SystemObj
 
     @Override
     public void onKeyRelease(String functionName, String key, Object... args) {
-        KeyboardListener listener = new KeyListener(
+        KeyboardListener listener = new KeyListener2(
                 "script." + functionName + "." + key + ".release",
                 key,
                 "RELEASE",

@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.Resources;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
+import javax.swing.event.ChangeEvent;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -112,10 +114,10 @@ public class MainController implements Initializable {
             } else {
                 AnchorPane.setLeftAnchor(lupePane, null);
                 AnchorPane.setRightAnchor(lupePane, 0d);
-            } 
+            }
         });
         lupePane.getChildren().addAll(lupeImageView);
-        
+
 
         // events recorder
         eventsRecorder = new EventsRecorder(config);
@@ -396,6 +398,7 @@ public class MainController implements Initializable {
     ToggleButton btnCombinedMinDistance;
 
 
+    private ToggleGroup toggleGroup = new ToggleGroup();
     private List<ToggleButton> listOfInsertCodeToggles = new ArrayList<>();
 
     private List<ToggleButton> simpleToggles = new ArrayList<>();
@@ -405,10 +408,29 @@ public class MainController implements Initializable {
      */
     private void initToggles(SourcePropertyFile properties) {
         // keyboard
-        listOfInsertCodeToggles.add(btnInsertKeyName);
-        listOfInsertCodeToggles.add(btnInsertKeyCode);
-        listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
+        // listOfInsertCodeToggles.add(btnInsertKeyName);
+        // listOfInsertCodeToggles.add(btnInsertKeyCode);
+        //  listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
 
+        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+
+        });
+        ChangeListener<? super Boolean> changeListener = (observable, oldValue, newValue) -> {
+            if (newValue) {
+                System.out.println("start " + observable);
+                eventsRecorder.keyNameStart();
+            } else {
+                System.out.println("stop " + observable);
+                eventsRecorder.keyNameStop();
+            }
+        };
+
+        eventsRecorder.bindToggleButton(btnInsertKeyName, eventsRecorder::keyNameStart, eventsRecorder::keyNameStop);
+        btnInsertKeyName.selectedProperty().addListener(changeListener);
+        btnInsertKeyName.setToggleGroup(toggleGroup);
+        btnInsertKeyCode.selectedProperty().addListener(changeListener);
+        btnInsertKeyCode.setToggleGroup(toggleGroup);
+        btnInsertKeyCodeWithDelay.setToggleGroup(toggleGroup);
         // mouse basics
         listOfInsertCodeToggles.add(btnInsertMouseClick);
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
@@ -450,7 +472,7 @@ public class MainController implements Initializable {
         List<Node> nodes = new ArrayList<>();
 
         nodes.add(recFilePath);
-        
+
         nodes.addAll(simpleToggles);
         nodes.addAll(listOfInsertCodeToggles);
         for (Node b : nodes) {
@@ -548,6 +570,7 @@ public class MainController implements Initializable {
     }
     // Keyboard
 
+
     /**
      * 'KEY1 KEY2 '
      *
@@ -555,9 +578,11 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyName(ActionEvent event) {
+        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
+        System.out.println(data[0]);
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyName();
-        });
+            eventsRecorder.keyNameStart();
+        });*/
     }
 
     /**
@@ -568,9 +593,11 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyCode(ActionEvent event) {
+        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
+        System.out.println(data[0]);
         onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyPerform();
-        });
+            eventsRecorder.startKeyPerform();
+        });*/
     }
 
     /**
@@ -583,9 +610,11 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
+        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
+        System.out.println(data[0]);
         onToggleButtonPerformed(event, prefix -> {
             eventsRecorder.keyPerformWithDelays();
-        });
+        });*/
     }
 
     // Mouse buttons
