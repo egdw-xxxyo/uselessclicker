@@ -6,12 +6,15 @@ import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.eventmanager.listener.EventListener;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class SimpleRecorder implements Recorder {
     private Consumer<String> onRecorded;
     private EventManager eventManager;
     private BooleanProperty recording;
+    private List<EventListener> listeners = new ArrayList<>();
 
     public SimpleRecorder(Consumer<String> onRecorded) {
         this.onRecorded = onRecorded;
@@ -20,11 +23,15 @@ public abstract class SimpleRecorder implements Recorder {
     }
 
     protected void addListener(String name, EventListener listener) {
+        listeners.add(listener);
         eventManager.addListener(name, listener);
     }
 
     protected void removeListener(String name) {
         eventManager.removeListener(name);
+    }
+    protected void removeListener(EventListener listener) {
+        eventManager.removeListener(listener);
     }
 
     protected void putCode(String code) {
@@ -53,5 +60,7 @@ public abstract class SimpleRecorder implements Recorder {
     
     protected abstract void onStart();
 
-    protected abstract void onStop();
+    protected  void onStop(){
+        listeners.forEach(this::removeListener);
+    }
 }

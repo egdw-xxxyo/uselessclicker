@@ -30,9 +30,4 @@ public class KeyPerformRecorder extends SimpleRecorder implements KeyRecorder{
             }
         });
     }
-
-    @Override
-    public void onStop() {
-        removeListener("recording.key.perform");
-    }
 }

@@ -13,9 +13,4 @@ public class KeyNameRecorder extends SimpleRecorder implements KeyRecorder{
     public void onStart() {
         addListener("recording.key.name", (KeyPressListener) e -> putCode(e.getKey() + " "));
     }
-
-    @Override
-    public void onStop() {
-        removeListener("recording.key.name");
-    }
 }

@@ -414,6 +414,7 @@ public class MainController implements Initializable {
         //  listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
 
 
+        // keyboard
         btnInsertKeyName.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertKeyName, KeyNameRecorder.class);
        
