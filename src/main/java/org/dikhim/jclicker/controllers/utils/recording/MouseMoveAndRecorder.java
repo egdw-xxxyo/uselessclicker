@@ -1,28 +1,29 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
-import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
-import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
-import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
+import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerator;
 
+import java.awt.*;
 import java.util.function.Consumer;
 
-public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
-    public MouseButtonWheelAtRecorder(Consumer<String> onRecorded) {
+public class MouseMoveAndRecorder extends SimpleMouseRecorder {
+
+
+    public MouseMoveAndRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
+    Point point1;
+    EventLogger eventLog = new EventLogger(4);
     @Override
     public void onStart() {
         super.onStart();
         MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
         addListener("recording.mouse.buttonWheelAt", new MouseButtonWheelListener() {
-            
+
 
             @Override
             public void buttonPressed(MousePressEvent event) {
@@ -55,5 +56,11 @@ public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
                 putCode(codeGenerator.getGeneratedCode());
             }
         });
+    }
+
+    @Override
+    protected void controlPressed(KeyPressEvent event) {
+        super.controlPressed(event);
+        point1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }
 }

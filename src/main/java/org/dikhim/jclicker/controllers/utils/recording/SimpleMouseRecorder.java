@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
+import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
+import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
 
 import java.util.function.Consumer;
@@ -17,11 +19,25 @@ public class SimpleMouseRecorder extends SimpleRecorder implements MouseRecorder
                 "recording.mouse.controlKey",
                 new KeyPressReleaseListener(
                         "CONTROL",
-                        () -> controlPressed = true,
-                        () -> controlPressed = false));
+                        (event) -> {
+                            controlPressed = true;
+                            controlPressed(event);
+                        },
+                        (event) -> {
+                            controlPressed = false;
+                            controlReleased(event);
+                        }));
     }
 
     protected boolean isControlPressed() {
         return controlPressed;
+    }
+
+    protected void controlPressed(KeyPressEvent event) {
+        
+    }
+
+    protected void controlReleased(KeyReleaseEvent event) {
+
     }
 }

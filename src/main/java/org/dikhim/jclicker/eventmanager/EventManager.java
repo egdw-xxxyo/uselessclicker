@@ -56,7 +56,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
     }
 
     // KEY
-    public void nativeKeyPressed(NativeKeyEvent e) {
+    synchronized public void nativeKeyPressed(NativeKeyEvent e) {
         // build new key event
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
@@ -67,7 +67,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(keyPressEvent);
     }
 
-    public void nativeKeyReleased(NativeKeyEvent e) {
+    synchronized  public void nativeKeyReleased(NativeKeyEvent e) {
         // build new key event
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
@@ -78,12 +78,12 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(keyReleaseEvent);
     }
 
-    public void nativeKeyTyped(NativeKeyEvent e) {
+    synchronized public void nativeKeyTyped(NativeKeyEvent e) {
         // ignored
     }
 
     // MOUSE BUTTONS
-    public void nativeMousePressed(NativeMouseEvent e) {
+    synchronized public void nativeMousePressed(NativeMouseEvent e) {
         // build new event
         String button = MouseCodes.getNameByNativeCode(e.getButton());
         if (button.isEmpty()) return;
@@ -97,7 +97,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(mousePressEvent);
     }
 
-    public void nativeMouseReleased(NativeMouseEvent e) {
+    synchronized public void nativeMouseReleased(NativeMouseEvent e) {
         // build new event
         String button = MouseCodes.getNameByNativeCode(e.getButton());
         if (button.isEmpty()) return;
@@ -110,12 +110,12 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(mouseReleaseEvent);
     }
 
-    public void nativeMouseClicked(NativeMouseEvent e) {
+    synchronized public void nativeMouseClicked(NativeMouseEvent e) {
         // ignored
     }
 
     // MOUSE MOVEMENT
-    public void nativeMouseMoved(NativeMouseEvent e) {
+    synchronized public void nativeMouseMoved(NativeMouseEvent e) {
         int x = e.getX();
         int y = e.getY();
         long time = System.currentTimeMillis();
@@ -124,12 +124,12 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(mouseMoveEvent);
     }
 
-    public void nativeMouseDragged(NativeMouseEvent e) {
+    synchronized public void nativeMouseDragged(NativeMouseEvent e) {
         nativeMouseMoved(e);
     }
 
     // MOUSE WHEEL
-    public void nativeMouseWheelMoved(NativeMouseWheelEvent e) {
+    synchronized public void nativeMouseWheelMoved(NativeMouseWheelEvent e) {
         // build new wheel events
         int x = e.getX();
         int y = e.getY();
@@ -225,26 +225,26 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
 
 
     /////////////////////// PUBLIC
-    public void addListener(String key, EventListener listener) {
+    synchronized public void addListener(String key, EventListener listener) {
         listeners.put(key, listener);
     }
 
-    public void removeListener(String key) {
+    synchronized public void removeListener(String key) {
         listeners.remove(key);
     }
 
-    public void removeListener(EventListener listener) {
+    synchronized public void removeListener(EventListener listener) {
         while (listeners.values().remove(listener)) ;
     }
 
 
     private List<Filter> filters = new ArrayList<>();
 
-    public void addFilter(Filter filter) {
+    synchronized  public void addFilter(Filter filter) {
         filters.add(filter);
     }
 
-    public void removeFilter(Filter filter) {
+    synchronized public void removeFilter(Filter filter) {
         filters.remove(filter);
     }
 }

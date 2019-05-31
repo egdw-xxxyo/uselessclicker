@@ -437,22 +437,32 @@ public class MainController implements Initializable {
 
         btnInsertMouseMove.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseMove, MouseMoveRecorder.class);
+
+        btnInsertMousePress.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMousePress, MousePressRecorder.class);
+
+        btnInsertMousePressAt.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMousePressAt, MousePressAtRecorder.class);
+
+        btnInsertMouseRelease.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseRelease, MouseReleaseRecorder.class);
+
+        btnInsertMouseReleaseAt.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseReleaseAt, MouseReleaseAtRecorder.class);
+
+        btnInsertMouseWheel.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseWheel, WheelRecorder.class);
         
 
         
         // mouse press/release
         btnInsertMouseCode.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseCode, MouseButtonWheelAtRecorder.class);
-        // mouse basics
-        
-        listOfInsertCodeToggles.add(btnInsertMousePress);
-        listOfInsertCodeToggles.add(btnInsertMousePressAt);
-        listOfInsertCodeToggles.add(btnInsertMouseRelease);
-        listOfInsertCodeToggles.add(btnInsertMouseReleaseAt);
-        listOfInsertCodeToggles.add(btnInsertMouseWheel);
 
+        btnInsertMouseCodeWithDelay.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseCodeWithDelay, MouseButtonWheelAtWithDelaysRecorder.class);
+        
         // mouse press/release
-        listOfInsertCodeToggles.add(btnInsertMouseCodeWithDelay);
         listOfInsertCodeToggles.add(btnInsertMouseRelativeCode);
 
         //mouse click
