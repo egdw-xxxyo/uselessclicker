@@ -17,7 +17,7 @@ public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
     }
 
     @Override
-    protected void onStart() {
+    public void onStart() {
         super.onStart();
         EventLogger eventLog = new EventLogger(4);
         MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();

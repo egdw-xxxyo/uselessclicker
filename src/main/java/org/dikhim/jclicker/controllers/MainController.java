@@ -426,8 +426,17 @@ public class MainController implements Initializable {
         btnInsertMouseClick.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseClick, MouseClickRecorder.class);
 
+        btnInsertMouseClickAt.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseClickAt, MouseClickAtRecorder.class);
+
         btnInsertMouseName.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseName, MouseNameRecorder.class);
+
+        btnInsertMouseMoveTo.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseMoveTo, MouseMoveToRecorder.class);
+
+        btnInsertMouseMove.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseMove, MouseMoveRecorder.class);
         
 
         
@@ -435,10 +444,7 @@ public class MainController implements Initializable {
         btnInsertMouseCode.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseCode, MouseButtonWheelAtRecorder.class);
         // mouse basics
-        listOfInsertCodeToggles.add(btnInsertMouseClickAt);
         
-        listOfInsertCodeToggles.add(btnInsertMouseMove);
-        listOfInsertCodeToggles.add(btnInsertMouseMoveTo);
         listOfInsertCodeToggles.add(btnInsertMousePress);
         listOfInsertCodeToggles.add(btnInsertMousePressAt);
         listOfInsertCodeToggles.add(btnInsertMouseRelease);
@@ -633,9 +639,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseCodeWithDelay(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseButtonAndWheelAtWithDelays();
-        });
     }
 
 
@@ -650,9 +653,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseRelativeCode(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseMoveAndButtonAndWheel();
-        });
     }
 
     // Clicks
@@ -689,9 +689,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseClick(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseClick();
-        });
     }
 
     /**
@@ -702,9 +699,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseClickAt(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseClickAt();
-        });
     }
 
     /**
@@ -714,9 +708,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseMove(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseMove();
-        });
     }
 
     /**
@@ -726,9 +717,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseMoveTo(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseMoveTo();
-        });
     }
 
     /**
@@ -738,9 +726,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMousePress(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMousePress();
-        });
     }
 
     /**
@@ -750,9 +735,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMousePressAt(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMousePressAt();
-        });
     }
 
     /**
@@ -762,9 +744,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseRelease(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseRelease();
-        });
     }
 
     /**
@@ -774,9 +753,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseReleaseAt(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseReleaseAt();
-        });
     }
 
     /**
@@ -786,9 +762,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseWheel(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.wheel();
-        });
     }
 
     /**
@@ -798,9 +771,6 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseWheelAt(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.wheelAt();
-        });
     }
 
     /**

@@ -1,6 +1,7 @@
 package org.dikhim.jclicker.eventmanager;
 
 import org.dikhim.jclicker.eventmanager.event.*;
+import org.dikhim.jclicker.eventmanager.event.Event;
 import org.dikhim.jclicker.eventmanager.filter.Filter;
 import org.dikhim.jclicker.eventmanager.listener.*;
 import org.dikhim.jclicker.eventmanager.listener.EventListener;
@@ -12,10 +13,12 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 import org.jnativehook.mouse.*;
 
+import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -210,6 +213,16 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         }
         return false;
     }
+
+    synchronized public int getX() {
+        return MouseInfo.getPointerInfo().getLocation().x;
+    }
+
+
+    synchronized public int getY() {
+        return MouseInfo.getPointerInfo().getLocation().y;
+    }
+
 
     /////////////////////// PUBLIC
     public void addListener(String key, EventListener listener) {
