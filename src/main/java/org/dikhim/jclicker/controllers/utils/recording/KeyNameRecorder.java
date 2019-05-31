@@ -4,7 +4,7 @@ import org.dikhim.jclicker.eventmanager.listener.KeyPressListener;
 
 import java.util.function.Consumer;
 
-public class KeyNameRecorder extends SimpleRecorder {
+public class KeyNameRecorder extends SimpleRecorder implements KeyRecorder{
     public KeyNameRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }

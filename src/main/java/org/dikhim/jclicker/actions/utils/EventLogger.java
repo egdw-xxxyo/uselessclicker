@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.actions.utils;
 
-import org.dikhim.jclicker.actions.events.*;
+import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 
 public class EventLogger {

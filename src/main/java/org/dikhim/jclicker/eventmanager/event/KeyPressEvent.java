@@ -16,7 +16,7 @@ public class KeyPressEvent implements KeyboardEvent {
 
     @Override
     public long getTime() {
-        return 0;
+        return time;
     }
 
     @Override

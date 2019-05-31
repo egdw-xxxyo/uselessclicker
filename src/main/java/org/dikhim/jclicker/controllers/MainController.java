@@ -22,13 +22,15 @@ import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.actions.StringPropertyShortcut;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
-import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
+import org.dikhim.jclicker.controllers.utils.recording.KeyNameRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.KeyPerformRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.KeyPerformWithDelaysRecorder;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -57,7 +59,6 @@ public class MainController implements Initializable {
 
     private MainApplication mainApplication = Clicker.getApplication().getMainApplication();
     private Preferences preferences = Preferences.userRoot().node(getClass().getName());
-    private EventLogger eventLog = new EventLogger(10000);
 
     private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
     private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
@@ -412,25 +413,17 @@ public class MainController implements Initializable {
         // listOfInsertCodeToggles.add(btnInsertKeyCode);
         //  listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
 
-        toggleGroup.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
 
-        });
-        ChangeListener<? super Boolean> changeListener = (observable, oldValue, newValue) -> {
-            if (newValue) {
-                System.out.println("start " + observable);
-                eventsRecorder.keyNameStart();
-            } else {
-                System.out.println("stop " + observable);
-                eventsRecorder.keyNameStop();
-            }
-        };
-
-        eventsRecorder.bindToggleButton(btnInsertKeyName, eventsRecorder::keyNameStart, eventsRecorder::keyNameStop);
-        btnInsertKeyName.selectedProperty().addListener(changeListener);
         btnInsertKeyName.setToggleGroup(toggleGroup);
-        btnInsertKeyCode.selectedProperty().addListener(changeListener);
+        eventsRecorder.bindToggleButton(btnInsertKeyName, KeyNameRecorder.class);
+       
         btnInsertKeyCode.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertKeyCode, KeyPerformRecorder.class);
+        
         btnInsertKeyCodeWithDelay.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertKeyCodeWithDelay, KeyPerformWithDelaysRecorder.class);
+
+
         // mouse basics
         listOfInsertCodeToggles.add(btnInsertMouseClick);
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
@@ -578,11 +571,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyName(ActionEvent event) {
-        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
-        System.out.println(data[0]);
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyNameStart();
-        });*/
+
     }
 
     /**
@@ -593,11 +582,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyCode(ActionEvent event) {
-        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
-        System.out.println(data[0]);
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.startKeyPerform();
-        });*/
+
     }
 
     /**
@@ -610,11 +595,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertKeyCodeWithDelay(ActionEvent event) {
-        /*String[] data = (String[]) toggleGroup.getSelectedToggle().getUserData();
-        System.out.println(data[0]);
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.keyPerformWithDelays();
-        });*/
+
     }
 
     // Mouse buttons
