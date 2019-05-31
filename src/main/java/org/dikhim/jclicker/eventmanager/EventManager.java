@@ -90,7 +90,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         long time = System.currentTimeMillis();
         MousePressEvent mousePressEvent = new MousePressEvent(button, x, y, time);
 
-        // mouseReleased
+        // buttonReleased
         fire(mousePressEvent);
     }
 
@@ -103,7 +103,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         long time = System.currentTimeMillis();
         MouseReleaseEvent mouseReleaseEvent = new MouseReleaseEvent(button, x, y, time);
 
-        // mouseReleased
+        // buttonReleased
         fire(mouseReleaseEvent);
     }
 
@@ -166,7 +166,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
             listeners.forEach((key, listener) -> {
                 if (ignored(key, e, listener)) return;
                 if (listener instanceof MousePressListener) {
-                    ((MousePressListener) listener).mousePressed(event);
+                    ((MousePressListener) listener).buttonPressed(event);
                 }
             });
         } else if (e instanceof MouseReleaseEvent) {
@@ -174,7 +174,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
             listeners.forEach((key, listener) -> {
                 if (ignored(key, e, listener)) return;
                 if (listener instanceof MouseReleaseListener) {
-                    ((MouseReleaseListener) listener).mouseReleased(event);
+                    ((MouseReleaseListener) listener).buttonReleased(event);
                 }
             });
         } else if (e instanceof MouseMoveEvent) {

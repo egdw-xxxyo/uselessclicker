@@ -428,7 +428,12 @@ public class MainController implements Initializable {
 
         btnInsertMouseName.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseName, MouseNameRecorder.class);
+        
 
+        
+        // mouse press/release
+        btnInsertMouseCode.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseCode, MouseButtonWheelAtRecorder.class);
         // mouse basics
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
         
@@ -441,7 +446,6 @@ public class MainController implements Initializable {
         listOfInsertCodeToggles.add(btnInsertMouseWheel);
 
         // mouse press/release
-        listOfInsertCodeToggles.add(btnInsertMouseCode);
         listOfInsertCodeToggles.add(btnInsertMouseCodeWithDelay);
         listOfInsertCodeToggles.add(btnInsertMouseRelativeCode);
 
@@ -614,9 +618,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseCode(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.mouseButtonAndWheelAt();
-        });
+    
     }
 
     /**

@@ -21,13 +21,13 @@ public class MouseClickRecorder extends SimpleMouseRecorder implements MouseReco
         MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();
         addListener("recording.key.performWithDelays", new MouseButtonListener() {
             @Override
-            public void mousePressed(MousePressEvent event) {
+            public void buttonPressed(MousePressEvent event) {
                 if (!isControlPressed()) return;
                 eventLog.add(event);
             }
 
             @Override
-            public void mouseReleased(MouseReleaseEvent event) {
+            public void buttonReleased(MouseReleaseEvent event) {
                 if (!isControlPressed() || eventLog.isEmpty()) return;
                 MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
                 if (lastMouseButtonEvent.getButton().equals(event.getButton()) &&

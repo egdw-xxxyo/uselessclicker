@@ -541,7 +541,8 @@ public class EventsRecorder {
 
                 onSetOutputImage.accept(bufferedImage);
             });
-        }));*/
+        }));
+        */
     }
 
     // miscellaneous
