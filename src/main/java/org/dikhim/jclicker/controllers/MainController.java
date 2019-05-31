@@ -31,6 +31,7 @@ import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.KeyNameRecorder;
 import org.dikhim.jclicker.controllers.utils.recording.KeyPerformRecorder;
 import org.dikhim.jclicker.controllers.utils.recording.KeyPerformWithDelaysRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.MouseClickRecorder;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -424,9 +425,11 @@ public class MainController implements Initializable {
         btnInsertKeyCodeWithDelay.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertKeyCodeWithDelay, KeyPerformWithDelaysRecorder.class);
 
+        // mouse basics
+        btnInsertMouseClick.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseClick, MouseClickRecorder.class);
 
         // mouse basics
-        listOfInsertCodeToggles.add(btnInsertMouseClick);
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
         listOfInsertCodeToggles.add(btnInsertMouseName);
         listOfInsertCodeToggles.add(btnInsertMouseMove);

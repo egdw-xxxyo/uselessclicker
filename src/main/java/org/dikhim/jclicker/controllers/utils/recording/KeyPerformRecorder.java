@@ -3,7 +3,6 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.eventmanager.listener.KeyPressListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
 
 import java.util.function.Consumer;

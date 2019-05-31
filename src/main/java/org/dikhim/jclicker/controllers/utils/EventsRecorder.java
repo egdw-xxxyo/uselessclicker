@@ -83,47 +83,9 @@ public class EventsRecorder {
     public EventsRecorder(MainConfiguration mainConfiguration) {
         this.mainConfiguration = mainConfiguration;
         recordingParams = mainConfiguration.getRecordingParams();
-        ////
-        recoders.put("keyName", new KeyNameRecorder(this::putCode));
     }
     // keyboard
 
-
-    public void startKeyPerform() {
-        startKeyboardRecording();
-        eventManager.addListener("recording.key.name", new KeyListener() {
-            @Override
-            public void keyPressed(KeyPressEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
-                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
-            }
-
-            @Override
-            public void keyReleased(KeyReleaseEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
-                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
-            }
-        });
-    }
-
-    public void keyPerformWithDelays() {
-        /*startKeyboardRecording();
-        eventLog.clear();
-        keyEventsManager.addKeyboardListener(new ShortcutIncludesListener(prefix + ".perform", "", "", (e) -> {
-            eventLog.add(e);
-
-            String code = "";
-            if (eventLog.size() > 1) {
-                int delay = eventLog.getDelay();
-                systemObjectCodeGenerator.sleep(delay);
-                code += systemObjectCodeGenerator.getGeneratedCode();
-            }
-
-            keyboardObjectCodeGenerator.perform(e.getKey(), e.getAction());
-            code += keyboardObjectCodeGenerator.getGeneratedCode();
-            putCode(code);
-        }));*/
-    }
 
     // mouse basics
 
