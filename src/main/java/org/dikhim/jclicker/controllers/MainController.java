@@ -28,10 +28,7 @@ import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.EventsRecorder;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
-import org.dikhim.jclicker.controllers.utils.recording.KeyNameRecorder;
-import org.dikhim.jclicker.controllers.utils.recording.KeyPerformRecorder;
-import org.dikhim.jclicker.controllers.utils.recording.KeyPerformWithDelaysRecorder;
-import org.dikhim.jclicker.controllers.utils.recording.MouseClickRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.*;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -429,9 +426,12 @@ public class MainController implements Initializable {
         btnInsertMouseClick.setToggleGroup(toggleGroup);
         eventsRecorder.bindToggleButton(btnInsertMouseClick, MouseClickRecorder.class);
 
+        btnInsertMouseName.setToggleGroup(toggleGroup);
+        eventsRecorder.bindToggleButton(btnInsertMouseName, MouseNameRecorder.class);
+
         // mouse basics
         listOfInsertCodeToggles.add(btnInsertMouseClickAt);
-        listOfInsertCodeToggles.add(btnInsertMouseName);
+        
         listOfInsertCodeToggles.add(btnInsertMouseMove);
         listOfInsertCodeToggles.add(btnInsertMouseMoveTo);
         listOfInsertCodeToggles.add(btnInsertMousePress);
@@ -664,9 +664,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseCodeClick(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.click();
-        });
+ 
     }
 
     // mouse basics
@@ -678,9 +676,7 @@ public class MainController implements Initializable {
      */
     @FXML
     void insertMouseName(ActionEvent event) {
-        onToggleButtonPerformed(event, prefix -> {
-            eventsRecorder.insertMouseName();
-        });
+
     }
 
     /**
