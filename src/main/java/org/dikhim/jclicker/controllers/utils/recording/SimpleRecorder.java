@@ -11,12 +11,13 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public abstract class SimpleRecorder implements Recorder {
-    private Consumer<String> onRecorded;
+    
+    private Consumer onRecorded;
     private EventManager eventManager;
     private BooleanProperty recording;
     private List<EventListener> listeners = new ArrayList<>();
 
-    public SimpleRecorder(Consumer<String> onRecorded) {
+    public SimpleRecorder(Consumer onRecorded) {
         this.onRecorded = onRecorded;
         eventManager = Dependency.getEventManager();
         recording = new SimpleBooleanProperty(false);
@@ -32,10 +33,6 @@ public abstract class SimpleRecorder implements Recorder {
     }
     protected void removeListener(EventListener listener) {
         eventManager.removeListener(listener);
-    }
-
-    protected void putCode(String code) {
-        onRecorded.accept(code);
     }
 
     public boolean isRecording() {
@@ -62,5 +59,9 @@ public abstract class SimpleRecorder implements Recorder {
 
     protected  void onStop(){
         listeners.forEach(this::removeListener);
+    }
+
+    protected Consumer getOnRecorded() {
+        return onRecorded;
     }
 }

@@ -1,6 +1,5 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
-import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
@@ -15,45 +14,52 @@ public class MouseMoveAndRecorder extends SimpleMouseRecorder {
         super(onRecorded);
     }
 
-    Point point1;
-    EventLogger eventLog = new EventLogger(4);
+    Point p1;
+
     @Override
     public void onStart() {
         super.onStart();
         MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
         addListener("recording.mouse.buttonWheelAt", new MouseButtonWheelListener() {
-
-
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isControlPressed()) return;
-                codeGenerator.buttonAt(event.getButton(), "PRESS", event.getX(), event.getY());
-                putCode(codeGenerator.getGeneratedCode());
+
+                Point p2 = new Point(event.getX(), event.getY());
+                codeGenerator.moveAndPress(event.getButton(), p2.x - p1.x, p2.y - p1.y);
+                p1 = p2;
+                putString(codeGenerator.getGeneratedCode());
             }
 
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
                 if (!isControlPressed()) return;
 
-                codeGenerator.buttonAt(event.getButton(), "RELEASE", event.getX(), event.getY());
-                putCode(codeGenerator.getGeneratedCode());
+                Point p2 = new Point(event.getX(), event.getY());
+                codeGenerator.moveAndRelease(event.getButton(), p2.x - p1.x, p2.y - p1.y);
+                p1 = p2;
+                putString(codeGenerator.getGeneratedCode());
             }
 
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isControlPressed()) return;
 
-                codeGenerator.wheelAt("UP", event.getAmount(), event.getX(), event.getY());
-                putCode(codeGenerator.getGeneratedCode());
+                Point p2 = new Point(event.getX(), event.getY());
+                codeGenerator.moveAndWheel("UP", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                p1 = p2;
+                putString(codeGenerator.getGeneratedCode());
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isControlPressed()) return;
 
-                codeGenerator.wheelAt("DOWN", event.getAmount(), event.getX(), event.getY());
-                putCode(codeGenerator.getGeneratedCode());
+                Point p2 = new Point(event.getX(), event.getY());
+                codeGenerator.moveAndWheel("DOWN", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                p1 = p2;
+                putString(codeGenerator.getGeneratedCode());
             }
         });
     }
@@ -61,6 +67,6 @@ public class MouseMoveAndRecorder extends SimpleMouseRecorder {
     @Override
     protected void controlPressed(KeyPressEvent event) {
         super.controlPressed(event);
-        point1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+        p1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }
 }

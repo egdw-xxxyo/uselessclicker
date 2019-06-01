@@ -7,7 +7,7 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGener
 
 import java.util.function.Consumer;
 
-public class KeyPerformRecorder extends SimpleRecorder implements KeyRecorder{
+public class KeyPerformRecorder extends StringRecorder implements KeyRecorder{
     public KeyPerformRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
@@ -19,13 +19,13 @@ public class KeyPerformRecorder extends SimpleRecorder implements KeyRecorder{
             @Override
             public void keyPressed(KeyPressEvent event) {
                 keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
-                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(keyboardObjectCodeGenerator.getGeneratedCode());
             }
 
             @Override
             public void keyReleased(KeyReleaseEvent event) {
                 keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
-                putCode(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(keyboardObjectCodeGenerator.getGeneratedCode());
             }
         });
     }

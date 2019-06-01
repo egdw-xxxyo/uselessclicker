@@ -21,7 +21,7 @@ public class MouseMoveToRecorder extends SimpleMouseRecorder  {
             public void buttonReleased(MouseReleaseEvent event) {
                 if(!isControlPressed()) return;
                 mouseObjectCodeGenerator.moveTo(event.getX(),event.getY());
-                putCode(mouseObjectCodeGenerator.getGeneratedCode());
+                putString(mouseObjectCodeGenerator.getGeneratedCode());
             }
 
             @Override

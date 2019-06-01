@@ -21,7 +21,7 @@ public class MouseReleaseAtRecorder extends SimpleMouseRecorder{
             public void buttonReleased(MouseReleaseEvent event) {
                 if (!isControlPressed()) return;
                 codeGenerator.pressAt(event.getButton(),event.getX(), event.getY());
-                putCode(codeGenerator.getGeneratedCode());
+                putString(codeGenerator.getGeneratedCode());
             }
         });
     }

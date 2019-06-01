@@ -6,7 +6,7 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 import java.awt.*;
 import java.util.function.Consumer;
 
-public class MouseMoveRecorder extends SimpleRecorder implements MouseRecorder {
+public class MouseMoveRecorder extends StringRecorder implements MouseRecorder {
     public MouseMoveRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
@@ -22,7 +22,7 @@ public class MouseMoveRecorder extends SimpleRecorder implements MouseRecorder {
                     Point point2 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
 
                     mouseObjectCodeGenerator.move(point2.x - point1.x, point2.y - point1.y);
-                    putCode(mouseObjectCodeGenerator.getGeneratedCode());
+                    putString(mouseObjectCodeGenerator.getGeneratedCode());
                 }));
 
     }

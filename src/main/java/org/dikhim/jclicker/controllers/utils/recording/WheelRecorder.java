@@ -22,14 +22,14 @@ public class WheelRecorder extends SimpleMouseRecorder {
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isControlPressed()) return;
                 codeGenerator.wheel("UP", event.getAmount());
-                putCode(codeGenerator.getGeneratedCode());
+                putString(codeGenerator.getGeneratedCode());
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isControlPressed()) return;
                 codeGenerator.wheel("DOWN", event.getAmount());
-                putCode(codeGenerator.getGeneratedCode());
+                putString(codeGenerator.getGeneratedCode());
             }
         });
     }

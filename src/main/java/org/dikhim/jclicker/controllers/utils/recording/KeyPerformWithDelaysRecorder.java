@@ -9,7 +9,7 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerat
 
 import java.util.function.Consumer;
 
-public class KeyPerformWithDelaysRecorder extends SimpleRecorder implements KeyRecorder {
+public class KeyPerformWithDelaysRecorder extends StringRecorder implements KeyRecorder {
     public KeyPerformWithDelaysRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
@@ -33,7 +33,7 @@ public class KeyPerformWithDelaysRecorder extends SimpleRecorder implements KeyR
 
                 keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
                 code += keyboardObjectCodeGenerator.getGeneratedCode();
-                putCode(code);
+                putString(code);
             }
 
             @Override
@@ -47,7 +47,7 @@ public class KeyPerformWithDelaysRecorder extends SimpleRecorder implements KeyR
 
                 keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
                 code += keyboardObjectCodeGenerator.getGeneratedCode();
-                putCode(code);
+                putString(code);
             }
         });
     }
