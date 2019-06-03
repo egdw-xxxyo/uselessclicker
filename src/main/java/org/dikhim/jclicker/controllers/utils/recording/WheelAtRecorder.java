@@ -7,6 +7,9 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 
 import java.util.function.Consumer;
 
+/**
+ * mouse.wheelAt('DOWN',3,562,823);
+ */
 public class WheelAtRecorder extends SimpleMouseRecorder {
     public WheelAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

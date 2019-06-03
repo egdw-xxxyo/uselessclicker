@@ -9,6 +9,12 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerat
 
 import java.util.function.Consumer;
 
+/**
+ * key.perform('KEY1','PRESS');<br>
+ * system.sleep(100);<br>
+ * key.perform('KEY1','RELEASE');<br>
+ * system.sleep(100);
+ */
 public class KeyPerformWithDelaysRecorder extends StringRecorder implements KeyRecorder {
     public KeyPerformWithDelaysRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

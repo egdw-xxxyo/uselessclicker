@@ -9,6 +9,12 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 
 import java.util.function.Consumer;
 
+/**
+ * mouse.buttonAt('LEFT','PRESS',1004,353);<br>
+ * mouse.buttonAt('LEFT','RELEASE',1004,353);<br>
+ * mouse.wheelAt('DOWN',3,1111,344);<br>
+ * mouse.wheelAt('DOWN',3,1211,348);
+ */
 public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
     public MouseButtonWheelAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
@@ -20,7 +26,7 @@ public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
         MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
         addListener("recording.mouse.buttonWheelAt", new MouseButtonWheelListener() {
-            
+
 
             @Override
             public void buttonPressed(MousePressEvent event) {

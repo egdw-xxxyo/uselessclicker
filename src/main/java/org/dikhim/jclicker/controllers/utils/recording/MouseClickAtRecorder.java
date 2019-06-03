@@ -9,6 +9,10 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 
 import java.util.function.Consumer;
 
+/**
+ * mouse.clickAt('LEFT',685,375);<br>
+ * mouse.clickAt('RIGHT',951,295);
+ */
 public class MouseClickAtRecorder extends SimpleMouseRecorder implements MouseRecorder {
     public MouseClickAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

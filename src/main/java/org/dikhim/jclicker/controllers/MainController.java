@@ -45,7 +45,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 import java.util.prefs.Preferences;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
@@ -104,15 +103,6 @@ public class MainController implements Initializable {
 
         // lupe pane
         LupeImageView lupeImageView = new LupeImageView(resources);
-        lupeImageView.setOnChangePosition(position -> {
-            if (position == LupeImageView.Position.LEFT) {
-                AnchorPane.setLeftAnchor(lupePane, 0d);
-                AnchorPane.setRightAnchor(lupePane, null);
-            } else {
-                AnchorPane.setLeftAnchor(lupePane, null);
-                AnchorPane.setRightAnchor(lupePane, 0d);
-            }
-        });
         lupePane.getChildren().addAll(lupeImageView);
 
 
@@ -130,9 +120,6 @@ public class MainController implements Initializable {
 
         initToggles(propertyFile);
         initTemplateButtons(propertyFile);
-
-        // Init script
-        setToggleStatus(null);
 
         bindConfig();
     }
@@ -225,7 +212,6 @@ public class MainController implements Initializable {
 
     @FXML
     public void runScript() {
-        select(null);
         mainApplication.runScript();
     }
 
@@ -395,109 +381,116 @@ public class MainController implements Initializable {
     ToggleButton btnCombinedMinDistance;
 
 
-    private ToggleGroup toggleGroup = new ToggleGroup();
-    private List<ToggleButton> listOfInsertCodeToggles = new ArrayList<>();
-
-    private List<ToggleButton> simpleToggles = new ArrayList<>();
+    private ToggleGroup recordingToggleGroup = new ToggleGroup();
 
     /**
      * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
      */
     private void initToggles(SourcePropertyFile properties) {
+        List<Node> nodes = new ArrayList<>();
+        
         // keyboard
-        // listOfInsertCodeToggles.add(btnInsertKeyName);
-        // listOfInsertCodeToggles.add(btnInsertKeyCode);
-        //  listOfInsertCodeToggles.add(btnInsertKeyCodeWithDelay);
+        btnInsertKeyName.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertKeyName, new KeyNameRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertKeyName);
+
+        btnInsertKeyCode.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertKeyCode, new KeyPerformRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertKeyCode);
 
 
-        // keyboard
-        btnInsertKeyName.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertKeyName, new KeyNameRecorder(eventsRecorder::putCode));
-
-        btnInsertKeyCode.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertKeyCode, new KeyPerformRecorder(eventsRecorder::putCode));
-
-        btnInsertKeyCodeWithDelay.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertKeyCodeWithDelay, new KeyPerformWithDelaysRecorder(eventsRecorder::putCode));
+        btnInsertKeyCodeWithDelay.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertKeyCodeWithDelay, new KeyPerformWithDelaysRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertKeyCodeWithDelay);
 
         // mouse basics
-        btnInsertMouseClick.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseClick, new MouseClickRecorder(eventsRecorder::putCode));
+        btnInsertMouseClick.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseClick, new MouseClickRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseClick);
 
-        btnInsertMouseClickAt.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseClickAt, new MouseClickAtRecorder(eventsRecorder::putCode));
+        btnInsertMouseClickAt.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseClickAt, new MouseClickAtRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseClickAt);
 
-        btnInsertMouseName.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseName, new MouseNameRecorder(eventsRecorder::putCode));
+        btnInsertMouseName.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseName, new MouseNameRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseName);
 
-        btnInsertMouseMoveTo.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseMoveTo, new MouseMoveToRecorder(eventsRecorder::putCode));
+        btnInsertMouseMoveTo.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseMoveTo, new MouseMoveToRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseMoveTo);
 
-        btnInsertMouseMove.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseMove, new MouseMoveRecorder(eventsRecorder::putCode));
+        btnInsertMouseMove.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseMove, new MouseMoveRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseMove);
 
-        btnInsertMousePress.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMousePress, new MousePressRecorder(eventsRecorder::putCode));
+        btnInsertMousePress.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMousePress, new MousePressRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMousePress);
 
-        btnInsertMousePressAt.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMousePressAt, new MousePressAtRecorder(eventsRecorder::putCode));
+        btnInsertMousePressAt.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMousePressAt, new MousePressAtRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMousePressAt);
 
-        btnInsertMouseRelease.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseRelease, new MouseReleaseRecorder(eventsRecorder::putCode));
+        btnInsertMouseRelease.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseRelease, new MouseReleaseRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseRelease);
 
-        btnInsertMouseReleaseAt.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseReleaseAt, new MouseReleaseAtRecorder(eventsRecorder::putCode));
+        btnInsertMouseReleaseAt.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseReleaseAt, new MouseReleaseAtRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseReleaseAt);
 
-        btnInsertMouseWheel.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseWheel, new WheelRecorder(eventsRecorder::putCode));
+        btnInsertMouseWheel.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseWheel, new WheelRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseWheel);
 
 
         // mouse press/release
-        btnInsertMouseCode.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseCode, new MouseButtonWheelAtRecorder(eventsRecorder::putCode));
+        btnInsertMouseCode.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseCode, new MouseButtonWheelAtRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseCode);
 
-        btnInsertMouseCodeWithDelay.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseCodeWithDelay, new MouseButtonWheelAtWithDelaysRecorder(eventsRecorder::putCode));
+        btnInsertMouseCodeWithDelay.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseCodeWithDelay, new MouseButtonWheelAtWithDelaysRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseCodeWithDelay);
 
-        btnInsertMouseRelativeCode.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertMouseRelativeCode, new MouseMoveAndRecorder(eventsRecorder::putCode));
+        btnInsertMouseRelativeCode.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertMouseRelativeCode, new MouseMoveAndRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertMouseRelativeCode);
+
+        recFilePath.onActionProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(newValue);
+        });
+        eventsRecorder.bind(recFilePath, new FilePathRecorder(eventsRecorder::putCode));
+        nodes.add(recFilePath);
 
 
         // image
 
-        btnInsertSelectImage.setToggleGroup(toggleGroup);
-        eventsRecorder.bindToggleButton(btnInsertSelectImage, new ImageRecorder(eventsRecorder::puImage));
+        btnInsertSelectImage.setToggleGroup(recordingToggleGroup);
+        eventsRecorder.bind(btnInsertSelectImage, new ImageRecorder(eventsRecorder::puImage));
+        nodes.add(btnInsertSelectImage);
 
         // combined
-        listOfInsertCodeToggles.add(btnInsertCombinedLog);
 
-        simpleToggles.add(btnCombinedAbsolutePath);
-        simpleToggles.add(btnCombinedDelays);
-        simpleToggles.add(btnCombinedDetectStopPoints);
-        simpleToggles.add(btnCombinedFixRate);
-        simpleToggles.add(btnCombinedKeys);
-        simpleToggles.add(btnCombinedMinDistance);
-        simpleToggles.add(btnCombinedMouseButtons);
-        simpleToggles.add(btnCombinedMouseWheel);
-        simpleToggles.add(btnCombinedRelativePath);
-
+        nodes.add(btnCombinedAbsolutePath);
+        nodes.add(btnCombinedDelays);
+        nodes.add(btnCombinedDetectStopPoints);
+        nodes.add(btnCombinedFixRate);
+        nodes.add(btnCombinedKeys);
+        nodes.add(btnCombinedMinDistance);
+        nodes.add(btnCombinedMouseButtons);
+        nodes.add(btnCombinedMouseWheel);
+        nodes.add(btnCombinedRelativePath);
 
         // set user data 'String' hint
-        List<Node> nodes = new ArrayList<>();
-
-        nodes.add(recFilePath);
-
-        nodes.addAll(simpleToggles);
-        nodes.addAll(listOfInsertCodeToggles);
+        nodes.add(combinedEncodingType);
+        
         for (Node b : nodes) {
             b.setUserData(new String[]{properties.get(b.getId()), ""});
             b.setOnMouseEntered(this::showCodeSample);
             b.setOnMouseExited(this::hideCodeSample);
         }
-
-        combinedEncodingType.setUserData(new String[]{properties.get(combinedEncodingType.getId()), ""});
-        combinedEncodingType.setOnMouseEntered(this::showCodeSample);
-        combinedEncodingType.setOnMouseExited(this::hideCodeSample);
     }
 
     private String getToggleButtonPath(Object button) {
@@ -518,283 +511,6 @@ public class MainController implements Initializable {
         } while ((!(n instanceof AnchorPane)) && (n != null));
         return out;
     }
-
-
-    /**
-     * Deselect all toggles except the parameter
-     *
-     * @param toggle ToggleButton
-     */
-    private void select(ToggleButton toggle) {
-        for (ToggleButton t : listOfInsertCodeToggles) {
-            if (t.isSelected()) {
-                if (t != toggle)
-                    t.fire();
-            }
-        }
-        setToggleStatus(toggle);
-    }
-
-    /**
-     * When toggle has been deselected
-     *
-     * @param toggle ToggleButton
-     */
-    private void deselect(ToggleButton toggle) {
-        setToggleStatus(toggle);
-    }
-
-    private void setToggleStatus(ToggleButton toggle) {
-        if (toggle == null) {
-            if (btnTogglesStatus.getUserData() == null) {
-                btnTogglesStatus.setText("...");
-                btnTogglesStatus.setUserData(null);
-                return;
-            }
-            return;
-        }
-        btnTogglesStatus.setSelected(toggle.isSelected());
-        String title = "";
-        if (toggle.isSelected()) {
-            title += "Activated: ";
-        } else {
-            title += " Disabled: ";
-        }
-        title += getToggleButtonPath(toggle);
-        btnTogglesStatus.setText(title);
-        btnTogglesStatus.setUserData(toggle);
-    }
-
-    private void onToggleButtonPerformed(ActionEvent event, Consumer<String> consumer) {
-        ToggleButton toggleButton = (ToggleButton) event.getSource();
-        if (toggleButton == null) return;
-
-        String prefix = eventsRecorder.getPrefix();
-        if (toggleButton.isSelected()) {
-            select(toggleButton);
-            // if toggle has been selected
-            consumer.accept(prefix);
-        } else {
-            deselect(toggleButton);
-            // if toggle has been deselected
-            eventsRecorder.stopRecording();
-            keyEventsManager.removeListenersByPrefix(prefix);
-            mouseEventsManager.removeListenersByPrefix(prefix);
-        }
-    }
-    // Keyboard
-
-
-    /**
-     * 'KEY1 KEY2 '
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertKeyName(ActionEvent event) {
-
-    }
-
-    /**
-     * key.perform('KEY1','PRESS');<p>
-     * key.perform('KEY1','RELEASE');
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertKeyCode(ActionEvent event) {
-
-    }
-
-    /**
-     * key.perform('KEY1','PRESS');<br>
-     * system.sleep(100);<br>
-     * key.perform('KEY1','RELEASE');<br>
-     * system.sleep(100);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertKeyCodeWithDelay(ActionEvent event) {
-
-    }
-
-    // Mouse buttons
-
-    /**
-     * mouse.buttonAt('LEFT','PRESS',1004,353);<br>
-     * mouse.buttonAt('LEFT','RELEASE',1004,353);<br>
-     * mouse.wheelAt('DOWN',3,1111,344);<br>
-     * mouse.wheelAt('DOWN',3,1211,348);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseCode(ActionEvent event) {
-
-    }
-
-    /**
-     * system.sleep(232);<br>
-     * mouse.buttonAt('LEFT','PRESS',999,330);<br>
-     * system.sleep(96);<br>
-     * mouse.buttonAt('LEFT','RELEASE',999,330);<br>
-     * system.sleep(592);<br>
-     * mouse.wheelAt('DOWN',3,1191,353);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseCodeWithDelay(ActionEvent event) {
-    }
-
-
-    /**
-     * mouse.moveAndButton('LEFT',PRESS,-2,0);<br>
-     * mouse.moveAndButton('LEFT',RELEASE,94,-27);<br>
-     * mouse.moveAndWheel('DOWN',3,0,0);<br>
-     * mouse.moveAndWheel('DOWN',3,0,0);<br>
-     * mouse.moveAndWheel('DOWN',3,-13,22);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseRelativeCode(ActionEvent event) {
-    }
-
-    // Clicks
-
-    /**
-     * mouse.pressAt('LEFT',914,426);<br>
-     * mouse.releaseAt('LEFT',915,438);<br>
-     * mouse.clickAt('LEFT',918,502);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseCodeClick(ActionEvent event) {
-
-    }
-
-    // mouse basics
-
-    /**
-     * 'LEFT RIGHT MIDDLE '
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseName(ActionEvent event) {
-
-    }
-
-    /**
-     * mouse.click('LEFT');<br>
-     * mouse.click('RIGHT');
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseClick(ActionEvent event) {
-    }
-
-    /**
-     * mouse.clickAt('LEFT',685,375);<br>
-     * mouse.clickAt('RIGHT',951,295);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseClickAt(ActionEvent event) {
-    }
-
-    /**
-     * mouse.move(153,-1);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseMove(ActionEvent event) {
-    }
-
-    /**
-     * mouse.moveAt(888,651);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseMoveTo(ActionEvent event) {
-    }
-
-    /**
-     * mouse.press('LEFT');
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMousePress(ActionEvent event) {
-    }
-
-    /**
-     * mouse.pressAt('LEFT',123,446);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMousePressAt(ActionEvent event) {
-    }
-
-    /**
-     * mouse.release('LEFT');
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseRelease(ActionEvent event) {
-    }
-
-    /**
-     * mouse.releaseAt('LEFT',838,450);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseReleaseAt(ActionEvent event) {
-    }
-
-    /**
-     * mouse.wheel('DOWN',3);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseWheel(ActionEvent event) {
-    }
-
-    /**
-     * mouse.wheelAt('DOWN',3,562,823);
-     *
-     * @param event event from ToggleButton on scene
-     */
-    @FXML
-    void insertMouseWheelAt(ActionEvent event) {
-    }
-
-    /**
-     * @param event event from ToggleButton on scene
-     */
-    /*Combined*/
-    @FXML
-    void insertCombinedLog(ActionEvent event) {
-
-    }
-
-    @FXML
-    void insertSelectImage(ActionEvent event) {
-
-    }
-
-    // Other
 
     @FXML
     void recFilePath(ActionEvent event) {

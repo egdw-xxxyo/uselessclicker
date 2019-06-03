@@ -6,6 +6,9 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 import java.awt.*;
 import java.util.function.Consumer;
 
+/**
+ * mouse.move(153,-1);
+ */
 public class MouseMoveRecorder extends StringRecorder implements MouseRecorder {
     public MouseMoveRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

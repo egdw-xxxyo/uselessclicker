@@ -44,10 +44,7 @@ public class MainApplication {
         Dependency.setClickAuto(clickAuto);
         bindProperties();
 
-        InputStream is = getClass().getResourceAsStream("/config.json");
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject jsonObject = jsonReader.readObject();
-        config = new MainConfiguration(jsonObject, "main");
+        config = Dependency.getConfig();
         httpServer = new HttpServer(config.getServers().getServer("httpServer"));
         socketServer = new SocketServer(config.getServers().getServer("socketServer"));
     }

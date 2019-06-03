@@ -6,7 +6,10 @@ import org.dikhim.jclicker.eventmanager.listener.MouseWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
 
 import java.util.function.Consumer;
-
+/**
+ * mouse.wheel('DOWN',3);
+ *
+ */
 public class WheelRecorder extends SimpleMouseRecorder {
     public WheelRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

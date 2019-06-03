@@ -12,6 +12,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.function.Consumer;
 
+/**
+ * Recording buffered image
+ */
 public class ImageRecorder extends SimpleRecorder implements ScreenRecorder {
     private Point p1;
     ScreenObject screenObject = new UselessScreenObject(Dependency.getRobot());
@@ -41,7 +44,7 @@ public class ImageRecorder extends SimpleRecorder implements ScreenRecorder {
     }
 
     protected void controlReleased(KeyReleaseEvent event) {
-        Point p2  = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+        Point p2  = new Point(MouseInfo.getPointerInfo().getLocation().x+1, MouseInfo.getPointerInfo().getLocation().y+1);
         Image image = screenObject.getImage(p1, p2);
         putImage(image);
     }

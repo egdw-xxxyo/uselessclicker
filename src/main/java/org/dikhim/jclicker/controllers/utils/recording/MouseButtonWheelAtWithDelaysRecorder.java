@@ -8,10 +8,19 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerat
 
 import java.util.function.Consumer;
 
+/**
+ * system.sleep(232);<br>
+ * mouse.buttonAt('LEFT','PRESS',999,330);<br>
+ * system.sleep(96);<br>
+ * mouse.buttonAt('LEFT','RELEASE',999,330);<br>
+ * system.sleep(592);<br>
+ * mouse.wheelAt('DOWN',3,1191,353);
+ */
 public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder {
     public MouseButtonWheelAtWithDelaysRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
+
     EventLogger eventLog = new EventLogger(4);
 
     @Override

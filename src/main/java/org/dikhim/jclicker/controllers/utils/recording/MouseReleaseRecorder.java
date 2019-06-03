@@ -6,7 +6,10 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerato
 
 import java.util.function.Consumer;
 
-public class MouseReleaseRecorder extends SimpleMouseRecorder{
+/**
+ * mouse.release('LEFT');
+ */
+public class MouseReleaseRecorder extends SimpleMouseRecorder {
     public MouseReleaseRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
@@ -14,7 +17,7 @@ public class MouseReleaseRecorder extends SimpleMouseRecorder{
     @Override
     public void onStart() {
         super.onStart();
-        addListener("recording.mouse.press", new MouseReleaseListener(){
+        addListener("recording.mouse.press", new MouseReleaseListener() {
             MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
             @Override

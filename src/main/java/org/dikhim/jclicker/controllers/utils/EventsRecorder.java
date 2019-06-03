@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.dikhim.jclicker.Dependency;
@@ -39,10 +40,6 @@ public class EventsRecorder {
     private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
     private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
 
-    private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator();
-    private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();
-    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(120);
-    private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator();
 
     private EventLogger eventLog = new EventLogger(10000);
     private RecordingParams recordingParams;
@@ -50,12 +47,12 @@ public class EventsRecorder {
 
     private CodeTextArea outputTextArea;
 
-    private BooleanProperty recording = new SimpleBooleanProperty(false);
+    private BooleanProperty recorderSelected = new SimpleBooleanProperty(false);
 
+    private BooleanProperty recording = new SimpleBooleanProperty(false);
     private BooleanProperty mouseRecording = new SimpleBooleanProperty(false);
     private BooleanProperty keyboardRecording = new SimpleBooleanProperty(false);
-
-    private BooleanProperty controlKeyPressed = new SimpleBooleanProperty(false);
+    private BooleanProperty lupeIsNeeded = new SimpleBooleanProperty(false);
 
     private Consumer<BufferedImage> onSetOutputImage;
 
@@ -230,7 +227,10 @@ public class EventsRecorder {
 
     private void stopMouseRecording() {
         mouseRecording.setValue(false);
-        removeMouseListeners();
+    }
+    
+    private void showLupe() {
+        
     }
 
     private void setOutputImage(Point p1, Point p2) {
@@ -250,10 +250,6 @@ public class EventsRecorder {
     //
     private void removeKeyboardListeners() {
         keyEventsManager.removeListenersByPrefix(prefix);
-    }
-
-    void removeMouseListeners() {
-        mouseEventsManager.removeListenersByPrefix(prefix);
     }
 
 
@@ -280,7 +276,11 @@ public class EventsRecorder {
 
     private List<Recorder> recorderList = new ArrayList<>();
 
-    public void bindToggleButton(ToggleButton toggleButton, Recorder recorder) {
+    public void bind(Button button, Recorder recorder) {
+        button.setOnAction(event -> recorder.start());
+    }
+    
+    public void bind(ToggleButton toggleButton, Recorder recorder) {
         if (recorder instanceof KeyRecorder) {
             Recorder finalRecorder = recorder;
             toggleButton.selectedProperty().addListener((observable, oldValue, newValue) -> {

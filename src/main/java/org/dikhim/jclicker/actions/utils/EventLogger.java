@@ -18,6 +18,15 @@ public class EventLogger {
         return eventLog;
     }
 
+    public EventLogger() {
+        eventLog = new LimitedSizeQueue<>();
+        keyboardLog = new LimitedSizeQueue<>();
+        mouseLog = new LimitedSizeQueue<>();
+        mouseButtonLog = new LimitedSizeQueue<>();
+        mouseWheelLog = new LimitedSizeQueue<>();
+        mouseMoveLog = new LimitedSizeQueue<>();
+    }
+
     public EventLogger(int n) {
         if (n < 2) throw new IllegalArgumentException("EventLogger size cannot be less than 2");
         eventLog = new LimitedSizeQueue<>(n);

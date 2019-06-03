@@ -45,14 +45,20 @@ public abstract class SimpleRecorder implements Recorder {
 
     @Override
     public void start() {
-        recording.set(true);
         onStart();
     }
 
     @Override
     public void stop() {
-        recording.set(false);
         onStop();
+    }
+    
+    protected void startRecording() {
+        recording.set(true);
+    }
+    
+    protected void stopRecording() {
+        recording.set(false);
     }
     
     protected abstract void onStart();

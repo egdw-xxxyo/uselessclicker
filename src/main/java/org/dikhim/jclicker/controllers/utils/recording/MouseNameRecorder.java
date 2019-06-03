@@ -4,7 +4,10 @@ import org.dikhim.jclicker.eventmanager.listener.MouseReleaseListener;
 
 import java.util.function.Consumer;
 
-public class MouseNameRecorder extends SimpleMouseRecorder{
+/**
+ * 'LEFT RIGHT MIDDLE '
+ */
+public class MouseNameRecorder extends SimpleMouseRecorder {
     public MouseNameRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }

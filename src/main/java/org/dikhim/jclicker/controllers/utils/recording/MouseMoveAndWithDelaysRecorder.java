@@ -9,12 +9,20 @@ import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerat
 import java.awt.*;
 import java.util.function.Consumer;
 
+/**
+ * mouse.moveAndButton('LEFT',PRESS,-2,0);<br>
+ * mouse.moveAndButton('LEFT',RELEASE,94,-27);<br>
+ * mouse.moveAndWheel('DOWN',3,0,0);<br>
+ * mouse.moveAndWheel('DOWN',3,0,0);<br>
+ * mouse.moveAndWheel('DOWN',3,-13,22);
+ */
 public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder {
 
 
     public MouseMoveAndWithDelaysRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
+
     String code = "";
     Point p1;
     EventLogger eventLog = new EventLogger(4);
@@ -31,7 +39,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder {
                 eventLog.add(event);
 
                 forEachEvent();
-                
+
                 Point p2 = new Point(event.getX(), event.getY());
                 mouseObjectCodeGenerator.moveAndPress(event.getButton(), p2.x - p1.x, p2.y - p1.y);
                 p1 = p2;

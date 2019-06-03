@@ -98,7 +98,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
 
             onInsert.accept(resultString);
         } catch (IOException e) {
-            Out.println("Cannot convert image to the string representation");
+            Out.println("Cannot convertUselessEventToClickauto image to the string representation");
         }
     }
 
