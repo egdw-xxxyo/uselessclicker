@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.actions.utils;
 
-import org.dikhim.jclicker.actions.events.*;
+import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.util.LimitedSizeQueue;
 
 public class EventLogger {
@@ -16,6 +16,15 @@ public class EventLogger {
 
     public LimitedSizeQueue<Event> getEventLog() {
         return eventLog;
+    }
+
+    public EventLogger() {
+        eventLog = new LimitedSizeQueue<>();
+        keyboardLog = new LimitedSizeQueue<>();
+        mouseLog = new LimitedSizeQueue<>();
+        mouseButtonLog = new LimitedSizeQueue<>();
+        mouseWheelLog = new LimitedSizeQueue<>();
+        mouseMoveLog = new LimitedSizeQueue<>();
     }
 
     public EventLogger(int n) {

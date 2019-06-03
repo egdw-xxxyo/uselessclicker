@@ -15,7 +15,7 @@ import org.jnativehook.keyboard.NativeKeyListener;
 public class KeyEventsManager implements NativeKeyListener{
 
     private static KeyEventsManager instance;
-    // pressed keys
+    // press keys
     private Set<String> pressedKeys = new HashSet<>();
     private List<String> ignoredPrefixes = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class KeyEventsManager implements NativeKeyListener{
         // build new key events
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
-        // add to pressed buttons
+        // add to press buttons
         pressedKeys.add(key);
         long time = System.currentTimeMillis();
         KeyboardEvent keyboardEvent = new KeyboardEvent(key, pressedKeys, "PRESS", time);
@@ -71,7 +71,7 @@ public class KeyEventsManager implements NativeKeyListener{
         // fire
         fire(keyboardEvent);
 
-        // add to pressed buttons
+        // add to press buttons
         pressedKeys.remove(key);
 
     }

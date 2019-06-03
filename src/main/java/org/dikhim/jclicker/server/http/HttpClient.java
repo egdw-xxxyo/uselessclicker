@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.server.http;
 
-import org.dikhim.jclicker.jsengine.objects.ComputerObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ComputerObject;
 
 public class HttpClient {
     private int uid;

@@ -348,3 +348,49 @@
     -fx-border-width: 1 1 0 1;
     -fx-border-color: #ccc;
 }
+
+
+.statusButton{
+    -fx-alignment: center-left;
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+    -fx-background-repeat: no-repeat;
+    -fx-max-height: 26;
+    -fx-min-height: 26;
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+    -fx-background-size: 24px;
+}
+
+
+.statusButton:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.statusButton:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.statusButton:selected {
+    -fx-background-color: -fx-color-selected;
+}
+
+
+#keyboardStatusButton{
+    -fx-background-image: url("../../images/keyboard.png");
+}
+
+#mouseStatusButton{
+    -fx-background-image: url("../../images/mouse.png");
+}
+
+
+#lupeStatusButton{
+    -fx-background-image: url("../../images/lupe_cursor_grey_32.png");
+}
+
+
+
+#recordingStatusButton{
+    
+}

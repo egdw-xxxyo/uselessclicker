@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.ui;
 
+import javafx.application.Platform;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
@@ -11,21 +12,30 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import org.dikhim.jclicker.actions.MouseMoveHandler;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.controllers.utils.ImageCapturer;
-import org.dikhim.jclicker.jsengine.objects.JsScreenObject;
-import org.dikhim.jclicker.jsengine.objects.ScreenObject;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.eventmanager.EventManager;
+import org.dikhim.jclicker.eventmanager.listener.MouseMoveListener;
+import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.UselessScreenObject;
 import org.dikhim.jclicker.util.ImageUtil;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.function.BiConsumer;
 
 public class LupeImageView extends VBox implements Initializable {
+
+
+    private IntegerProperty resolution = new SimpleIntegerProperty(33);
+    private Position position = Position.RIGHT;
+    private EventManager eventManager = Dependency.getEventManager();
+    private ImageCapturer imageCapturer = new ImageCapturer();
+
+    @FXML
+    private ImageView lupeImage;
 
     public LupeImageView(ResourceBundle resources) {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -45,27 +55,32 @@ public class LupeImageView extends VBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        AnchorPane.setTopAnchor(this, 0d);
-        AnchorPane.setRightAnchor(this, 0d);
-        AnchorPane.setBottomAnchor(this, 0d);
-        AnchorPane.setLeftAnchor(this, 0d);
-        
+        System.out.println(this.getParent());
+
         // on change visibility hide/show parent and start/stop recording
         visibleProperty().addListener((observable, oldValue, newValue) -> {
-            getParent().visibleProperty().bindBidirectional(this.visibleProperty());
+            getParent().visibleProperty().bind(this.visibleProperty());
             if (newValue) {
                 start();
             } else {
                 stop();
-            } 
-        });        
+            }
+        });
+
+        // change position on click
+        lupeImage.setOnMouseClicked(event -> {
+            if (position == Position.LEFT) {
+                position = Position.RIGHT;
+                AnchorPane.setLeftAnchor(this.getParent(), null);
+                AnchorPane.setRightAnchor(this.getParent(), 0d);
+            } else {
+                position = Position.LEFT;
+                AnchorPane.setLeftAnchor(this.getParent(), 0d);
+                AnchorPane.setRightAnchor(this.getParent(), null);
+            }
+        });
     }
 
-    @FXML
-    private ImageView lupeImage;
-
-    private String prefix = "lupe";
-    private IntegerProperty resolution = new SimpleIntegerProperty(33);
 
     @FXML
     void zoomIn(ActionEvent event) {
@@ -73,6 +88,9 @@ public class LupeImageView extends VBox implements Initializable {
         if (value > 9) {
             resolution.setValue(resolution.getValue() / 2 + 1);
         }
+        int initX = Dependency.getMouse().getX();
+        int initY = Dependency.getMouse().getY();
+        imageCapturer.captureImage(getCaptureRect(initX, initY));
     }
 
     @FXML
@@ -81,6 +99,19 @@ public class LupeImageView extends VBox implements Initializable {
         if (value < 33) {
             resolution.setValue((resolution.getValue() - 1) * 2);
         }
+        int initX = Dependency.getMouse().getX();
+        int initY = Dependency.getMouse().getY();
+        imageCapturer.captureImage(getCaptureRect(initX, initY));
+    }
+
+    @FXML
+    void changeCursor(ActionEvent event) {
+        imageCapturer.changeCursor();
+    }
+
+    @FXML
+    void changeColor(ActionEvent event) {
+        imageCapturer.changeColor();
     }
 
     private void setPreviewImage(BufferedImage bufferedImage) {
@@ -88,37 +119,37 @@ public class LupeImageView extends VBox implements Initializable {
         int h = (int) lupeImage.getFitHeight();
         BufferedImage resizedImage = ImageUtil.resizeImage(bufferedImage, w, h);
         Image image = SwingFXUtils.toFXImage(resizedImage, null);
-        lupeImage.setImage(image);
+        Platform.runLater(()->lupeImage.setImage(image));
     }
 
     private void start() {
-        final ScreenObject screenObject = new JsScreenObject(RobotStatic.get());
-        ImageCapturer imageCapturer = new ImageCapturer();
+        ScreenObject screenObject = new UselessScreenObject(Dependency.getRobot());
         imageCapturer.setScreenObject(screenObject);
         imageCapturer.setOnImageLoaded(this::setPreviewImage);
 
-        BiConsumer<Integer, Integer> onMove = (x, y) -> {
-            
-        };
-
-        MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-        onMove.accept(mouseEventsManager.getX(), mouseEventsManager.getY());
-
-        mouseEventsManager.addMoveListener(new MouseMoveHandler(prefix + ".show.on.move", e -> {
-            if (!imageCapturer.isLocked()) {
-                int x = e.getX();
-                int y = e.getY();
-                int rectSize = resolution.get();
-                int x0 = x - rectSize / 2;
-                int y0 = y - rectSize / 2;
-                int x1 = x0 + rectSize;
-                int y1 = y0 + rectSize;
-                imageCapturer.captureImage(x0, y0, x1, y1);
-            }
-        }));
+        int initX = Dependency.getMouse().getX();
+        int initY = Dependency.getMouse().getY();
+        imageCapturer.captureImage(getCaptureRect(initX, initY));
+        
+        eventManager.addListener("lupe.image.view", (MouseMoveListener) event -> {
+            imageCapturer.captureImage(getCaptureRect(event.getX(), event.getY()));
+        });
+        
     }
+
+    private Rectangle getCaptureRect(int x, int y) {
+        int rectSize = resolution.get();
+        int x0 = x - rectSize / 2;
+        int y0 = y - rectSize / 2;
+        return new Rectangle(x0, y0, rectSize, rectSize);
+    }
+    
     private void stop() {
-        MouseEventsManager.getInstance().removeListenersByPrefix(prefix);
+        eventManager.removeListener("lupe.image.view");
     }
 
+    public enum Position {
+        LEFT,
+        RIGHT
+    }
 }

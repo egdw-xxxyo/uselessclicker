@@ -24,7 +24,7 @@ public class MouseEventsManager
 
     private List<String> ignoredPrefixes = new ArrayList<>();
 
-    // pressed buttons
+    // press buttons
     private Set<String> pressedButtons = new HashSet<>();
 
     // handlers
@@ -98,7 +98,7 @@ public class MouseEventsManager
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
         if (button.isEmpty()) return;// return if button is unknown
-        // add to pressed buttons
+        // add to press buttons
         pressedButtons.add(button);
         Set<String> pressedButton = new HashSet<>();
         pressedButton.add(button);
@@ -119,7 +119,7 @@ public class MouseEventsManager
         String button = MouseCodes
                 .getNameByNativeCode(nativeMouseEvent.getButton());
         if (button.isEmpty()) return;// return if button is unknown
-        // remove from pressed buttons
+        // remove from press buttons
         pressedButtons.remove(button);
 
         Set<String> releasedButton = new HashSet<>();

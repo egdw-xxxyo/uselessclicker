@@ -1,14 +1,11 @@
 package org.dikhim.jclicker.model;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.configuration.MainConfiguration;
-import org.dikhim.jclicker.jsengine.JSEngine;
-import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Out;
@@ -16,27 +13,24 @@ import org.dikhim.jclicker.util.Out;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
-import javax.script.ScriptException;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
 import java.util.function.Consumer;
 
-@SuppressWarnings("Duplicates")
 public class MainApplication {
     private MainConfiguration config;
 
 
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
-    
+
     private HttpServer httpServer;
     private SocketServer socketServer;
-    
-    private Robot robot;
-    private JSEngine jse;
-    
+
+    private UselessClickAuto clickAuto;
+
     private Consumer<BufferedImage> onSetOutputImage;
 
     private Script script = new Script();
@@ -45,15 +39,12 @@ public class MainApplication {
         return script;
     }
 
-    public MainApplication() {
-        robot = RobotStatic.get();
-        jse = new JSEngine(robot);
+    public MainApplication() throws AWTException {
+        clickAuto = new UselessClickAuto();
+        Dependency.setClickAuto(clickAuto);
         bindProperties();
 
-        InputStream is = getClass().getResourceAsStream("/config.json");
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject jsonObject = jsonReader.readObject();
-        config = new MainConfiguration(jsonObject, "main");
+        config = Dependency.getConfig();
         httpServer = new HttpServer(config.getServers().getServer("httpServer"));
         socketServer = new SocketServer(config.getServers().getServer("socketServer"));
     }
@@ -83,16 +74,16 @@ public class MainApplication {
      */
     public void runScript() {
         Out.clear();
-        jse.putCode(script.codeProperty().get());
-        jse.start();
+        clickAuto.removeScripts();
+        clickAuto.putScript(script.codeProperty().getValue());
+        clickAuto.start();
     }
 
     /**
      * Stop running script
      */
     public void stopScript() {
-        jse.stop();
-
+        clickAuto.stop();
     }
 
     public void stop() {
@@ -103,11 +94,11 @@ public class MainApplication {
 
     private void bindProperties() {
         title.bind(script.nameProperty());
-        status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(jse.runningProperty()));
+        status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(clickAuto.isRunningProperty()));
     }
 
-    public JSEngine getJse() {
-        return jse;
+    public UselessClickAuto getClickAuto() {
+        return clickAuto;
     }
 
     public StringProperty titleProperty() {

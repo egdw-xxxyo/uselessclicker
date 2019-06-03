@@ -1,9 +1,9 @@
 package org.dikhim.jclicker.actions.utils;
 
 import org.dikhim.jclicker.actions.actions.*;
-import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
-import org.dikhim.jclicker.jsengine.objects.MouseObject;
-import org.dikhim.jclicker.jsengine.objects.SystemObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.SystemObject;
 
 import java.util.List;
 

@@ -5,9 +5,15 @@ import java.util.ArrayList;
 public class LimitedSizeQueue<K> extends ArrayList<K> {
 
 	private static final long serialVersionUID = -2102376514568353785L;
-	private int maxSize;
+	private int maxSize = Integer.MAX_VALUE;
+
+    public LimitedSizeQueue() {
+        super();
+    }
 
     public LimitedSizeQueue(int size){
+        super();
+        if(size < 1) throw new IllegalArgumentException("size should be >0");
         this.maxSize = size;
     }
 

@@ -2,18 +2,14 @@ package org.dikhim.jclicker.server.http;
 
 
 import javafx.beans.property.*;
+import org.dikhim.clickauto.ClickAuto;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.configuration.servers.ServerConfig;
-import org.dikhim.jclicker.jsengine.objects.ComputerObject;
-import org.dikhim.jclicker.jsengine.objects.JsKeyboardObject;
-import org.dikhim.jclicker.jsengine.objects.JsMouseObject;
-import org.dikhim.jclicker.jsengine.objects.JsSystemObject;
-import org.dikhim.jclicker.jsengine.robot.Robot;
-import org.dikhim.jclicker.jsengine.robot.RobotStatic;
+import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
 import org.dikhim.jclicker.util.Out;
 
-import java.awt.*;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -32,13 +28,15 @@ public class HttpServer {
     private HttpClient defaultClient;
 
     ServerConfig serverConfig;
+    private ClickAuto clickAuto;
 
     public HttpServer(ServerConfig serverConfig) {
         this.serverConfig = serverConfig;
-        Robot robot = RobotStatic.get();
-        JsKeyboardObject keyboardObject = new JsKeyboardObject(robot);
-        JsMouseObject mouseObject = new JsMouseObject(robot);
-        JsSystemObject systemObject = new JsSystemObject(robot);
+        this.clickAuto = Dependency.getClickAuto();
+        
+        KeyboardObject keyboardObject = new UselessKeyboardObject(clickAuto.robot());
+        MouseObject mouseObject = new UselessMouseObject(clickAuto.robot());
+        SystemObject systemObject = new UselessSystemObject(clickAuto.getEngine());
         defaultComputerObject = new ComputerObject(keyboardObject, mouseObject, systemObject);
         defaultClient = new HttpClient(0, defaultComputerObject);
         initialization();

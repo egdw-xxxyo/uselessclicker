@@ -3,7 +3,7 @@
     -fx-color-pressed: #ffde66;
     -fx-color-hover: #ffec9d;
 }
-.zoom-button{
+.lupe-button{
     -fx-background-radius: 0;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
@@ -15,12 +15,11 @@
     -fx-max-width: infinity;
 }
 
-
-.zoom-button:hover {
+.lupe-button:hover {
     -fx-background-color: -fx-color-hover;
 }
 
-.zoom-button:pressed {
+.lupe-button:pressed {
     -fx-background-color: -fx-color-pressed;
 }
 
@@ -29,4 +28,11 @@
 }
 #zoom-out{
     -fx-background-image: url("../images/zoom-out_32.png");
+}
+
+#cursor{
+    -fx-background-image: url("../images/lupe_cursor_32.png");
+}
+#rgb{
+    -fx-background-image: url("../images/rgb_32.png");
 }

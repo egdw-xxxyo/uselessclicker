@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.util.*;
 import java.util.prefs.Preferences;
 
-@SuppressWarnings("AccessStaticViaInstance")
 public class WindowManager {
     private static WindowManager windowManager;
     private Preferences preferences = Preferences.userRoot().node(getClass().getName());

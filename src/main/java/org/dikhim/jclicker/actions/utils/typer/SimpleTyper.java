@@ -1,6 +1,6 @@
 package org.dikhim.jclicker.actions.utils.typer;
 
-import org.dikhim.jclicker.jsengine.objects.KeyboardObject;
+import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -55,7 +55,7 @@ public class SimpleTyper implements Typer {
                 keyboard.type(key);
                 break;
             case 1:
-                // 1 - type key with SHIFT key pressed
+                // 1 - type key with SHIFT key press
                 pressShift();
                 keyboard.type(key);
                 break;
