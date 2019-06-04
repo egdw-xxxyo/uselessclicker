@@ -87,4 +87,12 @@ public class StatusHolder {
     public BooleanProperty lupeIsNeededProperty() {
         return lupeIsNeeded;
     }
+
+    public Recorder getActiveRecorder() {
+        return activeRecorder.getValue();
+    }
+
+    public Property<Recorder> activeRecorderProperty() {
+        return activeRecorder;
+    }
 }

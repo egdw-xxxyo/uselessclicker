@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.dikhim.jclicker.Clicker;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.ShortcutEqualsListener;
 import org.dikhim.jclicker.actions.StringPropertyShortcut;
@@ -28,6 +29,7 @@ import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.recording.EventsRecorder;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
+import org.dikhim.jclicker.eventmanager.listener.ShortcutPressListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
@@ -145,13 +147,14 @@ public class MainController implements Initializable {
 
         createHotkeys();
     }
+
     // status buttons
     @FXML
     private ToggleButton btnScriptStatus;
 
     @FXML
     private ToggleButton btnActiveRecorderStatus;
-    
+
     @FXML
     private ToggleButton btnLupeStatus;
 
@@ -163,7 +166,7 @@ public class MainController implements Initializable {
 
     @FXML
     private ToggleButton btnRecordingStatus;
-    
+
 
     @FXML
     private Button btnNewFile;
@@ -398,7 +401,7 @@ public class MainController implements Initializable {
      */
     private void initToggles(SourcePropertyFile properties) {
         List<Node> nodes = new ArrayList<>();
-        
+
         // keyboard
         eventsRecorder.bind(btnInsertKeyName, new KeyNameRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyName);
@@ -465,7 +468,7 @@ public class MainController implements Initializable {
 
         eventsRecorder.bind(btnInsertCombinedLog, new CombinedRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertCombinedLog);
-        
+
         nodes.add(btnCombinedAbsolutePath);
         nodes.add(btnCombinedDelays);
         nodes.add(btnCombinedDetectStopPoints);
@@ -478,7 +481,7 @@ public class MainController implements Initializable {
 
         // set user data 'String' hint
         nodes.add(combinedEncodingType);
-        
+
         for (Node b : nodes) {
             b.setUserData(new String[]{properties.get(b.getId()), ""});
             b.setOnMouseEntered(this::showCodeSample);
@@ -650,27 +653,25 @@ public class MainController implements Initializable {
 
         HotKeys hotKeys = config.getHotKeys();
 
-        KeyEventsManager keyListener = KeyEventsManager.getInstance();
-
-        ShortcutEqualsListener stopScriptListener = new ShortcutEqualsListener();
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
         stopScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("stopScript").getKeys().valueProperty());
-        stopScriptListener.setName("stopScript");
-        stopScriptListener.setShortcut(new StringPropertyShortcut(stopScriptShortcutStringProperty));
-        stopScriptListener.setAction("PRESS");
-        stopScriptListener.setHandler((e) -> Platform.runLater(this::stopScript));
 
-        ShortcutEqualsListener runScriptListener = new ShortcutEqualsListener();
+        Dependency.getEventManager().addListener("root.stopScript", new ShortcutPressListener(
+                () -> {
+                    Platform.runLater(this::stopScript);
+                },
+                stopScriptShortcutStringProperty
+        ));
+
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
         runScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("runScript").getKeys().valueProperty());
-        runScriptListener.setName("runScript");
-        runScriptListener.setShortcut(new StringPropertyShortcut(runScriptShortcutStringProperty));
-        runScriptListener.setAction("PRESS");
-        runScriptListener.setHandler((e) -> Platform.runLater(this::runScript));
 
-
-        keyListener.addKeyboardListener(stopScriptListener);
-        keyListener.addKeyboardListener(runScriptListener);
+        Dependency.getEventManager().addListener("root.runScript", new ShortcutPressListener(
+                () -> {
+                    Platform.runLater(this::runScript);
+                },
+                runScriptShortcutStringProperty
+        ));
     }
 
 }

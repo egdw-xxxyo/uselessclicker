@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.eventmanager.listener;
 
+import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 
@@ -8,14 +9,26 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class ShortcutPressListener implements KeyListener {
-    private Set<String> pressedKeys =  new TreeSet<>();
+    private Set<String> pressedKeys = new TreeSet<>();
     private Set<String> shortcutKeys = new TreeSet<>();
     private Runnable onFire;
 
-    public ShortcutPressListener(Runnable onFire, String ... keys) {
+    public ShortcutPressListener(Runnable onFire, String... keys) {
         this.onFire = onFire;
         shortcutKeys.addAll(Arrays.asList(keys));
     }
+
+    public ShortcutPressListener(Runnable onFire, StringProperty stringProperty) {
+        this.onFire = onFire;
+        shortcutKeys.clear();
+        shortcutKeys.addAll(Arrays.asList(stringProperty.getValue().split(" ")));
+        
+        stringProperty.addListener((observable, oldValue, newValue) -> {
+            shortcutKeys.clear();
+            shortcutKeys.addAll(Arrays.asList(newValue.split(" ")));
+        });
+    }
+
 
     @Override
     public void keyPressed(KeyPressEvent event) {
