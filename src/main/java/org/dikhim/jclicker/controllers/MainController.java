@@ -18,19 +18,13 @@ import javafx.util.converter.NumberStringConverter;
 import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
-import org.dikhim.jclicker.actions.ShortcutEqualsListener;
-import org.dikhim.jclicker.actions.StringPropertyShortcut;
-import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
-import org.dikhim.jclicker.controllers.utils.recording.EventsRecorder;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
 import org.dikhim.jclicker.eventmanager.listener.ShortcutPressListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.ui.CodeTextArea;
@@ -47,7 +41,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
 
 @SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
 public class MainController implements Initializable {
@@ -350,6 +343,9 @@ public class MainController implements Initializable {
     // image
     @FXML
     private ToggleButton btnInsertSelectImage;
+    
+    @FXML
+    private ToggleButton btnInsertSelectArea;
 
     // Combined
     @FXML
@@ -466,6 +462,9 @@ public class MainController implements Initializable {
 
         eventsRecorder.bind(btnInsertSelectImage, new ImageRecorder(eventsRecorder::puImage));
         nodes.add(btnInsertSelectImage);
+
+        eventsRecorder.bind(btnInsertSelectArea, new AreaRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertSelectArea);
 
         // combined
 

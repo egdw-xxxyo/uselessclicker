@@ -248,6 +248,7 @@
                                                         <VBox>
                                                             <children>
                                                                 <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectImage" />
+                                                <ToggleButton fx:id="btnInsertSelectArea" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectArea" />
                                                             </children>
                                                         </VBox>
                                                     </content>
