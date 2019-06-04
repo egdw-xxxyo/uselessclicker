@@ -11,7 +11,6 @@ import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
 import org.dikhim.jclicker.eventmanager.listener.MouseListener;
 import org.dikhim.jclicker.jsengine.clickauto.EventsConverter;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CombinedCodeGenerator;
-import org.dikhim.jclicker.jsengine.clickauto.generators.CombinedObjectOldCodeGenerator;
 
 import java.util.function.Consumer;
 

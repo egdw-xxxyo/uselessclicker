@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class SimpleCodeGenerator implements CodeGenerator {
     private static final int MIN_LINE_SIZE = 50;
@@ -126,5 +127,10 @@ public class SimpleCodeGenerator implements CodeGenerator {
     @Override
     public int getLineSize() {
         return lineSize;
+    }
+
+    @Override
+    public List<String> getMethodNames() {
+        return methods.stream().map(Method::getName).collect(Collectors.toList());
     }
 }

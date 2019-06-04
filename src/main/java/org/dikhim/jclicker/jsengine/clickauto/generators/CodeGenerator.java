@@ -1,5 +1,7 @@
 package org.dikhim.jclicker.jsengine.clickauto.generators;
 
+import java.util.List;
+
 public interface CodeGenerator {
     int getLineSize();
 
@@ -23,4 +25,6 @@ public interface CodeGenerator {
         sb.append("');\n");
         return sb.toString();
     }
+
+    List<String> getMethodNames();
 }

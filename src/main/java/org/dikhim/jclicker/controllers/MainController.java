@@ -53,17 +53,6 @@ public class MainController implements Initializable {
     private Clicker application = Clicker.getApplication();
 
     private MainApplication mainApplication = Clicker.getApplication().getMainApplication();
-    private Preferences preferences = Preferences.userRoot().node(getClass().getName());
-
-    private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-    private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-
-    private int lineSize = 60;
-    private KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator(lineSize);
-    private MouseObjectOldCodeGenerator mouseObjectCodeGenerator = new MouseObjectOldCodeGenerator(lineSize);
-    private SystemObjectOldCodeGenerator systemObjectCodeGenerator = new SystemObjectOldCodeGenerator(lineSize);
-    private ClipboardObjectOldCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectOldCodeGenerator(lineSize);
-    private CombinedObjectOldCodeGenerator combinedObjectCodeGenerator = new CombinedObjectOldCodeGenerator(lineSize);
 
     private EventsRecorder eventsRecorder;
     private MainConfiguration config;

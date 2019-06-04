@@ -18,13 +18,14 @@ public class TemplateButtonGenerator {
 
     private int lineSize;
     private SourcePropertyFile properties;
-    private KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator;
-    private MouseObjectOldCodeGenerator mouseObjectCodeGenerator;
-    private SystemObjectOldCodeGenerator systemObjectCodeGenerator;
-    private ScreenObjectOldCodeGenerator screenObjectCodeGenerator;
-    private CombinedObjectOldCodeGenerator combinedObjectCodeGenerator;
-    private ClipboardObjectOldCodeGenerator clipboardObjectCodeGenerator;
-    private CreateObjectOldCodeGenerator createObjectCodeGenerator;
+    private KeyboardCodeGenerator keyboardCodeGenerator;
+    private MouseCodeGenerator mouseCodeGenerator;
+    private SystemCodeGenerator systemCodeGenerator;
+    private ScreenCodeGenerator screenCodeGenerator;
+    private CombinedCodeGenerator combinedCodeGenerator;
+    private ClipboardCodeGenerator clipboardCodeGenerator;
+    private CreateCodeGenerator createCodeGenerator;
+    
     private List<String> styleClasses = new ArrayList<>();
 
     private Consumer<MouseEvent> onMouseEntered;
@@ -65,41 +66,42 @@ public class TemplateButtonGenerator {
     }
 
     public TemplateButtonGenerator build() {
-        keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator(lineSize);
-        mouseObjectCodeGenerator = new MouseObjectOldCodeGenerator(lineSize);
-        systemObjectCodeGenerator = new SystemObjectOldCodeGenerator(lineSize);
-        screenObjectCodeGenerator = new ScreenObjectOldCodeGenerator(lineSize);
-        clipboardObjectCodeGenerator = new ClipboardObjectOldCodeGenerator(lineSize);
-        combinedObjectCodeGenerator = new CombinedObjectOldCodeGenerator(lineSize);
-        createObjectCodeGenerator = new CreateObjectOldCodeGenerator(lineSize);
+        
+        keyboardCodeGenerator = new KeyboardCodeGenerator(lineSize);
+        mouseCodeGenerator = new MouseCodeGenerator(lineSize);
+        systemCodeGenerator = new SystemCodeGenerator(lineSize);
+        screenCodeGenerator = new ScreenCodeGenerator(lineSize);
+        clipboardCodeGenerator = new ClipboardCodeGenerator(lineSize);
+        combinedCodeGenerator = new CombinedCodeGenerator(lineSize);
+        createCodeGenerator = new CreateCodeGenerator(lineSize);
         return this;
     }
 
     public List<Button> getButtonListForKeyboardObject() {
-        return createButtons("key", keyboardObjectCodeGenerator.getMethodNames());
+        return createButtons("key", keyboardCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForMouseObject() {
-        return createButtons("mouse", mouseObjectCodeGenerator.getMethodNames());
+        return createButtons("mouse", mouseCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForSystemObject() {
-        return createButtons("system", systemObjectCodeGenerator.getMethodNames());
+        return createButtons("system", systemCodeGenerator.getMethodNames());
     }
     
     public List<Button> getButtonListForScreenObject() {
-        return createButtons("screen", screenObjectCodeGenerator.getMethodNames());
+        return createButtons("screen", screenCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForClipboardObject() {
-        return createButtons("clipboard", clipboardObjectCodeGenerator.getMethodNames());
+        return createButtons("clipboard", clipboardCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForCombinedObject() {
-        return createButtons("combined", combinedObjectCodeGenerator.getMethodNames());
+        return createButtons("combined", combinedCodeGenerator.getMethodNames());
     }
     public List<Button> getButtonListForCreateObject() {
-        return createButtons("create", createObjectCodeGenerator.getMethodNames());
+        return createButtons("create", createCodeGenerator.getMethodNames());
     }
 
     public List<Button> getButtonListForLanguage() {

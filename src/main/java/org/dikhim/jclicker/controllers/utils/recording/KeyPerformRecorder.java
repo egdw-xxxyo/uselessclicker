@@ -3,7 +3,8 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectOldCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -16,22 +17,21 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
         super(onRecorded);
     }
 
+    private CodeGenerator codeGenerator = new KeyboardCodeGenerator();
+    
     @Override
     public void onStart() {
         startRecording();
         addListener("recording.key.perform", new KeyListener() {
-            KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator();
 
             @Override
             public void keyPressed(KeyPressEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
-                putString(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("perform",event.getKey(), "PRESS"));
             }
 
             @Override
             public void keyReleased(KeyReleaseEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
-                putString(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("perform",event.getKey(), "RELEASE"));
             }
         });
     }
@@ -41,5 +41,4 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
         super.onStop();
         stopRecording();
     }
-
 }
