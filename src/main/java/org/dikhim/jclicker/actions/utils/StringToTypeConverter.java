@@ -140,7 +140,6 @@ public class StringToTypeConverter {
     private void pressShift() {
         if (!isShiftPressed()) {
             setShiftPressed(true);
-            System.out.println("press:shift");
 
             actions.add(new KeyboardPressAction("SHIFT"));
         }
@@ -149,7 +148,6 @@ public class StringToTypeConverter {
     private void releaseShift() {
         if (isShiftPressed()) {
             setShiftPressed(false);
-            System.out.println("release:shift");
             actions.add(new KeyboardReleaseAction("SHIFT"));
         }
     }
@@ -166,7 +164,6 @@ public class StringToTypeConverter {
                 keyName = Character.toString(c);
             }
         }
-        System.out.println("type:"+keyName);
         actions.add(new KeyboardPressAction(keyName));
         actions.add(new KeyboardReleaseAction(keyName));
     }

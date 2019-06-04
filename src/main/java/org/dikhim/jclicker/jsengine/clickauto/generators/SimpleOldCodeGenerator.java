@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public abstract class UniversalCodeGenerator implements CodeGenerator {
+public abstract class SimpleOldCodeGenerator implements OldCodeGenerator {
     private String objectName;
     private int lineSize;
     private StringBuilder sb = new StringBuilder();
@@ -15,7 +15,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
 
     private final int MIN_LINE_SIZE = 50;
 
-    UniversalCodeGenerator(String objectName, int lineSize, Class c) {
+    SimpleOldCodeGenerator(String objectName, int lineSize, Class c) {
         this.objectName = objectName;
         setLineSize(lineSize);
         methods.addAll(Arrays.asList(c.getDeclaredMethods()));
@@ -24,7 +24,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
         }
     }
 
-    UniversalCodeGenerator(String objectName, Class c) {
+    SimpleOldCodeGenerator(String objectName, Class c) {
         this.objectName = objectName;
         methods.addAll(Arrays.asList(c.getDeclaredMethods()));
         for(Class<?> inf: c.getInterfaces()){
@@ -40,7 +40,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
      * @param str a string.
      * @return a reference to this object
      */
-    protected UniversalCodeGenerator append(String str) {
+    protected SimpleOldCodeGenerator append(String str) {
         sb.append("'").append(str).append("'");
         return this;
     }
@@ -51,7 +51,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
      * @param i an int.
      * @return a reference to this object
      */
-    protected UniversalCodeGenerator append(int i) {
+    protected SimpleOldCodeGenerator append(int i) {
         sb.append(i);
         return this;
     }
@@ -62,7 +62,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
      * @param f a float.
      * @return a reference to this object
      */
-    protected UniversalCodeGenerator append(float f) {
+    protected SimpleOldCodeGenerator append(float f) {
         sb.append(f);
         return this;
     }
@@ -72,7 +72,7 @@ public abstract class UniversalCodeGenerator implements CodeGenerator {
      * @param f a double.
      * @return a reference to this object
      */
-    protected UniversalCodeGenerator append(double f) {
+    protected SimpleOldCodeGenerator append(double f) {
         sb.append(f);
         return this;
     }

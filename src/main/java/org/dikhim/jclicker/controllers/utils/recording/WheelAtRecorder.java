@@ -3,36 +3,35 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
 import org.dikhim.jclicker.eventmanager.listener.MouseWheelListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
 import java.util.function.Consumer;
 
 /**
  * mouse.wheelAt('DOWN',3,562,823);
  */
-public class WheelAtRecorder extends SimpleMouseRecorder {
+public class WheelAtRecorder extends SimpleMouseRecorder implements LupeRequired {
     public WheelAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
+    private CodeGenerator codeGenerator = new MouseCodeGenerator();
     @Override
     public void onStart() {
         super.onStart();
         addListener("recording.mouse.press", new MouseWheelListener() {
-            MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
-                if (!isControlPressed()) return;
-                codeGenerator.wheelAt("UP", event.getAmount(), event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                if (!isRecording()) return;
+                putString(codeGenerator.forMethod("wheelAt","UP", event.getAmount(), event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
-                if (!isControlPressed()) return;
-                codeGenerator.wheelAt("DOWN", event.getAmount(), event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                if (!isRecording()) return;
+                putString(codeGenerator.forMethod("wheelAt","DOWN", event.getAmount(), event.getX(), event.getY()));
             }
         });
     }

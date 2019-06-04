@@ -18,13 +18,13 @@ public class TemplateButtonGenerator {
 
     private int lineSize;
     private SourcePropertyFile properties;
-    private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator;
-    private MouseObjectCodeGenerator mouseObjectCodeGenerator;
-    private SystemObjectCodeGenerator systemObjectCodeGenerator;
-    private ScreenObjectCodeGenerator screenObjectCodeGenerator;
-    private CombinedObjectCodeGenerator combinedObjectCodeGenerator;
-    private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator;
-    private CreateObjectCodeGenerator createObjectCodeGenerator;
+    private KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator;
+    private MouseObjectOldCodeGenerator mouseObjectCodeGenerator;
+    private SystemObjectOldCodeGenerator systemObjectCodeGenerator;
+    private ScreenObjectOldCodeGenerator screenObjectCodeGenerator;
+    private CombinedObjectOldCodeGenerator combinedObjectCodeGenerator;
+    private ClipboardObjectOldCodeGenerator clipboardObjectCodeGenerator;
+    private CreateObjectOldCodeGenerator createObjectCodeGenerator;
     private List<String> styleClasses = new ArrayList<>();
 
     private Consumer<MouseEvent> onMouseEntered;
@@ -65,13 +65,13 @@ public class TemplateButtonGenerator {
     }
 
     public TemplateButtonGenerator build() {
-        keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
-        mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
-        systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
-        screenObjectCodeGenerator = new ScreenObjectCodeGenerator(lineSize);
-        clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
-        combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
-        createObjectCodeGenerator = new CreateObjectCodeGenerator(lineSize);
+        keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator(lineSize);
+        mouseObjectCodeGenerator = new MouseObjectOldCodeGenerator(lineSize);
+        systemObjectCodeGenerator = new SystemObjectOldCodeGenerator(lineSize);
+        screenObjectCodeGenerator = new ScreenObjectOldCodeGenerator(lineSize);
+        clipboardObjectCodeGenerator = new ClipboardObjectOldCodeGenerator(lineSize);
+        combinedObjectCodeGenerator = new CombinedObjectOldCodeGenerator(lineSize);
+        createObjectCodeGenerator = new CreateObjectOldCodeGenerator(lineSize);
         return this;
     }
 

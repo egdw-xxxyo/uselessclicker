@@ -47,7 +47,6 @@ public class SettingsController implements Initializable {
 
             rightPane.setContent(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -62,7 +61,6 @@ public class SettingsController implements Initializable {
 
             rightPane.setContent(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

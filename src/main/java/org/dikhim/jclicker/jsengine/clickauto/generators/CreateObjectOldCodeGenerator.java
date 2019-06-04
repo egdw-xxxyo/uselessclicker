@@ -5,17 +5,17 @@ import org.dikhim.jclicker.jsengine.clickauto.objects.CreateObject;
 
 import java.awt.*;
 
-public class CreateObjectCodeGenerator extends SimpleCodeGenerator implements CreateObject {
-    public CreateObjectCodeGenerator(int lineSize) {
+public class CreateObjectOldCodeGenerator extends SimpleOldCodeGenerator implements CreateObject {
+    public CreateObjectOldCodeGenerator(int lineSize) {
         super("create", lineSize, CreateObject.class);
     }
 
-    public CreateObjectCodeGenerator() {
+    public CreateObjectOldCodeGenerator() {
         super("create", CreateObject.class);
     }
 
     @Override
-    protected SimpleCodeGenerator append(String str) {
+    protected SimpleOldCodeGenerator append(String str) {
         getSb().append(str);
         return this;
     }

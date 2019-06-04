@@ -2,12 +2,12 @@ package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import org.dikhim.jclicker.jsengine.clickauto.objects.CombinedObject;
 
-public class CombinedObjectCodeGenerator extends SimpleCodeGenerator implements CombinedObject {
-    public CombinedObjectCodeGenerator(int lineSize) {
+public class CombinedObjectOldCodeGenerator extends SimpleOldCodeGenerator implements CombinedObject {
+    public CombinedObjectOldCodeGenerator(int lineSize) {
         super("combined", lineSize, CombinedObject.class);
     }
 
-    public CombinedObjectCodeGenerator() {
+    public CombinedObjectOldCodeGenerator() {
         super("combined", CombinedObject.class);
     }
 

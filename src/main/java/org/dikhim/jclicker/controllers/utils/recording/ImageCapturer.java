@@ -1,6 +1,5 @@
-package org.dikhim.jclicker.controllers.utils;
+package org.dikhim.jclicker.controllers.utils.recording;
 
-import javafx.application.Platform;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.util.RotatableSelector;
 

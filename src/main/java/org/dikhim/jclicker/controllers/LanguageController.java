@@ -64,8 +64,5 @@ public class LanguageController {
                 return null;
             }
         });
-
-
-        System.out.println(localization.getApplicationLanguage().get());
     }
 }

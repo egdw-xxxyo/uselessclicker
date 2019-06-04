@@ -14,6 +14,7 @@ import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Converters;
+import org.dikhim.jclicker.util.Out;
 
 
 public class HttpServerController {
@@ -57,7 +58,7 @@ public class HttpServerController {
 
 
     public void print(String text) {
-        System.out.println(text);
+        
     }
 
     private void bindConfig() {

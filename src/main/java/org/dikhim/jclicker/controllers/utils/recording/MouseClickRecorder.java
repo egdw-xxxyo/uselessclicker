@@ -5,7 +5,9 @@ import org.dikhim.jclicker.eventmanager.event.MouseButtonEvent;
 import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.MouseButtonListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectOldCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -18,29 +20,29 @@ public class MouseClickRecorder extends SimpleMouseRecorder implements MouseReco
         super(onRecorded);
     }
 
+    private CodeGenerator mouseCodeGenerator = new MouseCodeGenerator();
+
     @Override
     public void onStart() {
         super.onStart();
         EventLogger eventLog = new EventLogger(2);
-        MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();
-        addListener("recording.key.performWithDelays", new MouseButtonListener() {
+        addListener("recording.mouse.click", new MouseButtonListener() {
             @Override
             public void buttonPressed(MousePressEvent event) {
-                if (!isControlPressed()) return;
+                if (!isRecording()) return;
                 eventLog.add(event);
             }
 
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
-                if (!isControlPressed() || eventLog.isEmpty()) return;
+                if (!isRecording() || eventLog.isEmpty()) return;
                 MouseButtonEvent lastMouseButtonEvent = eventLog.getLastMouseButtonEvent();
                 if (lastMouseButtonEvent.getButton().equals(event.getButton()) &&
                         lastMouseButtonEvent.getX() >= event.getX() - 2 &&
                         lastMouseButtonEvent.getX() <= event.getX() + 2 &&
                         lastMouseButtonEvent.getY() >= event.getY() - 2 &&
                         lastMouseButtonEvent.getY() <= event.getY() + 2) {
-                    mouseObjectCodeGenerator.click(event.getButton());
-                    putString(mouseObjectCodeGenerator.getGeneratedCode());
+                    putString(mouseCodeGenerator.forMethod("click", event.getButton()));
                 }
                 eventLog.clear();
             }

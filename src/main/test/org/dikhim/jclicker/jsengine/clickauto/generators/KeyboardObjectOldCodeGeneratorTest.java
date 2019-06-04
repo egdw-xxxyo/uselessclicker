@@ -9,11 +9,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class KeyboardObjectCodeGeneratorTest {
-    private static KeyboardObjectCodeGenerator generator;
+public class KeyboardObjectOldCodeGeneratorTest {
+    private static KeyboardObjectOldCodeGenerator generator;
     @BeforeClass
     public static void init() {
-        generator = new KeyboardObjectCodeGenerator();
+        generator = new KeyboardObjectOldCodeGenerator();
     }
 
     @Test

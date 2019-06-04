@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.dikhim.jclicker.Dependency;
-import org.dikhim.jclicker.controllers.utils.ImageCapturer;
+import org.dikhim.jclicker.controllers.utils.recording.ImageCapturer;
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.eventmanager.listener.MouseMoveListener;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
@@ -55,8 +55,6 @@ public class LupeImageView extends VBox implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println(this.getParent());
-
         // on change visibility hide/show parent and start/stop recording
         visibleProperty().addListener((observable, oldValue, newValue) -> {
             getParent().visibleProperty().bind(this.visibleProperty());

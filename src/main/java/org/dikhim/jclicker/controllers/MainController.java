@@ -25,7 +25,7 @@ import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
-import org.dikhim.jclicker.controllers.utils.EventsRecorder;
+import org.dikhim.jclicker.controllers.utils.recording.EventsRecorder;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
@@ -59,11 +59,11 @@ public class MainController implements Initializable {
     private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
 
     private int lineSize = 60;
-    private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
-    private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
-    private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
-    private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
-    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
+    private KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator(lineSize);
+    private MouseObjectOldCodeGenerator mouseObjectCodeGenerator = new MouseObjectOldCodeGenerator(lineSize);
+    private SystemObjectOldCodeGenerator systemObjectCodeGenerator = new SystemObjectOldCodeGenerator(lineSize);
+    private ClipboardObjectOldCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectOldCodeGenerator(lineSize);
+    private CombinedObjectOldCodeGenerator combinedObjectCodeGenerator = new CombinedObjectOldCodeGenerator(lineSize);
 
     private EventsRecorder eventsRecorder;
     private MainConfiguration config;
@@ -104,6 +104,7 @@ public class MainController implements Initializable {
         // lupe pane
         LupeImageView lupeImageView = new LupeImageView(resources);
         lupePane.getChildren().addAll(lupeImageView);
+        lupeImageView.visibleProperty().bind(btnLupeStatus.selectedProperty());
 
 
         // events recorder
@@ -111,8 +112,12 @@ public class MainController implements Initializable {
         eventsRecorder.setOutputTextArea(codeTextArea);
 
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
-        lupeImageView.visibleProperty().bind(eventsRecorder.mouseRecordingProperty());
         codeTextArea.activeProperty().bind(eventsRecorder.keyboardRecordingProperty().not());
+
+        btnLupeStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().lupeIsNeededProperty());
+        btnMouseRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeMouseRecordingProperty());
+        btnKeyboardRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeKeyboardRecordingProperty());
+        btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
 
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -151,6 +156,25 @@ public class MainController implements Initializable {
 
         createHotkeys();
     }
+    // status buttons
+    @FXML
+    private ToggleButton btnScriptStatus;
+
+    @FXML
+    private ToggleButton btnActiveRecorderStatus;
+    
+    @FXML
+    private ToggleButton btnLupeStatus;
+
+    @FXML
+    private ToggleButton btnMouseRecordingStatus;
+
+    @FXML
+    private ToggleButton btnKeyboardRecordingStatus;
+
+    @FXML
+    private ToggleButton btnRecordingStatus;
+    
 
     @FXML
     private Button btnNewFile;
@@ -380,9 +404,6 @@ public class MainController implements Initializable {
     @FXML
     ToggleButton btnCombinedMinDistance;
 
-
-    private ToggleGroup recordingToggleGroup = new ToggleGroup();
-
     /**
      * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
      */
@@ -390,89 +411,72 @@ public class MainController implements Initializable {
         List<Node> nodes = new ArrayList<>();
         
         // keyboard
-        btnInsertKeyName.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyName, new KeyNameRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyName);
 
-        btnInsertKeyCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyCode, new KeyPerformRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCode);
 
 
-        btnInsertKeyCodeWithDelay.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyCodeWithDelay, new KeyPerformWithDelaysRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCodeWithDelay);
 
         // mouse basics
-        btnInsertMouseClick.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseClick, new MouseClickRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseClick);
 
-        btnInsertMouseClickAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseClickAt, new MouseClickAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseClickAt);
 
-        btnInsertMouseName.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseName, new MouseNameRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseName);
 
-        btnInsertMouseMoveTo.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseMoveTo, new MouseMoveToRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseMoveTo);
 
-        btnInsertMouseMove.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseMove, new MouseMoveRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseMove);
 
-        btnInsertMousePress.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMousePress, new MousePressRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMousePress);
 
-        btnInsertMousePressAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMousePressAt, new MousePressAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMousePressAt);
 
-        btnInsertMouseRelease.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseRelease, new MouseReleaseRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseRelease);
 
-        btnInsertMouseReleaseAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseReleaseAt, new MouseReleaseAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseReleaseAt);
 
-        btnInsertMouseWheel.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseWheel, new WheelRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseWheel);
 
 
         // mouse press/release
-        btnInsertMouseCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseCode, new MouseButtonWheelAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseCode);
 
-        btnInsertMouseCodeWithDelay.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseCodeWithDelay, new MouseButtonWheelAtWithDelaysRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseCodeWithDelay);
 
-        btnInsertMouseRelativeCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseRelativeCode, new MouseMoveAndRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseRelativeCode);
 
-        recFilePath.onActionProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });
         eventsRecorder.bind(recFilePath, new FilePathRecorder(eventsRecorder::putCode));
         nodes.add(recFilePath);
 
 
         // image
 
-        btnInsertSelectImage.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertSelectImage, new ImageRecorder(eventsRecorder::puImage));
         nodes.add(btnInsertSelectImage);
 
         // combined
 
+        eventsRecorder.bind(btnInsertCombinedLog, new CombinedRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertCombinedLog);
+        
         nodes.add(btnCombinedAbsolutePath);
         nodes.add(btnCombinedDelays);
         nodes.add(btnCombinedDetectStopPoints);
@@ -609,12 +613,6 @@ public class MainController implements Initializable {
     private void hideCodeSample(MouseEvent event) {
         areaCodeSample.setVisible(false);
     }
-
-    @FXML
-    private ToggleButton btnScriptStatus;
-
-    @FXML
-    private ToggleButton btnTogglesStatus;
 
     @FXML
     private void onBtnStatusScript(ActionEvent event) {

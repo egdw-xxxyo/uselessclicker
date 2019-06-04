@@ -15,7 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.dikhim.jclicker.WindowManager;
-import org.dikhim.jclicker.jsengine.clickauto.generators.CreateObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CreateObjectOldCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.objects.CreateObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.UselessCreateObject;
 import org.dikhim.jclicker.ui.util.DoWhilePressed;
@@ -92,7 +92,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         try {
             byte[] data = ImageUtil.getByteArray(croppedImage);
             String encodedData = ZipBase64.encode(data);
-            CreateObjectCodeGenerator createObjectCodeGenerator = new CreateObjectCodeGenerator(120);
+            CreateObjectOldCodeGenerator createObjectCodeGenerator = new CreateObjectOldCodeGenerator(120);
             createObjectCodeGenerator.image(encodedData);
             String resultString = createObjectCodeGenerator.getGeneratedCode();
 

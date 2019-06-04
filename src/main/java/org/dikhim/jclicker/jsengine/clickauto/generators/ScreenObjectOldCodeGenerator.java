@@ -6,8 +6,8 @@ import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import java.awt.*;
 
 
-public class ScreenObjectCodeGenerator extends SimpleCodeGenerator implements ScreenObject {
-    public ScreenObjectCodeGenerator(int lineSize) {
+public class ScreenObjectOldCodeGenerator extends SimpleOldCodeGenerator implements ScreenObject {
+    public ScreenObjectOldCodeGenerator(int lineSize) {
         super("screen", lineSize, ScreenObject.class);
     }
 

@@ -3,13 +3,13 @@ package org.dikhim.jclicker.jsengine.clickauto.generators;
 import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.jsengine.clickauto.objects.SystemObject;
 
-public class SystemObjectCodeGenerator extends SimpleCodeGenerator implements SystemObject {
+public class SystemObjectOldCodeGenerator extends SimpleOldCodeGenerator implements SystemObject {
 
-    public SystemObjectCodeGenerator(int lineSize) {
+    public SystemObjectOldCodeGenerator(int lineSize) {
         super("system", lineSize, SystemObject.class);
     }
 
-    public SystemObjectCodeGenerator() {
+    public SystemObjectOldCodeGenerator() {
         super("system", SystemObject.class);
     }
     

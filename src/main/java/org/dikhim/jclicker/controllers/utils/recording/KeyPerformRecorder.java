@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectOldCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -18,8 +18,9 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
 
     @Override
     public void onStart() {
+        startRecording();
         addListener("recording.key.perform", new KeyListener() {
-            KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator();
+            KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator();
 
             @Override
             public void keyPressed(KeyPressEvent event) {
@@ -34,4 +35,11 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopRecording();
+    }
+
 }

@@ -83,15 +83,15 @@
 }
 
 #menu-mouse-button {
-    -fx-background-image: url("/images/mouse.png");
+    -fx-background-image: url("/images/mouse_32.png");
 }
 
 .menu-button {
-    -fx-graphic: url("/images/mouse.png")
+    -fx-graphic: url("/images/mouse_32.png")
 }
 
 .menu-button-item > .label {
-    -fx-graphic: url("/images/mouse.png")
+    -fx-graphic: url("/images/mouse_32.png")
 }
 
 .script-button {
@@ -224,7 +224,7 @@
 }
 
 .mouse-paste-code-button {
-    -fx-background-image: url("/images/mouse.png");
+    -fx-background-image: url("/images/mouse_32.png");
 }
 
 /*right pane*/
@@ -351,15 +351,14 @@
 
 
 .statusButton{
-    -fx-alignment: center-left;
+    -fx-background-position: center;
+
     -fx-background-radius: 0;
     -fx-background-color: #fff;
     -fx-background-repeat: no-repeat;
     -fx-max-height: 26;
     -fx-min-height: 26;
-    -fx-max-width: 26;
-    -fx-min-width: 26;
-    -fx-background-size: 24px;
+    -fx-background-size: 20px;
 }
 
 
@@ -374,23 +373,36 @@
 .statusButton:selected {
     -fx-background-color: -fx-color-selected;
 }
+.statusButton:disabled{
+    -fx-opacity: 1.0 ;
+}
 
 
 #keyboardStatusButton{
     -fx-background-image: url("../../images/keyboard.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
 }
 
 #mouseStatusButton{
-    -fx-background-image: url("../../images/mouse.png");
+    -fx-background-image: url("../../images/32/mouse2_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
 }
 
 
 #lupeStatusButton{
-    -fx-background-image: url("../../images/lupe_cursor_grey_32.png");
+    -fx-background-image: url("../../images/32/lupe_cursor_grey_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
 }
 
 
 
 #recordingStatusButton{
-    
+    -fx-background-image: url("../../images/32/rec_light_32.png");
+    -fx-background-size: 45 13;
+    -fx-background-position: center;
+    -fx-max-width: 54;
+    -fx-min-width: 54;
 }

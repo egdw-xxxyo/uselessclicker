@@ -19,7 +19,6 @@ public class WebViewObject {
     }
 
     public void hello(String text) {
-        System.out.println("Hello "+text);
     }
 
     public void copy(String text) {

@@ -24,7 +24,6 @@ public class SourcePropertyFile {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Cannot read source prop file");
 		}
 	}
 

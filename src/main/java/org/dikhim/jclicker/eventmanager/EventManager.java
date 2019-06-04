@@ -48,7 +48,6 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
             GlobalScreen.addNativeMouseMotionListener(this);
             GlobalScreen.addNativeMouseWheelListener(this);
         } catch (NativeHookException ignored) {
-            System.out.println("JnativeHooker");
         }finally {
             System.setOut(oldOut);
         }

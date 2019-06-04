@@ -5,7 +5,6 @@ public class StackTraceUtil {
         boolean doNext = false;
         for (StackTraceElement s : e) {
             if (doNext) {
-                System.out.println(s.getMethodName());
                 return;
             }
             doNext = s.getMethodName().equals("getStackTrace");

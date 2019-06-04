@@ -14,7 +14,13 @@ public class KeyNameRecorder extends StringRecorder implements KeyRecorder {
 
     @Override
     public void onStart() {
+        startRecording();
         addListener("recording.key.name", (KeyPressListener) e -> putString(e.getKey() + " "));
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopRecording();
+    }
 }

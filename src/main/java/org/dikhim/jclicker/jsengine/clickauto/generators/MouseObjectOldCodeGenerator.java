@@ -2,13 +2,13 @@ package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import org.dikhim.jclicker.jsengine.clickauto.objects.MouseObject;
 
-public class MouseObjectCodeGenerator extends SimpleCodeGenerator implements MouseObject {
+public class MouseObjectOldCodeGenerator extends SimpleOldCodeGenerator implements MouseObject {
 
-    public MouseObjectCodeGenerator(int lineSize) {
+    public MouseObjectOldCodeGenerator(int lineSize) {
         super("mouse", lineSize, MouseObject.class);
     }
 
-    public MouseObjectCodeGenerator() {
+    public MouseObjectOldCodeGenerator() {
         super("mouse", MouseObject.class);
     }
 

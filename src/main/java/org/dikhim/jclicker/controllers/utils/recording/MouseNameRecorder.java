@@ -16,7 +16,7 @@ public class MouseNameRecorder extends SimpleMouseRecorder {
     public void onStart() {
         super.onStart();
         addListener("recording.mouse.name", (MouseReleaseListener) event -> {
-            if (isControlPressed()) putString(event.getButton() + " ");
+            if (isRecording()) putString(event.getButton() + " ");
         });
     }
 }

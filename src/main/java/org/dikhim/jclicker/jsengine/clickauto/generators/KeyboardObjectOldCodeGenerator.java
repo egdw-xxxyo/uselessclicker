@@ -4,14 +4,14 @@ import org.dikhim.jclicker.jsengine.clickauto.objects.KeyboardObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class KeyboardObjectCodeGenerator extends SimpleCodeGenerator implements KeyboardObject {
-    private static Logger LOGGER = LoggerFactory.getLogger(KeyboardObjectCodeGenerator.class);
+public class KeyboardObjectOldCodeGenerator extends SimpleOldCodeGenerator implements KeyboardObject {
+    private static Logger LOGGER = LoggerFactory.getLogger(KeyboardObjectOldCodeGenerator.class);
 
-    public KeyboardObjectCodeGenerator(int lineSize) {
+    public KeyboardObjectOldCodeGenerator(int lineSize) {
         super("key", lineSize, KeyboardObject.class);
     }
 
-    public KeyboardObjectCodeGenerator() {
+    public KeyboardObjectOldCodeGenerator() {
         super("key", KeyboardObject.class);
     }
 

@@ -4,8 +4,8 @@ import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
-import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectOldCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.SystemObjectOldCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -22,9 +22,10 @@ public class KeyPerformWithDelaysRecorder extends StringRecorder implements KeyR
 
     @Override
     public void onStart() {
+        startRecording();
         EventLogger eventLog = new EventLogger(2);
-        KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator();
-        SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator();
+        KeyboardObjectOldCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectOldCodeGenerator();
+        SystemObjectOldCodeGenerator systemObjectCodeGenerator = new SystemObjectOldCodeGenerator();
         addListener("recording.key.performWithDelays", new KeyListener() {
             String code;
 
@@ -57,4 +58,12 @@ public class KeyPerformWithDelaysRecorder extends StringRecorder implements KeyR
             }
         });
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopRecording();
+    }
+    
+    
 }

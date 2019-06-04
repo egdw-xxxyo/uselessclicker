@@ -2,13 +2,13 @@ package org.dikhim.jclicker.jsengine.clickauto.generators;
 
 import org.dikhim.jclicker.jsengine.clickauto.objects.ClipboardObject;
 
-public class ClipboardObjectCodeGenerator extends SimpleCodeGenerator implements ClipboardObject {
+public class ClipboardObjectOldCodeGenerator extends SimpleOldCodeGenerator implements ClipboardObject {
 
-    public ClipboardObjectCodeGenerator(int lineSize) {
+    public ClipboardObjectOldCodeGenerator(int lineSize) {
         super("clipboard", lineSize, ClipboardObject.class);
     }
 
-    public ClipboardObjectCodeGenerator() {
+    public ClipboardObjectOldCodeGenerator() {
         super("clipboard", ClipboardObject.class);
     }
 

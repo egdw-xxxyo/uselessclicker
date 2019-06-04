@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
-import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
 import java.awt.*;
 import java.util.function.Consumer;
@@ -9,24 +9,28 @@ import java.util.function.Consumer;
 /**
  * mouse.move(153,-1);
  */
-public class MouseMoveRecorder extends StringRecorder implements MouseRecorder {
+public class MouseMoveRecorder extends SimpleMouseRecorder implements LupeRequired {
     public MouseMoveRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
     private Point point1;
 
+    CodeGenerator codeGenerator = new MouseCodeGenerator();
+    
     @Override
     public void onStart() {
-        MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator();
-        addListener("recording.mouse.controlKey", new KeyPressReleaseListener("CONTROL",
-                (event) -> point1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y),
-                (event) -> {
-                    Point point2 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+        super.onStart();
+    }
 
-                    mouseObjectCodeGenerator.move(point2.x - point1.x, point2.y - point1.y);
-                    putString(mouseObjectCodeGenerator.getGeneratedCode());
-                }));
+    @Override
+    protected void onRecordingStarted() {
+        point1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+    }
 
+    @Override
+    protected void onRecordingStopped() {
+        Point point2 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+        putString(codeGenerator.forMethod("move", point2.x - point1.x, point2.y - point1.y));
     }
 }
