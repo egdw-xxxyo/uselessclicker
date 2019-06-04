@@ -2,10 +2,14 @@ package org.dikhim.jclicker.controllers.utils.recording;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
@@ -166,12 +170,51 @@ public class EventsRecorder {
         toggleButton.setToggleGroup(recordingToggleGroup);
         toggleButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
+                activeRecorderToggle.setUserData(toggleButton);
+                activeRecorderToggle.setSelected(true);
+
                 recordingStatus.setActiveRecorder(recorder);
                 recorder.start();
             } else {
+                activeRecorderToggle.setSelected(false);
+                
                 recorder.stop();
                 recordingStatus.removeActiveRecorder();
             }
+        });
+    }
+
+    private String getToggleButtonPath(Object button) {
+        String out = "";
+        Node n = (Node) button;
+        if (button instanceof Button) {
+            out = ((Button) button).getText();
+
+        } else if (button instanceof ToggleButton) {
+            out = ((ToggleButton) button).getText();
+        }
+
+        do {
+            if (n instanceof TitledPane) {
+                out = ((TitledPane) n).getText() + "> " + out;
+            }
+            n = n.getParent();
+        } while ((!(n instanceof AnchorPane)) && (n != null));
+        return out;
+    }
+    
+    private ToggleButton activeRecorderToggle;
+    
+    public void addActiveRecorderToggleButton(ToggleButton toggleButton) {
+        activeRecorderToggle =toggleButton;
+        toggleButton.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            ToggleButton recordingtoggle = (ToggleButton) toggleButton.getUserData();
+            if((recordingtoggle) == null) {
+                toggleButton.setSelected(false);
+                return;
+            }
+            toggleButton.setText(getToggleButtonPath(recordingtoggle));
+            recordingtoggle.setSelected(toggleButton.isSelected());
         });
     }
 

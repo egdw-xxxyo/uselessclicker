@@ -110,6 +110,9 @@ public class MainController implements Initializable {
         btnKeyboardRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeKeyboardRecordingProperty());
         btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
 
+        //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
+                
+        eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
         propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
@@ -489,24 +492,6 @@ public class MainController implements Initializable {
         }
     }
 
-    private String getToggleButtonPath(Object button) {
-        String out = "";
-        Node n = (Node) button;
-        if (button instanceof Button) {
-            out = ((Button) button).getText();
-
-        } else if (button instanceof ToggleButton) {
-            out = ((ToggleButton) button).getText();
-        }
-
-        do {
-            if (n instanceof TitledPane) {
-                out = ((TitledPane) n).getText() + "> " + out;
-            }
-            n = n.getParent();
-        } while ((!(n instanceof AnchorPane)) && (n != null));
-        return out;
-    }
 
     @FXML
     void recFilePath(ActionEvent event) {
@@ -613,21 +598,6 @@ public class MainController implements Initializable {
             runScript();
         } else {
             stopScript();
-        }
-    }
-
-    /**
-     * Invokes by toggle to insert code on main scene
-     *
-     * @param event actionEvent from toggle
-     */
-    @FXML
-    private void onBtnStatusToggles(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.getUserData() == null) {
-            toggle.setSelected(false);
-        } else if (toggle.getUserData() instanceof ToggleButton) {
-            ((ToggleButton) toggle.getUserData()).fire();
         }
     }
 
