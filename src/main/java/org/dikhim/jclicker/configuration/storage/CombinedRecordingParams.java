@@ -1,10 +1,10 @@
-package org.dikhim.jclicker.configuration.newconfig.storage;
+package org.dikhim.jclicker.configuration.storage;
 
 import javafx.beans.property.*;
 
 public class CombinedRecordingParams {
-    private final StringProperty encodingType = new SimpleStringProperty("base64");
-    private final IntegerProperty fixedRate = new SimpleIntegerProperty(30);
+    private final StringProperty encodingType = new SimpleStringProperty("base64-zip");
+    private final IntegerProperty fixedRate = new SimpleIntegerProperty(60);
     private final IntegerProperty minDistance = new SimpleIntegerProperty(10);
     private final IntegerProperty stopDetectionTime = new SimpleIntegerProperty(70);
     private final BooleanProperty includeKeyboard = new SimpleBooleanProperty(true);

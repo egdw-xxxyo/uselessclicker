@@ -1,10 +1,11 @@
-package org.dikhim.jclicker.configuration.newconfig;
+package org.dikhim.jclicker.configuration;
 
-import org.dikhim.jclicker.configuration.newconfig.hotkeys.HotKeys;
-import org.dikhim.jclicker.configuration.newconfig.localization.Localization;
-import org.dikhim.jclicker.configuration.newconfig.property.SimpleConfigElement;
-import org.dikhim.jclicker.configuration.newconfig.servers.Servers;
-import org.dikhim.jclicker.configuration.newconfig.storage.Storage;
+
+import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
+import org.dikhim.jclicker.configuration.localization.Localization;
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.servers.Servers;
+import org.dikhim.jclicker.configuration.storage.Storage;
 
 import java.util.prefs.Preferences;
 
@@ -26,16 +27,22 @@ public class Configuration extends SimpleConfigElement {
     @Override
     public void save() {
         hotKeys.save();
+        servers.save();
+        localization.save();
     }
 
     @Override
     public void resetToDefault() {
         hotKeys.resetToDefault();
+        servers.resetToDefault();
+        localization.resetToDefault();
     }
 
     @Override
     public void resetToSaved() {
         hotKeys.resetToSaved();
+        servers.resetToSaved();
+        localization.resetToSaved();
     }
 
     public HotKeys hotKeys() {

@@ -1,61 +1,28 @@
 package org.dikhim.jclicker.configuration.localization;
 
-import javax.json.JsonObject;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.prefs.Preferences;
-import java.util.stream.Collectors;
 
 public class Languages {
-    private String path;
-    private String name;
+    private final Language english = new Language("en", "English", "English");
+    private final Language russian = new Language("ru", "Russian", "Русский");
 
-    private Preferences preferences;
-    private final List<Language> languages = new ArrayList<>();
-
-    public Languages(JsonObject jsonObject, String path, String name) {
-        this.path = path;
-        this.name = name;
-        preferences = Preferences.userRoot().node(name);
-        loadDefault(jsonObject);
+    public List<Language> list;
+    {
+        Language[] arr = {english, russian};
+        list = Collections.unmodifiableList(Arrays.asList(arr));
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        jsonObject.keySet().forEach(key ->
-                languages.add(new Language(jsonObject.getJsonObject(key), path + "/" + key, key)));
+    public Language english() {
+        return english;
     }
-
-    public void setDefault() {
-        languages.forEach(Language::setDefault);
+    
+    public Language russian() {
+        return russian;
     }
-
-    public void save() {
-        languages.forEach(Language::save);
-    }
-
-    public void loadOrSetDefault() {
-        languages.forEach(Language::loadOrSetDefault);
-    }
-
-    //
-    public String getName() {
-        return name;
-    }
-
-    public List<Language> getLanguageList() {
-        return languages;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public Language getById(String id) {
-        return getLanguageList()
-                .stream()
-                .filter(language -> language.getId().get().equals(id))
-                .limit(1)
-                .collect(Collectors.toList())
-                .get(0);
+    
+    public List<Language> list() {
+        return list;
     }
 }

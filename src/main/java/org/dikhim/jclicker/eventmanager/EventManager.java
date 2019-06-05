@@ -7,6 +7,7 @@ import org.dikhim.jclicker.eventmanager.listener.*;
 import org.dikhim.jclicker.eventmanager.listener.EventListener;
 import org.dikhim.jclicker.eventmanager.utils.KeyCodes;
 import org.dikhim.jclicker.eventmanager.utils.MouseCodes;
+import org.dikhim.jclicker.util.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -47,7 +48,9 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
             GlobalScreen.addNativeMouseListener(this);
             GlobalScreen.addNativeMouseMotionListener(this);
             GlobalScreen.addNativeMouseWheelListener(this);
-        } catch (NativeHookException ignored) {
+        } catch (NativeHookException e) {
+            Out.println("Cannot create keyboard/mouse recording object");
+            Out.println("Recording events won't be available");
         }finally {
             System.setOut(oldOut);
         }

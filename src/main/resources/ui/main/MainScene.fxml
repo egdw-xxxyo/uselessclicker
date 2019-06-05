@@ -110,7 +110,7 @@
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </ToggleButton>
-                    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
+                    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="" HBox.hgrow="SOMETIMES">
                         <font>
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>

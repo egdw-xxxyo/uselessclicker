@@ -4,7 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.dikhim.jclicker.Dependency;
-import org.dikhim.jclicker.configuration.newconfig.hotkeys.HotKeys;
+import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -30,7 +30,7 @@ public class HotkeysController {
 
     @FXML
     void initialize() {
-        HotKeys hotKeys = Dependency.getConfiguration().hotKeys();
+        HotKeys hotKeys = Dependency.getConfig().hotKeys();
         Bindings.bindBidirectional(runScriptTxt.textProperty(), hotKeys.runScript().keysProperty());
         Bindings.bindBidirectional(stopScriptTxt.textProperty(), hotKeys.stopScript().keysProperty());
         Bindings.bindBidirectional(mouseControlTxt.textProperty(), hotKeys.mouseControl().keysProperty());

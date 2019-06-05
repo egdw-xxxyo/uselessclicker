@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.configuration.newconfig.storage;
+package org.dikhim.jclicker.configuration.storage;
 
 import javafx.beans.property.*;
 

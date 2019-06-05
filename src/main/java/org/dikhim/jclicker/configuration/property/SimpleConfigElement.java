@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.configuration.newconfig.property;
+package org.dikhim.jclicker.configuration.property;
 
 import java.util.prefs.Preferences;
 

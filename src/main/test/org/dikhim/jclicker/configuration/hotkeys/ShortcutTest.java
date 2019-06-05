@@ -1,10 +1,10 @@
-package org.dikhim.jclicker.configuration.newconfig.hotkeys;
+package org.dikhim.jclicker.configuration.hotkeys;
 
 import org.junit.Test;
 
 import java.util.prefs.Preferences;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ShortcutTest {
 

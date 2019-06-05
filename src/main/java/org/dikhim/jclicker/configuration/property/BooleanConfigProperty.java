@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.configuration.newconfig.property;
+package org.dikhim.jclicker.configuration.property;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

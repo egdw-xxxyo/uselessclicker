@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class SimpleCodeGenerator implements CodeGenerator {
@@ -29,11 +30,11 @@ public class SimpleCodeGenerator implements CodeGenerator {
 
     @Override
     public String forMethod(String methodName, Object... params) {
-        Optional<Method> method = methods.stream().filter(method1 -> method1.getName().equals(methodName)).findFirst();
-        if (!method.isPresent())
+        List<Method> listOfMethods= methods.stream().filter(method1 -> method1.getName().equals(methodName)).collect(Collectors.toList());
+        if (listOfMethods.size()<1)
             throw new IllegalArgumentException("Given class doesn't contain the specified method");
 
-        if (method.get().getParameterCount() != params.length)
+        if (listOfMethods.stream().noneMatch(method -> method.getParameterCount() == params.length))
             throw new IllegalArgumentException("Given wrong number of parameters");
 
         StringBuilder sb = new StringBuilder();
@@ -131,6 +132,6 @@ public class SimpleCodeGenerator implements CodeGenerator {
 
     @Override
     public List<String> getMethodNames() {
-        return methods.stream().map(Method::getName).collect(Collectors.toList());
+        return methods.stream().map(Method::getName).distinct().collect(Collectors.toList());
     }
 }

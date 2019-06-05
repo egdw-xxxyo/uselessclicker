@@ -1,11 +1,11 @@
-package org.dikhim.jclicker.configuration.newconfig.property;
+package org.dikhim.jclicker.configuration.property;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.prefs.Preferences;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class StringConfigPropertyTest {
     ConfigProperty<String> property;

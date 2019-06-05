@@ -1,8 +1,8 @@
-package org.dikhim.jclicker.configuration.newconfig.servers;
+package org.dikhim.jclicker.configuration.servers;
 
 import javafx.beans.property.IntegerProperty;
-import org.dikhim.jclicker.configuration.newconfig.property.SimpleConfigElement;
-import org.dikhim.jclicker.configuration.newconfig.property.IntegerConfigProperty;
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.property.IntegerConfigProperty;
 
 import java.util.prefs.Preferences;
 

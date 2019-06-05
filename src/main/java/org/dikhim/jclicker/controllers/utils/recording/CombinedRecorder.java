@@ -4,7 +4,7 @@ import org.dikhim.clickauto.jsengine.utils.encoders.ActionEncoder;
 import org.dikhim.clickauto.jsengine.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.configuration.newconfig.storage.CombinedRecordingParams;
+import org.dikhim.jclicker.configuration.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
@@ -30,7 +30,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
     @Override
     public void onStart() {
         combinedCodeGenerator = new CombinedCodeGenerator();
-        control = Dependency.getConfiguration().hotKeys().combinedControl().getKeys();
+        control = Dependency.getConfig().hotKeys().combinedControl().getKeys();
         eventLog = new EventLogger();
         // control button listener. Start on release and stop after press
         addListener("recording.combined.control", new KeyPressReleaseListener(control,
@@ -107,7 +107,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
 
     @Override
     protected void onRecordingStopped() {
-        CombinedRecordingParams params = Dependency.getConfiguration().storage().combinedRecordingParams();
+        CombinedRecordingParams params = Dependency.getConfig().storage().combinedRecordingParams();
         String encodingType = params.getEncodingType();
         ActionEncoder actionEncoder = ActionEncoderFactory.get(encodingType);
         if (params.isIncludeKeyboard()) actionEncoder.addKeys();

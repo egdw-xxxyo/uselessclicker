@@ -4,23 +4,17 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.Dependency;
-import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
 import org.dikhim.jclicker.util.Out;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.InputStream;
 import java.util.function.Consumer;
 
 public class MainApplication {
-    private MainConfiguration config;
 
 
     private StringProperty title = new SimpleStringProperty("");
@@ -44,9 +38,8 @@ public class MainApplication {
         Dependency.setClickAuto(clickAuto);
         bindProperties();
 
-        config = Dependency.getConfig();
-        httpServer = new HttpServer(config.getServers().getServer("httpServer"));
-        socketServer = new SocketServer(config.getServers().getServer("socketServer"));
+        httpServer = new HttpServer();
+        socketServer = new SocketServer();
     }
 
     public void newFile() {
@@ -107,10 +100,6 @@ public class MainApplication {
 
     public StringProperty statusProperty() {
         return status;
-    }
-
-    public MainConfiguration getConfig() {
-        return config;
     }
 
     public HttpServer getHttpServer() {

@@ -19,10 +19,8 @@ import org.dikhim.jclicker.Clicker;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
-import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
-import org.dikhim.jclicker.configuration.newconfig.storage.CombinedRecordingParams;
-import org.dikhim.jclicker.configuration.recordingparams.Combined;
+import org.dikhim.jclicker.configuration.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
 import org.dikhim.jclicker.eventmanager.listener.ShortcutPressListener;
@@ -51,7 +49,6 @@ public class MainController implements Initializable {
     private MainApplication mainApplication = Clicker.getApplication().getMainApplication();
 
     private EventsRecorder eventsRecorder;
-    private MainConfiguration config;
 
 
     private ResourceBundle resources;
@@ -59,7 +56,6 @@ public class MainController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
-        config = mainApplication.getConfig();
         // init text areas
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
@@ -122,7 +118,7 @@ public class MainController implements Initializable {
         StringConverter<Number> stringConverter = Converters.getStringToNumberConvertor();
 
 
-        CombinedRecordingParams combinedRecordingParams = Dependency.getConfiguration().storage().combinedRecordingParams();
+        CombinedRecordingParams combinedRecordingParams = Dependency.getConfig().storage().combinedRecordingParams();
         
         Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combinedRecordingParams.fixedRateProperty(), stringConverter);
         Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combinedRecordingParams.minDistanceProperty(), new NumberStringConverter());
@@ -622,10 +618,10 @@ public class MainController implements Initializable {
 
     private void createHotkeys() {
 
-        HotKeys hotKeys = config.getHotKeys();
+        HotKeys hotKeys = Dependency.getConfig().hotKeys();
 
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
-        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("stopScript").getKeys().valueProperty());
+        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
 
         Dependency.getEventManager().addListener("root.stopScript", new ShortcutPressListener(
                 () -> {
@@ -635,7 +631,7 @@ public class MainController implements Initializable {
         ));
 
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
-        runScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("runScript").getKeys().valueProperty());
+        runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
 
         Dependency.getEventManager().addListener("root.runScript", new ShortcutPressListener(
                 () -> {

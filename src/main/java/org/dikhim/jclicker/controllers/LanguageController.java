@@ -7,8 +7,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.util.StringConverter;
 import org.dikhim.jclicker.Dependency;
-import org.dikhim.jclicker.configuration.newconfig.localization.Language;
-import org.dikhim.jclicker.configuration.newconfig.localization.Localization;
+import org.dikhim.jclicker.configuration.localization.Language;
+import org.dikhim.jclicker.configuration.localization.Localization;
 
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,7 +25,7 @@ public class LanguageController {
 
     @FXML
     void initialize() {
-        Localization localization = Dependency.getConfiguration().localization();
+        Localization localization = Dependency.getConfig().localization();
 
         List<Language> list = localization.languages().list();
         languageChoiceBox.setItems(FXCollections.observableArrayList(list));
