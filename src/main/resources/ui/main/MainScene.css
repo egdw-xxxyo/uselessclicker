@@ -77,23 +77,6 @@
 }
 
 
-/*Menu buttons*/
-#menu-keyboard-button {
-    -fx-background-image: url("/images/keyboard.png");
-}
-
-#menu-mouse-button {
-    -fx-background-image: url("/images/mouse_32.png");
-}
-
-.menu-button {
-    -fx-graphic: url("/images/mouse_32.png")
-}
-
-.menu-button-item > .label {
-    -fx-graphic: url("/images/mouse_32.png")
-}
-
 .script-button {
     -fx-alignment: bottom_center;
     -fx-font-size: 12px;
@@ -122,14 +105,14 @@
     -fx-background-color: -fx-color-selected;
 }
 
-.menu-bar {
-    -fx-background-color: #eaeaea;
-    -fx-border-color: #aaaaaa;
-    -fx-border-width: 0 0 1 0;
-}
-
 .menu-bar .label {
     -fx-text-fill: #444444;
+}
+
+.context-menu {
+    -fx-background-color: #fff;
+    -fx-text-fill: 333;
+    -fx-border-color: #4cae4c;
 }
 
 .menu-item {
@@ -141,7 +124,7 @@
 }
 
 .menu:hover {
-    -fx-background-color: #cccccc;
+    -fx-background-color: #66cc0b;
 }
 
 .menu:pressed {
@@ -164,6 +147,7 @@
     -fx-highlight-fill: #ffdd7F;
     -fx-highlight-text-fill: #777;
 
+    -fx-border-color: #ddd;
 }
 
 .code-text-area:focused {
@@ -172,13 +156,13 @@
     -fx-highlight-fill: #FFCC5F;
     -fx-highlight-text-fill: #333;
 
-    -fx-focus-color: #777;
-
+    -fx-faint-focus-color: #ffefa3;
 }
 
 .code-text-area:disabled {
     -fx-opacity: 1;
     -fx-text-fill: #111;
+    
 
 }
 
@@ -208,23 +192,6 @@
 
     -fx-border-width: 0 1 1 1;
     -fx-border-color: #bbb;
-}
-
-.paste-code-button-label {
-    -fx-alignment: left;
-}
-
-.paste-code-button:selected {
-    -fx-background-color: #FFCC5F;
-    -fx-border-color: #FFCC5F;
-}
-
-.keyboard-paste-code-button {
-    -fx-background-image: url("/images/keyboard.png");
-}
-
-.mouse-paste-code-button {
-    -fx-background-image: url("/images/mouse_32.png");
 }
 
 /*right pane*/

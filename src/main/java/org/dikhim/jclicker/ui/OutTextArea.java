@@ -32,6 +32,7 @@ public class OutTextArea extends TextArea {
             }
         };
         this.setSkin(customContextSkin);
+        getStyleClass().add("code-text-area");
     }
 
     public void addChangeListener(Runnable runnable) {

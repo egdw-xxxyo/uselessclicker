@@ -74,6 +74,7 @@ public class CodeTextArea extends TextArea {
             }
         };
         this.setSkin(customContextSkin);
+        getStyleClass().add("code-text-area");
     }
 
     private void insertTab() {
