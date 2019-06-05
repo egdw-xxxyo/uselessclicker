@@ -105,31 +105,7 @@
     -fx-background-color: -fx-color-selected;
 }
 
-.menu-bar .label {
-    -fx-text-fill: #444444;
-}
 
-.context-menu {
-    -fx-background-color: #fff;
-    -fx-text-fill: 333;
-    -fx-border-color: #4cae4c;
-}
-
-.menu-item {
-    -fx-background-color: #dddddd;
-    -fx-min-height: 50;
-    -fx-max-height: 50;
-    -fx-min-width: 55;
-    -fx-max-width: 45;
-}
-
-.menu:hover {
-    -fx-background-color: #66cc0b;
-}
-
-.menu:pressed {
-    -fx-background-color: #FFCC5F;
-}
 
 /*Hint area*/
 
@@ -373,3 +349,29 @@
     -fx-max-width: 54;
     -fx-min-width: 54;
 }
+
+.out-tab{
+    -fx-background-color: #aaa, #ddd;
+    -fx-background-radius: 2 2 0 0;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-focus-size: 0 ;
+}
+.out-tab:hover{
+    -fx-background-color:#aaa, #eee;
+
+}
+
+.out-tab:selected{
+    -fx-background-color: #aaa, #fff;
+    
+}
+
+.out-tab .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+

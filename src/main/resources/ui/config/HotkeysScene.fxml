@@ -32,7 +32,7 @@
             <TextField fx:id="runScriptTxt" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
-                  <String fx:value="white-element" />
+                  <String fx:value="text-edit" />
                </styleClass>
                <GridPane.margin>
                   <Insets />
@@ -40,7 +40,7 @@
             <TextField fx:id="stopScriptTxt" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
-                  <String fx:value="white-element" />
+                  <String fx:value="text-edit" />
                </styleClass></TextField>
          </children>
       </GridPane>
@@ -61,7 +61,7 @@
             <TextField fx:id="mouseControlTxt" GridPane.columnIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
-                  <String fx:value="white-element" />
+                  <String fx:value="text-edit" />
                </styleClass></TextField>
          </children>
       </GridPane>
@@ -82,7 +82,7 @@
             <TextField fx:id="combinedControlTxt" GridPane.columnIndex="1">
                <styleClass>
                   <String fx:value="hotkeys-txt" />
-                  <String fx:value="white-element" />
+                  <String fx:value="text-edit" />
                </styleClass></TextField>
          </children>
       </GridPane>
