@@ -4,7 +4,7 @@ import org.dikhim.clickauto.jsengine.utils.encoders.ActionEncoder;
 import org.dikhim.clickauto.jsengine.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.configuration.recordingparams.Combined;
+import org.dikhim.jclicker.configuration.newconfig.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.eventmanager.event.*;
 import org.dikhim.jclicker.eventmanager.listener.KeyListener;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
@@ -23,7 +23,6 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
     }
 
     private CombinedCodeGenerator combinedCodeGenerator;
-    private Combined combinedConfig;
     private String control;
     private EventLogger eventLog;
     private boolean ignoreNextKeyRelease = false;
@@ -31,8 +30,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
     @Override
     public void onStart() {
         combinedCodeGenerator = new CombinedCodeGenerator();
-        combinedConfig = Dependency.getConfig().getRecordingParams().getCombined();
-        control = combinedConfig.getControlKey();
+        control = Dependency.getConfiguration().hotKeys().combinedControl().getKeys();
         eventLog = new EventLogger();
         // control button listener. Start on release and stop after press
         addListener("recording.combined.control", new KeyPressReleaseListener(control,
@@ -109,19 +107,20 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
 
     @Override
     protected void onRecordingStopped() {
-        String encodingType = combinedConfig.getEncodingType();
+        CombinedRecordingParams params = Dependency.getConfiguration().storage().combinedRecordingParams();
+        String encodingType = params.getEncodingType();
         ActionEncoder actionEncoder = ActionEncoderFactory.get(encodingType);
-        if (combinedConfig.isKeysIncluded()) actionEncoder.addKeys();
-        if (combinedConfig.isMouseButtonsIncluded()) actionEncoder.addMouseButtons();
-        if (combinedConfig.isMouseWheelIncluded()) actionEncoder.addMouseWheel();
-        if (combinedConfig.isAbsolute()) actionEncoder.absolute();
-        if (combinedConfig.isRelative()) actionEncoder.relative();
-        if (combinedConfig.isDelaysIncluded()) actionEncoder.addDelays();
-        if (combinedConfig.isFixedRateOn()) actionEncoder.fixedRate(combinedConfig.getFixedRate());
-        if (combinedConfig.isMinDistanceOn())
-            actionEncoder.minDistance(combinedConfig.getMinDistance());
-        if (combinedConfig.isStopDetectionOn())
-            actionEncoder.detectStopPoints(combinedConfig.getStopDetectionTime());
+        if (params.isIncludeKeyboard()) actionEncoder.addKeys();
+        if (params.isIncludeMouseButtons()) actionEncoder.addMouseButtons();
+        if (params.isIncludeMouseWheel()) actionEncoder.addMouseWheel();
+        if (params.isAbsolute()) actionEncoder.absolute();
+        if (params.isRelative()) actionEncoder.relative();
+        if (params.isIncludeDelays()) actionEncoder.addDelays();
+        if (params.isFixedRateOn()) actionEncoder.fixedRate(params.getFixedRate());
+        if (params.isMinDistanceOn())
+            actionEncoder.minDistance(params.getMinDistance());
+        if (params.isStopDetectionOn())
+            actionEncoder.detectStopPoints(params.getStopDetectionTime());
 
         String rawCode = actionEncoder.encode(EventsConverter.convertUselessEventToClickauto(eventLog.getEventLog()));
 

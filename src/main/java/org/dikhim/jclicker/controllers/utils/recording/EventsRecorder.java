@@ -2,19 +2,16 @@ package org.dikhim.jclicker.controllers.utils.recording;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.scene.Node;
-import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
-import org.dikhim.jclicker.configuration.MainConfiguration;
-import org.dikhim.jclicker.configuration.recordingparams.RecordingParams;
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.UselessScreenObject;
@@ -32,9 +29,6 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("ALL")
 public class EventsRecorder {
-    private RecordingParams recordingParams;
-    private MainConfiguration mainConfiguration;
-
     private CodeTextArea outputTextArea;
 
     private BooleanProperty recorderSelected = new SimpleBooleanProperty(false);
@@ -56,9 +50,7 @@ public class EventsRecorder {
 
     private Map<String, Recorder> recoders = new HashMap<>();
 
-    public EventsRecorder(MainConfiguration mainConfiguration) {
-        this.mainConfiguration = mainConfiguration;
-        recordingParams = mainConfiguration.getRecordingParams();
+    public EventsRecorder() {
     }
 
     // miscellaneous

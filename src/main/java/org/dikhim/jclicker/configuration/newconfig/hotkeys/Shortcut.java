@@ -1,13 +1,13 @@
 package org.dikhim.jclicker.configuration.newconfig.hotkeys;
 
 import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.configuration.newconfig.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.newconfig.property.SimpleConfigElement;
 import org.dikhim.jclicker.configuration.newconfig.property.StringConfigProperty;
 
 import java.util.prefs.Preferences;
 
 public class Shortcut extends SimpleConfigElement {
-    private StringConfigProperty keys;
+    private final StringConfigProperty keys;
     private final String category;
 
     public Shortcut(String name, String defaultKeys, String category, Preferences preferences) {

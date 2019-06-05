@@ -22,4 +22,9 @@ public class Language {
     public String nativeName() {
         return nativeName;
     }
+
+    @Override
+    public String toString() {
+        return nativeName;
+    }
 }

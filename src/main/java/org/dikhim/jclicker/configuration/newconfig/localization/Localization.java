@@ -1,15 +1,15 @@
 package org.dikhim.jclicker.configuration.newconfig.localization;
 
 import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.configuration.newconfig.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.newconfig.property.SimpleConfigElement;
 import org.dikhim.jclicker.configuration.newconfig.property.StringConfigProperty;
 
 import java.util.prefs.Preferences;
 
 public class Localization extends SimpleConfigElement {
-    private Languages languages = new Languages();
+    private final Languages languages = new Languages();
 
-    private StringConfigProperty applicationLanguageId;
+    private final StringConfigProperty applicationLanguageId;
 
     public Localization(String name, Preferences preferences) {
         super(name, preferences);
@@ -32,7 +32,7 @@ public class Localization extends SimpleConfigElement {
         applicationLanguageId.resetToSaved();
     }
 
-    public Languages getLanguages() {
+    public Languages languages() {
         return languages;
     }
 

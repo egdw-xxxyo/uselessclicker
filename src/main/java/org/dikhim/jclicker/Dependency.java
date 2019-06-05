@@ -4,6 +4,7 @@ import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.configuration.newconfig.Configuration;
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.global.Mouse;
 
@@ -18,6 +19,7 @@ public class Dependency {
     private static volatile Robot robot;
     private static final Mouse mouse;
     private static final MainConfiguration config;
+    private static final Configuration configuration;
 
     private static volatile EventManager eventManager;
     static {
@@ -26,6 +28,7 @@ public class Dependency {
         JsonReader jsonReader = Json.createReader(is);
         JsonObject jsonObject = jsonReader.readObject();
         config = new MainConfiguration(jsonObject, "main");
+        configuration = new Configuration();
     }
     public static void setClickAuto(ClickAuto clickAuto) {
         Dependency.clickAuto = clickAuto;
@@ -59,5 +62,9 @@ public class Dependency {
 
     public static MainConfiguration getConfig() {
         return config;
+    }
+    
+    public static Configuration getConfiguration() {
+        return configuration;
     }
 }

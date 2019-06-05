@@ -21,6 +21,7 @@ import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
 import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
+import org.dikhim.jclicker.configuration.newconfig.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.configuration.recordingparams.Combined;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
@@ -92,7 +93,7 @@ public class MainController implements Initializable {
 
 
         // events recorder
-        eventsRecorder = new EventsRecorder(config);
+        eventsRecorder = new EventsRecorder();
         eventsRecorder.setOutputTextArea(codeTextArea);
 
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
@@ -121,25 +122,26 @@ public class MainController implements Initializable {
         StringConverter<Number> stringConverter = Converters.getStringToNumberConvertor();
 
 
-        Combined combined = config.getRecordingParams().getCombined();
-        Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combined.getFixedRateValue().valueProperty(), stringConverter);
-        Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combined.getMinDistanceValue().valueProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combined.getStopDetectionTimeValue().valueProperty(), new NumberStringConverter());
+        CombinedRecordingParams combinedRecordingParams = Dependency.getConfiguration().storage().combinedRecordingParams();
+        
+        Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combinedRecordingParams.fixedRateProperty(), stringConverter);
+        Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combinedRecordingParams.minDistanceProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combinedRecordingParams.stopDetectionTimeProperty(), new NumberStringConverter());
 
-        Bindings.bindBidirectional(btnCombinedDelays.selectedProperty(), combined.getIncludeDelaysValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedKeys.selectedProperty(), combined.getIncludeKeyboardValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMouseButtons.selectedProperty(), combined.getIncludeMouseButtonsValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMouseWheel.selectedProperty(), combined.getIncludeMouseWheelValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedAbsolutePath.selectedProperty(), combined.getAbsoluteValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedRelativePath.selectedProperty(), combined.getRelative().valueProperty());
+        Bindings.bindBidirectional(btnCombinedDelays.selectedProperty(), combinedRecordingParams.includeDelaysProperty());
+        Bindings.bindBidirectional(btnCombinedKeys.selectedProperty(), combinedRecordingParams.includeKeyboardProperty());
+        Bindings.bindBidirectional(btnCombinedMouseButtons.selectedProperty(), combinedRecordingParams.includeMouseButtonsProperty());
+        Bindings.bindBidirectional(btnCombinedMouseWheel.selectedProperty(), combinedRecordingParams.includeMouseWheelProperty());
+        Bindings.bindBidirectional(btnCombinedAbsolutePath.selectedProperty(), combinedRecordingParams.absoluteProperty());
+        Bindings.bindBidirectional(btnCombinedRelativePath.selectedProperty(), combinedRecordingParams.relativeProperty());
 
-        Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combined.getFixedRateOnValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combined.getMinDistanceOnValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combined.getStopDetectionOnValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combinedRecordingParams.fixedRateOnProperty());
+        Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combinedRecordingParams.minDistanceOnProperty());
+        Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combinedRecordingParams.stopDetectionOnProperty());
 
         combinedEncodingType.setItems(FXCollections.observableArrayList(ActionEncoderFactory.getListOfEncodings()));
-        combinedEncodingType.getSelectionModel().select(combined.getEncodingType());
-        combinedEncodingType.valueProperty().bindBidirectional(combined.getEncodingTypeValue().valueProperty());
+        combinedEncodingType.getSelectionModel().select(combinedRecordingParams.getEncodingType());
+        combinedEncodingType.valueProperty().bindBidirectional(combinedRecordingParams.encodingTypeProperty());
 
         createHotkeys();
     }

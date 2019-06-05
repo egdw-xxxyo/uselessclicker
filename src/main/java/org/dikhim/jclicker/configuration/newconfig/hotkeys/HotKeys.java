@@ -1,14 +1,14 @@
 package org.dikhim.jclicker.configuration.newconfig.hotkeys;
 
-import org.dikhim.jclicker.configuration.newconfig.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.newconfig.property.SimpleConfigElement;
 
 import java.util.prefs.Preferences;
 
 public class HotKeys extends SimpleConfigElement {
-    private Shortcut runScript;
-    private Shortcut stopScript;
-    private Shortcut combinedControl;
-    private Shortcut mouseControl;
+    private final Shortcut runScript;
+    private final Shortcut stopScript;
+    private final Shortcut combinedControl;
+    private final Shortcut mouseControl;
 
     public HotKeys(String name, Preferences preferences) {
         super(name, preferences);
