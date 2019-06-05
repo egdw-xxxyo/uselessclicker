@@ -22,9 +22,6 @@ public class Dependency {
     private static volatile EventManager eventManager;
     static {
         mouse = new Mouse();
-        InputStream is = Dependency.class.getResourceAsStream("/config.json");
-        JsonReader jsonReader = Json.createReader(is);
-        JsonObject jsonObject = jsonReader.readObject();
         configuration = new Configuration();
     }
     public static void setClickAuto(ClickAuto clickAuto) {

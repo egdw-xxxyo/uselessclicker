@@ -1054,7 +1054,7 @@ clipboard.set('TEXT');
 ////////////CREATE///////////////////
 /////////////////////////////////////
 $create_image_hint:
-var image = create.image(16,16);
+create.image(16,16);
   
 Создать изображение
   
@@ -1063,15 +1063,26 @@ var image = create.image(16,16);
   image(String base64String)
 
 $create_imageFile_hint:
-var image = create.imageFile('file.png');
+create.imageFile('file.png');
   
 Создать изображения по указанному пути к файлу
 
 $create_point_hint:
-var point = create.point(0,0);
+create.point(0,0);
   
 Создать точку
 
+$create_rectangle_hint:
+create.rectangle(0,0,1,1);
+  
+Создать объект прямоугольника
+  
+Использование:
+  rectangle(int x1, int y1,
+    int width, int height)
+  rectangle(Point p,
+    int width, int height)
+  rectangle(Point p1, Point p2)
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////
 /////////////////////////////////////
