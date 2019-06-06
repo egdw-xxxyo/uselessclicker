@@ -6,9 +6,7 @@ import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.configuration.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.eventmanager.event.*;
-import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
-import org.dikhim.jclicker.eventmanager.listener.MouseListener;
+import org.dikhim.jclicker.eventmanager.listener.*;
 import org.dikhim.jclicker.jsengine.clickauto.EventsConverter;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CombinedCodeGenerator;
 
@@ -17,7 +15,7 @@ import java.util.function.Consumer;
 /**
  * combined.run("......
  */
-public class CombinedRecorder extends StringRecorder implements MouseRecorder, KeyRecorder,LupeRequired {
+public class CombinedRecorder extends StringRecorder implements MouseRecorder, KeyRecorder, LupeRequired {
     public CombinedRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
@@ -33,7 +31,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
         control = Dependency.getConfig().hotKeys().combinedControl().getKeys();
         eventLog = new EventLogger();
         // control button listener. Start on release and stop after press
-        addListener("recording.combined.control", new KeyPressReleaseListener(control,
+        addListener(new KeyPressReleaseListener("recording.combined.control", control,
                 event -> {
                     if (isRecording()) {
                         stopRecording();
@@ -52,7 +50,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
                 }));
 
         // keyboard
-        addListener("recording.combined.keyboard", new KeyListener() {
+        addListener(new SimpleKeyListener("recording.combined.keyboard") {
             @Override
             public void keyPressed(KeyPressEvent event) {
                 if (!isRecording()) return;
@@ -66,16 +64,17 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
             }
         });
 
+
         // mouse
-        addListener("recording.combined.mouse", new MouseListener() {
+        addListener(new SimpleMouseListener("recording.combined.mouse") {
             @Override
-            public void buttonReleased(MouseReleaseEvent event) {
+            public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
                 eventLog.add(event);
             }
 
             @Override
-            public void buttonPressed(MousePressEvent event) {
+            public void buttonReleased(MouseReleaseEvent event) {
                 if (!isRecording()) return;
                 eventLog.add(event);
             }

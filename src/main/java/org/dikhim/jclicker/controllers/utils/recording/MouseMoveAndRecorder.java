@@ -4,7 +4,7 @@ import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
-import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
@@ -25,7 +25,7 @@ public class MouseMoveAndRecorder extends SimpleMouseRecorder implements LupeReq
     public void onStart() {
         super.onStart();
 
-        addListener("recording.mouse.moveAnd", new MouseButtonWheelListener() {
+        addListener(new SimpleMouseButtonWheelListener("recording.mouse.moveAnd") {
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
@@ -72,6 +72,5 @@ public class MouseMoveAndRecorder extends SimpleMouseRecorder implements LupeReq
     @Override
     protected void onRecordingStarted() {
         p1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
-
     }
 }

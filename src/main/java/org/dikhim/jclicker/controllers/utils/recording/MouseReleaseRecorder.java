@@ -1,6 +1,7 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
-import org.dikhim.jclicker.eventmanager.listener.MouseReleaseListener;
+import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseReleaseListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
@@ -19,9 +20,12 @@ public class MouseReleaseRecorder extends SimpleMouseRecorder {
     @Override
     public void onStart() {
         super.onStart();
-        addListener("recording.mouse.press", (MouseReleaseListener) event -> {
-            if (!isRecording()) return;
-            putString(codeGenerator.forMethod("release",event.getButton()));
-        });
+        addListener(new SimpleMouseReleaseListener("recording.mouse.release") {
+                        @Override
+                        public void buttonReleased(MouseReleaseEvent event) {
+                            if (!isRecording()) return;
+                            putString(codeGenerator.forMethod("release", event.getButton()));
+                        }
+                    });
     }
 }

@@ -16,11 +16,5 @@ public class NewCodeGeneratorTest {
 
         assertEquals("object.testMethod(true,1,2,3.0,4.0,'TEST');\n", 
                 codeGenerator.forMethod("testMethod", true, 1, 2, 3.0, 4.0, "TEST"));
-        
-        
-
-
     }
-
-
 }

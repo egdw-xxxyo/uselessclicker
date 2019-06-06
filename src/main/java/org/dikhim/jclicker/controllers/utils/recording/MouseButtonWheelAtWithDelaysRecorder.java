@@ -1,9 +1,14 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.eventmanager.event.*;
-import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.*;
+import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonWheelListener;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.SystemCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -20,18 +25,18 @@ public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder im
         super(onRecorded);
     }
 
-    EventLogger eventLog = new EventLogger(4);
+    private EventLogger eventLog = new EventLogger(4);
 
     private CodeGenerator mouseCodeGenerator = new MouseCodeGenerator();
     private CodeGenerator systemCodeGenerator = new SystemCodeGenerator();
+
+    private String code;
 
     @Override
     public void onStart() {
         super.onStart();
 
-        addListener("recording.mouse.buttonWheelAt", new MouseButtonWheelListener() {
-            String code;
-
+        addListener(new SimpleMouseButtonWheelListener("recording.mouse.buttonWheelAtWithDelays") {
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;

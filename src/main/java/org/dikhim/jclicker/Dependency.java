@@ -5,6 +5,7 @@ import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 import org.dikhim.jclicker.configuration.Configuration;
 import org.dikhim.jclicker.eventmanager.EventManager;
+import org.dikhim.jclicker.global.Keyboard;
 import org.dikhim.jclicker.global.Mouse;
 
 import javax.json.Json;
@@ -16,12 +17,10 @@ public class Dependency {
     private static volatile ClickAuto clickAuto;
     private static volatile ClickAutoScriptEngine engine;
     private static volatile Robot robot;
-    private static final Mouse mouse;
     private static final Configuration configuration;
 
     private static volatile EventManager eventManager;
     static {
-        mouse = new Mouse();
         configuration = new Configuration();
     }
     public static void setClickAuto(ClickAuto clickAuto) {
@@ -49,11 +48,7 @@ public class Dependency {
     public static Robot getRobot() {
         return robot;
     }
-    
-    public static Mouse getMouse() {
-        return mouse;
-    }
-    
+
     public static Configuration getConfig() {
         return configuration;
     }

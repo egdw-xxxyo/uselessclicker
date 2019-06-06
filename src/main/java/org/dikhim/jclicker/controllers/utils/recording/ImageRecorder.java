@@ -24,8 +24,8 @@ public class ImageRecorder extends SimpleRecorder implements ScreenRecorder {
     @Override
     protected void onStart() {
         addListener(
-                "recording.mouse.controlKey",
                 new KeyPressReleaseListener(
+                        "recording.mouse.controlKey",
                         "CONTROL",
                         (event) -> startRecording(),
                         (event) -> stopRecording()));

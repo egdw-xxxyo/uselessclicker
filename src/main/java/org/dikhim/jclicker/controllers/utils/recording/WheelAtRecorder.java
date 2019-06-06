@@ -2,7 +2,7 @@ package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
-import org.dikhim.jclicker.eventmanager.listener.MouseWheelListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
@@ -17,21 +17,21 @@ public class WheelAtRecorder extends SimpleMouseRecorder implements LupeRequired
     }
 
     private CodeGenerator codeGenerator = new MouseCodeGenerator();
+
     @Override
     public void onStart() {
         super.onStart();
-        addListener("recording.mouse.press", new MouseWheelListener() {
-
+        addListener(new SimpleMouseWheelListener("recording.mouse.wheelAt") {
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheelAt","UP", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelAt", "UP", event.getAmount(), event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheelAt","DOWN", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelAt", "DOWN", event.getAmount(), event.getX(), event.getY()));
             }
         });
     }

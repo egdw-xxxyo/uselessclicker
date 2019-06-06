@@ -2,7 +2,7 @@ package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
-import org.dikhim.jclicker.eventmanager.listener.KeyListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleKeyListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardCodeGenerator;
 
@@ -18,20 +18,21 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
     }
 
     private CodeGenerator codeGenerator = new KeyboardCodeGenerator();
-    
+
     @Override
     public void onStart() {
         startRecording();
-        addListener("recording.key.perform", new KeyListener() {
-
+        addListener(new SimpleKeyListener("recording.key.perform") {
             @Override
             public void keyPressed(KeyPressEvent event) {
-                putString(codeGenerator.forMethod("perform",event.getKey(), "PRESS"));
+                putString(codeGenerator.forMethod("perform", event.getKey(), "PRESS"));
+
             }
 
             @Override
             public void keyReleased(KeyReleaseEvent event) {
-                putString(codeGenerator.forMethod("perform",event.getKey(), "RELEASE"));
+                putString(codeGenerator.forMethod("perform", event.getKey(), "RELEASE"));
+
             }
         });
     }

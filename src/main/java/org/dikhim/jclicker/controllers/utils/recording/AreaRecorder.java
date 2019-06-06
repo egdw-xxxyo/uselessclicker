@@ -22,8 +22,8 @@ public class AreaRecorder extends StringRecorder implements ScreenRecorder {
     @Override
     protected void onStart() {
         addListener(
-                "recording.mouse.controlKey",
                 new KeyPressReleaseListener(
+                        "recording.mouse.controlKey",
                         "CONTROL",
                         (event) -> startRecording(),
                         (event) -> stopRecording()));
@@ -40,7 +40,7 @@ public class AreaRecorder extends StringRecorder implements ScreenRecorder {
     protected void onRecordingStopped() {
         Point p2 = new Point(MouseInfo.getPointerInfo().getLocation().x + 1, MouseInfo.getPointerInfo().getLocation().y + 1);
         Rectangle r = ShapeUtil.createRectangle(p1, p2);
-        
+
         putString(codeGenerator.forMethod("rectangle", r.x, r.y, r.width, r.height));
     }
 

@@ -25,9 +25,9 @@ public abstract class SimpleRecorder implements Recorder {
         active = new SimpleBooleanProperty(false);
     }
 
-    protected void addListener(String name, EventListener listener) {
+    protected void addListener(EventListener listener) {
         listeners.add(listener);
-        eventManager.addListener(name, listener);
+        eventManager.addListener(listener);
     }
 
     protected void removeListener(String name) {

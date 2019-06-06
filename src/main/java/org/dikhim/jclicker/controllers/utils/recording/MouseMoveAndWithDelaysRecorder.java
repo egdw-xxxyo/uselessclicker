@@ -1,9 +1,14 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.actions.utils.EventLogger;
-import org.dikhim.jclicker.eventmanager.event.*;
-import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.*;
+import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
+import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonWheelListener;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.SystemCodeGenerator;
 
 import java.awt.*;
 import java.util.function.Consumer;
@@ -29,7 +34,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
     @Override
     public void onStart() {
         super.onStart();
-        addListener("recording.mouse.buttonWheelAtWithDelays", new MouseButtonWheelListener() {
+        addListener(new SimpleMouseButtonWheelListener("recording.mouse.buttonWheelAtWithDelays") {
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
@@ -64,7 +69,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndWheel","UP", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                code += mouseCodeGenerator.forMethod("moveAndWheel", "UP", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
                 p1 = p2;
                 putString(code);
             }
@@ -77,7 +82,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndWheel","DOWN", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                code += mouseCodeGenerator.forMethod("moveAndWheel", "DOWN", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
                 p1 = p2;
                 putString(code);
             }

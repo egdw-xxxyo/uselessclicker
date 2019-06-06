@@ -4,7 +4,7 @@ import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.eventmanager.event.MouseButtonEvent;
 import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
-import org.dikhim.jclicker.eventmanager.listener.MouseButtonListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
@@ -25,7 +25,7 @@ public class MouseClickAtRecorder extends SimpleMouseRecorder implements MouseRe
     public void onStart() {
         super.onStart();
         EventLogger eventLog = new EventLogger(2);
-        addListener("recording.mouse.clickAt", new MouseButtonListener() {
+        addListener(new SimpleMouseButtonListener("recording.mouse.clickAt") {
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;

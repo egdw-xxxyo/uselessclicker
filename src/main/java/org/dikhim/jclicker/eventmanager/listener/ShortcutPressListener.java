@@ -8,17 +8,20 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class ShortcutPressListener implements KeyListener {
+public class ShortcutPressListener extends SimpleListener implements KeyListener {
     private Set<String> pressedKeys = new TreeSet<>();
     private Set<String> shortcutKeys = new TreeSet<>();
     private Runnable onFire;
 
-    public ShortcutPressListener(Runnable onFire, String... keys) {
+    public ShortcutPressListener(String id, Runnable onFire, String... keys) {
+        super(id);
+
         this.onFire = onFire;
         shortcutKeys.addAll(Arrays.asList(keys));
     }
 
-    public ShortcutPressListener(Runnable onFire, StringProperty stringProperty) {
+    public ShortcutPressListener(String id, Runnable onFire, StringProperty stringProperty) {
+        super(id);
         this.onFire = onFire;
         shortcutKeys.clear();
         shortcutKeys.addAll(Arrays.asList(stringProperty.getValue().split(" ")));

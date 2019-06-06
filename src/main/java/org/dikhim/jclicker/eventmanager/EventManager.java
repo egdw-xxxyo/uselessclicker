@@ -7,6 +7,8 @@ import org.dikhim.jclicker.eventmanager.listener.*;
 import org.dikhim.jclicker.eventmanager.listener.EventListener;
 import org.dikhim.jclicker.eventmanager.utils.KeyCodes;
 import org.dikhim.jclicker.eventmanager.utils.MouseCodes;
+import org.dikhim.jclicker.global.Keyboard;
+import org.dikhim.jclicker.global.Mouse;
 import org.dikhim.jclicker.util.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
@@ -14,7 +16,6 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 import org.jnativehook.mouse.*;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -26,11 +27,17 @@ import java.util.logging.Logger;
 
 public class EventManager implements NativeKeyListener, NativeMouseListener, NativeMouseMotionListener, NativeMouseWheelListener {
 
-    private Map<String, EventListener> listeners = new LinkedHashMap<>();
+    private final Mouse mouse;
+    private final Keyboard keyboard;
 
-    public EventManager(){
+    private final List<EventListener> listeners = new ArrayList<>();
+
+    public EventManager() {
+        mouse = new Mouse();
+        keyboard = new Keyboard(this);
+
         PrintStream oldOut = System.out;
-        
+
         try {
             Logger logger = Logger
                     .getLogger(GlobalScreen.class.getPackage().getName());
@@ -41,8 +48,8 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
                 public void write(int b) throws IOException {
                 }
             }));
-            
-            
+
+
             GlobalScreen.registerNativeHook();
             GlobalScreen.addNativeKeyListener(this);
             GlobalScreen.addNativeMouseListener(this);
@@ -51,10 +58,10 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         } catch (NativeHookException e) {
             Out.println("Cannot create keyboard/mouse recording object");
             Out.println("Recording events won't be available");
-        }finally {
+        } finally {
             System.setOut(oldOut);
         }
-        
+
     }
 
     // KEY
@@ -69,7 +76,7 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         fire(keyPressEvent);
     }
 
-    synchronized  public void nativeKeyReleased(NativeKeyEvent e) {
+    synchronized public void nativeKeyReleased(NativeKeyEvent e) {
         // build new key event
         String key = KeyCodes.getNameByNativeCode(e.getKeyCode());
         if (key.isEmpty()) return;
@@ -152,56 +159,56 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
     /////////////////////// FIRE
     private void fire(Event e) {
         if (e instanceof KeyPressEvent) {
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof KeyPressListener) {
                     ((KeyPressListener) listener).keyPressed((KeyPressEvent) e);
                 }
             });
         } else if (e instanceof KeyReleaseEvent) {
             KeyReleaseEvent event = (KeyReleaseEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof KeyReleaseListener) {
                     ((KeyReleaseListener) listener).keyReleased(event);
                 }
             });
         } else if (e instanceof MousePressEvent) {
             MousePressEvent event = (MousePressEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof MousePressListener) {
                     ((MousePressListener) listener).buttonPressed(event);
                 }
             });
         } else if (e instanceof MouseReleaseEvent) {
             MouseReleaseEvent event = (MouseReleaseEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof MouseReleaseListener) {
                     ((MouseReleaseListener) listener).buttonReleased(event);
                 }
             });
         } else if (e instanceof MouseMoveEvent) {
             MouseMoveEvent event = (MouseMoveEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof MouseMoveListener) {
                     ((MouseMoveListener) listener).mouseMoved(event);
                 }
             });
         } else if (e instanceof MouseWheelUpEvent) {
             MouseWheelUpEvent event = (MouseWheelUpEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof MouseWheelUpListener) {
                     ((MouseWheelUpListener) listener).wheeledUp(event);
                 }
             });
         } else if (e instanceof MouseWheelDownEvent) {
             MouseWheelDownEvent event = (MouseWheelDownEvent) e;
-            listeners.forEach((key, listener) -> {
-                if (ignored(key, e, listener)) return;
+            listeners.forEach((listener) -> {
+                if (ignored(listener, e)) return;
                 if (listener instanceof MouseWheelDownListener) {
                     ((MouseWheelDownListener) listener).wheeledDown(event);
                 }
@@ -209,26 +216,16 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         }
     }
 
-    private boolean ignored(String key, Event event, EventListener listener) {
+    private boolean ignored(EventListener listener, Event event) {
         for (Filter filter : filters) {
-            if (filter.ignored(key, event, listener)) return true;
+            if (filter.ignored(listener, event)) return true;
         }
         return false;
     }
 
-    synchronized public int getX() {
-        return MouseInfo.getPointerInfo().getLocation().x;
-    }
-
-
-    synchronized public int getY() {
-        return MouseInfo.getPointerInfo().getLocation().y;
-    }
-
-
     /////////////////////// PUBLIC
-    synchronized public void addListener(String key, EventListener listener) {
-        listeners.put(key, listener);
+    synchronized public void addListener(EventListener listener) {
+        listeners.add(listener);
     }
 
     synchronized public void removeListener(String key) {
@@ -236,17 +233,29 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
     }
 
     synchronized public void removeListener(EventListener listener) {
-        while (listeners.values().remove(listener)) ;
+        while (listeners.remove(listener)) ;
     }
 
 
     private List<Filter> filters = new ArrayList<>();
 
-    synchronized  public void addFilter(Filter filter) {
+    synchronized public void addFilter(Filter filter) {
         filters.add(filter);
     }
 
     synchronized public void removeFilter(Filter filter) {
         filters.remove(filter);
+    }
+
+    synchronized public void removeFilters(List<Filter> filters) {
+        this.filters.removeAll(filters);
+    }
+
+    public Mouse getMouse() {
+        return mouse;
+    }
+
+    public Keyboard getKeyboard() {
+        return keyboard;
     }
 }

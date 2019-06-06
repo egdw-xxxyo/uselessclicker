@@ -623,7 +623,7 @@ public class MainController implements Initializable {
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
         stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
 
-        Dependency.getEventManager().addListener("root.stopScript", new ShortcutPressListener(
+        Dependency.getEventManager().addListener( new ShortcutPressListener("root.stopScript",
                 () -> {
                     Platform.runLater(this::stopScript);
                 },
@@ -633,7 +633,7 @@ public class MainController implements Initializable {
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
         runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
 
-        Dependency.getEventManager().addListener("root.runScript", new ShortcutPressListener(
+        Dependency.getEventManager().addListener( new ShortcutPressListener("root.runScript",
                 () -> {
                     Platform.runLater(this::runScript);
                 },

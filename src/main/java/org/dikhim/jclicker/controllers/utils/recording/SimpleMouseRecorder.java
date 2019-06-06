@@ -13,8 +13,8 @@ public class SimpleMouseRecorder extends StringRecorder implements MouseRecorder
     @Override
     public void onStart() {
         addListener(
-                "recording.mouse.controlKey",
                 new KeyPressReleaseListener(
+                        "recording.mouse.controlKey",
                         "CONTROL",
                         (event) -> startRecording(),
                         (event) -> stopRecording()));

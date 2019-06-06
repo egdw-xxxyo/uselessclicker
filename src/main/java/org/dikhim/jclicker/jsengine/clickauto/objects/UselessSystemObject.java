@@ -5,11 +5,21 @@ import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.clickauto.jsengine.objects.ScriptSystemObject;
 import org.dikhim.jclicker.Clicker;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.actions.*;
 import org.dikhim.jclicker.actions.managers.KeyEventsManager;
 import org.dikhim.jclicker.actions.managers.MouseEventsManager;
+import org.dikhim.jclicker.eventmanager.EventManager;
+import org.dikhim.jclicker.eventmanager.filter.Filter;
+import org.dikhim.jclicker.eventmanager.filter.KeyboardFilter;
+import org.dikhim.jclicker.eventmanager.filter.PrefixFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UselessSystemObject extends ScriptSystemObject implements SystemObject {
+    private final EventManager eventManager = Dependency.getEventManager();
+    
     public UselessSystemObject(ClickAutoScriptEngine engine) {
         super(engine);
     }
@@ -19,14 +29,18 @@ public class UselessSystemObject extends ScriptSystemObject implements SystemObj
         Platform.exit();
     }
 
+
+    private List<Filter> keyFilters = new ArrayList<>();
     @Override
     public void keyIgnore() {
-        KeyEventsManager.getInstance().ignorePrefix("script.");
+        Filter filter = new KeyboardFilter();
+        keyFilters.add(filter);
+        eventManager.addFilter(filter); 
     }
 
     @Override
     public void keyResume() {
-        KeyEventsManager.getInstance().removeIgnorePrefix("script.");
+        eventManager.removeFilters(keyFilters);
     }
 
     @Override

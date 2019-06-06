@@ -6,7 +6,7 @@ import org.dikhim.jclicker.eventmanager.listener.EventListener;
 
 public class AllEventFilter implements Filter {
     @Override
-    public boolean ignored(String key, Event event, EventListener eventListener) {
+    public boolean ignored(EventListener eventListener, Event event) {
         return true;
     }
 }
