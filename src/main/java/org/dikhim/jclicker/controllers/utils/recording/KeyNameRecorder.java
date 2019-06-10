@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
-import org.dikhim.jclicker.eventmanager.listener.SimpleKeyPressListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleKeyboardPressListener;
 
 import java.util.function.Consumer;
 
@@ -16,7 +16,7 @@ public class KeyNameRecorder extends StringRecorder implements KeyRecorder {
     @Override
     public void onStart() {
         startRecording();
-        addListener(new SimpleKeyPressListener("recording.key.name") {
+        addListener(new SimpleKeyboardPressListener("recording.key.name") {
             @Override
             public void keyPressed(KeyPressEvent event) {
                 putString(event.getKey() + " ");

@@ -5,4 +5,6 @@ import org.dikhim.jclicker.eventmanager.listener.EventListener;
 
 public interface Filter {
     boolean ignored(EventListener eventListener, Event event);
+
+    String getId();
 }

@@ -225,15 +225,22 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
 
     /////////////////////// PUBLIC
     synchronized public void addListener(EventListener listener) {
+        if (listeners.stream().anyMatch(l -> l.getId().equals(listener.getId()))) {
+            listeners.removeIf(l -> l.getId().equals(listener.getId()));
+        }
         listeners.add(listener);
     }
 
-    synchronized public void removeListener(String key) {
-        listeners.remove(key);
+    synchronized public void removeListener(String id) {
+        listeners.removeIf(l -> l.getId().equals(id));
+    }
+
+    synchronized public void removeListenersWithPrefix(String prefix) {
+        listeners.removeIf(l -> l.getId().startsWith(prefix));
     }
 
     synchronized public void removeListener(EventListener listener) {
-        while (listeners.remove(listener)) ;
+        listeners.remove(listener);
     }
 
 
@@ -246,6 +253,12 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
     synchronized public void removeFilter(Filter filter) {
         filters.remove(filter);
     }
+
+
+    synchronized public void removeFiltersWithPrefix(String prefix) {
+        filters.removeIf(filter -> filter.getId().startsWith(prefix));
+    }
+
 
     synchronized public void removeFilters(List<Filter> filters) {
         this.filters.removeAll(filters);

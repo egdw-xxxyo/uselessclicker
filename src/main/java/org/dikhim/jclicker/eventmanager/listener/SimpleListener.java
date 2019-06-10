@@ -9,6 +9,6 @@ public class SimpleListener implements EventListener {
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 }

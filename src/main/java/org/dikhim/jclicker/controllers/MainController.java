@@ -101,7 +101,7 @@ public class MainController implements Initializable {
         btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
 
         //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
-                
+
         eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
         // codesamples file
         SourcePropertyFile propertyFile = new SourcePropertyFile();
@@ -119,7 +119,7 @@ public class MainController implements Initializable {
 
 
         CombinedRecordingParams combinedRecordingParams = Dependency.getConfig().storage().combinedRecordingParams();
-        
+
         Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combinedRecordingParams.fixedRateProperty(), stringConverter);
         Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combinedRecordingParams.minDistanceProperty(), new NumberStringConverter());
         Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combinedRecordingParams.stopDetectionTimeProperty(), new NumberStringConverter());
@@ -341,7 +341,7 @@ public class MainController implements Initializable {
     // image
     @FXML
     private ToggleButton btnInsertSelectImage;
-    
+
     @FXML
     private ToggleButton btnInsertSelectArea;
 
@@ -623,7 +623,8 @@ public class MainController implements Initializable {
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
         stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
 
-        Dependency.getEventManager().addListener( new ShortcutPressListener("root.stopScript",
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.stopScript",
                 () -> {
                     Platform.runLater(this::stopScript);
                 },
@@ -633,7 +634,8 @@ public class MainController implements Initializable {
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
         runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
 
-        Dependency.getEventManager().addListener( new ShortcutPressListener("root.runScript",
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.runScript",
                 () -> {
                     Platform.runLater(this::runScript);
                 },

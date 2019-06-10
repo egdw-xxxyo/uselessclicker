@@ -21,7 +21,7 @@ public class HotKeys extends SimpleConfigElement {
                 "stopScript", "CONTROL ALT S", "execution", getPreferences());
         
         combinedControl = new Shortcut(
-                "combinedControl", "ALT", "recording", getPreferences());
+                "combinedControl", "F2", "recording", getPreferences());
         
         mouseControl = new Shortcut(
                 "mouseControl", "CONTROL", "recording", getPreferences());

@@ -1,0 +1,22 @@
+module org.dikhim.jclicker{
+    requires javafx.controls;
+    requires java.prefs;
+    requires javafx.fxml;
+    requires javafx.web;
+    requires jdk.jsobject;
+    requires jnativehook;
+    requires java.logging;
+    requires java.desktop;
+    requires javafx.swing;
+    requires java.scripting;
+    requires jdk.httpserver;
+    requires javax.json;
+    requires commons.io;
+    requires slf4j.api;
+    requires commons.cli;
+    requires commons.collections4;
+    exports org.dikhim.jclicker;
+    exports org.dikhim.jclicker.controllers;
+    exports org.dikhim.jclicker.controllers.utils;
+    
+}

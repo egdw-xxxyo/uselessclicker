@@ -3,7 +3,7 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.jclicker.actions.utils.EventLogger;
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
-import org.dikhim.jclicker.eventmanager.listener.SimpleKeyListener;
+import org.dikhim.jclicker.eventmanager.listener.SimpleKeyboardListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.SystemCodeGenerator;
@@ -29,7 +29,7 @@ public class KeyPerformWithDelaysRecorder extends StringRecorder implements KeyR
     @Override
     public void onStart() {
         startRecording();
-        addListener(new SimpleKeyListener("recording.key.performWithDelays") {
+        addListener(new SimpleKeyboardListener("recording.key.performWithDelays") {
             @Override
             public void keyPressed(KeyPressEvent event) {
                 eventLog.add(event);

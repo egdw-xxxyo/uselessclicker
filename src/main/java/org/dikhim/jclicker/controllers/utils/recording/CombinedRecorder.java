@@ -50,7 +50,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
                 }));
 
         // keyboard
-        addListener(new SimpleKeyListener("recording.combined.keyboard") {
+        addListener(new SimpleKeyboardListener("recording.combined.keyboard") {
             @Override
             public void keyPressed(KeyPressEvent event) {
                 if (!isRecording()) return;
