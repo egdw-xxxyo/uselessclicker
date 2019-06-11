@@ -6,10 +6,7 @@ import javafx.scene.input.MouseEvent;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,7 +14,7 @@ import java.util.regex.Pattern;
 public class TemplateButtonGenerator {
 
     private int lineSize;
-    private SourcePropertyFile properties;
+    private Properties properties;
     private KeyboardCodeGenerator keyboardCodeGenerator;
     private MouseCodeGenerator mouseCodeGenerator;
     private SystemCodeGenerator systemCodeGenerator;
@@ -60,7 +57,7 @@ public class TemplateButtonGenerator {
         return this;
     }
 
-    public TemplateButtonGenerator setProperties(SourcePropertyFile properties) {
+    public TemplateButtonGenerator setProperties(Properties properties) {
         this.properties = properties;
         return this;
     }
@@ -105,23 +102,23 @@ public class TemplateButtonGenerator {
     }
 
     public List<Button> getButtonListForLanguage() {
-        return createButtons("language", getButtonNamesFromPropertyFile("language"));
+        return createButtons("language", new ArrayList<>(getButtonNamesFromPropertyFile("language")));
     }
     
     
     
     private List<Button> createButtons(String objectName, List<String> methodNames) {
         List<Button> buttons = new ArrayList<>();
-        methodNames.forEach(name -> {
-            String id = objectName+"_" + name;
+        methodNames.forEach(methodName -> {
+            String id = objectName+"." + methodName;
             Button button = new Button();
 
-            String text = properties.get(id);
-            if (text.isEmpty()) text = name;
-            String hint = properties.get(id + "_hint");
-            if (hint.isEmpty()) hint = "insert " + id;
-            String template = properties.get(id + "_template");
-            if (template.isEmpty()) template = hint.split("[\\r\\n]+")[0]+"\n";
+            String text = properties.getProperty(id + ".name");
+            if (text == null) text = methodName;
+            String hint = properties.getProperty(id + ".hint");
+            if (hint == null) hint = id;
+            String template = properties.getProperty(id + ".code");
+            if (template == null) template = hint.split("[\\r\\n]+")[0]+"\n";
 
             button.setText(text);
             button.setUserData(new String[]{hint, template});
@@ -136,12 +133,12 @@ public class TemplateButtonGenerator {
         return buttons;
     }
 
-    private List<String> getButtonNamesFromPropertyFile(String objectName) {
-        List<String> buttonNames = new ArrayList<>();
-        Pattern pattern = Pattern.compile(objectName + "_([a-zA-Z]*)_hint");
-        Set<String> propertyNames = properties.getKetSet();
+    private Set<String> getButtonNamesFromPropertyFile(String objectName) {
+        Set<String> buttonNames = new HashSet<>();
+        Pattern pattern = Pattern.compile(objectName + ".([a-zA-Z]+).");
+        Set<Object> propertyNames = properties.keySet();
         propertyNames.forEach(propName->{
-            Matcher matcher = pattern.matcher(propName);
+            Matcher matcher = pattern.matcher((CharSequence) propName);
             while (matcher.find()) {
                 String buttonName = matcher.group(1);
                 buttonNames.add(buttonName);

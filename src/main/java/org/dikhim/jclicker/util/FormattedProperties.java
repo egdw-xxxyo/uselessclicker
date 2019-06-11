@@ -1,8 +1,8 @@
 package org.dikhim.jclicker.util;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
+import org.apache.commons.io.FileUtils;
+
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Properties;
@@ -16,6 +16,13 @@ public class FormattedProperties extends Properties {
     @Override
     public synchronized void load(Reader reader) throws IOException {
         load0(new LineReader(reader));
+    }
+
+    public synchronized void load(File file) throws IOException {
+        load(new FileInputStream(file));
+    }
+
+    public synchronized void load(String url) {
     }
 
     private void load0(LineReader lr) throws IOException {
