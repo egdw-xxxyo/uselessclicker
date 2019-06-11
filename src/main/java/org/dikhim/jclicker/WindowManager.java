@@ -36,111 +36,99 @@ public class WindowManager {
 
     private WindowManager() {
         this.locale = Dependency.getConfig().localization().getLocale();
+        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager", locale);
+    }
+
+    public void showStage(String stageName) {
+        Stage stage = getStage(stageName);
+        stage.show();
+        stage.toFront();
+    }
+
+
+    private Scene getScene(String sceneName) {
+        Scene scene = sceneMap.get(sceneName);
+        if (scene != null) return scene;
+
         try {
-            init();
+            if ("main".equals(sceneName)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/MainScene.fxml"));
+                loader.setResources(ResourceBundle.getBundle("i18n/MainScene", locale));
+                Parent root = loader.load();
+
+                scene = new Scene(root);
+            } else if ("help".equals(sceneName)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/HelpScene.fxml"));
+                loader.setResources(ResourceBundle.getBundle("i18n/HelpScene", locale));
+                Parent root = loader.load();
+                
+                scene = new Scene(root);
+            } else if ("about".equals(sceneName)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/AboutScene.fxml"));
+                loader.setResources(ResourceBundle.getBundle("i18n/AboutScene", locale));
+                Parent root = loader.load();
+                
+                scene = new Scene(root);
+            } else if ("settings".equals(sceneName)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/config/ConfigScene.fxml"));
+                loader.setResources(ResourceBundle.getBundle("i18n/SettingsScene", locale));
+                Parent root = loader.load();
+                
+                scene = new Scene(root);
+            } else if ("server".equals(sceneName)) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/server/ServerScene.fxml"));
+                loader.setResources(ResourceBundle.getBundle("i18n/ServerScene", locale));
+                Parent root = loader.load();
+                
+                scene = new Scene(root);
+            } else {
+                throw new IllegalArgumentException("wrong scene name :" + sceneName);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return scene;
     }
 
-    private void init() throws IOException {
-        resourceBundle = ResourceBundle.getBundle("i18n/WindowManager", locale);
-
-        sceneMap.put("about", loadAboutScene(locale));
-        sceneMap.put("settings", loadConfigScene(locale));
-        sceneMap.put("help", loadHelpScene(locale));
-        sceneMap.put("main", loadMainScene(locale));
-        sceneMap.put("server", loadServerScene(locale));
-
-
-        Stage stage = new Stage();
-        stage.setScene(sceneMap.get("about"));
-        stage.setTitle(resourceBundle.getString("about"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/info.png")));
-        stageMap.put("about", stage);
-
-        stage = new Stage();
-        stage.setScene(sceneMap.get("settings"));
-        stage.setTitle(resourceBundle.getString("settings"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/config.png")));
-        stageMap.put("settings", stage);
-
-        stage = new Stage();
-        stage.setScene(sceneMap.get("help"));
-        stage.setTitle(resourceBundle.getString("help"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/help.png")));
-        stageMap.put("help", stage);
-
-
-        stage = new Stage();
-        stage.setScene(sceneMap.get("server"));
-        stage.setTitle(resourceBundle.getString("server"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/server.png")));
-        stageMap.put("server", stage);
-
-        stage = new Stage();
-        stage.setScene(sceneMap.get("main"));
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
-        stage.setOnCloseRequest(event -> stageMap.forEach((k, v) -> v.hide()));
-        stageMap.put("main", stage);
-    }
-
-
-    public void showStage(String stageName) {
-        Stage stage = stageMap.get(stageName);
-        if (stage != null) {
-            stage.show();
-            stage.toFront();
-        }
-    }
-
-
-    private Scene loadInitScene() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/ChooseLanguageDialogScene.fxml"));
-        Parent root = loader.load();
-
-        return new Scene(root);
-    }
-
-    private Scene loadMainScene(Locale locale) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/MainScene.fxml"));
-        loader.setResources(ResourceBundle.getBundle("i18n/MainScene", locale));
-        Parent root = loader.load();
-
-        return new Scene(root);
-    }
-
-    private Scene loadHelpScene(Locale locale) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/HelpScene.fxml"));
-        loader.setResources(ResourceBundle.getBundle("i18n/HelpScene", locale));
-
-        Parent root = loader.load();
-        return new Scene(root);
-    }
-
-    private Scene loadAboutScene(Locale locale) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/AboutScene.fxml"));
-        loader.setResources(ResourceBundle.getBundle("i18n/AboutScene", locale));
-        Parent root = loader.load();
-        return new Scene(root);
-    }
-
-    private Scene loadConfigScene(Locale locale) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/config/ConfigScene.fxml"));
-        loader.setResources(ResourceBundle.getBundle("i18n/SettingsScene", locale));
-        Parent root = loader.load();
-        return new Scene(root);
-    }
-
-    private Scene loadServerScene(Locale locale) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/server/ServerScene.fxml"));
-        loader.setResources(ResourceBundle.getBundle("i18n/ServerScene", locale));
-        Parent root = loader.load();
-        return new Scene(root);
-    }
 
     public Stage getStage(String stageName) {
-        return stageMap.get(stageName);
+        Stage stage = stageMap.get(stageName);
+        if (stage != null) return stage;
+        if ("main".equals(stageName)) {
+            stage = new Stage();
+            stage.setScene(getScene("main"));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/cursor.png")));
+            stage.setOnCloseRequest(event -> stageMap.forEach((k, v) -> v.hide()));
+            stageMap.put("main", stage);
+        } else if ("help".equals(stageName)) {
+            stage = new Stage();
+            stage.setScene(getScene("help"));
+            stage.setTitle(resourceBundle.getString("help"));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/help.png")));
+            stageMap.put("help", stage);
+        } else if ("settings".equals(stageName)) {
+            stage = new Stage();
+            stage.setScene(getScene("settings"));
+            stage.setTitle(resourceBundle.getString("settings"));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/config.png")));
+            stageMap.put("settings", stage);
+        } else if ("about".equals(stageName)) {
+            stage = new Stage();
+            stage.setScene(getScene("about"));
+            stage.setTitle(resourceBundle.getString("about"));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/info.png")));
+            stageMap.put("about", stage);
+
+        } else if ("server".equals(stageName)) {
+            stage = new Stage();
+            stage.setScene(getScene("server"));
+            stage.setTitle(resourceBundle.getString("server"));
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/server.png")));
+            stageMap.put("server", stage);
+        } else {
+            throw new IllegalArgumentException("wrong stage name :" + stageName);
+        }
+        return stage;
     }
 
 
