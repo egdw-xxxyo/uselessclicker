@@ -12,6 +12,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class Dependency {
     private static volatile ClickAuto clickAuto;

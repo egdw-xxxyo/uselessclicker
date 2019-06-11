@@ -40,8 +40,6 @@ public class Clicker extends Application {
                 Dependency.getConfig().localization().setApplicationLanguageId(language);
                 Dependency.getConfig().save();
             }
-            String language = Dependency.getConfig().localization().getApplicationLanguageId();
-            WindowManager.initialization(new Locale(language));
             loadMainScene();
         }
         Out.addPrintMethod(System.out::print);

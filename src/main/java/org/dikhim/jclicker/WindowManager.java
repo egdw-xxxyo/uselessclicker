@@ -25,19 +25,17 @@ public class WindowManager {
     private Map<String, Scene> sceneMap = new HashMap<>();
     private Locale locale;
 
-    public static void initialization(Locale locale) {
-        if (windowManager == null) {
-            windowManager = new WindowManager(locale);
-        }
-    }
 
     public static WindowManager getInstance() {
+        if (windowManager == null) {
+            windowManager = new WindowManager();
+        }
         return windowManager;
     }
 
 
-    private WindowManager(Locale locale) {
-        this.locale = locale;
+    private WindowManager() {
+        this.locale = Dependency.getConfig().localization().getLocale();
         try {
             init();
         } catch (IOException e) {

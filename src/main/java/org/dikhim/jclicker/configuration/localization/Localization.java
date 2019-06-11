@@ -4,6 +4,7 @@ import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
 import org.dikhim.jclicker.configuration.property.StringConfigProperty;
 
+import java.util.Locale;
 import java.util.prefs.Preferences;
 
 public class Localization extends SimpleConfigElement {
@@ -11,10 +12,13 @@ public class Localization extends SimpleConfigElement {
 
     private final StringConfigProperty applicationLanguageId;
 
+    private Locale locale;
+
     public Localization(String name, Preferences preferences) {
         super(name, preferences);
 
         this.applicationLanguageId = new StringConfigProperty("appLangId", "en", getPreferences());
+        this.locale = new Locale(applicationLanguageId.get());
     }
 
     @Override
@@ -46,5 +50,9 @@ public class Localization extends SimpleConfigElement {
 
     public void setApplicationLanguageId(String id) {
         applicationLanguageId.set(id);
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 }
