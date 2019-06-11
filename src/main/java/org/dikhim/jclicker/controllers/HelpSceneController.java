@@ -24,6 +24,10 @@ public class HelpSceneController implements Initializable {
         webViewObject = new WebViewObject();
         webViewObject.setOpenInBrowser(Clicker.getApplication()::openInBrowser);
         webViewObject.setOnSetText(Clicker.getApplication().getMainApplication()::setScript);
+        webViewObject.setOnRun((code) ->{
+            Clicker.getApplication().getMainApplication().setScript(code);
+            Clicker.getApplication().getMainApplication().runScript();
+        });
 
         this.resourceBundle = resources;
         WebEngine webEngine = web.getEngine();
