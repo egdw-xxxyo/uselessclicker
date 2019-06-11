@@ -16,19 +16,14 @@ import javafx.scene.layout.VBox;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import org.dikhim.jclicker.Clicker;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.WindowManager;
-import org.dikhim.jclicker.actions.ShortcutEqualsListener;
-import org.dikhim.jclicker.actions.StringPropertyShortcut;
-import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.actions.utils.encoders.ActionEncoderFactory;
-import org.dikhim.jclicker.configuration.MainConfiguration;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
-import org.dikhim.jclicker.configuration.recordingparams.Combined;
-import org.dikhim.jclicker.controllers.utils.EventsRecorder;
+import org.dikhim.jclicker.configuration.storage.CombinedRecordingParams;
 import org.dikhim.jclicker.controllers.utils.TemplateButtonGenerator;
 import org.dikhim.jclicker.controllers.utils.recording.*;
-import org.dikhim.jclicker.jsengine.clickauto.generators.*;
+import org.dikhim.jclicker.eventmanager.listener.ShortcutPressListener;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.model.Script;
 import org.dikhim.jclicker.ui.CodeTextArea;
@@ -36,37 +31,25 @@ import org.dikhim.jclicker.ui.LupeImageView;
 import org.dikhim.jclicker.ui.OutTextArea;
 import org.dikhim.jclicker.ui.OutputImageView;
 import org.dikhim.jclicker.util.Converters;
+import org.dikhim.jclicker.util.FormattedProperties;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.Resources;
-import org.dikhim.jclicker.util.SourcePropertyFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.prefs.Preferences;
 
-@SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
+@SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr"})
 public class MainController implements Initializable {
 
     private Clicker application = Clicker.getApplication();
 
     private MainApplication mainApplication = Clicker.getApplication().getMainApplication();
-    private Preferences preferences = Preferences.userRoot().node(getClass().getName());
-
-    private MouseEventsManager mouseEventsManager = MouseEventsManager.getInstance();
-    private KeyEventsManager keyEventsManager = KeyEventsManager.getInstance();
-
-    private int lineSize = 60;
-    private KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator(lineSize);
-    private MouseObjectCodeGenerator mouseObjectCodeGenerator = new MouseObjectCodeGenerator(lineSize);
-    private SystemObjectCodeGenerator systemObjectCodeGenerator = new SystemObjectCodeGenerator(lineSize);
-    private ClipboardObjectCodeGenerator clipboardObjectCodeGenerator = new ClipboardObjectCodeGenerator(lineSize);
-    private CombinedObjectCodeGenerator combinedObjectCodeGenerator = new CombinedObjectCodeGenerator(lineSize);
 
     private EventsRecorder eventsRecorder;
-    private MainConfiguration config;
 
 
     private ResourceBundle resources;
@@ -74,7 +57,6 @@ public class MainController implements Initializable {
     @FXML
     public void initialize(URL location, ResourceBundle resources) {
         this.resources = resources;
-        config = mainApplication.getConfig();
         // init text areas
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
@@ -104,22 +86,36 @@ public class MainController implements Initializable {
         // lupe pane
         LupeImageView lupeImageView = new LupeImageView(resources);
         lupePane.getChildren().addAll(lupeImageView);
+        lupeImageView.visibleProperty().bind(btnLupeStatus.selectedProperty());
 
 
         // events recorder
-        eventsRecorder = new EventsRecorder(config);
+        eventsRecorder = new EventsRecorder();
         eventsRecorder.setOutputTextArea(codeTextArea);
 
         eventsRecorder.setOnSetOutputImage(outputImageView::loadImage);
-        lupeImageView.visibleProperty().bind(eventsRecorder.mouseRecordingProperty());
         codeTextArea.activeProperty().bind(eventsRecorder.keyboardRecordingProperty().not());
 
-        // codesamples file
-        SourcePropertyFile propertyFile = new SourcePropertyFile();
-        propertyFile.setSource(Resources.getSource(resources.getString("codesamples")));
+        btnLupeStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().lupeIsNeededProperty());
+        btnMouseRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeMouseRecordingProperty());
+        btnKeyboardRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeKeyboardRecordingProperty());
+        btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
 
-        initToggles(propertyFile);
-        initTemplateButtons(propertyFile);
+        //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
+
+        eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
+        
+        
+        // codeSamples file
+        FormattedProperties codeSamplesProperties = new FormattedProperties();
+        try {
+            codeSamplesProperties.load(Resources.getInputStream(resources.getString("codeSamples")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        initToggles(codeSamplesProperties);
+        initTemplateButtons(codeSamplesProperties);
 
         bindConfig();
     }
@@ -129,28 +125,49 @@ public class MainController implements Initializable {
         StringConverter<Number> stringConverter = Converters.getStringToNumberConvertor();
 
 
-        Combined combined = config.getRecordingParams().getCombined();
-        Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combined.getFixedRateValue().valueProperty(), stringConverter);
-        Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combined.getMinDistanceValue().valueProperty(), new NumberStringConverter());
-        Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combined.getStopDetectionTimeValue().valueProperty(), new NumberStringConverter());
+        CombinedRecordingParams combinedRecordingParams = Dependency.getConfig().storage().combinedRecordingParams();
 
-        Bindings.bindBidirectional(btnCombinedDelays.selectedProperty(), combined.getIncludeDelaysValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedKeys.selectedProperty(), combined.getIncludeKeyboardValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMouseButtons.selectedProperty(), combined.getIncludeMouseButtonsValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMouseWheel.selectedProperty(), combined.getIncludeMouseWheelValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedAbsolutePath.selectedProperty(), combined.getAbsoluteValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedRelativePath.selectedProperty(), combined.getRelative().valueProperty());
+        Bindings.bindBidirectional(txtCombinedFixRate.textProperty(), combinedRecordingParams.fixedRateProperty(), stringConverter);
+        Bindings.bindBidirectional(txtCombinedMinDistance.textProperty(), combinedRecordingParams.minDistanceProperty(), new NumberStringConverter());
+        Bindings.bindBidirectional(txtCombinedDetectStopPoints.textProperty(), combinedRecordingParams.stopDetectionTimeProperty(), new NumberStringConverter());
 
-        Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combined.getFixedRateOnValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combined.getMinDistanceOnValue().valueProperty());
-        Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combined.getStopDetectionOnValue().valueProperty());
+        Bindings.bindBidirectional(btnCombinedDelays.selectedProperty(), combinedRecordingParams.includeDelaysProperty());
+        Bindings.bindBidirectional(btnCombinedKeys.selectedProperty(), combinedRecordingParams.includeKeyboardProperty());
+        Bindings.bindBidirectional(btnCombinedMouseButtons.selectedProperty(), combinedRecordingParams.includeMouseButtonsProperty());
+        Bindings.bindBidirectional(btnCombinedMouseWheel.selectedProperty(), combinedRecordingParams.includeMouseWheelProperty());
+        Bindings.bindBidirectional(btnCombinedAbsolutePath.selectedProperty(), combinedRecordingParams.absoluteProperty());
+        Bindings.bindBidirectional(btnCombinedRelativePath.selectedProperty(), combinedRecordingParams.relativeProperty());
+
+        Bindings.bindBidirectional(btnCombinedFixRate.selectedProperty(), combinedRecordingParams.fixedRateOnProperty());
+        Bindings.bindBidirectional(btnCombinedMinDistance.selectedProperty(), combinedRecordingParams.minDistanceOnProperty());
+        Bindings.bindBidirectional(btnCombinedDetectStopPoints.selectedProperty(), combinedRecordingParams.stopDetectionOnProperty());
 
         combinedEncodingType.setItems(FXCollections.observableArrayList(ActionEncoderFactory.getListOfEncodings()));
-        combinedEncodingType.getSelectionModel().select(combined.getEncodingType());
-        combinedEncodingType.valueProperty().bindBidirectional(combined.getEncodingTypeValue().valueProperty());
+        combinedEncodingType.getSelectionModel().select(combinedRecordingParams.getEncodingType());
+        combinedEncodingType.valueProperty().bindBidirectional(combinedRecordingParams.encodingTypeProperty());
 
         createHotkeys();
     }
+
+    // status buttons
+    @FXML
+    private ToggleButton btnScriptStatus;
+
+    @FXML
+    private ToggleButton btnActiveRecorderStatus;
+
+    @FXML
+    private ToggleButton btnLupeStatus;
+
+    @FXML
+    private ToggleButton btnMouseRecordingStatus;
+
+    @FXML
+    private ToggleButton btnKeyboardRecordingStatus;
+
+    @FXML
+    private ToggleButton btnRecordingStatus;
+
 
     @FXML
     private Button btnNewFile;
@@ -332,6 +349,9 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnInsertSelectImage;
 
+    @FXML
+    private ToggleButton btnInsertSelectArea;
+
     // Combined
     @FXML
     private ToggleButton btnInsertCombinedLog;
@@ -380,98 +400,81 @@ public class MainController implements Initializable {
     @FXML
     ToggleButton btnCombinedMinDistance;
 
-
-    private ToggleGroup recordingToggleGroup = new ToggleGroup();
-
     /**
      * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
+     * @param properties 
      */
-    private void initToggles(SourcePropertyFile properties) {
+    private void initToggles(FormattedProperties properties) {
         List<Node> nodes = new ArrayList<>();
-        
+
         // keyboard
-        btnInsertKeyName.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyName, new KeyNameRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyName);
 
-        btnInsertKeyCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyCode, new KeyPerformRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCode);
 
-
-        btnInsertKeyCodeWithDelay.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertKeyCodeWithDelay, new KeyPerformWithDelaysRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCodeWithDelay);
 
         // mouse basics
-        btnInsertMouseClick.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseClick, new MouseClickRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseClick);
 
-        btnInsertMouseClickAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseClickAt, new MouseClickAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseClickAt);
 
-        btnInsertMouseName.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseName, new MouseNameRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseName);
 
-        btnInsertMouseMoveTo.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseMoveTo, new MouseMoveToRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseMoveTo);
 
-        btnInsertMouseMove.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseMove, new MouseMoveRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseMove);
 
-        btnInsertMousePress.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMousePress, new MousePressRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMousePress);
 
-        btnInsertMousePressAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMousePressAt, new MousePressAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMousePressAt);
 
-        btnInsertMouseRelease.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseRelease, new MouseReleaseRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseRelease);
 
-        btnInsertMouseReleaseAt.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseReleaseAt, new MouseReleaseAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseReleaseAt);
 
-        btnInsertMouseWheel.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseWheel, new WheelRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseWheel);
 
 
         // mouse press/release
-        btnInsertMouseCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseCode, new MouseButtonWheelAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseCode);
 
-        btnInsertMouseCodeWithDelay.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseCodeWithDelay, new MouseButtonWheelAtWithDelaysRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseCodeWithDelay);
 
-        btnInsertMouseRelativeCode.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertMouseRelativeCode, new MouseMoveAndRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertMouseRelativeCode);
 
-        recFilePath.onActionProperty().addListener((observable, oldValue, newValue) -> {
-            System.out.println(newValue);
-        });
         eventsRecorder.bind(recFilePath, new FilePathRecorder(eventsRecorder::putCode));
         nodes.add(recFilePath);
 
 
         // image
 
-        btnInsertSelectImage.setToggleGroup(recordingToggleGroup);
         eventsRecorder.bind(btnInsertSelectImage, new ImageRecorder(eventsRecorder::puImage));
         nodes.add(btnInsertSelectImage);
 
+        eventsRecorder.bind(btnInsertSelectArea, new AreaRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertSelectArea);
+
         // combined
+
+        eventsRecorder.bind(btnInsertCombinedLog, new CombinedRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertCombinedLog);
 
         nodes.add(btnCombinedAbsolutePath);
         nodes.add(btnCombinedDelays);
@@ -485,32 +488,14 @@ public class MainController implements Initializable {
 
         // set user data 'String' hint
         nodes.add(combinedEncodingType);
-        
+
         for (Node b : nodes) {
-            b.setUserData(new String[]{properties.get(b.getId()), ""});
+            b.setUserData(new String[]{(String) properties.get(b.getId()), ""});
             b.setOnMouseEntered(this::showCodeSample);
             b.setOnMouseExited(this::hideCodeSample);
         }
     }
 
-    private String getToggleButtonPath(Object button) {
-        String out = "";
-        Node n = (Node) button;
-        if (button instanceof Button) {
-            out = ((Button) button).getText();
-
-        } else if (button instanceof ToggleButton) {
-            out = ((ToggleButton) button).getText();
-        }
-
-        do {
-            if (n instanceof TitledPane) {
-                out = ((TitledPane) n).getText() + "> " + out;
-            }
-            n = n.getParent();
-        } while ((!(n instanceof AnchorPane)) && (n != null));
-        return out;
-    }
 
     @FXML
     void recFilePath(ActionEvent event) {
@@ -551,7 +536,7 @@ public class MainController implements Initializable {
      *
      * @param prop - property file
      */
-    private void initTemplateButtons(SourcePropertyFile prop) {
+    private void initTemplateButtons(FormattedProperties prop) {
 
         TemplateButtonGenerator buttonGenerator = new TemplateButtonGenerator()
                 .setLineSize(120)
@@ -611,33 +596,12 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private ToggleButton btnScriptStatus;
-
-    @FXML
-    private ToggleButton btnTogglesStatus;
-
-    @FXML
     private void onBtnStatusScript(ActionEvent event) {
         ToggleButton button = (ToggleButton) event.getSource();
         if (button.isSelected()) {
             runScript();
         } else {
             stopScript();
-        }
-    }
-
-    /**
-     * Invokes by toggle to insert code on main scene
-     *
-     * @param event actionEvent from toggle
-     */
-    @FXML
-    private void onBtnStatusToggles(ActionEvent event) {
-        ToggleButton toggle = (ToggleButton) event.getSource();
-        if (toggle.getUserData() == null) {
-            toggle.setSelected(false);
-        } else if (toggle.getUserData() instanceof ToggleButton) {
-            ((ToggleButton) toggle.getUserData()).fire();
         }
     }
 
@@ -661,29 +625,29 @@ public class MainController implements Initializable {
 
     private void createHotkeys() {
 
-        HotKeys hotKeys = config.getHotKeys();
+        HotKeys hotKeys = Dependency.getConfig().hotKeys();
 
-        KeyEventsManager keyListener = KeyEventsManager.getInstance();
-
-        ShortcutEqualsListener stopScriptListener = new ShortcutEqualsListener();
         StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
-        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("stopScript").getKeys().valueProperty());
-        stopScriptListener.setName("stopScript");
-        stopScriptListener.setShortcut(new StringPropertyShortcut(stopScriptShortcutStringProperty));
-        stopScriptListener.setAction("PRESS");
-        stopScriptListener.setHandler((e) -> Platform.runLater(this::stopScript));
+        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
 
-        ShortcutEqualsListener runScriptListener = new ShortcutEqualsListener();
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.stopScript",
+                () -> {
+                    Platform.runLater(this::stopScript);
+                },
+                stopScriptShortcutStringProperty
+        ));
+
         StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
-        runScriptShortcutStringProperty.bindBidirectional(hotKeys.getShortcut("runScript").getKeys().valueProperty());
-        runScriptListener.setName("runScript");
-        runScriptListener.setShortcut(new StringPropertyShortcut(runScriptShortcutStringProperty));
-        runScriptListener.setAction("PRESS");
-        runScriptListener.setHandler((e) -> Platform.runLater(this::runScript));
+        runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
 
-
-        keyListener.addKeyboardListener(stopScriptListener);
-        keyListener.addKeyboardListener(runScriptListener);
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.runScript",
+                () -> {
+                    Platform.runLater(this::runScript);
+                },
+                runScriptShortcutStringProperty
+        ));
     }
 
 }

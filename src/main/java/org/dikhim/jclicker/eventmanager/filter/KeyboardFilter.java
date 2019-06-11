@@ -4,9 +4,13 @@ import org.dikhim.jclicker.eventmanager.event.Event;
 import org.dikhim.jclicker.eventmanager.event.KeyboardEvent;
 import org.dikhim.jclicker.eventmanager.listener.EventListener;
 
-public class KeyboardFilter implements Filter {
+public class KeyboardFilter extends SimpleFilter{
+    public KeyboardFilter(String id) {
+        super(id);
+    }
+
     @Override
-    public boolean ignored(String key, Event event, EventListener eventListener) {
+    public boolean ignored(EventListener eventListener, Event event) {
         return event instanceof KeyboardEvent;
     }
 }

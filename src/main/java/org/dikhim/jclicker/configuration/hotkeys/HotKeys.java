@@ -1,54 +1,70 @@
 package org.dikhim.jclicker.configuration.hotkeys;
 
-import javax.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
+
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+
 import java.util.prefs.Preferences;
 
-public class HotKeys {
+public class HotKeys extends SimpleConfigElement {
+    private final Shortcut runScript;
+    private final Shortcut stopScript;
+    private final Shortcut combinedControl;
+    private final Shortcut mouseControl;
 
-
-    private String name;
-    private Preferences preferences;
-    private final List<Shortcut> shortcutList = new ArrayList<>();
-
-    public HotKeys(JsonObject jsonObject, String name) {
-        this.name = name;
-        preferences = Preferences.userRoot().node(name);
-        loadDefault(jsonObject);
+    public HotKeys(String name, Preferences preferences) {
+        super(name, preferences);
+        
+        runScript = new Shortcut(
+                "runScript", "CONTROL ALT A", "execution", getPreferences());
+        
+        stopScript = new Shortcut(
+                "stopScript", "CONTROL ALT S", "execution", getPreferences());
+        
+        combinedControl = new Shortcut(
+                "combinedControl", "F2", "recording", getPreferences());
+        
+        mouseControl = new Shortcut(
+                "mouseControl", "CONTROL", "recording", getPreferences());
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        jsonObject.keySet().forEach(key ->
-                shortcutList.add(new Shortcut(jsonObject.getJsonObject(key), name + "/" + key)));
-    }
 
-    public void setDefault() {
-        shortcutList.forEach(Shortcut::setDefault);
-    }
-
+    @Override
     public void save() {
-        shortcutList.forEach(Shortcut::save);
+        runScript.save();
+        stopScript.save();
+        combinedControl.save();
+        mouseControl.save();
     }
 
-    public void loadOrSetDefault() {
-        shortcutList.forEach(Shortcut::loadOrSetDefault);
+    @Override
+    public void resetToDefault() {
+        runScript.resetToDefault();
+        stopScript.resetToDefault();
+        combinedControl.resetToDefault();
+        mouseControl.resetToDefault();
     }
 
-    //
-    public String getName() {
-        return name;
+    @Override
+    public void resetToSaved() {
+        runScript.resetToSaved();
+        stopScript.resetToSaved();
+        combinedControl.resetToSaved();
+        mouseControl.resetToSaved();
     }
 
-    public List<Shortcut> getShortcutList() {
-        return shortcutList;
+    public Shortcut runScript() {
+        return runScript;
     }
-    
-    public Shortcut getShortcut(String name){
-        String prefix = getName() + "/";
-        for (Shortcut s : getShortcutList()) {
-            if(s.getName().equals(prefix+name)) return s;
-        }
-        return null;
+
+    public Shortcut stopScript() {
+        return stopScript;
+    }
+
+    public Shortcut combinedControl() {
+        return combinedControl;
+    }
+
+    public Shortcut mouseControl() {
+        return mouseControl;
     }
 }

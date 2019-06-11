@@ -4,7 +4,7 @@ package org.dikhim.jclicker.server.http;
 import javafx.beans.property.*;
 import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.jclicker.Dependency;
-import org.dikhim.jclicker.configuration.servers.ServerConfig;
+import org.dikhim.jclicker.configuration.servers.Server;
 import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
@@ -27,11 +27,10 @@ public class HttpServer {
     private List<HttpClient> clients = new ArrayList<>();
     private HttpClient defaultClient;
 
-    ServerConfig serverConfig;
+    private Server serverConfig = Dependency.getConfig().servers().http();
     private ClickAuto clickAuto;
 
-    public HttpServer(ServerConfig serverConfig) {
-        this.serverConfig = serverConfig;
+    public HttpServer() {
         this.clickAuto = Dependency.getClickAuto();
         
         KeyboardObject keyboardObject = new UselessKeyboardObject(clickAuto.robot());
@@ -43,7 +42,7 @@ public class HttpServer {
     }
 
     private void initialization() {
-        port.bindBidirectional(serverConfig.getPort().valueProperty());
+        port.bindBidirectional(serverConfig.portProperty());
         updateStatus();
     }
 

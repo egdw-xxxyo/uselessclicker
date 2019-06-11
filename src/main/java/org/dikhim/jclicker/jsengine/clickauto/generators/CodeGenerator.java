@@ -3,32 +3,15 @@ package org.dikhim.jclicker.jsengine.clickauto.generators;
 import java.util.List;
 
 public interface CodeGenerator {
-
-    void buildStringForCurrentMethod(Object... params);
-    
-    void invokeMethodWithDefaultParams(String methodName);
-
-    String getGeneratedCode();
-
     int getLineSize();
 
-    List<String> getMethodNames();
-
-
-    String getObjectName();
-
-    /**
-     * @return
-     */
-    default String getMethodName() {
-        return Thread.currentThread().getStackTrace()[3].getMethodName();
-    }
+    String forMethod(String methodMane, Object... params);
 
     default String separateOnLines(StringBuilder inputStringBuilder, int lineSize) {
         if (inputStringBuilder.length() <= lineSize) return inputStringBuilder.toString();
 
         char[] c = inputStringBuilder.toString().toCharArray();
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < c.length - 4; i++) {
             if ((sb.length() + 3) % lineSize != 0) {
@@ -43,6 +26,5 @@ public interface CodeGenerator {
         return sb.toString();
     }
 
-    void setLineSize(int lineSize);
-
+    List<String> getMethodNames();
 }

@@ -1,0 +1,79 @@
+<!DOCTYPE html><!--suppress JSUnusedLocalSymbols -->
+<html lang='ru' class=''>
+<head>
+    <meta charset='UTF-8'>
+    <meta name="robots" content="noindex">
+    <link rel='stylesheet prefetch' href='../../css/bootstrap.min.css'>
+    <script type="text/javascript">const current_page = "versionHistory.html";</script>
+    <script src='../../js/jquery.min.js'></script>
+    <script src='../../js/root.js'></script>
+    <script src="index.js"></script>
+
+    <link rel='stylesheet prefetch' href='../../css/index.css'>
+</head>
+<body>
+<nav class="navbar-primary">
+    <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+    <ul class="navbar-primary-menu">
+        <li>
+        </li>
+    </ul>
+</nav>
+<div class="main-content">
+    <h3>Version 0.5.0</h3>
+    11.06.2019
+    
+    Interface changes, similar image searching, optimizations, and bugfixing. 
+    
+    <h3>Version 0.4.1</h3>
+    <h4>User interface</h4>
+    <ul>
+        <li>Now all inserted text inserts with intents</li>
+        <li>Select text and press tub to insert intents to each selected line</li>
+        <li>Context menu item 'Insert'</li>
+    </ul>
+    <h4>Other</h4>
+    <ul>
+        <li>Language selection window for the first launch</li>
+        <li>Added "Insert file path" button in the recording section</li>
+        <li>Load an image from selected text. If you have a selection it at first tries to load image from selection and if an attempt failed than showed an input dialog. To load image you should select any text between <strong>('</strong> and <strong>')</strong>, like "ate.image('H4sIAAAAAAAAAOsM8HPn5ZLiYmBg4PX0cAkC0ixAzMjBBiR/2vCfBVLCni6OIRW3knfUvP5YXytcbcC2kTHUkitRMzM'+
+            '6FCjN4Onq57LOKaEJAJPFrSFMAAAA');" is still correct. It omits any unnecessary chars between braces</li>
+    </ul>
+    <br>
+    <br>
+    
+    
+    <h3>Version 0.4.0</h3>
+    <h4>Screen capturing</h4>
+    <ul>
+        <li>Added the <strong>screen</strong> object, with which you can capture an image from the display;</li>
+        <li>added the <strong>Screen</strong> tab, where you can quickly select the part of the screen and save it.</li>
+    </ul>
+
+    <h4>Images</h4>
+    <ul>
+        <li>a new Image class that contains all the necessary methods for image processing;</li>
+        <li>searching for an image in another image using the <strong>findFirst</strong>, <strong>findAll</strong>, and <strong>findLimit</strong> methods;</li>
+        <li>images can be compiled by calling the method <strong>image.compile()</strong>, thereby consuming time for the compilation, but speed up further search;</li>
+        <li>added the image output view, where an image can be loaded, edited, saved to file or inserted to a script;</li>
+        <li>you can upload an image to the image output view from the script using the <strong>system.showImage()</strong> method.</li>
+    </ul>
+    <h4>Keyboard</h4>
+    <ul>
+        <li>Added new method key.typeText(String layout, String text) that typing the passed text in the specified layout;</li>
+        <li>the method key.typeText() supported layouts:
+            <br>"us" - English(US),
+            <br>"gb" - English(UK),
+            <br>"ru" - Russian,
+            <br>"ua" - Ukrainian.
+        </li>
+        <li>Added the key ALT_GR for testing</li>
+    </ul>
+
+    <h4>Other</h4>
+    <ul>
+        <li>Added new object <strong>create</strong> by which it is easy to create necessary objects</li>
+    </ul>
+</div>
+</body>
+</html>

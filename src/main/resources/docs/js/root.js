@@ -40,7 +40,7 @@ $(document).ready(function () {
             .attr("title", "Copy to clipboard")
             .click(function (e) {
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
-                sys.copy(text);
+                sys.setClipboard(text);
             }));
 
     //set button
@@ -49,14 +49,21 @@ $(document).ready(function () {
             .addClass("glyphicon glyphicon-save-file")
             .attr("title", "Set to the script editor field")
             .click(function (e) {
-                console.log("set");
                 let text = $(e.target).parent().parent().parent().find("pre code").text();
-                sys.set(text);
+                sys.setToCodeTextArea(text);
+            }));
+
+    //run button
+    let $runButton = $li.clone().append(
+        $("<a>")
+            .addClass("glyphicon glyphicon-play")
+            .attr("title", "Put code into editor and run")
+            .click(function (e) {
+                let text = $(e.target).parent().parent().parent().find("pre code").text();
+                sys.runCode(text);
             }));
 
     //show more button
-
-
     let getMoreButton = function(){
         return $li.clone().append($('<a />', {
             class: "glyphicon glyphicon-chevron-down",
@@ -72,7 +79,8 @@ $(document).ready(function () {
     let $codeButtonBar = $("<ul>")
         .addClass("code-bar")
         .append($copyButton)
-        .append($setButton);
+        .append($setButton)
+        .append($runButton);
     let $codeboxes = $(".codebox");
 
     $codeboxes.append($codeButtonBar);

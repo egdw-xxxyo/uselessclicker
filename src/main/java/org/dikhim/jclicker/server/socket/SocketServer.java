@@ -2,7 +2,7 @@ package org.dikhim.jclicker.server.socket;
 
 import javafx.beans.property.*;
 import javafx.collections.ObservableList;
-import org.dikhim.jclicker.configuration.servers.ServerConfig;
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.server.Server;
 import org.dikhim.jclicker.util.WebUtils;
 
@@ -18,17 +18,15 @@ public class SocketServer implements Server {
 
     private SocketServerThread serverThread;
 
-    private ServerConfig serverConfig;
+    private org.dikhim.jclicker.configuration.servers.Server serverConfig = Dependency.getConfig().servers().socket();
 
-    public SocketServer(ServerConfig serverConfig) {
-        this.serverConfig = serverConfig;
-
+    public SocketServer() {
         initialization();
         updateStatus();
     }
 
     private void initialization() {
-        port.bindBidirectional(serverConfig.getPort().valueProperty());
+        port.bindBidirectional(serverConfig.portProperty());
         updateStatus();
     }
 

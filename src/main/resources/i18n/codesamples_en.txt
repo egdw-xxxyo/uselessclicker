@@ -253,6 +253,22 @@ $combinedEncodingType:
 //////////////IMAGE//////////////////
 $btnInsertSelectImage:
   Insert a selected area to the image output view
+  
+  Choose any two points that represent rectangular you want to capture
+  
+  Press control button to record the first point and release it to specify the second one
+  
+  The result will be loaded to the image out area
+
+
+$btnInsertSelectArea:
+  Insert a selected area to the image output view
+  
+  Choose any two points that represent rectangular you want to capture
+  
+  Press control button to record the first point and release it to specify the second one
+  
+  The result will be loaded to the image out area
 
 /////////////////////////////////////
 //////////////OTHER//////////////////
@@ -1049,23 +1065,39 @@ Copy the text to the clipboard
 ////////////CREATE///////////////////
 /////////////////////////////////////
 $create_image_hint:
-var image = create.image(16,16);
+create.image(16,16);
   
-Create an image
+Create an image object
   
 Usages:
   image(int width, int height)
   image(String base64String)
 
 $create_imageFile_hint:
-var image = create.imageFile('file.png');
+create.imageFile('file.png');
   
 Create an image from the file path
 
 $create_point_hint:
-var point = create.point(0,0);
+create.point(0,0);
   
-Create a point
+Create a point object
+  
+Usages:
+  point(int x, int y)
+
+$create_rectangle_hint:
+create.rectangle(0,0,1,1);
+  
+Create a rectangle object
+  
+Usages:
+  rectangle(int x1, int y1,
+    int width, int height)
+  rectangle(Point p,
+    int width, int height)
+  rectangle(Point p1, Point p2)
+
 
 /////////////////////////////////////
 ///THIS IS MAX SIZE FOR EACH LINE////

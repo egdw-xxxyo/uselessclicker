@@ -1,64 +1,58 @@
 package org.dikhim.jclicker.configuration.localization;
 
-import org.dikhim.jclicker.configuration.values.StringValue;
+import javafx.beans.property.StringProperty;
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.property.StringConfigProperty;
 
-import javax.json.JsonObject;
+import java.util.Locale;
 import java.util.prefs.Preferences;
 
-public class Localization {
-    private String path;
-    private String name;
-    private Preferences preferences;
+public class Localization extends SimpleConfigElement {
+    private final Languages languages = new Languages();
 
-    private StringValue applicationLanguage;
-    private Languages languages;
+    private final StringConfigProperty applicationLanguageId;
 
+    private Locale locale;
 
-    public Localization(JsonObject jsonObject, String path, String name) {
-        this.path = path;
-        this.name = name;
-        preferences = Preferences.userRoot().node(name);
-        loadDefault(jsonObject);
+    public Localization(String name, Preferences preferences) {
+        super(name, preferences);
+
+        this.applicationLanguageId = new StringConfigProperty("appLangId", "en", getPreferences());
+        this.locale = new Locale(applicationLanguageId.get());
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        applicationLanguage = new StringValue(name + "/applicationLanguage",jsonObject.getString("applicationLanguage"));
-        languages = new Languages(jsonObject.getJsonObject("languages"), path + "/" + name, name);
-    }
-
-    public void setDefault() {
-        applicationLanguage.setDefault();
-        languages.setDefault();
-    }
-
+    @Override
     public void save() {
-        applicationLanguage.save(preferences);
-        languages.save();
+        applicationLanguageId.save();
     }
 
-    public void loadOrSetDefault() {
-        applicationLanguage.loadOrSetDefault(preferences);
-        languages.loadOrSetDefault();
+    @Override
+    public void resetToDefault() {
+        applicationLanguageId.resetToDefault();
     }
 
-    //
-    public String getName() {
-        return name;
+    @Override
+    public void resetToSaved() {
+        applicationLanguageId.resetToSaved();
     }
 
-    public StringValue getApplicationLanguage() {
-        return applicationLanguage;
-    }
-
-    public Language getSelectedLanguage() {
-        return getLanguages().getById(applicationLanguage.get());
-    }
-
-    public Languages getLanguages() {
+    public Languages languages() {
         return languages;
     }
 
-    public String getPath() {
-        return path;
+    public String getApplicationLanguageId() {
+        return applicationLanguageId.get();
+    }
+    
+    public StringProperty applicationLanguageIdProperty() {
+        return applicationLanguageId.getProperty();
+    }
+
+    public void setApplicationLanguageId(String id) {
+        applicationLanguageId.set(id);
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 }

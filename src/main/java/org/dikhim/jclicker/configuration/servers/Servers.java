@@ -1,54 +1,43 @@
 package org.dikhim.jclicker.configuration.servers;
 
-import javax.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+
 import java.util.prefs.Preferences;
 
-public class Servers {
-    private String path;
-    private String name;
+public class Servers extends SimpleConfigElement {
+    private final Server socket;
+    private final Server http;
 
-    private Preferences preferences;
-    private final List<ServerConfig> serverList = new ArrayList<>();
+    public Servers(String name, Preferences preferences) {
+        super(name, preferences);
 
-    public Servers(JsonObject jsonObject, String path, String name) {
-        this.path = path;
-        this.name = name;
-        preferences = Preferences.userRoot().node(path);
-        loadDefault(jsonObject);
+        socket = new Server("socket", getPreferences());
+        http = new Server("http", getPreferences());
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        jsonObject.keySet().forEach(key ->
-                serverList.add(new ServerConfig(jsonObject.getJsonObject(key), path + "/" + key, key)));
-    }
-
-    public void setDefault() {
-        serverList.forEach(ServerConfig::setDefault);
-    }
-
+    @Override
     public void save() {
-        serverList.forEach(ServerConfig::save);
+        socket.save();
+        http.save();
     }
 
-    public void loadOrSetDefault() {
-        serverList.forEach(ServerConfig::loadOrSetDefault);
+    @Override
+    public void resetToDefault() {
+        socket.resetToDefault();
+        http.resetToDefault();
     }
 
-    //
-    public String getPath() {
-        return path;
+    @Override
+    public void resetToSaved() {
+        socket.resetToSaved();
+        http.resetToSaved();
     }
 
-    public List<ServerConfig> getServerList() {
-        return serverList;
+    public Server socket() {
+        return socket;
     }
 
-    public ServerConfig getServer(String name) {
-        for (ServerConfig s : serverList) {
-            if (s.getName().equals(name)) return s;
-        }
-        throw new IllegalArgumentException("unknown parameter config '" + name + "' in '" + path);
+    public Server http() {
+        return http;
     }
 }

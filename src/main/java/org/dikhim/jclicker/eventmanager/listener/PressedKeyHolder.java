@@ -17,6 +17,4 @@ public class PressedKeyHolder {
     public Set<String> getPressedKeys() {
         return pressedKeys;
     }
-    
-    
 }

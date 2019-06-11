@@ -4,8 +4,9 @@ import org.dikhim.jclicker.eventmanager.event.MousePressEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelDownEvent;
 import org.dikhim.jclicker.eventmanager.event.MouseWheelUpEvent;
-import org.dikhim.jclicker.eventmanager.listener.MouseButtonWheelListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonWheelListener;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -15,48 +16,43 @@ import java.util.function.Consumer;
  * mouse.wheelAt('DOWN',3,1111,344);<br>
  * mouse.wheelAt('DOWN',3,1211,348);
  */
-public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder {
+public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder implements LupeRequired {
     public MouseButtonWheelAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
+    private CodeGenerator codeGenerator = new MouseCodeGenerator();
+
     @Override
     public void onStart() {
         super.onStart();
-        MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
 
-        addListener("recording.mouse.buttonWheelAt", new MouseButtonWheelListener() {
-
-
+        addListener(new SimpleMouseButtonWheelListener("recording.mouse.buttonWheelAt") {
             @Override
             public void buttonPressed(MousePressEvent event) {
-                if (!isControlPressed()) return;
-                codeGenerator.buttonAt(event.getButton(), "PRESS", event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                if (!isRecording()) return;
+                
+                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "PRESS", event.getX(), event.getY()));
             }
 
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
-                if (!isControlPressed()) return;
-
-                codeGenerator.buttonAt(event.getButton(), "RELEASE", event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                if (!isRecording()) return;
+                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "PRESS", event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
-                if (!isControlPressed()) return;
+                if (!isRecording()) return;
 
-                codeGenerator.wheelAt("UP", event.getAmount(), event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("wheelAt", "UP", event.getAmount(), event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
-                if (!isControlPressed()) return;
+                if (!isRecording()) return;
 
-                codeGenerator.wheelAt("DOWN", event.getAmount(), event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("wheelAt", "DOWN", event.getAmount(), event.getX(), event.getY()));
             }
         });
     }

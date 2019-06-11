@@ -1,80 +1,128 @@
 package org.dikhim.jclicker.jsengine.clickauto.generators;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
-public abstract class SimpleCodeGenerator implements CodeGenerator {
-    private String objectName;
+public class SimpleCodeGenerator implements CodeGenerator {
+    private static final int MIN_LINE_SIZE = 50;
+
     private int lineSize;
-    private StringBuilder sb = new StringBuilder();
+    private String objectName;
+    List<Method> methods;
 
-    private List<Method> methods = new ArrayList<>();
-
-    private final int MIN_LINE_SIZE = 50;
-
-    SimpleCodeGenerator(String objectName, int lineSize, Class c) {
+    public SimpleCodeGenerator(String objectName, Class c, int lineSize) {
         this.objectName = objectName;
-        setLineSize(lineSize);
-        methods.addAll(Arrays.asList(c.getDeclaredMethods()));
-        for(Class<?> inf: c.getInterfaces()){
+        this.lineSize = lineSize;
+        methods = new ArrayList<>(Arrays.asList(c.getDeclaredMethods()));
+        for (Class<?> inf : c.getInterfaces()) {
             methods.addAll(Arrays.asList(inf.getDeclaredMethods()));
         }
     }
 
-    SimpleCodeGenerator(String objectName, Class c) {
-        this.objectName = objectName;
-        methods.addAll(Arrays.asList(c.getDeclaredMethods()));
-        for(Class<?> inf: c.getInterfaces()){
-            methods.addAll(Arrays.asList(inf.getDeclaredMethods()));
+    public SimpleCodeGenerator(String objectName, Class c) {
+        this(objectName, c, MIN_LINE_SIZE);
+    }
+
+    @Override
+    public String forMethod(String methodName, Object... params) {
+        List<Method> listOfMethods= methods.stream().filter(method1 -> method1.getName().equals(methodName)).collect(Collectors.toList());
+        if (listOfMethods.size()<1)
+            throw new IllegalArgumentException("Given class doesn't contain the specified method");
+
+        if (listOfMethods.stream().noneMatch(method -> method.getParameterCount() == params.length))
+            throw new IllegalArgumentException("Given wrong number of parameters");
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(objectName);
+        sb.append(".");
+        sb.append(methodName);
+        sb.append("(");
+
+        for (int i = 0; i < params.length; i++) {
+            append(sb, params[i]);
+            if (i != params.length - 1) {
+                sb.append(",");
+            }
         }
-        
-        setLineSize(MIN_LINE_SIZE);
+        sb.append(");\n");
+
+        return separateOnLines(sb, lineSize);
+    }
+
+    private void append(StringBuilder sb, Object param) {
+        if (param instanceof Integer) {
+            append(sb, (int) (param));
+        } else if (param instanceof Float) {
+            append(sb, (float) (param));
+        } else if (param instanceof Double) {
+            append(sb, (double) (param));
+        } else if (param instanceof Long) {
+            append(sb, (long) (param));
+        } else if (param instanceof String) {
+            append(sb, (String) (param));
+        } else if (param instanceof Boolean) {
+            append(sb, (boolean) (param));
+        }
     }
 
     /**
      * Appends the specified string to character sequence.
      *
      * @param str a string.
-     * @return a reference to this object
      */
-    protected SimpleCodeGenerator append(String str) {
+    protected void append(StringBuilder sb, String str) {
         sb.append("'").append(str).append("'");
-        return this;
     }
 
     /**
      * Appends the string representation of the int argument to this sequence.
      *
      * @param i an int.
-     * @return a reference to this object
      */
-    protected SimpleCodeGenerator append(int i) {
+    protected void append(StringBuilder sb, int i) {
         sb.append(i);
-        return this;
     }
 
     /**
      * Appends the string representation of the float argument to this sequence.
      *
      * @param f a float.
-     * @return a reference to this object
      */
-    protected SimpleCodeGenerator append(float f) {
+    protected void append(StringBuilder sb, float f) {
         sb.append(f);
-        return this;
     }
+
     /**
      * Appends the string representation of the double argument to this sequence.
      *
      * @param f a double.
-     * @return a reference to this object
      */
-    protected SimpleCodeGenerator append(double f) {
+    protected void append(StringBuilder sb, double f) {
         sb.append(f);
-        return this;
+    }
+
+    /**
+     * Appends the string representation of the boolean argument to this sequence.
+     *
+     * @param f a boolean.
+     */
+    protected void append(StringBuilder sb, boolean f) {
+        sb.append(f);
+    }
+
+    /**
+     * Appends the string representation of the long argument to this sequence.
+     *
+     * @param f a boolean.
+     */
+    protected void append(StringBuilder sb, long f) {
+        sb.append(f);
     }
 
     @Override
@@ -83,105 +131,7 @@ public abstract class SimpleCodeGenerator implements CodeGenerator {
     }
 
     @Override
-    public void setLineSize(int lineSize) {
-        if (lineSize < MIN_LINE_SIZE) {
-            this.lineSize = MIN_LINE_SIZE;
-        } else {
-            this.lineSize = lineSize;
-        }
-    }
-
-    @Override
-    public String getObjectName() {
-        return objectName;
-    }
-
-    @Override
-    public String getGeneratedCode() {
-        return separateOnLines(sb, lineSize);
-    }
-
-    public void buildStringForCurrentMethod(Object... params) {
-        String objectName = getObjectName();
-        String methodName = getMethodName();
-
-        sb = new StringBuilder();
-        sb.append(objectName).append(".")
-                .append(methodName).append("(");
-
-        Method m = getMethodWithName(methodName);
-        Type[] gpType;
-        if (m != null) {
-            gpType = m.getGenericParameterTypes();
-        } else {
-            return;
-        }
-
-        for (int i = 0; i < gpType.length; i++) {
-            if (gpType[i].equals(String.class)) {
-                append((String) params[i]);
-            } else if (gpType[i].equals(int.class)) {
-                append((int) params[i]);
-            } else if (gpType[i].equals(float.class)) {
-                append((float) params[i]);
-            }else if (gpType[i].equals(double.class)) {
-                append((double) params[i]);
-            }
-            if (i != gpType.length - 1) sb.append(",");
-        }
-        sb.append(");\n");
-    }
-
-    @Override
-    public void invokeMethodWithDefaultParams(String methodName) {
-        Method m = getMethodWithName(methodName);
-        Type[] gpType;
-        if (m != null) {
-            gpType = m.getGenericParameterTypes();
-        } else {
-            return;
-        }
-        Object[] params = new Object[gpType.length];
-        for (int i = 0; i < gpType.length; i++) {
-            if (gpType[i].equals(String.class)) {
-                params[i] = "";
-            } else if (gpType[i].equals(int.class)) {
-                params[i] = 0;
-            } else if (gpType[i].equals(float.class)) {
-                params[i] = 0;
-            }
-        }
-        try {
-            m.invoke(this, params);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
     public List<String> getMethodNames() {
-        Set<String> methodsNamesSet = new HashSet<>();
-        for (Method m : methods) {
-            if (Modifier.isPublic(m.getModifiers()))
-                methodsNamesSet.add(m.getName());
-        }
-        List<String> methodNames = new ArrayList<>(methodsNamesSet);
-        methodNames.sort(Comparator.naturalOrder());
-        return methodNames;
-    }
-
-
-    private Method getMethodWithName(String methodName) {
-        for (Method m : methods) {
-            if (!m.getName().equals(methodName)) {
-                continue;
-            }
-            return m;
-        }
-        return null;
-    }
-
-    public StringBuilder getSb() {
-        return sb;
+        return methods.stream().map(Method::getName).distinct().collect(Collectors.toList());
     }
 }

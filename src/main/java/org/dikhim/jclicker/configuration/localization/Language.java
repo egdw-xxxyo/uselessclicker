@@ -1,67 +1,30 @@
 package org.dikhim.jclicker.configuration.localization;
 
-import org.dikhim.jclicker.configuration.values.StringValue;
-
-import javax.json.JsonObject;
-import java.util.prefs.Preferences;
-
 public class Language {
-    private String path;
-    private String name;
-
-    private Preferences preferences;
-
-    private StringValue nativeName;
-    private StringValue id;
-
-    public Language(JsonObject jsonObject,String path, String name) {
-        this.path = path;
-        this.name = name;
-        preferences = Preferences.userRoot().node(name);
-        loadDefault(jsonObject);
+    private final String id;
+    private final String englishName;
+    private final String nativeName;
+    
+    public Language(String id, String englishName, String nativeName) {
+        this.id = id;
+        this.englishName = englishName;
+        this.nativeName = nativeName;
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        nativeName = new StringValue("nativeName", jsonObject.getString("nativeName"));
-        id = new StringValue("id", jsonObject.getString("id"));
-    }
-
-
-    public void setDefault() {
-        id.setDefault();
-        nativeName.setDefault();
-    }
-
-    public void save() {
-        id.save(preferences);
-        nativeName.save(preferences);
-    }
-
-    public void loadOrSetDefault() {
-        id.loadOrSetDefault(preferences);
-        nativeName.loadOrSetDefault(preferences);
-    }
-
-    //
-
-    public String getName() {
-        return name;
-    }
-
-    public StringValue getId() {
+    public String id() {
         return id;
     }
 
-    public StringValue getNativeName() {
-        return nativeName;
+    public String englishName() {
+        return englishName;
     }
 
-    public String getPath() {
-        return path;
+    public String nativeName() {
+        return nativeName;
     }
 
     @Override
     public String toString() {
-        return getNativeName().get();
+        return nativeName;
     }
 }

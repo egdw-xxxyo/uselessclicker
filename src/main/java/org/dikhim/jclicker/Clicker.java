@@ -3,8 +3,6 @@ package org.dikhim.jclicker;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.dikhim.clickauto.ClickAuto;
-import org.dikhim.jclicker.actions.managers.KeyEventsManager;
-import org.dikhim.jclicker.actions.managers.MouseEventsManager;
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.model.MainApplication;
 import org.dikhim.jclicker.util.Cli;
@@ -12,12 +10,7 @@ import org.dikhim.jclicker.util.Out;
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.prefs.Preferences;
 
 public class Clicker extends Application {
@@ -44,11 +37,9 @@ public class Clicker extends Application {
             if(Preferences.userRoot().node("main").getBoolean("isFirstLaunch",true)){
                 Preferences.userRoot().node("main").putBoolean("isFirstLaunch",false);
                 String language = WindowManager.showChooseLanguageDialog();
-                mainApplication.getConfig().getLocalization().getApplicationLanguage().set(language);
-                mainApplication.getConfig().save();
+                Dependency.getConfig().localization().setApplicationLanguageId(language);
+                Dependency.getConfig().save();
             }
-            String language = mainApplication.getConfig().getLocalization().getApplicationLanguage().get();
-            WindowManager.initialization(new Locale(language));
             loadMainScene();
         }
         Out.addPrintMethod(System.out::print);
@@ -94,22 +85,8 @@ public class Clicker extends Application {
      * Initialization of JNativeHook
      */
     private void jNativeHookStart() {
-        try {
-            EventManager eventManager = new EventManager();
-            Dependency.setEventManager(eventManager);
-            
-            //TODO
-           /* GlobalScreen.registerNativeHook();
-            MouseEventsManager mouseListener = MouseEventsManager.getInstance();
-            GlobalScreen.addNativeMouseListener(mouseListener);
-            GlobalScreen.addNativeMouseMotionListener(mouseListener);
-            GlobalScreen.addNativeMouseWheelListener(mouseListener);
-            KeyEventsManager keyListener = KeyEventsManager.getInstance();
-            GlobalScreen.addNativeKeyListener(keyListener);*/
-        } catch (Exception e) {
-            Out.println("Cannot create keyboard/mouse recording object");
-            Out.println("Recording events won't be available");
-        }
+        EventManager eventManager = new EventManager();
+        Dependency.setEventManager(eventManager);
     }
 
     private void jNativeHookStop() {

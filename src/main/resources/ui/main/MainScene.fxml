@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -26,7 +27,7 @@
 
 <!--suppress ALL -->
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" stylesheets="@MainScene.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
 
     <center>
         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -110,22 +111,27 @@
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </ToggleButton>
-                    <ToggleButton id="recordingStatusButton" fx:id="btnTogglesStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onBtnStatusToggles" styleClass="templateButton" text="Record Events&gt; Mouse 'press/release'&gt; moveAndPress/moveAndRelease" HBox.hgrow="SOMETIMES">
+                    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="" HBox.hgrow="SOMETIMES">
                         <font>
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </ToggleButton>
-               <ToggleButton id="lupeStatusButton" fx:id="btnRecording" mnemonicParsing="false" styleClass="statusButton">
+               <ToggleButton id="lupeStatusButton" fx:id="btnLupeStatus" mnemonicParsing="false" styleClass="statusButton">
                   <font>
                      <Font name="FreeMono Bold" size="13.0" />
                   </font>
                </ToggleButton>
-               <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecording" disable="true" mnemonicParsing="false" styleClass="statusButton">
+               <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
                   <font>
                      <Font name="FreeMono Bold" size="13.0" />
                   </font>
                </ToggleButton>
-               <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecording" disable="true" mnemonicParsing="false" styleClass="statusButton">
+               <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
+                  <font>
+                     <Font name="FreeMono Bold" size="13.0" />
+                  </font>
+               </ToggleButton>
+               <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
                   <font>
                      <Font name="FreeMono Bold" size="13.0" />
                   </font>
@@ -139,12 +145,12 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="300.0">
                             <TabPane fx:id="outputTabPane" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                 <tabs>
-                                    <Tab text="Output">
+                                    <Tab styleClass="out-tab" text="Output">
                                         <content>
                                             <AnchorPane fx:id="outputTextPane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                         </content>
                                     </Tab>
-                                    <Tab text="Image">
+                                    <Tab styleClass="out-tab" text="Image">
                                         <content>
                                             <AnchorPane fx:id="outputImagePane" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                         </content>
@@ -220,17 +226,17 @@
                                                     <ChoiceBox fx:id="combinedEncodingType" prefWidth="150.0" styleClass="templateButton" />
                                                     <ToggleButton fx:id="btnCombinedFixRate" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.fixedRate">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" text="30" />
+                                                            <TextField fx:id="txtCombinedFixRate" maxWidth="50.0" styleClass="text-edit" text="30" />
                                                         </graphic>
                                                     </ToggleButton>
                                                     <ToggleButton fx:id="btnCombinedMinDistance" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.minDistance">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" text="5" />
+                                                            <TextField fx:id="txtCombinedMinDistance" maxWidth="50.0" styleClass="text-edit" text="5" />
                                                         </graphic>
                                                     </ToggleButton>
                                                     <ToggleButton fx:id="btnCombinedDetectStopPoints" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" styleClass="templateButton" text="%r.eRec.combined.stopPoints">
                                                         <graphic>
-                                                            <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" text="100" />
+                                                            <TextField fx:id="txtCombinedDetectStopPoints" maxWidth="50.0" styleClass="text-edit" text="100" />
                                                         </graphic>
                                                     </ToggleButton>
                                                 </VBox>
@@ -243,6 +249,7 @@
                                                         <VBox>
                                                             <children>
                                                                 <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectImage" />
+                                                <ToggleButton fx:id="btnInsertSelectArea" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectArea" />
                                                             </children>
                                                         </VBox>
                                                     </content>
@@ -324,4 +331,8 @@
             </SplitPane>
         </GridPane>
     </center>
+    <stylesheets>
+        <URL value="@../CommonElements.css" />
+        <URL value="@MainScene.css" />
+    </stylesheets>
 </BorderPane>

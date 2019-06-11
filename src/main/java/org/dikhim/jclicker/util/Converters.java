@@ -10,7 +10,6 @@ public class Converters {
                 try {
                     return String.valueOf(object);
                 } catch (Exception e) {
-                    System.out.println(object);
                     return "";
                 }
             }
@@ -21,7 +20,6 @@ public class Converters {
                 try {
                     return Integer.parseInt(string);
                 } catch (Exception e) {
-                    System.out.println(string);
                     return 0;
                 }
             }

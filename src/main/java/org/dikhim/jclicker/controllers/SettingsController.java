@@ -5,10 +5,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
-import org.dikhim.jclicker.Clicker;
-import org.dikhim.jclicker.configuration.MainConfiguration;
+import org.dikhim.jclicker.Dependency;
+import org.dikhim.jclicker.configuration.Configuration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -18,19 +17,9 @@ public class SettingsController implements Initializable {
     private ResourceBundle resourceBundle;
     
     @FXML
-    public Button resetBtn;
-
-    @FXML
-    public Button saveBtn;
-    
-    @FXML
-    public Button hotkeysBtn;
-
-
-    @FXML
     private ScrollPane rightPane;
 
-    private MainConfiguration config = Clicker.getApplication().getMainApplication().getConfig();
+    private Configuration configuration = Dependency.getConfig();
 
     @FXML
     void initialize() {
@@ -47,7 +36,6 @@ public class SettingsController implements Initializable {
 
             rightPane.setContent(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -62,20 +50,24 @@ public class SettingsController implements Initializable {
 
             rightPane.setContent(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
 
 
     @FXML
-    void resetConfig(ActionEvent event) {
-        config.setDefault();
+    void resetToDefault(ActionEvent event) {
+        configuration.resetToDefault();
     }
 
     @FXML
-    void saveConfig(ActionEvent event) {
-        config.save();
+    void discardChanges(ActionEvent event) {
+        configuration.resetToSaved();
+    }
+
+    @FXML
+    void save(ActionEvent event) {
+        configuration.save();
     }
 
 

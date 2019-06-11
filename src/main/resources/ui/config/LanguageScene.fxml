@@ -26,7 +26,7 @@
         </rowConstraints>
          <children>
             <Label styleClass="common-label" text="%language.selectedLanguage" GridPane.rowIndex="1" />
-            <ChoiceBox fx:id="selectedLanguage" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <ChoiceBox fx:id="languageChoiceBox" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <styleClass>
                   <String fx:value="white-element" />
                   <String fx:value="settings-choice-box" />

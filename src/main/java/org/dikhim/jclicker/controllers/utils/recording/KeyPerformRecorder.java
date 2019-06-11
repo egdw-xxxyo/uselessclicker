@@ -2,8 +2,9 @@ package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.eventmanager.event.KeyPressEvent;
 import org.dikhim.jclicker.eventmanager.event.KeyReleaseEvent;
-import org.dikhim.jclicker.eventmanager.listener.KeyListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardObjectCodeGenerator;
+import org.dikhim.jclicker.eventmanager.listener.SimpleKeyboardListener;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.KeyboardCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -16,22 +17,29 @@ public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
         super(onRecorded);
     }
 
+    private CodeGenerator codeGenerator = new KeyboardCodeGenerator();
+
     @Override
     public void onStart() {
-        addListener("recording.key.perform", new KeyListener() {
-            KeyboardObjectCodeGenerator keyboardObjectCodeGenerator = new KeyboardObjectCodeGenerator();
-
+        startRecording();
+        addListener(new SimpleKeyboardListener("recording.key.perform") {
             @Override
             public void keyPressed(KeyPressEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "PRESS");
-                putString(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("perform", event.getKey(), "PRESS"));
+
             }
 
             @Override
             public void keyReleased(KeyReleaseEvent event) {
-                keyboardObjectCodeGenerator.perform(event.getKey(), "RELEASE");
-                putString(keyboardObjectCodeGenerator.getGeneratedCode());
+                putString(codeGenerator.forMethod("perform", event.getKey(), "RELEASE"));
+
             }
         });
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopRecording();
     }
 }

@@ -1,47 +1,50 @@
 package org.dikhim.jclicker.configuration.hotkeys;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import org.dikhim.jclicker.configuration.values.IntegerValue;
-import org.dikhim.jclicker.configuration.values.StringValue;
+import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
+import org.dikhim.jclicker.configuration.property.StringConfigProperty;
 
-import javax.json.JsonObject;
 import java.util.prefs.Preferences;
 
-public class Shortcut {
-    private String name;
+public class Shortcut extends SimpleConfigElement {
+    private final StringConfigProperty keys;
+    private final String category;
 
-    private Preferences preferences;
+    public Shortcut(String name, String defaultKeys, String category, Preferences preferences) {
+        super(name, preferences);
 
-    private StringValue keys;
-
-    public Shortcut(JsonObject jsonObject, String name) {
-        this.name = name;
-        preferences = Preferences.userRoot().node(name);
-        loadDefault(jsonObject);
+        this.keys = new StringConfigProperty("keys", defaultKeys, getPreferences());
+        this.category = category;
     }
 
-    private void loadDefault(JsonObject jsonObject) {
-        keys = new StringValue("keys", jsonObject.getString("keys"));
-    }
-
-    public void setDefault() {
-        keys.setDefault();
-    }
-
+    @Override
     public void save() {
-        keys.save(preferences);
+        keys.save();
     }
 
-    public void loadOrSetDefault() {
-        keys.loadOrSetDefault(preferences);
+    @Override
+    public void resetToDefault() {
+        keys.resetToDefault();
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public void resetToSaved() {
+        keys.resetToSaved();
     }
 
-    public StringValue getKeys() {
-        return keys;
+    public String getKeys() {
+        return keys.get();
+    }
+
+    public StringProperty keysProperty() {
+        return keys.getProperty();
+    }
+    
+    public void setKeys(String keys) {
+        this.keys.set(keys);
+    }
+
+    public String getCategory() {
+        return category;
     }
 }

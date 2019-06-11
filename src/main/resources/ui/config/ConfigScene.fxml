@@ -14,13 +14,13 @@
       <SplitPane dividerPositions="0.4096989966555184" BorderPane.alignment="CENTER">
          <ScrollPane fitToWidth="true" hbarPolicy="NEVER" maxWidth="-Infinity">
             <VBox>
-               <Button fx:id="hotkeysBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHotkeys" text="%hotkeys">
+               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showHotkeys" text="%hotkeys">
                   <styleClass>
                      <String fx:value="white-element" />
                      <String fx:value="tree-menu-item" />
                   </styleClass>
                </Button>
-               <Button fx:id="languageBtn" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showLanguage" text="%language">
+               <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#showLanguage" text="%language">
                   <styleClass>
                      <String fx:value="white-element" />
                      <String fx:value="tree-menu-item" />
@@ -35,8 +35,9 @@
       <BorderPane BorderPane.alignment="CENTER">
          <right>
             <HBox BorderPane.alignment="CENTER">
-               <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#resetConfig" styleClass="white-element" text="%setDefault" />
-               <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#saveConfig" styleClass="white-element" text="%save" />
+               <Button mnemonicParsing="false" onAction="#resetToDefault" styleClass="white-element" text="%setDefault" />
+               <Button mnemonicParsing="false" onAction="#discardChanges" styleClass="white-element" text="%discardChanges" />
+               <Button  mnemonicParsing="false" onAction="#save" styleClass="white-element" text="%save" />
             </HBox>
          </right>
       </BorderPane>

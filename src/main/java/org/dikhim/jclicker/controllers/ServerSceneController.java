@@ -40,7 +40,6 @@ public class ServerSceneController implements Initializable {
             AnchorPane.setLeftAnchor(root, 0.0);
             httpPane.getChildren().add(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }
@@ -57,7 +56,6 @@ public class ServerSceneController implements Initializable {
             AnchorPane.setLeftAnchor(root, 0.0);
             socketPane.getChildren().add(root);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
         }
     }

@@ -21,11 +21,34 @@
     -fx-color-hover-built-in: #dcf5c6;
 }
 
+.text-edit{
+-fx-border-radius: 0 0 1 0;
+    -fx-background-color: #fff;
+    -fx-highlight-fill: #ffdd7F;
+    -fx-highlight-text-fill: #777;
+}
+
+.text-edit:hover{
+    -fx-background-color: #fffbd8;
+}
+
+.text-edit:pressed{
+    
+}
+
+.text-edit:focused{
+    -fx-background-color: #fffbd8;
+    -fx-border-color: -fx-color-selected;
+}
+
+
 
 
 .white-element{
     -fx-background-radius: 0;
     -fx-background-color: #fff;
+    -fx-highlight-fill: #ffdd7F;
+    -fx-highlight-text-fill: #777;
 }
 
 .white-element:hover {
@@ -38,4 +61,21 @@
 
 .white-element:selected {
     -fx-background-color: -fx-color-selected;
+}
+
+
+
+.context-menu {
+    -fx-background-color: #fff;
+    -fx-padding: 0;
+    -fx-border-color: #ccc;
+}
+
+
+.menu-item:focused {
+    -fx-background-color: -fx-color-hover;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: #333;
 }

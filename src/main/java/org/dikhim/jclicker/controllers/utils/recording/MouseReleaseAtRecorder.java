@@ -1,8 +1,9 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
 import org.dikhim.jclicker.eventmanager.event.MouseReleaseEvent;
-import org.dikhim.jclicker.eventmanager.listener.MouseReleaseListener;
-import org.dikhim.jclicker.jsengine.clickauto.generators.MouseObjectCodeGenerator;
+import org.dikhim.jclicker.eventmanager.listener.SimpleMouseReleaseListener;
+import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
 
 import java.util.function.Consumer;
 
@@ -10,22 +11,21 @@ import java.util.function.Consumer;
 /**
  * mouse.releaseAt('LEFT',838,450);
  */
-public class MouseReleaseAtRecorder extends SimpleMouseRecorder {
+public class MouseReleaseAtRecorder extends SimpleMouseRecorder implements LupeRequired {
     public MouseReleaseAtRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
+    private CodeGenerator codeGenerator = new MouseCodeGenerator();
+
     @Override
     public void onStart() {
         super.onStart();
-        addListener("recording.mouse.press", new MouseReleaseListener() {
-            MouseObjectCodeGenerator codeGenerator = new MouseObjectCodeGenerator();
-
+        addListener(new SimpleMouseReleaseListener("recording.mouse.releaseAt") {
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
-                if (!isControlPressed()) return;
-                codeGenerator.pressAt(event.getButton(), event.getX(), event.getY());
-                putString(codeGenerator.getGeneratedCode());
+                if (!isRecording()) return;
+                putString(codeGenerator.forMethod("pressAt", event.getButton(), event.getX(), event.getY()));
             }
         });
     }

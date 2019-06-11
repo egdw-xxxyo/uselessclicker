@@ -15,17 +15,19 @@ public abstract class SimpleRecorder implements Recorder {
     private Consumer onRecorded;
     private EventManager eventManager;
     private BooleanProperty recording;
+    private BooleanProperty active;
     private List<EventListener> listeners = new ArrayList<>();
 
     public SimpleRecorder(Consumer onRecorded) {
         this.onRecorded = onRecorded;
         eventManager = Dependency.getEventManager();
         recording = new SimpleBooleanProperty(false);
+        active = new SimpleBooleanProperty(false);
     }
 
-    protected void addListener(String name, EventListener listener) {
+    protected void addListener(EventListener listener) {
         listeners.add(listener);
-        eventManager.addListener(name, listener);
+        eventManager.addListener(listener);
     }
 
     protected void removeListener(String name) {
@@ -43,28 +45,48 @@ public abstract class SimpleRecorder implements Recorder {
         return recording;
     }
 
+    public boolean getActive() {
+        return active.get();
+    }
+
+    public BooleanProperty activeProperty() {
+        return active;
+    }
+
     @Override
     public void start() {
+        active.set(true);
         onStart();
     }
 
     @Override
     public void stop() {
         onStop();
+        active.set(false);
     }
-    
-    protected void startRecording() {
-        recording.set(true);
-    }
-    
-    protected void stopRecording() {
-        recording.set(false);
-    }
-    
+
     protected abstract void onStart();
 
-    protected  void onStop(){
+    protected void onStop(){
         listeners.forEach(this::removeListener);
+    }
+
+    protected void startRecording() {
+        recording.set(true);
+        onRecordingStarted();
+    }
+
+    protected void stopRecording() {
+        recording.set(false);
+        onRecordingStopped();
+    }
+
+    protected void onRecordingStarted() {
+        
+    }
+    
+    protected void onRecordingStopped() {
+        
     }
 
     protected Consumer getOnRecorded() {
