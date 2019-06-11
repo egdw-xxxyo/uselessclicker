@@ -30,17 +30,19 @@ import org.dikhim.jclicker.ui.CodeTextArea;
 import org.dikhim.jclicker.ui.LupeImageView;
 import org.dikhim.jclicker.ui.OutTextArea;
 import org.dikhim.jclicker.ui.OutputImageView;
-import org.dikhim.jclicker.util.*;
+import org.dikhim.jclicker.util.Converters;
+import org.dikhim.jclicker.util.FormattedProperties;
+import org.dikhim.jclicker.util.Out;
+import org.dikhim.jclicker.util.Resources;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
-@SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr", "StringBufferReplaceableByString", "StringConcatenationInLoop"})
+@SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr"})
 public class MainController implements Initializable {
 
     private Clicker application = Clicker.getApplication();
@@ -102,10 +104,11 @@ public class MainController implements Initializable {
         //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
 
         eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
-        // codesamples file
+        
+        
+        // codeSamples file
         FormattedProperties codeSamplesProperties = new FormattedProperties();
         try {
-            System.out.println(resources.getString("codeSamples"));
             codeSamplesProperties.load(Resources.getInputStream(resources.getString("codeSamples")));
         } catch (IOException e) {
             e.printStackTrace();
@@ -399,7 +402,7 @@ public class MainController implements Initializable {
 
     /**
      * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
-     * @param properties
+     * @param properties 
      */
     private void initToggles(FormattedProperties properties) {
         List<Node> nodes = new ArrayList<>();
@@ -410,7 +413,6 @@ public class MainController implements Initializable {
 
         eventsRecorder.bind(btnInsertKeyCode, new KeyPerformRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCode);
-
 
         eventsRecorder.bind(btnInsertKeyCodeWithDelay, new KeyPerformWithDelaysRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertKeyCodeWithDelay);

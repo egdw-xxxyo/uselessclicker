@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
+import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
 
 import java.util.*;
@@ -116,9 +117,16 @@ public class TemplateButtonGenerator {
             String text = properties.getProperty(id + ".name");
             if (text == null) text = methodName;
             String hint = properties.getProperty(id + ".hint");
-            if (hint == null) hint = id;
+            if (hint == null) {
+                Out.println("no hint for :" + id);
+                hint = id;
+            }
             String template = properties.getProperty(id + ".code");
-            if (template == null) template = hint.split("[\\r\\n]+")[0]+"\n";
+            if (template == null) {
+                Out.println("no code for :" + id);
+
+                template = hint.split("[\\r\\n]+")[0]+"\n";
+            }
 
             button.setText(text);
             button.setUserData(new String[]{hint, template});
