@@ -29,7 +29,7 @@ public class NaturalActionDecoder extends AbstractActionDecoder {
             ActionType actionType = nextActionType();
 
             if (actionType == null)
-                throw new IllegalArgumentException(String.format("incorrect action '%s'", codeArray[i]));
+                 throw new IllegalArgumentException(String.format("incorrect action '%s'", codeArray[i]));
 
             switch (actionType) {
                 case MOUSE_PRESS_LEFT:

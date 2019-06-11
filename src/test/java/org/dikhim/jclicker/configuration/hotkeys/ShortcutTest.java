@@ -13,6 +13,8 @@ public class ShortcutTest {
         Preferences preferences = Preferences.userRoot().node("testing");
 
         Shortcut shortcut = new Shortcut("test", "default", "category", preferences);
+        shortcut.resetToDefault();
+        shortcut.save();
         
         assertEquals("default", shortcut.getKeys());
         shortcut.setKeys("changed");
