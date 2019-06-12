@@ -25,7 +25,7 @@ public class MouseReleaseAtRecorder extends SimpleMouseRecorder implements LupeR
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("pressAt", event.getButton(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("releaseAt", event.getButton(), event.getX(), event.getY()));
             }
         });
     }

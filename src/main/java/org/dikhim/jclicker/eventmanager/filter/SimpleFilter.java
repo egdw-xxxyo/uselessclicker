@@ -9,6 +9,6 @@ public abstract class SimpleFilter implements Filter {
 
     @Override
     public String getId() {
-        return null;
+        return id;
     }
 }

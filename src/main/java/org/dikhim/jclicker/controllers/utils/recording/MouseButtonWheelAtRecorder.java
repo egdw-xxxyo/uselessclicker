@@ -38,7 +38,7 @@ public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder implements L
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "PRESS", event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "RELEASE", event.getX(), event.getY()));
             }
 
             @Override

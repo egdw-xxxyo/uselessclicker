@@ -118,6 +118,7 @@
                 </executions>
             </plugin>
         </plugins>
+        <finalName>Useless_Auto_Clicker-${project.version}</finalName>
     </build>
 
 </project>
