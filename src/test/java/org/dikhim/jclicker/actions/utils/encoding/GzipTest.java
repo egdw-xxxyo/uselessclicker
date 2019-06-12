@@ -2,6 +2,7 @@ package org.dikhim.jclicker.actions.utils.encoding;
 
 import org.dikhim.jclicker.util.Gzip;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.Base64;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class GzipTest {
 
     String string = "A㝙㘠D㕹A㝘㘠D㓄A㝘㘢D㓄A㝖㘦D㓄A㝕㘩" +
@@ -103,13 +105,8 @@ public class GzipTest {
     public void compress_Decompress_Equality() {
         try {
             byte[] compresed = Gzip.compressString(string);
-            System.out.println(new String(compresed));
-            System.out.println();
-            System.out.println(String.format("size before =%s after=%s",string.length(),compresed.length));
             StringBuilder sb = new StringBuilder();
 
-            System.out.println(sb.toString());
-            System.out.println(Base64.getEncoder().encodeToString(compresed).length());
             String out = Gzip.decompressString(compresed);
             assertEquals(out,string);
         } catch (IOException e) {

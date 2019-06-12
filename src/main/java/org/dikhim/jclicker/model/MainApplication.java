@@ -77,6 +77,8 @@ public class MainApplication {
      */
     public void stopScript() {
         clickAuto.stop();
+        Dependency.getEventManager().removeListenersWithPrefix("script.");
+        Dependency.getEventManager().removeFiltersWithPrefix("script.");
     }
 
     public void stop() {

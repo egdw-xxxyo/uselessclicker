@@ -51,6 +51,6 @@ public class UsLayout extends SimpleLayout{
         put("/", "/", "?");
         put(";", ";", ":");
         put("'", "'", "\"");
-        put("SPACE", " ", " ");
+        put(" ", " ", " ");
     }
 }

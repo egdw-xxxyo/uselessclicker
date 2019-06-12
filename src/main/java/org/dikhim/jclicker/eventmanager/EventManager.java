@@ -259,7 +259,6 @@ public class EventManager implements NativeKeyListener, NativeMouseListener, Nat
         filters.removeIf(filter -> filter.getId().startsWith(prefix));
     }
 
-
     synchronized public void removeFilters(List<Filter> filters) {
         this.filters.removeAll(filters);
     }

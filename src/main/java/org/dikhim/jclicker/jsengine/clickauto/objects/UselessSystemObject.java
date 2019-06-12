@@ -77,7 +77,7 @@ public class UselessSystemObject extends ScriptSystemObject implements SystemObj
     @Override
     public void onMouseRelease(String functionName, String button, Object... args) {
         String id = "script." + functionName + "." + button + ".release";
-        Dependency.getEventManager().addListener(new SpecifiedMouseButtonPressListener(id, button, () -> engine.invokeFunction(functionName, args)));
+        Dependency.getEventManager().addListener(new SpecifiedMouseButtonReleaseListener(id, button, () -> engine.invokeFunction(functionName, args)));
     }
 
     @Override
