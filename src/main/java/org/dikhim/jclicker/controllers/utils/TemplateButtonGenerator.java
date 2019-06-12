@@ -125,8 +125,9 @@ public class TemplateButtonGenerator {
             if (template == null) {
                 Out.println("no code for :" + id);
 
-                template = hint.split("[\\r\\n]+")[0]+"\n";
+                template = hint.split("[\\r\\n]+")[0];
             }
+            template += "\n";
 
             button.setText(text);
             button.setUserData(new String[]{hint, template});
