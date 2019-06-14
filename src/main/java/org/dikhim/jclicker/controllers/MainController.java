@@ -547,7 +547,8 @@ public class MainController implements Initializable {
                 .setOnAction(this::insertTemplate)
                 .build();
 
-        keyboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForKeyboardObject());
+        buttonGenerator.addButtonsForKeyboardObject(keyboardTemplateButtonContainer);
+        
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
         clipboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForClipboardObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());

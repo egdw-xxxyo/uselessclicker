@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import org.dikhim.jclicker.jsengine.clickauto.generators.*;
 import org.dikhim.jclicker.util.Out;
 import org.dikhim.jclicker.util.SourcePropertyFile;
@@ -75,6 +76,10 @@ public class TemplateButtonGenerator {
         return this;
     }
 
+    public void addButtonsForKeyboardObject(VBox buttonPanel) {
+        buttonPanel.getChildren().addAll(createButtons("key", keyboardCodeGenerator.getMethodNames()));
+    }
+    
     public List<Button> getButtonListForKeyboardObject() {
         return createButtons("key", keyboardCodeGenerator.getMethodNames());
     }
