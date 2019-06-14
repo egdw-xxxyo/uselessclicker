@@ -21,7 +21,6 @@ public class MouseNameRecorder extends SimpleMouseRecorder {
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
                 if (isRecording()) putString(event.getButton() + " ");
-
             }
         });
     }

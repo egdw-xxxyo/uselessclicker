@@ -16,16 +16,28 @@ public class MouseReleaseRecorder extends SimpleMouseRecorder {
     }
 
     private CodeGenerator codeGenerator = new MouseCodeGenerator();
-    
+
     @Override
     public void onStart() {
         super.onStart();
         addListener(new SimpleMouseReleaseListener("recording.mouse.release") {
-                        @Override
-                        public void buttonReleased(MouseReleaseEvent event) {
-                            if (!isRecording()) return;
-                            putString(codeGenerator.forMethod("release", event.getButton()));
-                        }
-                    });
+            @Override
+            public void buttonReleased(MouseReleaseEvent event) {
+                if (!isRecording()) return;
+                String code = "";
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = codeGenerator.forMethod("releaseLeft");
+                        break;
+                    case "RIGHT":
+                        code = codeGenerator.forMethod("releaseRight");
+                        break;
+                    case "MIDDLE":
+                        code = codeGenerator.forMethod("releaseMiddle");
+                        break;
+                }
+                putString(code);
+            }
+        });
     }
 }

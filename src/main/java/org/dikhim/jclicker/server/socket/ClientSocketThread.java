@@ -100,13 +100,34 @@ public class ClientSocketThread extends Thread {
                 mouse.move(Integer.parseInt(params.get("dx")), Integer.parseInt(params.get("dy")));
                 break;
             case "/mouse/press":
-                mouse.press(params.get("button"));
+                if ("LEFT".equals(params.get("button").toUpperCase())) {
+                    mouse.pressLeft();
+                } else if ("RIGHT".equals(params.get("button").toUpperCase())) {
+                    mouse.pressRight();
+                }else if ("MIDDLE".equals(params.get("button").toUpperCase())) {
+                    mouse.pressMiddle();
+                }
                 break;
             case "/mouse/release":
-                mouse.release(params.get("button"));
+                if ("LEFT".equals(params.get("button").toUpperCase())) {
+                    mouse.releaseLeft();
+                } else if ("RIGHT".equals(params.get("button").toUpperCase())) {
+                    mouse.releaseRight();
+                }else if ("MIDDLE".equals(params.get("button").toUpperCase())) {
+                    mouse.releaseMiddle();
+                }
                 break;
             case "/mouse/wheel":
-                mouse.wheel(params.get("direction"), Integer.parseInt(params.get("amount")));
+                try {
+                    int amount = Integer.parseInt(params.get("amount"));
+                    if ("UP".equals(params.get("direction").toUpperCase())) {
+                        mouse.wheelUp(amount);
+                    } else if ("DOWN".equals(params.get("button").toUpperCase())) {
+                        mouse.wheelDown(amount);
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
                 break;
         }
 

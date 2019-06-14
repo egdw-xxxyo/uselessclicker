@@ -31,28 +31,51 @@ public class MouseButtonWheelAtRecorder extends SimpleMouseRecorder implements L
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
-                
-                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "PRESS", event.getX(), event.getY()));
+                String code = "";
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = codeGenerator.forMethod("pressLeftAt", event.getX(), event.getY());
+                        break;
+                    case "RIGHT":
+                        code = codeGenerator.forMethod("pressRightAt", event.getX(), event.getY());
+                        break;
+                    case "MIDDLE":
+                        code = codeGenerator.forMethod("pressMiddleAt", event.getX(), event.getY());
+                        break;
+                }
+                putString(code);
             }
 
             @Override
             public void buttonReleased(MouseReleaseEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("buttonAt", event.getButton(), "RELEASE", event.getX(), event.getY()));
+                String code = "";
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = codeGenerator.forMethod("releaseLeftAt", event.getX(), event.getY());
+                        break;
+                    case "RIGHT":
+                        code = codeGenerator.forMethod("releaseRightAt", event.getX(), event.getY());
+                        break;
+                    case "MIDDLE":
+                        code = codeGenerator.forMethod("releaseMiddleAt", event.getX(), event.getY());
+                        break;
+                }
+                putString(code);
             }
 
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isRecording()) return;
 
-                putString(codeGenerator.forMethod("wheelAt", "UP", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelUpAt", event.getAmount(), event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isRecording()) return;
 
-                putString(codeGenerator.forMethod("wheelAt", "DOWN", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelDownAt", event.getAmount(), event.getX(), event.getY()));
             }
         });
     }

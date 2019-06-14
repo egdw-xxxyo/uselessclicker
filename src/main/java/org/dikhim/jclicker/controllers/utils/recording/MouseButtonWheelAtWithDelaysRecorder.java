@@ -43,7 +43,17 @@ public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder im
                 eventLog.add(event);
 
                 forEachEvent();
-                code += mouseCodeGenerator.forMethod("buttonAt", event.getButton(), "PRESS", event.getX(), event.getY());
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = mouseCodeGenerator.forMethod("pressLeftAt", event.getX(), event.getY());
+                        break;
+                    case "RIGHT":
+                        code = mouseCodeGenerator.forMethod("pressRightAt", event.getX(), event.getY());
+                        break;
+                    case "MIDDLE":
+                        code = mouseCodeGenerator.forMethod("pressMiddleAt", event.getX(), event.getY());
+                        break;
+                }
                 putString(code);
             }
 
@@ -53,7 +63,17 @@ public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder im
                 eventLog.add(event);
 
                 forEachEvent();
-                code += mouseCodeGenerator.forMethod("buttonAt", event.getButton(), "RELEASE", event.getX(), event.getY());
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = mouseCodeGenerator.forMethod("releaseLeftAt", event.getX(), event.getY());
+                        break;
+                    case "RIGHT":
+                        code = mouseCodeGenerator.forMethod("releaseRightAt", event.getX(), event.getY());
+                        break;
+                    case "MIDDLE":
+                        code = mouseCodeGenerator.forMethod("releaseMiddleAt", event.getX(), event.getY());
+                        break;
+                }
                 putString(code);
             }
 
@@ -63,7 +83,7 @@ public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder im
                 eventLog.add(event);
 
                 forEachEvent();
-                code += mouseCodeGenerator.forMethod("wheelAt", "UP", event.getAmount(), event.getX(), event.getY());
+                code += mouseCodeGenerator.forMethod("wheelUpAt", event.getAmount(), event.getX(), event.getY());
                 putString(code);
             }
 
@@ -73,7 +93,7 @@ public class MouseButtonWheelAtWithDelaysRecorder extends SimpleMouseRecorder im
                 eventLog.add(event);
 
                 forEachEvent();
-                code += mouseCodeGenerator.forMethod("wheelAt", "DOWN", event.getAmount(), event.getX(), event.getY());
+                code += mouseCodeGenerator.forMethod("wheelDownAt", event.getAmount(), event.getX(), event.getY());
                 putString(code);
             }
 

@@ -25,13 +25,13 @@ public class WheelAtRecorder extends SimpleMouseRecorder implements LupeRequired
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheelAt", "UP", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelUpAt", event.getAmount(), event.getX(), event.getY()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheelAt", "DOWN", event.getAmount(), event.getX(), event.getY()));
+                putString(codeGenerator.forMethod("wheelDownAt", event.getAmount(), event.getX(), event.getY()));
             }
         });
     }

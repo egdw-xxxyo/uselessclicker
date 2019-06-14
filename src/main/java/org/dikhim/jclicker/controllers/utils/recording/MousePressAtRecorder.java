@@ -24,7 +24,19 @@ public class MousePressAtRecorder extends SimpleMouseRecorder implements LupeReq
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("pressAt", event.getButton(), event.getX(), event.getY()));
+                String code = "";
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = codeGenerator.forMethod("pressLeftAt", event.getX(), event.getY());
+                        break;
+                    case "RIGHT":
+                        code = codeGenerator.forMethod("pressRightAt", event.getX(), event.getY());
+                        break;
+                    case "MIDDLE":
+                        code = codeGenerator.forMethod("pressMiddleAt", event.getX(), event.getY());
+                        break;
+                }
+                putString(code);
             }
         });
     }

@@ -41,7 +41,19 @@ public class MouseClickAtRecorder extends SimpleMouseRecorder implements MouseRe
                         lastMouseButtonEvent.getX() <= event.getX() + 2 &&
                         lastMouseButtonEvent.getY() >= event.getY() - 2 &&
                         lastMouseButtonEvent.getY() <= event.getY() + 2) {
-                    putString(mouseCodeGenerator.forMethod("clickAt", event.getButton(), event.getX(), event.getY()));
+                    String code = "";
+                    switch (event.getButton()) {
+                        case "LEFT":
+                            code = mouseCodeGenerator.forMethod("clickLeftAt", event.getX(), event.getY());
+                            break;
+                        case "RIGHT":
+                            code = mouseCodeGenerator.forMethod("clickRightAt", event.getX(), event.getY());
+                            break;
+                        case "MIDDLE":
+                            code = mouseCodeGenerator.forMethod("clickMiddleAt", event.getX(), event.getY());
+                            break;
+                    }
+                    putString(code);
                 }
                 eventLog.clear();
             }

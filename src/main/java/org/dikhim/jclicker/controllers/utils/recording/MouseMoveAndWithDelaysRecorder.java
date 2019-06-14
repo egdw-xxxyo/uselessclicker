@@ -43,7 +43,17 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndPress", event.getButton(), p2.x - p1.x, p2.y - p1.y);
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code += mouseCodeGenerator.forMethod("moveAndPressLeft", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                    case "RIGHT":
+                        code += mouseCodeGenerator.forMethod("moveAndPressRight", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                    case "MIDDLE":
+                        code += mouseCodeGenerator.forMethod("moveAndPressMiddle", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                }
                 p1 = p2;
                 putString(code);
             }
@@ -56,7 +66,17 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndRelease", event.getButton(), p2.x - p1.x, p2.y - p1.y);
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code += mouseCodeGenerator.forMethod("moveAndReleaseLeft", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                    case "RIGHT":
+                        code += mouseCodeGenerator.forMethod("moveAndReleaseRight", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                    case "MIDDLE":
+                        code += mouseCodeGenerator.forMethod("moveAndReleaseMiddle", p2.x - p1.x, p2.y - p1.y);
+                        break;
+                }
                 p1 = p2;
                 putString(code);
             }
@@ -69,7 +89,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndWheel", "UP", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                code += mouseCodeGenerator.forMethod("moveAndWheelUp", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
                 p1 = p2;
                 putString(code);
             }
@@ -82,7 +102,7 @@ public class MouseMoveAndWithDelaysRecorder extends SimpleMouseRecorder implemen
                 forEachEvent();
 
                 Point p2 = new Point(event.getX(), event.getY());
-                code += mouseCodeGenerator.forMethod("moveAndWheel", "DOWN", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
+                code += mouseCodeGenerator.forMethod("moveAndWheelDown", event.getAmount(), p2.x - p1.x, p2.y - p1.y);
                 p1 = p2;
                 putString(code);
             }

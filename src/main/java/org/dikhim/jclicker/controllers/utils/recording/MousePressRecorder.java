@@ -24,7 +24,19 @@ public class MousePressRecorder extends SimpleMouseRecorder {
             @Override
             public void buttonPressed(MousePressEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("press", event.getButton()));
+                String code = "";
+                switch (event.getButton()) {
+                    case "LEFT":
+                        code = codeGenerator.forMethod("pressLeft");
+                        break;
+                    case "RIGHT":
+                        code = codeGenerator.forMethod("pressRight");
+                        break;
+                    case "MIDDLE":
+                        code = codeGenerator.forMethod("pressMiddle");
+                        break;
+                }
+                putString(code);
             }
         });
     }

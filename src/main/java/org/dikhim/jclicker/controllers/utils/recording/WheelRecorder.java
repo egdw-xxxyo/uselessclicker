@@ -25,13 +25,13 @@ public class WheelRecorder extends SimpleMouseRecorder {
             @Override
             public void wheeledUp(MouseWheelUpEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheel", "UP", event.getAmount()));
+                putString(codeGenerator.forMethod("wheelUp", event.getAmount()));
             }
 
             @Override
             public void wheeledDown(MouseWheelDownEvent event) {
                 if (!isRecording()) return;
-                putString(codeGenerator.forMethod("wheel", "DOWN", event.getAmount()));
+                putString(codeGenerator.forMethod("wheelDown", event.getAmount()));
             }
         });
     }
