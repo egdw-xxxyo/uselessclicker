@@ -12,8 +12,17 @@ public class MouseReleaseHttpHandler extends DefaultHttpHandler{
     @Override
     protected void handle() throws IOException {
         String button = getStringParam("button");
-        getHttpClient().getComputerObject().getMouseObject().release(button);
-
+        switch (button.toUpperCase()) {
+            case "LEFT":
+                getHttpClient().getComputerObject().getMouseObject().releaseLeft();
+                break;
+            case "RIGHT":
+                getHttpClient().getComputerObject().getMouseObject().releaseRight();
+                break;
+            case "MIDDLE":
+                getHttpClient().getComputerObject().getMouseObject().releaseMiddle();
+                break;
+        }
         sendResponse(200,"Released button=" + button);
     }
 }

@@ -13,8 +13,17 @@ public class MousePressHttpHandler extends DefaultHttpHandler {
     @Override
     protected void handle() throws IOException {
         String button = getStringParam("button");
-        getHttpClient().getComputerObject().getMouseObject().press(button);
-        
+        switch (button.toUpperCase()) {
+            case "LEFT":
+                getHttpClient().getComputerObject().getMouseObject().pressLeft();
+                break;
+            case "RIGHT":
+                getHttpClient().getComputerObject().getMouseObject().pressRight();
+                break;
+            case "MIDDLE":
+                getHttpClient().getComputerObject().getMouseObject().pressMiddle();
+                break;
+        }        
         sendResponse(200,"Pressed button=" + button);
     }
 }

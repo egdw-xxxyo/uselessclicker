@@ -48,28 +48,28 @@ public class ActionRunner {
                     mouseObject.moveTo(((MouseMoveToAction) a).getX(), ((MouseMoveToAction) a).getY());
                     break;
                 case MOUSE_PRESS_LEFT:
-                    mouseObject.button("LEFT", "PRESS");
+                    mouseObject.pressLeft();
                     break;
                 case MOUSE_RELEASE_LEFT:
-                    mouseObject.button("LEFT", "RELEASE");
+                    mouseObject.releaseLeft();
                     break;
                 case MOUSE_PRESS_RIGHT:
-                    mouseObject.button("RIGHT", "PRESS");
+                    mouseObject.pressRight();
                     break;
                 case MOUSE_RELEASE_RIGHT:
-                    mouseObject.button("RIGHT", "RELEASE");
+                    mouseObject.releaseRight();
                     break;
                 case MOUSE_PRESS_MIDDLE:
-                    mouseObject.button("MIDDLE", "PRESS");
+                    mouseObject.pressMiddle();
                     break;
                 case MOUSE_RELEASE_MIDDLE:
-                    mouseObject.button("MIDDLE", "RELEASE");
+                    mouseObject.releaseMiddle();
                     break;
                 case MOUSE_WHEEL_UP:
-                    mouseObject.wheel("UP", ((MouseWheelUpAction) a).getAmount());
+                    mouseObject.wheelUp(((MouseWheelUpAction) a).getAmount());
                     break;
                 case MOUSE_WHEEL_DOWN:
-                    mouseObject.wheel("DOWN", ((MouseWheelDownAction) a).getAmount());
+                    mouseObject.wheelDown(((MouseWheelDownAction) a).getAmount());
                     break;
                 case DELAY_SECONDS:
                     actionDelay = ((DelaySecondsAction) a).getDelay() * 1000;
