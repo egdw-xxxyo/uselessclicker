@@ -6,7 +6,7 @@
     <version>0.5.1</version>
     <modules>
         <module>clicker</module>
-        <module>jxfComponents</module>
+        <module>components</module>
     </modules>
     <packaging>pom</packaging>
     <properties>

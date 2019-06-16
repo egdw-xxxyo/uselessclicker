@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      prefHeight="400.0" prefWidth="600.0"
+      stylesheets="@StatusPane.css">
+    <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"
+                  onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="statusButton"
+                  text="Running:   newFile.js">
+
+    </ToggleButton>
+    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308"
+                  mnemonicParsing="false" styleClass="statusButton" text="" HBox.hgrow="SOMETIMES">
+
+    </ToggleButton>
+    <ToggleButton id="lupeStatusButton" fx:id="btnLupeStatus" mnemonicParsing="false" styleClass="statusButton">
+    </ToggleButton>
+    <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecordingStatus" disable="true" mnemonicParsing="false"
+                  styleClass="statusButton">
+
+    </ToggleButton>
+    <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecordingStatus" disable="true" mnemonicParsing="false"
+                  styleClass="statusButton">
+
+    </ToggleButton>
+    <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" disable="true" mnemonicParsing="false"
+                  styleClass="statusButton">
+    </ToggleButton>
+</HBox>
