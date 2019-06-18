@@ -34,6 +34,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
         addListener(new NonRepeatableSpecifiedKeyPressReleaseListener("recording.combined.control", control,
                 event -> {
                     if (isRecording()) {
+                        System.out.println("stop");
                         stopRecording();
                         ignoreNextKeyRelease = true;
                     }
@@ -44,6 +45,8 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
                         return;
                     }
                     if (!isRecording() && !ignoreNextKeyRelease) {
+                        System.out.println("start");
+
                         startRecording();
                     }
 
@@ -59,7 +62,9 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
 
             @Override
             public void keyReleased(KeyReleaseEvent event) {
+                
                 if (!isRecording()) return;
+                if(eventLog.isEmpty()) return;
                 eventLog.add(event);
             }
         });
@@ -102,6 +107,8 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
     @Override
     protected void onRecordingStarted() {
         eventLog.clear();
+        System.out.println("cleared");
+
     }
 
     @Override
