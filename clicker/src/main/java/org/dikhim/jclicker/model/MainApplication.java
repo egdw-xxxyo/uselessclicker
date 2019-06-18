@@ -5,6 +5,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import org.dikhim.clickauto.ClickAuto;
+import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.server.http.HttpServer;
@@ -14,6 +16,7 @@ import org.dikhim.jclicker.util.Out;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.function.Consumer;
 
 public class MainApplication {
@@ -69,9 +72,22 @@ public class MainApplication {
      * Evaluate code by JS Engine
      */
     public void runScript() {
+        System.out.println("run");
         Out.clear();
+        System.out.println(clickAuto.isRunning());
+        if (clickAuto.isRunning()) {
+            
+            clickAuto.stop();
+        }
+        
         clickAuto.removeScripts();
+
+
+
+        System.out.println("removed");
         clickAuto.putScript(script.codeProperty().getValue());
+        System.out.println("put");
+
         clickAuto.start();
     }
 

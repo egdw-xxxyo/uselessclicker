@@ -1,14 +1,12 @@
 package org.dikhim.jclicker;
 
-import org.dikhim.clickauto.ClickAuto;
-import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.clickauto.jsengine.robot.Robot;
 import org.dikhim.jclicker.configuration.Configuration;
 import org.dikhim.jclicker.eventmanager.EventManager;
+import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 
 public class Dependency {
-    private static volatile ClickAuto clickAuto;
-    private static volatile ClickAutoScriptEngine engine;
+    private static volatile UselessClickAuto clickAuto;
     private static volatile Robot robot;
     private static final Configuration configuration;
 
@@ -16,13 +14,12 @@ public class Dependency {
     static {
         configuration = new Configuration();
     }
-    public static void setClickAuto(ClickAuto clickAuto) {
+    public static void setClickAuto(UselessClickAuto clickAuto) {
         Dependency.clickAuto = clickAuto;
-        engine = clickAuto.getEngine();
         robot = clickAuto.robot();
     }
 
-    public static ClickAuto getClickAuto() {
+    public static UselessClickAuto getClickAuto() {
         return clickAuto;
     }
 
@@ -32,10 +29,6 @@ public class Dependency {
 
     public static void setEventManager(EventManager eventManager) {
         Dependency.eventManager = eventManager;
-    }
-
-    public static ClickAutoScriptEngine getEngine() {
-        return engine;
     }
 
     public static Robot getRobot() {

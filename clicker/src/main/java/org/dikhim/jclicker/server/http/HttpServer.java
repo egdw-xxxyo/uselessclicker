@@ -5,6 +5,7 @@ import javafx.beans.property.*;
 import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.configuration.servers.Server;
+import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.jsengine.clickauto.objects.*;
 import org.dikhim.jclicker.server.http.handler.*;
 import org.dikhim.jclicker.util.WebUtils;
@@ -28,7 +29,7 @@ public class HttpServer {
     private HttpClient defaultClient;
 
     private Server serverConfig = Dependency.getConfig().servers().http();
-    private ClickAuto clickAuto;
+    private UselessClickAuto clickAuto;
 
     public HttpServer() {
         this.clickAuto = Dependency.getClickAuto();
