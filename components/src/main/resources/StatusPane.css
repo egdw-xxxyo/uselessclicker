@@ -1,0 +1,93 @@
+* {
+    -fx-color-background:#eee;
+    -fx-color-border:#777;
+
+
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+
+    -fx-color-selected-built-in: #c4ff6e;
+    -fx-color-pressed-built-in: #bfff7b;
+    -fx-color-hover-built-in: #dcf5c6;
+}
+
+
+.statusButton{
+    -fx-background-position: center;
+
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+    -fx-background-repeat: no-repeat;
+    -fx-max-height: 26;
+    -fx-min-height: 26;
+    -fx-background-size: 20px;
+}
+
+
+.statusButton:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.statusButton:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.statusButton:selected {
+    -fx-background-color: -fx-color-selected;
+}
+.statusButton:disabled{
+    -fx-opacity: 1.0 ;
+}
+
+
+#keyboardStatusButton{
+    -fx-background-image: url("images/keyboard.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+#mouseStatusButton{
+    -fx-background-image: url("images/mouse2_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+
+#lupeStatusButton{
+    -fx-background-image: url("images/lupe_cursor_grey_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+
+
+#recordingStatusButton{
+    -fx-background-image: url("images/rec_light_32.png");
+    -fx-background-size: 45 13;
+    -fx-background-position: left;
+    -fx-max-width: 150;
+    -fx-min-width: 150;
+}
+
+#controlLabel{
+
+    -fx-padding:0 ;
+    -fx-background-position: 0 0 0 5;
+    
+    -fx-max-width: 100;
+    -fx-min-width: 100;
+
+    -fx-background-color: linear-gradient(from 47% 48% to 48% 73%, #eee, #666), #eee;
+    /*-fx-background-color: #999, #eee;*/
+    -fx-background-radius: 4,3;
+    -fx-background-insets: 0, 2 3 4 3;
+    -fx-border-color: #777, #777;
+    -fx-border-width: 1;
+    -fx-border-radius: 3,2;
+    -fx-border-insets: 0, 2 3 3 3;
+}
+
+#controlLabel:disabled{
+    -fx-opacity: 0.7 ;
+}
