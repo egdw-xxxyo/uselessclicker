@@ -324,6 +324,16 @@
 }
 
 
+#scriptStatusButton{
+    -fx-background-image: url("../../images/24/play-grey.png");
+    -fx-background-position: 7 7;
+    -fx-background-size: 12 12;
+}
+
+#scriptStatusButton:selected{
+    -fx-background-image: url("../../images/24/stop-grey.png");
+}
+
 #keyboardStatusButton {
     -fx-background-image: url("../../images/keyboard.png");
     -fx-max-width: 26;
@@ -355,7 +365,6 @@
 #controlLabel {
 
     -fx-padding: 0;
-    -fx-background-position: 0 0 0 5;
 
     -fx-max-width: 100;
     -fx-min-width: 100;
@@ -372,6 +381,13 @@
 
 #controlLabel:disabled {
     -fx-opacity: 0.7;
+}
+
+
+#startStopLabel{
+    -fx-padding: 0 0 0 15;
+    -fx-max-width: 250;
+    -fx-min-width: 250;
 }
 
 .out-tab {

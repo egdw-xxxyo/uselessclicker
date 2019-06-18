@@ -27,7 +27,7 @@
 
 <!--suppress ALL -->
 
-<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
+<BorderPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="768.0" prefWidth="1027.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.MainController">
 
     <center>
         <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" BorderPane.alignment="CENTER">
@@ -106,34 +106,44 @@
                     </Button>
                 </FlowPane>
                 <HBox>
-                    <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="templateButton" text="Running:   newFile.js">
+                    <ToggleButton id="scriptStatusButton" fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="statusButton" text="">
+                        <font>
+                            <Font name="FreeMono Bold" size="13.0" />
+                        </font>
+                        <graphic>
+                            <AnchorPane>
+                                <children>
+                                    <Label id="startStopLabel" fx:id="lblStopShortcut" alignment="CENTER" text="ETELED TLA LORTNOC BACKSPACE" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="1.0">
+                                        <padding>
+                                        </padding>
+                                    </Label>
+                                </children>
+                            </AnchorPane>
+                        </graphic>
+                    </ToggleButton>
+                    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="statusButton" text="" HBox.hgrow="SOMETIMES">
                         <font>
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </ToggleButton>
-                    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="" HBox.hgrow="SOMETIMES">
+                    <ToggleButton id="lupeStatusButton" fx:id="btnLupeStatus" mnemonicParsing="false" styleClass="statusButton">
                         <font>
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>
                     </ToggleButton>
-               <ToggleButton id="lupeStatusButton" fx:id="btnLupeStatus" mnemonicParsing="false" styleClass="statusButton">
-                  <font>
-                     <Font name="FreeMono Bold" size="13.0" />
-                  </font>
-               </ToggleButton>
-               <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
-                  <font>
-                     <Font name="FreeMono Bold" size="13.0" />
-                  </font>
-               </ToggleButton>
-               <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
-                  <font>
-                     <Font name="FreeMono Bold" size="13.0" />
-                  </font>
-               </ToggleButton>
+                    <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
+                        <font>
+                            <Font name="FreeMono Bold" size="13.0" />
+                        </font>
+                    </ToggleButton>
+                    <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
+                        <font>
+                            <Font name="FreeMono Bold" size="13.0" />
+                        </font>
+                    </ToggleButton>
                     <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" alignment="CENTER_LEFT" disable="true" mnemonicParsing="false" styleClass="statusButton">
                         <graphic>
-                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                            <AnchorPane>
                                 <children>
                                     <Label id="controlLabel" fx:id="lblControl" alignment="CENTER" text="LORTNOC" AnchorPane.leftAnchor="38.0">
                                         <padding>
@@ -141,7 +151,8 @@
                                     </Label>
                                 </children>
                             </AnchorPane>
-                        </graphic></ToggleButton>
+                        </graphic>
+                    </ToggleButton>
                 </HBox>
             </VBox>
             <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">
@@ -165,7 +176,7 @@
                             </TabPane>
                         </AnchorPane>
                     </SplitPane>
-               <AnchorPane fx:id="lupePane" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                    <AnchorPane fx:id="lupePane" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                     <TextArea id="hint-text-area" fx:id="areaCodeSample" editable="false" focusTraversable="false" maxWidth="320.0" minWidth="320.0" mouseTransparent="true" prefHeight="200.0" prefWidth="320.0" styleClass="code-text-area" text="Sample text" visible="false" wrapText="true" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0">
                         <effect>
                             <DropShadow color="#000000ac" height="10.0" radius="5.0" width="10.0" />
@@ -255,26 +266,26 @@
                                                         <VBox>
                                                             <children>
                                                                 <ToggleButton fx:id="btnInsertSelectImage" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectImage" />
-                                                <ToggleButton fx:id="btnInsertSelectArea" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectArea" />
+                                                                <ToggleButton fx:id="btnInsertSelectArea" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.image.selectArea" />
                                                             </children>
                                                         </VBox>
                                                     </content>
                                                 </ScrollPane>
                                             </content>
                                         </TitledPane>
-                              <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.other">
-                                 <content>
-                                    <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
-                                       <content>
-                                          <VBox>
-                                             <children>
-                                                <Button fx:id="recFilePath" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.other.filePath" />
-                                             </children>
-                                          </VBox>
-                                       </content>
-                                    </ScrollPane>
-                                 </content>
-                              </TitledPane>
+                                        <TitledPane animated="false" focusTraversable="false" prefHeight="200.0" prefWidth="200.0" styleClass="insert-code-titled-pane" text="%r.eRec.other">
+                                            <content>
+                                                <ScrollPane fitToWidth="true" hbarPolicy="NEVER">
+                                                    <content>
+                                                        <VBox>
+                                                            <children>
+                                                                <Button fx:id="recFilePath" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.other.filePath" />
+                                                            </children>
+                                                        </VBox>
+                                                    </content>
+                                                </ScrollPane>
+                                            </content>
+                                        </TitledPane>
                                     </panes>
                                 </Accordion>
                             </TitledPane>

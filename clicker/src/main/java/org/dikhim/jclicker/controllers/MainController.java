@@ -60,8 +60,7 @@ public class MainController implements Initializable {
         // init text areas
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
-        btnScriptStatus.textProperty().bind(mainApplication.statusProperty());
-        btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getClickAuto().isRunningProperty());
+
 
         // code area
         codeTextArea = new CodeTextArea();
@@ -102,7 +101,18 @@ public class MainController implements Initializable {
         btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
         lblControl.textProperty().bind(eventsRecorder.getRecordingStatus().controlKeyRequiredProperty());
 
-        //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
+        // left toggle run/stop button
+        lblStopShortcut.textProperty().bind(Dependency.getConfig().hotKeys().runScript().keysProperty());
+        btnScriptStatus.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                lblStopShortcut.textProperty().unbind();
+                lblStopShortcut.textProperty().bind(Dependency.getConfig().hotKeys().stopScript().keysProperty());
+            } else {
+                lblStopShortcut.textProperty().unbind();
+                lblStopShortcut.textProperty().bind(Dependency.getConfig().hotKeys().runScript().keysProperty());
+            }
+        });
+        btnScriptStatus.selectedProperty().bindBidirectional(mainApplication.getClickAuto().isRunningProperty());
 
         eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
 
@@ -171,6 +181,9 @@ public class MainController implements Initializable {
 
     @FXML
     private Label lblControl;
+    
+    @FXML
+    private Label lblStopShortcut;
 
     @FXML
     private Button btnNewFile;

@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<HBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      prefHeight="400.0" prefWidth="600.0"
-      stylesheets="@StatusPane.css">
-    <ToggleButton fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"
-                  onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="statusButton"
-                  text="Running:   newFile.js">
+
+<HBox prefHeight="400.0" prefWidth="600.0" stylesheets="@StatusPane.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <ToggleButton fx:id="btnScript" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" prefWidth="250.0" styleClass="statusButton" text="Running:   newFile.js">
 
     </ToggleButton>
-    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorderStatus" maxWidth="1.7976931348623157E308"
-                  mnemonicParsing="false" styleClass="statusButton" text="" HBox.hgrow="SOMETIMES">
+    <ToggleButton id="activeRecorderStatusButton" fx:id="btnActiveRecorder" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="statusButton" text="" HBox.hgrow="SOMETIMES">
 
     </ToggleButton>
-    <ToggleButton id="lupeStatusButton" fx:id="btnLupeStatus" mnemonicParsing="false" styleClass="statusButton">
+    <ToggleButton id="lupeStatusButton" fx:id="btnLupe" mnemonicParsing="false" styleClass="statusButton">
     </ToggleButton>
-    <ToggleButton id="mouseStatusButton" fx:id="btnMouseRecordingStatus" disable="true" mnemonicParsing="false"
-                  styleClass="statusButton">
+    <ToggleButton id="mouseStatusButton" fx:id="btnMouse" disable="true" mnemonicParsing="false" styleClass="statusButton">
 
     </ToggleButton>
-    <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboardRecordingStatus" disable="true" mnemonicParsing="false"
-                  styleClass="statusButton">
+    <ToggleButton id="keyboardStatusButton" fx:id="btnKeyboard" disable="true" mnemonicParsing="false" styleClass="statusButton">
 
     </ToggleButton>
-    <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" disable="true" mnemonicParsing="false"
-                  styleClass="statusButton">
-    </ToggleButton>
+    <ToggleButton id="recordingStatusButton" fx:id="btnRecording" alignment="CENTER_LEFT" disable="true" mnemonicParsing="false" styleClass="statusButton">
+      <graphic>
+         <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <children>
+               <Label id="controlLabel" fx:id="lblControl" alignment="CENTER" text="LORTNOC" AnchorPane.leftAnchor="38.0">
+                  <padding>
+                     <Insets left="44.0" />
+                  </padding>
+               </Label>
+            </children>
+         </AnchorPane>
+      </graphic></ToggleButton>
 </HBox>

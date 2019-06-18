@@ -1,6 +1,8 @@
 package org.dikhim.jclicker.model;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import org.dikhim.jclicker.Dependency;
@@ -19,7 +21,8 @@ public class MainApplication {
 
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
-
+    private BooleanProperty scriptRunning = new SimpleBooleanProperty(false);
+    
     private HttpServer httpServer;
     private SocketServer socketServer;
 
@@ -90,6 +93,7 @@ public class MainApplication {
     private void bindProperties() {
         title.bind(script.nameProperty());
         status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(clickAuto.isRunningProperty()));
+        scriptRunning.bindBidirectional(clickAuto.isRunningProperty());
     }
 
     public UselessClickAuto getClickAuto() {
@@ -102,6 +106,10 @@ public class MainApplication {
 
     public StringProperty statusProperty() {
         return status;
+    }
+
+    public BooleanProperty scriptRunningProperty() {
+        return scriptRunning;
     }
 
     public HttpServer getHttpServer() {
