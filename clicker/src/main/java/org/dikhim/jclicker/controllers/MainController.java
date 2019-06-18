@@ -372,6 +372,10 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnInsertCombinedLog;
 
+    // Animated
+
+    @FXML
+    private ToggleButton btnInsertAnimatedMouseAt;
     // Other
     @FXML
     private Button recFilePath;
@@ -479,6 +483,9 @@ public class MainController implements Initializable {
         eventsRecorder.bind(recFilePath, new FilePathRecorder(eventsRecorder::putCode));
         nodes.add(recFilePath);
 
+        
+        eventsRecorder.bind(btnInsertAnimatedMouseAt, new AnimatedMouseAtRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertAnimatedMouseAt);
 
         // image
 
