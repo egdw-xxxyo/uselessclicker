@@ -67,7 +67,8 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
                 eventLog.add(event);
 
                 int delay = eventLog.getDelay();
-
+                System.out.println(eventLog.getDelay());
+                System.out.println(event);
                 switch (event.getButton()) {
                     case "LEFT":
                         if (delay == 0) {
@@ -123,6 +124,7 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
 
     @Override
     protected void onRecordingStarted() {
+        System.out.println("clear");
         eventLog.clear();
     }
 }

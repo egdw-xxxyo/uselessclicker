@@ -1,6 +1,8 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
+import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
+import org.dikhim.jclicker.eventmanager.listener.NonRepeatableSpecifiedKeyPressReleaseListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CreateCodeGenerator;
 import org.dikhim.jclicker.util.ShapeUtil;
@@ -22,9 +24,9 @@ public class AreaRecorder extends StringRecorder implements ScreenRecorder {
     @Override
     protected void onStart() {
         addListener(
-                new KeyPressReleaseListener(
+                new NonRepeatableSpecifiedKeyPressReleaseListener(
                         "recording.mouse.controlKey",
-                        "CONTROL",
+                        Dependency.getConfig().hotKeys().mouseControl().getKeys(),
                         (event) -> startRecording(),
                         (event) -> stopRecording()));
 

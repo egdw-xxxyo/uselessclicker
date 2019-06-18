@@ -31,7 +31,7 @@ public class CombinedRecorder extends StringRecorder implements MouseRecorder, K
         control = Dependency.getConfig().hotKeys().combinedControl().getKeys();
         eventLog = new EventLogger();
         // control button listener. Start on release and stop after press
-        addListener(new KeyPressReleaseListener("recording.combined.control", control,
+        addListener(new NonRepeatableSpecifiedKeyPressReleaseListener("recording.combined.control", control,
                 event -> {
                     if (isRecording()) {
                         stopRecording();

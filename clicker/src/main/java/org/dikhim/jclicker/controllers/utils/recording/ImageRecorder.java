@@ -3,6 +3,7 @@ package org.dikhim.jclicker.controllers.utils.recording;
 import org.dikhim.clickauto.jsengine.objects.Classes.Image;
 import org.dikhim.jclicker.Dependency;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
+import org.dikhim.jclicker.eventmanager.listener.NonRepeatableSpecifiedKeyPressReleaseListener;
 import org.dikhim.jclicker.jsengine.clickauto.objects.ScreenObject;
 import org.dikhim.jclicker.jsengine.clickauto.objects.UselessScreenObject;
 
@@ -24,9 +25,9 @@ public class ImageRecorder extends SimpleRecorder implements ScreenRecorder {
     @Override
     protected void onStart() {
         addListener(
-                new KeyPressReleaseListener(
+                new NonRepeatableSpecifiedKeyPressReleaseListener(
                         "recording.mouse.controlKey",
-                        "CONTROL",
+                        Dependency.getConfig().hotKeys().mouseControl().getKeys(),
                         (event) -> startRecording(),
                         (event) -> stopRecording()));
 

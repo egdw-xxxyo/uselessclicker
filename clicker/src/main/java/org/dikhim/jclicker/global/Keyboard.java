@@ -2,6 +2,7 @@ package org.dikhim.jclicker.global;
 
 import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
+import org.dikhim.jclicker.eventmanager.listener.NonRepeatableSpecifiedKeyPressReleaseListener;
 import org.dikhim.jclicker.eventmanager.listener.PressedKeyHolder;
 
 import java.awt.*;
@@ -12,7 +13,7 @@ public class Keyboard {
     private final PressedKeyHolder pressedKeyHolder = new PressedKeyHolder();
 
     public Keyboard(EventManager eventManager) {
-        eventManager.addListener(new KeyPressReleaseListener("keyboard.pressed.keys","ANY",
+        eventManager.addListener(new NonRepeatableSpecifiedKeyPressReleaseListener("keyboard.pressed.keys","ANY",
                 event -> pressedKeyHolder.press(event.getKey()),
                 event -> pressedKeyHolder.release(event.getKey())));
     }
