@@ -4,7 +4,7 @@ import org.dikhim.jclicker.eventmanager.listener.KeyPressReleaseListener;
 
 import java.util.function.Consumer;
 
-public class SimpleMouseRecorder extends StringRecorder implements MouseRecorder{
+public class SimpleMouseRecorder extends StringRecorder implements MouseRecorder, MouseControlKeyRequired{
     
     public SimpleMouseRecorder(Consumer<String> onRecorded) {
         super(onRecorded);

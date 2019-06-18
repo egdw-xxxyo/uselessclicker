@@ -97,15 +97,16 @@ public class MainController implements Initializable {
         codeTextArea.activeProperty().bind(eventsRecorder.keyboardRecordingProperty().not());
 
         btnLupeStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().lupeIsNeededProperty());
-        btnMouseRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeMouseRecordingProperty());
-        btnKeyboardRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeKeyboardRecordingProperty());
+        btnMouseRecordingStatus.selectedProperty().bind(eventsRecorder.getRecordingStatus().activeMouseRecordingProperty());
+        btnKeyboardRecordingStatus.selectedProperty().bind(eventsRecorder.getRecordingStatus().activeKeyboardRecordingProperty());
         btnRecordingStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().recordingProperty());
+        lblControl.textProperty().bind(eventsRecorder.getRecordingStatus().controlKeyRequiredProperty());
 
         //btnActiveRecorderStatus.selectedProperty().bindBidirectional(eventsRecorder.getRecordingStatus().activeProperty());
 
         eventsRecorder.addActiveRecorderToggleButton(btnActiveRecorderStatus);
-        
-        
+
+
         // codeSamples file
         FormattedProperties codeSamplesProperties = new FormattedProperties();
         try {
@@ -168,6 +169,8 @@ public class MainController implements Initializable {
     @FXML
     private ToggleButton btnRecordingStatus;
 
+    @FXML
+    private Label lblControl;
 
     @FXML
     private Button btnNewFile;
@@ -402,7 +405,8 @@ public class MainController implements Initializable {
 
     /**
      * Adds all toggles to listOfInsertCodeToggles and sets hints to user data from property file
-     * @param properties 
+     *
+     * @param properties
      */
     private void initToggles(FormattedProperties properties) {
         List<Node> nodes = new ArrayList<>();
@@ -548,7 +552,7 @@ public class MainController implements Initializable {
                 .build();
 
         buttonGenerator.addButtonsForKeyboardObject(keyboardTemplateButtonContainer);
-        
+
         mouseTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForMouseObject());
         clipboardTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForClipboardObject());
         systemTemplateButtonContainer.getChildren().addAll(buttonGenerator.getButtonListForSystemObject());

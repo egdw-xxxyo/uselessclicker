@@ -131,11 +131,17 @@
                      <Font name="FreeMono Bold" size="13.0" />
                   </font>
                </ToggleButton>
-               <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" disable="true" mnemonicParsing="false" styleClass="statusButton">
-                  <font>
-                     <Font name="FreeMono Bold" size="13.0" />
-                  </font>
-               </ToggleButton>
+                    <ToggleButton id="recordingStatusButton" fx:id="btnRecordingStatus" alignment="CENTER_LEFT" disable="true" mnemonicParsing="false" styleClass="statusButton">
+                        <graphic>
+                            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                <children>
+                                    <Label id="controlLabel" fx:id="lblControl" alignment="CENTER" text="LORTNOC" AnchorPane.leftAnchor="38.0">
+                                        <padding>
+                                        </padding>
+                                    </Label>
+                                </children>
+                            </AnchorPane>
+                        </graphic></ToggleButton>
                 </HBox>
             </VBox>
             <SplitPane dividerPositions="0.5551378446115288" GridPane.rowIndex="1">

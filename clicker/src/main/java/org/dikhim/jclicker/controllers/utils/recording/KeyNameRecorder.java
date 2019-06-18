@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 /**
  * 'KEY1 KEY2 '
  */
-public class KeyNameRecorder extends StringRecorder implements KeyRecorder {
+public class KeyNameRecorder extends StringRecorder implements KeyRecorder, AnyKeyControlRequired {
     public KeyNameRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }

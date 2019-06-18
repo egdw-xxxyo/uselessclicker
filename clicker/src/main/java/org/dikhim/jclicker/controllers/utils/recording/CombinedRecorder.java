@@ -15,7 +15,7 @@ import java.util.function.Consumer;
 /**
  * combined.run("......
  */
-public class CombinedRecorder extends StringRecorder implements MouseRecorder, KeyRecorder, LupeRequired {
+public class CombinedRecorder extends StringRecorder implements MouseRecorder, KeyRecorder, LupeRequired, CombinedControlKeyRequiered {
     public CombinedRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }

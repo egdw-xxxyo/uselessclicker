@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  * key.perform('KEY1','PRESS');<p>
  * key.perform('KEY1','RELEASE');
  */
-public class KeyPerformRecorder extends StringRecorder implements KeyRecorder {
+public class KeyPerformRecorder extends StringRecorder implements KeyRecorder, AnyKeyControlRequired {
     public KeyPerformRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }

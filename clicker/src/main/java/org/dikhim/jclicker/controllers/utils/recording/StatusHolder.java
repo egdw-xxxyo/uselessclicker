@@ -1,9 +1,7 @@
 package org.dikhim.jclicker.controllers.utils.recording;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.*;
+import org.dikhim.jclicker.Dependency;
 
 public class StatusHolder {
 
@@ -13,6 +11,10 @@ public class StatusHolder {
     private BooleanProperty activeMouseRecording = new SimpleBooleanProperty(false);
     private BooleanProperty activeKeyboardRecording = new SimpleBooleanProperty(false);
     private BooleanProperty lupeIsNeeded = new SimpleBooleanProperty(false);
+
+    private StringProperty mouseControlKey = Dependency.getConfig().hotKeys().mouseControl().keysProperty();
+    private StringProperty combinedControlKey = Dependency.getConfig().hotKeys().combinedControl().keysProperty();
+    private StringProperty controlKeyRequired = new SimpleStringProperty("");
 
     public StatusHolder() {
         activeRecorder.addListener((observable, oldValue, recorder) -> {
@@ -28,6 +30,16 @@ public class StatusHolder {
                 }
                 if (recorder instanceof LupeRequired) {
                     lupeIsNeeded.set(true);
+                }
+                if (recorder instanceof MouseControlKeyRequired) {
+                    controlKeyRequired.set(mouseControlKey.getValue());
+                } else if (recorder instanceof CombinedControlKeyRequiered) {
+                    controlKeyRequired.set(combinedControlKey.getValue());
+
+                } else if (recorder instanceof AnyKeyControlRequired) {
+                    controlKeyRequired.set("ANY");
+                } else {
+                    controlKeyRequired.set("");
                 }
             } else {
                 active.set(false);
@@ -94,5 +106,13 @@ public class StatusHolder {
 
     public Property<Recorder> activeRecorderProperty() {
         return activeRecorder;
+    }
+
+    public String getControlKeyRequired() {
+        return controlKeyRequired.get();
+    }
+
+    public StringProperty controlKeyRequiredProperty() {
+        return controlKeyRequired;
     }
 }
