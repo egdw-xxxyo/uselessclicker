@@ -1,7 +1,7 @@
 package org.dikhim.jclicker.configuration;
 
 
-import org.dikhim.jclicker.configuration.codeInsert.CodeInsert;
+import org.dikhim.jclicker.configuration.recording.Recording;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 import org.dikhim.jclicker.configuration.localization.Localization;
 import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
@@ -14,7 +14,7 @@ public class Configuration extends SimpleConfigElement {
     private final HotKeys hotKeys;
     private final Servers servers;
     private final Localization localization;
-    private final CodeInsert codeInsert;
+    private final Recording recording;
     private final Storage storage;
 
     public Configuration() {
@@ -23,7 +23,7 @@ public class Configuration extends SimpleConfigElement {
         hotKeys = new HotKeys("hotKeys", getPreferences());
         servers = new Servers("servers", getPreferences());
         localization = new Localization("localization", getPreferences());
-        codeInsert = new CodeInsert("codeInsert", getPreferences());
+        recording = new Recording("recording", getPreferences());
         storage = new Storage();
     }
 
@@ -32,7 +32,7 @@ public class Configuration extends SimpleConfigElement {
         hotKeys.save();
         servers.save();
         localization.save();
-        codeInsert.save();
+        recording.save();
     }
 
     @Override
@@ -40,7 +40,7 @@ public class Configuration extends SimpleConfigElement {
         hotKeys.resetToDefault();
         servers.resetToDefault();
         localization.resetToDefault();
-        codeInsert.resetToDefault();
+        recording.resetToDefault();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Configuration extends SimpleConfigElement {
         hotKeys.resetToSaved();
         servers.resetToSaved();
         localization.resetToSaved();
-        codeInsert.resetToSaved();
+        recording.resetToSaved();
     }
 
     public HotKeys hotKeys() {
@@ -63,8 +63,8 @@ public class Configuration extends SimpleConfigElement {
         return localization;
     }
 
-    public CodeInsert codeInsert() {
-        return codeInsert;
+    public Recording recording() {
+        return recording;
     }
 
     public Storage storage() {

@@ -1,5 +1,9 @@
 package org.dikhim.jclicker.jsengine.clickauto.generators;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import org.dikhim.jclicker.Dependency;
+
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,29 +11,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SimpleCodeGenerator implements CodeGenerator {
-    private static final int MIN_LINE_SIZE = 50;
 
-    private int lineSize;
+    private IntegerProperty lineSize = new SimpleIntegerProperty();
     private String objectName;
     List<Method> methods;
 
-    public SimpleCodeGenerator(String objectName, Class c, int lineSize) {
+    public SimpleCodeGenerator(String objectName, Class c) {
         this.objectName = objectName;
-        this.lineSize = lineSize;
+        lineSize.bind(Dependency.getConfig().recording().lineSizeProperty());
         methods = new ArrayList<>(Arrays.asList(c.getDeclaredMethods()));
         for (Class<?> inf : c.getInterfaces()) {
             methods.addAll(Arrays.asList(inf.getDeclaredMethods()));
         }
     }
 
-    public SimpleCodeGenerator(String objectName, Class c) {
-        this(objectName, c, MIN_LINE_SIZE);
-    }
-
     @Override
     public String forMethod(String methodName, Object... params) {
-        List<Method> listOfMethods= methods.stream().filter(method1 -> method1.getName().equals(methodName)).collect(Collectors.toList());
-        if (listOfMethods.size()<1)
+        List<Method> listOfMethods = methods.stream().filter(method1 -> method1.getName().equals(methodName)).collect(Collectors.toList());
+        if (listOfMethods.size() < 1)
             throw new IllegalArgumentException("Given class doesn't contain the specified method");
 
         if (listOfMethods.stream().noneMatch(method -> method.getParameterCount() == params.length))
@@ -50,7 +49,7 @@ public class SimpleCodeGenerator implements CodeGenerator {
         }
         sb.append(");\n");
 
-        return separateOnLines(sb, lineSize);
+        return separateOnLines(sb, lineSize.get());
     }
 
     private void append(StringBuilder sb, Object param) {
@@ -125,7 +124,7 @@ public class SimpleCodeGenerator implements CodeGenerator {
 
     @Override
     public int getLineSize() {
-        return lineSize;
+        return lineSize.get();
     }
 
     @Override

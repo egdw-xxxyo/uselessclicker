@@ -64,14 +64,13 @@ public class TemplateButtonGenerator {
     }
 
     public TemplateButtonGenerator build() {
-        
-        keyboardCodeGenerator = new KeyboardCodeGenerator(lineSize);
-        mouseCodeGenerator = new MouseCodeGenerator(lineSize);
-        systemCodeGenerator = new SystemCodeGenerator(lineSize);
-        screenCodeGenerator = new ScreenCodeGenerator(lineSize);
-        clipboardCodeGenerator = new ClipboardCodeGenerator(lineSize);
-        combinedCodeGenerator = new CombinedCodeGenerator(lineSize);
-        createCodeGenerator = new CreateCodeGenerator(lineSize);
+        keyboardCodeGenerator = new KeyboardCodeGenerator();
+        mouseCodeGenerator = new MouseCodeGenerator();
+        systemCodeGenerator = new SystemCodeGenerator();
+        screenCodeGenerator = new ScreenCodeGenerator();
+        clipboardCodeGenerator = new ClipboardCodeGenerator();
+        combinedCodeGenerator = new CombinedCodeGenerator();
+        createCodeGenerator = new CreateCodeGenerator();
         return this;
     }
 

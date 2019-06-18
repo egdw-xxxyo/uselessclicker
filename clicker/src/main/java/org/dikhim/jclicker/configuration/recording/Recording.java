@@ -1,4 +1,4 @@
-package org.dikhim.jclicker.configuration.codeInsert;
+package org.dikhim.jclicker.configuration.recording;
 
 import javafx.beans.property.IntegerProperty;
 import org.dikhim.jclicker.configuration.property.IntegerConfigProperty;
@@ -6,12 +6,12 @@ import org.dikhim.jclicker.configuration.property.SimpleConfigElement;
 
 import java.util.prefs.Preferences;
 
-public class CodeInsert extends SimpleConfigElement {
+public class Recording extends SimpleConfigElement {
     private IntegerConfigProperty lineSize;
 
-    public CodeInsert(String name, Preferences preferences) {
+    public Recording(String name, Preferences preferences) {
         super(name, preferences);
-        lineSize = new IntegerConfigProperty("lineSize", 60, getPreferences());
+        lineSize = new IntegerConfigProperty("lineSize", 120, getPreferences());
     }
 
     @Override

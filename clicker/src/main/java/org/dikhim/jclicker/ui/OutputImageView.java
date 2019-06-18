@@ -93,7 +93,7 @@ public class OutputImageView extends AnchorPane implements Initializable {
         try {
             byte[] data = ImageUtil.getByteArray(croppedImage);
             String encodedData = ZipBase64.encode(data);
-            CodeGenerator codeGenerator = new CreateCodeGenerator(120);
+            CodeGenerator codeGenerator = new CreateCodeGenerator();
             String resultString = codeGenerator.forMethod("image", encodedData);
 
             onInsert.accept(resultString);
