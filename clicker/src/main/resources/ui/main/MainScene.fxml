@@ -224,6 +224,7 @@
                                                     <ToggleButton fx:id="btnInsertMouseCodeWithDelay" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.mouseButtons.buttonWheelAtSleep" />
                                                     <ToggleButton fx:id="btnInsertMouseRelativeCode" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.mouseButtons.moveAndButtonWheel" />
                                        <ToggleButton fx:id="btnInsertAnimatedMouseAt" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.mouseButtons.btnInsertAnimatedMouseAt" />
+                                                    <ToggleButton fx:id="btnInsertAnimatedMouseMoveAnd" focusTraversable="false" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="templateButton" text="%r.eRec.mouseButtons.btnInsertAnimatedMouseMoveAnd" />
                                                 </VBox>
                                             </ScrollPane>
                                         </TitledPane>

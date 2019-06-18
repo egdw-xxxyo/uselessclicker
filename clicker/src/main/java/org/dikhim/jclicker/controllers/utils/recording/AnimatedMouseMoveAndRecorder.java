@@ -9,24 +9,31 @@ import org.dikhim.jclicker.eventmanager.listener.SimpleMouseButtonWheelListener;
 import org.dikhim.jclicker.jsengine.clickauto.generators.AnimatedMouseCodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.CodeGenerator;
 import org.dikhim.jclicker.jsengine.clickauto.generators.MouseCodeGenerator;
+import org.dikhim.jclicker.jsengine.clickauto.generators.SystemCodeGenerator;
 
+import java.awt.*;
 import java.util.function.Consumer;
 
-public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements LupeRequired {
-
-    public AnimatedMouseAtRecorder(Consumer<String> onRecorded) {
+/**
+ * mouse.moveAndButton('LEFT',PRESS,-2,0);<br>
+ * mouse.moveAndButton('LEFT',RELEASE,94,-27);<br>
+ * mouse.moveAndWheel('DOWN',3,0,0);<br>
+ * mouse.moveAndWheel('DOWN',3,0,0);<br>
+ * mouse.moveAndWheel('DOWN',3,-13,22);
+ */
+public class AnimatedMouseMoveAndRecorder extends SimpleMouseRecorder implements LupeRequired {
+    public AnimatedMouseMoveAndRecorder(Consumer<String> onRecorded) {
         super(onRecorded);
     }
 
-    private EventLogger eventLog = new EventLogger(4);
-
-    private CodeGenerator animatedMouseCodeGenerator = new AnimatedMouseCodeGenerator();
+    private Point p1;
+    private EventLogger eventLog = new EventLogger(2);
     private CodeGenerator mouseCodeGenerator = new MouseCodeGenerator();
+    private CodeGenerator animatedMouseCodeGenerator = new AnimatedMouseCodeGenerator();
 
     @Override
     public void onStart() {
         super.onStart();
-
         addListener(new SimpleMouseButtonWheelListener("recording.mouse.buttonWheelAtWithDelays") {
             @Override
             public void buttonPressed(MousePressEvent event) {
@@ -35,17 +42,19 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
 
                 int delay = eventLog.getDelay();
 
+                Point p2 = new Point(event.getX(), event.getY());
                 switch (event.getButton()) {
                     case "LEFT":
-                        putString(animatedMouseCodeGenerator.forMethod("pressLeftAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndPressLeft", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                     case "RIGHT":
-                        putString(animatedMouseCodeGenerator.forMethod("pressRightAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndPressRight", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                     case "MIDDLE":
-                        putString(animatedMouseCodeGenerator.forMethod("pressMiddleAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndPressMiddle", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                 }
+                p1 = p2;
             }
 
             @Override
@@ -54,17 +63,20 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
                 eventLog.add(event);
 
                 int delay = eventLog.getDelay();
+
+                Point p2 = new Point(event.getX(), event.getY());
                 switch (event.getButton()) {
                     case "LEFT":
-                        putString(animatedMouseCodeGenerator.forMethod("releaseLeftAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndReleaseLeft", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                     case "RIGHT":
-                        putString(animatedMouseCodeGenerator.forMethod("releaseRightAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndReleaseRight", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                     case "MIDDLE":
-                        putString(animatedMouseCodeGenerator.forMethod("releaseMiddleAt", event.getX(), event.getY(), delay));
+                        putString(animatedMouseCodeGenerator.forMethod("moveAndReleaseMiddle", p2.x - p1.x, p2.y - p1.y, delay));
                         break;
                 }
+                p1 = p2;
             }
 
             @Override
@@ -73,7 +85,10 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
                 eventLog.add(event);
 
                 int delay = eventLog.getDelay();
-                putString(animatedMouseCodeGenerator.forMethod("wheelUpAt", event.getAmount(), event.getX(), event.getY(), delay));
+
+                Point p2 = new Point(event.getX(), event.getY());
+                putString(animatedMouseCodeGenerator.forMethod("moveAndWheelUp", event.getAmount(), p2.x - p1.x, p2.y - p1.y, delay));
+                p1 = p2;
             }
 
             @Override
@@ -82,13 +97,17 @@ public class AnimatedMouseAtRecorder extends SimpleMouseRecorder implements Lupe
                 eventLog.add(event);
 
                 int delay = eventLog.getDelay();
-                putString(animatedMouseCodeGenerator.forMethod("wheelDownAt", event.getAmount(), event.getX(), event.getY(), delay));
+
+
+                Point p2 = new Point(event.getX(), event.getY());
+                putString(mouseCodeGenerator.forMethod("moveAndWheelDown", event.getAmount(), p2.x - p1.x, p2.y - p1.y, delay));
+                p1 = p2;
             }
         });
     }
 
     @Override
     protected void onRecordingStarted() {
-        eventLog.clear();
+        p1 = new Point(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }
 }

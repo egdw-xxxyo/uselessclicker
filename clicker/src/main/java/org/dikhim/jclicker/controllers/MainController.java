@@ -181,7 +181,7 @@ public class MainController implements Initializable {
 
     @FXML
     private Label lblControl;
-    
+
     @FXML
     private Label lblStopShortcut;
 
@@ -376,6 +376,9 @@ public class MainController implements Initializable {
 
     @FXML
     private ToggleButton btnInsertAnimatedMouseAt;
+    
+    @FXML
+    private ToggleButton btnInsertAnimatedMouseMoveAnd;
     // Other
     @FXML
     private Button recFilePath;
@@ -483,9 +486,13 @@ public class MainController implements Initializable {
         eventsRecorder.bind(recFilePath, new FilePathRecorder(eventsRecorder::putCode));
         nodes.add(recFilePath);
 
-        
+
+        //animated
         eventsRecorder.bind(btnInsertAnimatedMouseAt, new AnimatedMouseAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertAnimatedMouseAt);
+        
+        eventsRecorder.bind(btnInsertAnimatedMouseMoveAnd, new AnimatedMouseMoveAndRecorder(eventsRecorder::putCode));
+        nodes.add(btnInsertAnimatedMouseMoveAnd);
 
         // image
 
@@ -514,9 +521,15 @@ public class MainController implements Initializable {
         nodes.add(combinedEncodingType);
 
         for (Node b : nodes) {
-            b.setUserData(new String[]{(String) properties.get(b.getId()), ""});
-            b.setOnMouseEntered(this::showCodeSample);
-            b.setOnMouseExited(this::hideCodeSample);
+            String hint = (String) properties.get(b.getId());
+            if (hint == null) {
+                Out.println("Missed hint for the '" + b.getId() + "' button");
+                b.setUserData(new String[]{"", ""});
+            } else {
+                b.setUserData(new String[]{hint, ""});
+            }
+            b.setOnMouseEntered(this::showHint);
+            b.setOnMouseExited(this::hideHint);
         }
     }
 
@@ -566,8 +579,8 @@ public class MainController implements Initializable {
                 .setLineSize(120)
                 .setProperties(prop)
                 .addStyleClass("templateButton")
-                .setOnMouseEntered(this::showCodeSample)
-                .setOnMouseExited(this::hideCodeSample)
+                .setOnMouseEntered(this::showHint)
+                .setOnMouseExited(this::hideHint)
                 .setOnAction(this::insertTemplate)
                 .build();
 
@@ -601,7 +614,7 @@ public class MainController implements Initializable {
      * @param event event from mouse hover button
      */
     @FXML
-    private void showCodeSample(MouseEvent event) {
+    private void showHint(MouseEvent event) {
         Node btn = (Node) event.getSource();
         String[] data = (String[]) btn.getUserData();
         if (data == null)
@@ -616,7 +629,7 @@ public class MainController implements Initializable {
      * @param event - MouseEvent
      */
     @FXML
-    private void hideCodeSample(MouseEvent event) {
+    private void hideHint(MouseEvent event) {
         areaCodeSample.setVisible(false);
     }
 
