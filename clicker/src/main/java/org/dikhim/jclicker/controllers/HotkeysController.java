@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import org.dikhim.jclicker.Dependency;
+import org.dikhim.jclicker.WindowManager;
 import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
 
 import java.net.URL;
@@ -35,5 +36,29 @@ public class HotkeysController {
         Bindings.bindBidirectional(stopScriptTxt.textProperty(), hotKeys.stopScript().keysProperty());
         Bindings.bindBidirectional(mouseControlTxt.textProperty(), hotKeys.mouseControl().keysProperty());
         Bindings.bindBidirectional(combinedControlTxt.textProperty(), hotKeys.combinedControl().keysProperty());
+    }
+
+    @FXML
+    void smRunScriptEdit() {
+        String keys = WindowManager.showShortcutRecordingDialog("settings");
+        if(!keys.isEmpty()) runScriptTxt.setText(keys);
+    }
+
+    @FXML
+    void smStopScriptEdit() {
+        String keys = WindowManager.showShortcutRecordingDialog("settings");
+        if(!keys.isEmpty()) stopScriptTxt.setText(keys);
+    }
+
+    @FXML
+    void mrControlKeyEdit() {
+        String keys = WindowManager.showShortcutRecordingDialog("settings");
+        if(keys != null && !keys.isEmpty()) mouseControlTxt.setText(keys);
+    }
+
+    @FXML
+    void crControlKeyEdit() {
+        String keys = WindowManager.showShortcutRecordingDialog("settings");
+        if(!keys.isEmpty()) combinedControlTxt.setText(keys);
     }
 }

@@ -10,6 +10,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.dikhim.jclicker.ui.controllers.ChooseLanguageDialogController;
+import org.dikhim.jclicker.ui.controllers.ShortcutRecordingDialogController;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,9 +19,9 @@ import java.util.prefs.Preferences;
 
 public class WindowManager {
     private static WindowManager windowManager;
+    private static ResourceBundle resourceBundle;
     private Preferences preferences = Preferences.userRoot().node(getClass().getName());
 
-    private ResourceBundle resourceBundle;
     private Map<String, Stage> stageMap = new HashMap<>();
     private Map<String, Scene> sceneMap = new HashMap<>();
     private Locale locale;
@@ -61,25 +62,25 @@ public class WindowManager {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/HelpScene.fxml"));
                 loader.setResources(ResourceBundle.getBundle("i18n/HelpScene", locale));
                 Parent root = loader.load();
-                
+
                 scene = new Scene(root);
             } else if ("about".equals(sceneName)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/main/AboutScene.fxml"));
                 loader.setResources(ResourceBundle.getBundle("i18n/AboutScene", locale));
                 Parent root = loader.load();
-                
+
                 scene = new Scene(root);
             } else if ("settings".equals(sceneName)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/config/ConfigScene.fxml"));
                 loader.setResources(ResourceBundle.getBundle("i18n/SettingsScene", locale));
                 Parent root = loader.load();
-                
+
                 scene = new Scene(root);
             } else if ("server".equals(sceneName)) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/server/ServerScene.fxml"));
                 loader.setResources(ResourceBundle.getBundle("i18n/ServerScene", locale));
                 Parent root = loader.load();
-                
+
                 scene = new Scene(root);
             } else {
                 throw new IllegalArgumentException("wrong scene name :" + sceneName);
@@ -260,5 +261,37 @@ public class WindowManager {
             return "en";
         }
     }
+
+    public static String showShortcutRecordingDialog(String stageName) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(WindowManager.class.getResource("/fxml/ShortcutRecordingDialogScene.fxml"));
+            loader.setResources(resourceBundle);
+            GridPane page = (GridPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle(" ");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(getInstance().getStage(stageName));
+            //dialogStage.initOwner(getStage("main"));
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            dialogStage.getIcons().add(new Image(WindowManager.class.getClass().getResourceAsStream("/images/keyboard.png")));
+
+            // Set the person into the controller.
+            ShortcutRecordingDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.getShortcut();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "en";
+        }
+    }
+
 
 }

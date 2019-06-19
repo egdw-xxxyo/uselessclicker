@@ -39,7 +39,7 @@ public class MainApplication {
         return script;
     }
 
-    public MainApplication() throws AWTException {
+    public MainApplication() {
         clickAuto = new UselessClickAuto();
         Dependency.setClickAuto(clickAuto);
         bindProperties();
@@ -72,21 +72,13 @@ public class MainApplication {
      * Evaluate code by JS Engine
      */
     public void runScript() {
-        System.out.println("run");
         Out.clear();
-        System.out.println(clickAuto.isRunning());
         if (clickAuto.isRunning()) {
-            
             clickAuto.stop();
         }
-        
         clickAuto.removeScripts();
 
-
-
-        System.out.println("removed");
         clickAuto.putScript(script.codeProperty().getValue());
-        System.out.println("put");
 
         clickAuto.start();
     }

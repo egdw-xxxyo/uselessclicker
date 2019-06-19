@@ -29,3 +29,24 @@
     -fx-border-style: solid;
     -fx-border-width: 1px;
 }
+
+.edit-button{
+    -fx-background-image: url("../../images/24/edit.png");;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 14px;
+    -fx-min-width: 18;
+    -fx-max-width: 18;
+    -fx-min-height: 18;
+    -fx-max-height: 18;
+
+    -fx-background-radius: 0;
+    -fx-background-color: transparent;
+}
+
+.edit-button:hover{
+    -fx-background-color: #ffec9d;
+}
+.edit-button:pressed{
+    -fx-background-color: #ffde66;
+}
