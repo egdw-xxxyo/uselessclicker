@@ -1,0 +1,26 @@
+
+* {
+    -fx-color-background:#eee;
+
+
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+
+}
+
+.textField{
+    
+}
+.button{
+    -fx-background-color: #fff;
+    -fx-border-radius: 0;
+}
+
+.button:hover{
+    -fx-background-color:-fx-color-hover ;
+}
+
+.button:pressed{
+    -fx-background-color:-fx-color-pressed ;
+}

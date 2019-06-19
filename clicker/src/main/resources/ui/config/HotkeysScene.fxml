@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="root-pane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="398.0" prefWidth="656.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.dikhim.jclicker.controllers.HotkeysController">
+   <children>
+      <Label styleClass="header-label" text="%hotkeys.scriptManagement" />
+      <Separator />
+      <GridPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+          <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label styleClass="common-label" text="%hotkeys.scriptManagement.runScript" GridPane.rowIndex="1" />
+            <Label styleClass="common-label" text="%hotkeys.scriptManagement.stopScript" GridPane.rowIndex="2" />
+            <TextField fx:id="runScriptTxt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <styleClass>
+                  <String fx:value="hotkeys-txt" />
+                  <String fx:value="text-edit" />
+               </styleClass>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin></TextField>
+            <TextField fx:id="stopScriptTxt" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <styleClass>
+                  <String fx:value="hotkeys-txt" />
+                  <String fx:value="text-edit" />
+               </styleClass></TextField>
+            <Button mnemonicParsing="false" onAction="#smRunScriptEdit" styleClass="edit-button" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#smStopScriptEdit" styleClass="edit-button" text="Button" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+      <Label styleClass="header-label" text="%hotkeys.mouseRecording" />
+      <Separator />
+      <GridPane layoutX="10.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label styleClass="common-label" text="%hotkeys.mouseRecording.controlKey" />
+            <TextField fx:id="mouseControlTxt" editable="false" GridPane.columnIndex="1">
+               <styleClass>
+                  <String fx:value="hotkeys-txt" />
+                  <String fx:value="text-edit" />
+               </styleClass></TextField>
+            <Button mnemonicParsing="false" onAction="#mrControlKeyEdit" styleClass="edit-button" text="Button" GridPane.columnIndex="2">
+               <GridPane.margin>
+                  <Insets left="2.0" />
+               </GridPane.margin></Button>
+         </children>
+      </GridPane>
+      <Label layoutX="10.0" layoutY="89.0" styleClass="header-label" text="%hotkeys.combinedRecording" />
+      <Separator layoutX="10.0" layoutY="105.0" />
+      <GridPane layoutX="10.0" layoutY="108.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label styleClass="common-label" text="%hotkeys.combinedRecording.controlKey" />
+            <TextField fx:id="combinedControlTxt" editable="false" GridPane.columnIndex="1">
+               <styleClass>
+                  <String fx:value="hotkeys-txt" />
+                  <String fx:value="text-edit" />
+               </styleClass></TextField>
+            <Button mnemonicParsing="false" onAction="#crControlKeyEdit" styleClass="edit-button" text="Button" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+   </children>
+   <stylesheets>
+      <URL value="@HotkeysScene.css" />
+      <URL value="@../CommonElements.css" />
+   </stylesheets>
+</VBox>
