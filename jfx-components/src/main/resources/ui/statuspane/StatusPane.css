@@ -1,0 +1,92 @@
+
+* {
+    -fx-color-background:#eee;
+    -fx-color-border:#777;
+
+
+    -fx-color-selected: #ffde66;
+    -fx-color-pressed: #ffde66;
+    -fx-color-hover: #ffec9d;
+
+    -fx-color-selected-built-in: #c4ff6e;
+    -fx-color-pressed-built-in: #bfff7b;
+    -fx-color-hover-built-in: #dcf5c6;
+}
+
+.templateButton {
+    -fx-alignment: center-left;
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+    -fx-max-height: 26;
+    -fx-min-height: 26;
+    -fx-max-width: infinity;
+}
+
+.templateButton:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.templateButton:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.templateButton:selected {
+    -fx-background-color: -fx-color-selected;
+}
+
+
+.statusButton{
+    -fx-background-position: center;
+
+    -fx-background-radius: 0;
+    -fx-background-color: #fff;
+    -fx-background-repeat: no-repeat;
+    -fx-max-height: 26;
+    -fx-min-height: 26;
+    -fx-background-size: 20px;
+}
+
+.statusButton:hover {
+    -fx-background-color: -fx-color-hover;
+}
+
+.statusButton:pressed {
+    -fx-background-color: -fx-color-pressed;
+}
+
+.statusButton:selected {
+    -fx-background-color: -fx-color-selected;
+}
+.statusButton:disabled{
+    -fx-opacity: 1.0 ;
+}
+
+
+#keyboardStatusButton{
+    -fx-background-image: url("keyboard.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+#mouseStatusButton{
+    -fx-background-image: url("mouse2_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+
+#lupeStatusButton{
+    -fx-background-image: url("lupe_cursor_grey_32.png");
+    -fx-max-width: 26;
+    -fx-min-width: 26;
+}
+
+
+
+#recordingStatusButton{
+    -fx-background-image: url("rec_light_32.png");
+    -fx-background-size: 45 13;
+    -fx-background-position: center;
+    -fx-max-width: 54;
+    -fx-min-width: 54;
+}
