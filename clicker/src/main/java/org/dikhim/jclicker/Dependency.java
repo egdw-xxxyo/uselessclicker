@@ -6,17 +6,16 @@ import org.dikhim.jclicker.eventmanager.EventManager;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 
 public class Dependency {
-    private static volatile UselessClickAuto clickAuto;
-    private static volatile Robot robot;
-    private static final Configuration configuration;
+    private final static UselessClickAuto clickAuto;
+    private final static Robot robot;
+    private final static Configuration configuration;
 
     private static volatile EventManager eventManager;
+
     static {
-        configuration = new Configuration();
-    }
-    public static void setClickAuto(UselessClickAuto clickAuto) {
-        Dependency.clickAuto = clickAuto;
+        clickAuto = new UselessClickAuto();
         robot = clickAuto.robot();
+        configuration = new Configuration();
     }
 
     public static UselessClickAuto getClickAuto() {

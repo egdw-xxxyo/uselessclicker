@@ -42,7 +42,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@SuppressWarnings({"unused", "Duplicates", "CodeBlock2Expr"})
 public class MainController implements Initializable {
 
     private Clicker application = Clicker.getApplication();
@@ -61,6 +60,7 @@ public class MainController implements Initializable {
 
         areaCodeSample.textProperty().bindBidirectional(codeSampleProperty);
 
+        initMenuButtons();
 
         // code area
         codeTextArea = new CodeTextArea();
@@ -160,7 +160,92 @@ public class MainController implements Initializable {
         createHotkeys();
     }
 
+
+    //////////////////////////////////////////////////////////////
+    // MENU BUTTONS
+    //////////////////////////////////////////////////////////////
+
+    @FXML
+    private Button btnNewFile;
+
+    @FXML
+    private Button btnOpenFile;
+
+    @FXML
+    private Button btnSaveFile;
+
+    @FXML
+    private Button btnSaveFileAs;
+
+    @FXML
+    private Button btnRunScript;
+
+    @FXML
+    private Button btnStopScript;
+
+    @FXML
+    private Button btnShowSeverWindow;
+
+    @FXML
+    private Button btnShowConfigWindow;
+
+    private void initMenuButtons() {
+        btnNewFile.setOnAction(event -> mainApplication.newFile());
+
+        btnOpenFile.setOnAction(event -> {
+            File file = WindowManager.getInstance().openScriptFile();
+
+            if (file != null) {
+                mainApplication.openFile(file);
+            }
+        });
+
+        btnSaveFile.setOnAction(event -> {
+            Script script = mainApplication.getScript();
+            if (script.isOpened()) {
+                mainApplication.saveFile();
+            } else {
+                File file = WindowManager.getInstance().saveScriptFileAs();
+                if (file != null) {
+                    mainApplication.saveFileAs(file);
+                }
+            }
+        });
+
+        btnSaveFileAs.setOnAction(event -> {
+            File file = WindowManager.getInstance().saveScriptFileAs();
+            if (file != null) {
+                mainApplication.saveFileAs(file);
+            }
+        });
+
+        btnRunScript.setOnAction(event -> mainApplication.runScript());
+
+        btnStopScript.setOnAction(event -> mainApplication.stopScript());
+
+    }
+
     // status buttons
+    @FXML
+    public void showServerWindow() {
+        WindowManager.getInstance().showStage("server");
+    }
+
+    @FXML
+    public void showConfigWindow() {
+        WindowManager.getInstance().showStage("settings");
+    }
+
+    @FXML
+    public void showAboutWindow() {
+        WindowManager.getInstance().showStage("about");
+    }
+
+    @FXML
+    public void showHelpWindow() {
+        WindowManager.getInstance().showStage("help");
+    }
+
     @FXML
     private ToggleButton btnScriptStatus;
 
@@ -185,50 +270,30 @@ public class MainController implements Initializable {
     @FXML
     private Label lblStopShortcut;
 
-    @FXML
-    private Button btnNewFile;
-
-    @FXML
-    private Button btnRunScript;
-
-    @FXML
-    private Button btnStopScript;
-
-    @FXML
-    private Button btnOpenFile;
-
-    @FXML
-    private Button btnSaveFile;
-
-    @FXML
-    private Button btnShowSeverWindow;
-
-    @FXML
-    private Button btnShowConfigWindow;
 
     private CodeTextArea codeTextArea;
-
     @FXML
     private TextArea areaCodeSample;
-    private StringProperty codeSampleProperty = new SimpleStringProperty("");
 
+    private StringProperty codeSampleProperty = new SimpleStringProperty("");
     // code pane
+
     @FXML
     private AnchorPane codeAreaPane;
-
     // output pane
+
     @FXML
     private TabPane outputTabPane;
-
     //// text output
+
     @FXML
     private AnchorPane outputTextPane;
-
     //// image output
+
     @FXML
     private AnchorPane outputImagePane;
+    // lupe pane
 
-    // lupe pane    
     @FXML
     private AnchorPane lupePane;
 
@@ -237,74 +302,6 @@ public class MainController implements Initializable {
 
     @FXML
     private TextField txtRelativePathRate;
-
-    @FXML
-    public void stopScript() {
-        mainApplication.stopScript();
-    }
-
-    @FXML
-    public void runScript() {
-        mainApplication.runScript();
-    }
-
-    @FXML
-    public void newFile() {
-        mainApplication.newFile();
-    }
-
-    @FXML
-    public void openFile() {
-        File file = WindowManager.getInstance().openScriptFile();
-
-        if (file != null) {
-            mainApplication.openFile(file);
-        }
-    }
-
-    @FXML
-    public void saveFile() {
-        Script script = mainApplication.getScript();
-        if (script.isOpened()) {
-            mainApplication.saveFile();
-        } else {
-            File file = WindowManager.getInstance().saveScriptFileAs();
-            if (file != null) {
-                mainApplication.saveFileAs(file);
-            }
-        }
-    }
-
-    /**
-     * Save script in new file
-     */
-    @FXML
-    public void saveFileAs() {
-        File file = WindowManager.getInstance().saveScriptFileAs();
-        if (file != null) {
-            mainApplication.saveFileAs(file);
-        }
-    }
-
-    @FXML
-    public void showServerWindow() {
-        WindowManager.getInstance().showStage("server");
-    }
-
-    @FXML
-    public void showConfigWindow() {
-        WindowManager.getInstance().showStage("settings");
-    }
-
-    @FXML
-    public void showAboutWindow() {
-        WindowManager.getInstance().showStage("about");
-    }
-
-    @FXML
-    public void showHelpWindow() {
-        WindowManager.getInstance().showStage("help");
-    }
 
     ////// Toggles
     // Keyboard
@@ -376,7 +373,7 @@ public class MainController implements Initializable {
 
     @FXML
     private ToggleButton btnInsertAnimatedMouseAt;
-    
+
     @FXML
     private ToggleButton btnInsertAnimatedMouseMoveAnd;
     // Other
@@ -490,7 +487,7 @@ public class MainController implements Initializable {
         //animated
         eventsRecorder.bind(btnInsertAnimatedMouseAt, new AnimatedMouseAtRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertAnimatedMouseAt);
-        
+
         eventsRecorder.bind(btnInsertAnimatedMouseMoveAnd, new AnimatedMouseMoveAndRecorder(eventsRecorder::putCode));
         nodes.add(btnInsertAnimatedMouseMoveAnd);
 
@@ -633,16 +630,6 @@ public class MainController implements Initializable {
         areaCodeSample.setVisible(false);
     }
 
-    @FXML
-    private void onBtnStatusScript(ActionEvent event) {
-        ToggleButton button = (ToggleButton) event.getSource();
-        if (button.isSelected()) {
-            runScript();
-        } else {
-            stopScript();
-        }
-    }
-
     private void putTextIntoCaretPosition(TextArea textArea, String text) {
         Platform.runLater(() -> {
             codeTextArea.insertTextIntoCaretPosition(text);
@@ -659,33 +646,4 @@ public class MainController implements Initializable {
     private void onCombinedRelativePathAction(ActionEvent event) {
         if (btnCombinedAbsolutePath.isSelected()) btnCombinedAbsolutePath.setSelected(false);
     }
-
-
-    private void createHotkeys() {
-
-        HotKeys hotKeys = Dependency.getConfig().hotKeys();
-
-        StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
-        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
-
-        Dependency.getEventManager().addListener(new ShortcutPressListener(
-                "main.stopScript",
-                () -> {
-                    Platform.runLater(this::stopScript);
-                },
-                stopScriptShortcutStringProperty
-        ));
-
-        StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
-        runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
-
-        Dependency.getEventManager().addListener(new ShortcutPressListener(
-                "main.runScript",
-                () -> {
-                    Platform.runLater(this::runScript);
-                },
-                runScriptShortcutStringProperty
-        ));
-    }
-
 }

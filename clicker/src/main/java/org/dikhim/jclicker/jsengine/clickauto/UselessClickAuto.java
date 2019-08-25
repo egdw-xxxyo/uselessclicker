@@ -65,15 +65,11 @@ public class UselessClickAuto {
     }
 
     public boolean isRunning() {
-        return clickAuto.isRunning();
+        return isRunningProperty().get();
     }
 
     public Robot robot() {
         return robot;
-    }
-    
-    public void setIsRunning(boolean isRunning) {
-        this.isRunning.set(isRunning);
     }
 
     public ClickAutoScriptEngine getEngine() {

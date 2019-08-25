@@ -1,5 +1,6 @@
 package org.dikhim.jclicker.model;
 
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -8,6 +9,8 @@ import javafx.beans.property.StringProperty;
 import org.dikhim.clickauto.ClickAuto;
 import org.dikhim.clickauto.jsengine.ClickAutoScriptEngine;
 import org.dikhim.jclicker.Dependency;
+import org.dikhim.jclicker.configuration.hotkeys.HotKeys;
+import org.dikhim.jclicker.eventmanager.listener.ShortcutPressListener;
 import org.dikhim.jclicker.jsengine.clickauto.UselessClickAuto;
 import org.dikhim.jclicker.server.http.HttpServer;
 import org.dikhim.jclicker.server.socket.SocketServer;
@@ -24,16 +27,15 @@ public class MainApplication {
 
     private StringProperty title = new SimpleStringProperty("");
     private StringProperty status = new SimpleStringProperty("");
-    private BooleanProperty scriptRunning = new SimpleBooleanProperty(false);
-    
+
     private HttpServer httpServer;
     private SocketServer socketServer;
 
     private UselessClickAuto clickAuto;
+    private Script script = new Script();
 
     private Consumer<BufferedImage> onSetOutputImage;
 
-    private Script script = new Script();
 
     public Script getScript() {
         return script;
@@ -41,11 +43,12 @@ public class MainApplication {
 
     public MainApplication() {
         clickAuto = new UselessClickAuto();
-        Dependency.setClickAuto(clickAuto);
         bindProperties();
 
         httpServer = new HttpServer();
         socketServer = new SocketServer();
+
+        createHotKeys();
     }
 
     public void newFile() {
@@ -101,7 +104,6 @@ public class MainApplication {
     private void bindProperties() {
         title.bind(script.nameProperty());
         status.bind(Bindings.concat(script.nameProperty()).concat(" running:").concat(clickAuto.isRunningProperty()));
-        scriptRunning.bindBidirectional(clickAuto.isRunningProperty());
     }
 
     public UselessClickAuto getClickAuto() {
@@ -117,7 +119,7 @@ public class MainApplication {
     }
 
     public BooleanProperty scriptRunningProperty() {
-        return scriptRunning;
+        return clickAuto.isRunningProperty();
     }
 
     public HttpServer getHttpServer() {
@@ -138,5 +140,31 @@ public class MainApplication {
 
     public void setOnSetOutputImage(Consumer<BufferedImage> onSetOutputImage) {
         this.onSetOutputImage = onSetOutputImage;
+    }
+
+    private void createHotKeys() {
+        HotKeys hotKeys = Dependency.getConfig().hotKeys();
+
+        StringProperty stopScriptShortcutStringProperty = new SimpleStringProperty("");
+        stopScriptShortcutStringProperty.bindBidirectional(hotKeys.stopScript().keysProperty());
+
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.stopScript",
+                () -> {
+                    Platform.runLater(this::stopScript);
+                },
+                stopScriptShortcutStringProperty
+        ));
+
+        StringProperty runScriptShortcutStringProperty = new SimpleStringProperty("");
+        runScriptShortcutStringProperty.bindBidirectional(hotKeys.runScript().keysProperty());
+
+        Dependency.getEventManager().addListener(new ShortcutPressListener(
+                "main.runScript",
+                () -> {
+                    Platform.runLater(this::runScript);
+                },
+                runScriptShortcutStringProperty
+        ));
     }
 }
