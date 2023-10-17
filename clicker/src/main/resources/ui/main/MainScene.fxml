@@ -41,7 +41,7 @@
             </rowConstraints>
             <VBox>
                 <FlowPane maxWidth="1.7976931348623157E308" rowValignment="TOP" style="-fx-background-color: #ddd; -fx-border-color: #ccc; -fx-border-width: 0 0 1 0;" vgap="4.0">
-                    <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0" mnemonicParsing="false" onAction="#newFile" prefHeight="71.0" prefWidth="36.0" text="%button.new">
+                    <Button id="new-script-button" fx:id="btnNewFile" focusTraversable="false" maxHeight="71.0" mnemonicParsing="false"   prefHeight="71.0" prefWidth="36.0" text="%button.new">
                         <font>
                             <Font size="14.0" />
                         </font>
@@ -50,13 +50,13 @@
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false" onAction="#openFile" text="%button.open">
+                    <Button id="open-script-button" fx:id="btnOpenFile" focusTraversable="false" mnemonicParsing="false"  text="%button.open">
                         <styleClass>
                             <String fx:value="script-button" />
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false" onAction="#saveFile" text="%button.save">
+                    <Button id="save-script-button" fx:id="btnSaveFile" focusTraversable="false" mnemonicParsing="false" accessibleHelp=""  text="%button.save">
                         <styleClass>
                             <String fx:value="script-button" />
                             <String fx:value="gray-element" />
@@ -68,13 +68,13 @@
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#runScript" text="%button.run">
+                    <Button id="run-script-button" fx:id="btnRunScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"   text="%button.run">
                         <styleClass>
                             <String fx:value="script-button" />
                             <String fx:value="gray-element" />
                         </styleClass>
                     </Button>
-                    <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false" onAction="#stopScript" text="%button.stop">
+                    <Button id="stop-script-button" fx:id="btnStopScript" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="32.0" minWidth="32.0" mnemonicParsing="false"   text="%button.stop">
                         <styleClass>
                             <String fx:value="script-button" />
                             <String fx:value="gray-element" />
@@ -106,7 +106,7 @@
                     </Button>
                 </FlowPane>
                 <HBox>
-                    <ToggleButton id="scriptStatusButton" fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false" onAction="#onBtnStatusScript" prefWidth="250.0" styleClass="statusButton" text="">
+                    <ToggleButton id="scriptStatusButton" fx:id="btnScriptStatus" maxWidth="250.0" minWidth="250.0" mnemonicParsing="false"   prefWidth="250.0" styleClass="statusButton" text="">
                         <font>
                             <Font name="FreeMono Bold" size="13.0" />
                         </font>

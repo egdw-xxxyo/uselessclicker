@@ -157,7 +157,7 @@ public class MainController implements Initializable {
         combinedEncodingType.getSelectionModel().select(combinedRecordingParams.getEncodingType());
         combinedEncodingType.valueProperty().bindBidirectional(combinedRecordingParams.encodingTypeProperty());
 
-        createHotkeys();
+//        createHotkeys();
     }
 
 

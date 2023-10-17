@@ -24,13 +24,14 @@ public class Clicker extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        if (cli.isEventRecording()) {
+            jNativeHookStart();
+        }
         mainApplication = new MainApplication();
         application = this;
         this.primaryStage = primaryStage;
 
-        if (cli.isEventRecording()) {
-            jNativeHookStart();
-        }
+
         
         if (cli.isGuiApplication()) {
             if(Preferences.userRoot().node("main").getBoolean("isFirstLaunch",true)){
